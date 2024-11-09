@@ -6,23 +6,27 @@
 #    By: erigonza <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/05 11:52:11 by erigonza          #+#    #+#              #
-#    Updated: 2024/11/05 12:21:41 by erigonza         ###   ########.fr        #
+#    Updated: 2024/11/09 16:54:42 by erigonza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			:= miniRT
 
-HEAD			:= includes
+FILES			:= main.c	
 
-SRCDIR			:= src/
+HEAD			:= includes
 
 LIB				:= lib/
 
-FILES			:= main.c	
+DIR_SRC			:= ./src
+SRCS			:= $(addprefix $(DIR_SRC)/, $(FILES))
 
-SRCS			:= $(addprefix $(SRCDIR), $(FILES))
+DIR_OBJ			:= $(DIR_SRC)/obj
 
-OBJS			:= ${SRCS:.c=.o}
+OBJS            := $(addprefix $(DIR_OBJ)/, $(FILES:.c=.o))
+DEPS			:= $(addprefix $(DIR_OBJ)/, $(FILES:.c=.d))
+
+INC				:= ./inc/miniRT.h
 
 CC				:= gcc -g
 
@@ -53,12 +57,20 @@ ifeq ($(UNAME),Linux)
 	FLAGS		+= $(LINUX_FLAGS)
 endif
 
-${NAME}:	${OBJS}
+all:		libft ${NAME}
+
+libft:
 			@make -s -C $(LIB)libft
 			@make -s -C $(LIB)libvector
-			${CC} ${CFLAGS} $(OBJS) $(FLAGS) -o ${NAME}
+			@mkdir -p $(DIR_OBJ)
 
-all:		${NAME}
+$(DIR_OBJ)/%.o:		$(DIR_SRC)/%.c ${INC} Makefile
+			@printf "\033[0;33m\r🔨 $< ✅ \033[0m"
+			@$(CC) -MMD $(CFLAGS) -c $< -o $@ 
+
+${NAME}:	${OBJS} ${INC}
+			$(CC) $(CFLAGS) $(OBJS) $(FLAGS) -o $(NAME)
+			clear
 
 c clean:
 			@make clean -s -C $(LIB)libft
