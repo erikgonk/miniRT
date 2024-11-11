@@ -6,64 +6,69 @@
 #    By: erigonza <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/05 11:52:11 by erigonza          #+#    #+#              #
-#    Updated: 2024/11/10 16:36:53 by erigonza         ###   ########.fr        #
+#    Updated: 2024/11/11 10:38:49 by erigonza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		= miniRT
-CC			= cc
-CFLAGS		= -Wextra -Wall -Werror #-fsanitize=address
-MLXFLAGS	= -ldl -lglfw -pthread -lm
+NAME			:= miniRT
 
-#<-------------------------------|LIBRARIES|---------------------------------->#
+SRC_D			:= ./src/
+OBJ_D			:= $(SRC_D)obj/
+DEP_D			:= $(SRC_D)dep/
+LIBFT_D			:= ./lib/libft/
+MLX_D			:= ./lib/MLX42/build/
 
-MLX		= libmlx42.a
-MLX_D	= ./lib/MLX42/build/
-LIBFT	= libft.a
-LIBFT_D	= ./lib/libft/
+FILES			:= prueba.c
+SRCS			:= $(addprefix $(SRC_D), $(FILES))
 
-#<---------------------------------|FILES|------------------------------------>#
+OBJS            := $(addprefix $(OBJ_D), $(FILES:.c=.o))
+DEPS			:= $(addprefix $(DEP_D), $(FILES:.c=.d))
 
-SRC_D	= ./src/
-SRC_F	= prueba.c
+CC				:= cc
+CFLAGS			:= -Wall -Wextra -Werror -fsanitize=address
 
-OBJ_D	= ./obj/
-OBJ_F	= $(SRC_F:.c=.o)
-OBJ 	= $(addprefix $(OBJ_D), $(OBJ_F))
+LIB				:= lib/
 
-DEP_D	= ./dep/
-DEP_F	= $(SRC_F:.c=.d)
-DEP		= $(addprefix $(DEP_D), $(DEP_F))
+LIBFT			:= libft.a
 
-#<---------------------------------|RULES|------------------------------------>#
+MLX				:= libmlx42.a
+DIR_MLX			:= ./lib/MLX42
+MLXFLAGS		:= -ldl -lglfw -pthread -lm
 
-all: libmlx libft $(NAME)
+RM				:= rm -fr
 
-libft:
-	make -C $(LIBFT_D)
+all:		libmlx libs $(NAME)
 
-libmlx: $(MLX_D)
-	cmake ./lib/MLX42 -B $(MLX_D) && make -C $(MLX_D) -j4
+libmlx:
+			cmake ./lib/MLX42 -B $(MLX_D) && make -C $(MLX_D) -j4
 
-$(OBJ_D)%.o: $(SRC_D)%.c Makefile
-	$(CC) $(CFLAGS) -MMD -o $@ -c $<
-	mv ${@:.o=.d} ${DEP_D}
+libs:
+			@make -s -C $(LIB)libft
+			@make -s -C $(LIB)libvector
+			@mkdir -p $(OBJ_D) $(DEP_D)
 
-$(NAME): $(DEP_D) $(OBJ_D) $(OBJ)
-	$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJ) $(MLX_D)$(MLX) $(LIBFT_D)$(LIBFT) -o $(NAME)
+$(OBJ_D)%.o:	$(SRC_D)%.c Makefile
+			@printf "\033[0;33m\r🔨 $< ✅ \033[0m"
+			@$(CC) $(CFLAGS) -MMD -o $@ -c $<
+			@mv $(@:.o=.d) $(DEP_D)
 
-#<------------------------------|DIRECTORIES|--------------------------------->#
+$(NAME):	$(OBJS)
+			$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) $(MLX_D)$(MLX) $(LIBFT_D)$(LIBFT) -o $(NAME)
+			clear
 
-$(DEP_D):
-	mkdir $(DEP_D)
+c clean:
+			@make clean -s -C $(LIB)libft
+			@make clean -s -C $(LIB)libvector
+			@$(RM) $(DIR_MLX)/build
+			${RM} ./src/obj
+			clear
 
-$(OBJ_D):
-	mkdir $(OBJ_D)
+f fclean:		clean
+			@make fclean -s -C $(LIB)libft
+			@make fclean -s -C $(LIB)libvector
+			@${RM} ${NAME}
 
-$(MLX_D):
-	mkdir $(MLX_D)
+r re:			fclean all
 
-#<---------------------------------|PHONY|------------------------------------>#
-
-clean:
-	rm -rf $(OBJ_D) $(DEP_D)
+PHONY:		all clean fclean re f c r libs libmlx
+.SILENT:
