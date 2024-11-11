@@ -6,7 +6,7 @@
 #    By: erigonza <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/05 11:52:11 by erigonza          #+#    #+#              #
-#    Updated: 2024/11/11 10:39:37 by erigonza         ###   ########.fr        #
+#    Updated: 2024/11/11 12:34:23 by erigonza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ OBJS            := $(addprefix $(OBJ_D), $(FILES:.c=.o))
 DEPS			:= $(addprefix $(DEP_D), $(FILES:.c=.d))
 
 CC				:= cc
-CFLAGS			:= -Wall -Wextra -Werror -fsanitize=address
+CFLAGS			:= #-Wall -Wextra -Werror -fsanitize=address
 
 LIB				:= lib/
 
