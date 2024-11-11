@@ -6,7 +6,7 @@
 #    By: erigonza <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/05 11:52:11 by erigonza          #+#    #+#              #
-#    Updated: 2024/11/11 10:38:49 by erigonza         ###   ########.fr        #
+#    Updated: 2024/11/11 10:39:37 by erigonza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,7 @@ c clean:
 			@make clean -s -C $(LIB)libft
 			@make clean -s -C $(LIB)libvector
 			@$(RM) $(DIR_MLX)/build
-			${RM} ./src/obj
+			${RM} ./src/obj ./src/dep
 			clear
 
 f fclean:		clean
