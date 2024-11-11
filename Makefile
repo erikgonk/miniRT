@@ -6,85 +6,64 @@
 #    By: erigonza <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/05 11:52:11 by erigonza          #+#    #+#              #
-#    Updated: 2024/11/09 16:54:42 by erigonza         ###   ########.fr        #
+#    Updated: 2024/11/10 16:36:53 by erigonza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME			:= miniRT
+NAME		= miniRT
+CC			= cc
+CFLAGS		= -Wextra -Wall -Werror #-fsanitize=address
+MLXFLAGS	= -ldl -lglfw -pthread -lm
 
-FILES			:= main.c	
+#<-------------------------------|LIBRARIES|---------------------------------->#
 
-HEAD			:= includes
+MLX		= libmlx42.a
+MLX_D	= ./lib/MLX42/build/
+LIBFT	= libft.a
+LIBFT_D	= ./lib/libft/
 
-LIB				:= lib/
+#<---------------------------------|FILES|------------------------------------>#
 
-DIR_SRC			:= ./src
-SRCS			:= $(addprefix $(DIR_SRC)/, $(FILES))
+SRC_D	= ./src/
+SRC_F	= prueba.c
 
-DIR_OBJ			:= $(DIR_SRC)/obj
+OBJ_D	= ./obj/
+OBJ_F	= $(SRC_F:.c=.o)
+OBJ 	= $(addprefix $(OBJ_D), $(OBJ_F))
 
-OBJS            := $(addprefix $(DIR_OBJ)/, $(FILES:.c=.o))
-DEPS			:= $(addprefix $(DIR_OBJ)/, $(FILES:.c=.d))
+DEP_D	= ./dep/
+DEP_F	= $(SRC_F:.c=.d)
+DEP		= $(addprefix $(DEP_D), $(DEP_F))
 
-INC				:= ./inc/miniRT.h
+#<---------------------------------|RULES|------------------------------------>#
 
-CC				:= gcc -g
-
-RM				:= rm -f
-
-CFLAGS			:= -Wall -Wextra -Werror -I $(HEAD) -D NUM_THREADS=$(NUM_THREADS)
-
-FLAGS			:= -L $(LIB)libft -lft -L $(LIB)libvector -lvct
-
-MACOS_MACRO		:= -D MACOS
-
-LINUX_MACRO		:= -D LINUX
-
-MACOS_FLAGS		:= -L $(LIB)minilibx_opengl_20191021 -lmlx -framework OpenGL -framework AppKit 
-
-LINUX_FLAGS		:= -L $(LIB)minilibx-linux -lmlx -lm -lX11 -lXext -lpthread
-
-UNAME			:= $(shell uname)
-
-ifeq ($(UNAME),Darwin)
-	NUM_THREADS	:= $(shell sysctl -n hw.ncpu)
-	CFLAGS		+= $(MACOS_MACRO)
-	FLAGS		+= $(MACOS_FLAGS)
-endif
-ifeq ($(UNAME),Linux)
-	NUM_THREADS	:= $(shell nproc --all)
-	CFLAGS		+= $(LINUX_MACRO)
-	FLAGS		+= $(LINUX_FLAGS)
-endif
-
-all:		libft ${NAME}
+all: libmlx libft $(NAME)
 
 libft:
-			@make -s -C $(LIB)libft
-			@make -s -C $(LIB)libvector
-			@mkdir -p $(DIR_OBJ)
+	make -C $(LIBFT_D)
 
-$(DIR_OBJ)/%.o:		$(DIR_SRC)/%.c ${INC} Makefile
-			@printf "\033[0;33m\r🔨 $< ✅ \033[0m"
-			@$(CC) -MMD $(CFLAGS) -c $< -o $@ 
+libmlx: $(MLX_D)
+	cmake ./lib/MLX42 -B $(MLX_D) && make -C $(MLX_D) -j4
 
-${NAME}:	${OBJS} ${INC}
-			$(CC) $(CFLAGS) $(OBJS) $(FLAGS) -o $(NAME)
-			clear
+$(OBJ_D)%.o: $(SRC_D)%.c Makefile
+	$(CC) $(CFLAGS) -MMD -o $@ -c $<
+	mv ${@:.o=.d} ${DEP_D}
 
-c clean:
-			@make clean -s -C $(LIB)libft
-			@make clean -s -C $(LIB)libvector
-			${RM} ${OBJS}
-			clear
+$(NAME): $(DEP_D) $(OBJ_D) $(OBJ)
+	$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJ) $(MLX_D)$(MLX) $(LIBFT_D)$(LIBFT) -o $(NAME)
 
-f fclean:		clean
-			@make fclean -s -C $(LIB)libft
-			@make fclean -s -C $(LIB)libvector
-			@${RM} ${NAME}
-			clear
+#<------------------------------|DIRECTORIES|--------------------------------->#
 
-r re:			fclean all
+$(DEP_D):
+	mkdir $(DEP_D)
 
-PHONY:		all clean fclean re f c r
-.SILENT:
+$(OBJ_D):
+	mkdir $(OBJ_D)
+
+$(MLX_D):
+	mkdir $(MLX_D)
+
+#<---------------------------------|PHONY|------------------------------------>#
+
+clean:
+	rm -rf $(OBJ_D) $(DEP_D)

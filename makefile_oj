@@ -1,0 +1,72 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: erigonza <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/11/05 11:52:11 by erigonza          #+#    #+#              #
+#    Updated: 2024/11/10 16:44:06 by erigonza         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+NAME			:= miniRT
+
+FILES			:= prueba.c	
+DIR_SRC			:= ./src
+SRCS			:= $(addprefix $(DIR_SRC)/, $(FILES))
+
+OBJS            := $(addprefix $(DIR_OBJ)/, $(FILES:.c=.o))
+DIR_OBJ			:= $(DIR_SRC)/obj
+DEPS			:= $(addprefix $(DIR_OBJ)/, $(FILES:.c=.d))
+
+CC				:= gcc -g
+CFLAGS			:= -Wall -Wextra -Werror #-fsanitize=address
+
+LIB				:= lib/
+
+LIBFT	= libft.a
+LIBFT_D	= ./lib/libft/
+
+MLX				:= libmlx42.a
+DIR_MLX			:= ./lib/MLX42
+MLXFLAGS		:= -ldl -lglfw -pthread -lm
+
+MLX_D			:= ./lib/MLX42/build/
+
+RM				:= rm -fr
+
+all:		libmlx libs ${NAME}
+
+libmlx:
+			cmake ./lib/MLX42 -B $(MLX_D) && make -C $(MLX_D) -j4
+
+libs:
+			@make -s -C $(LIB)libft
+			@make -s -C $(LIB)libvector
+			@mkdir -p $(DIR_OBJ)
+
+$(DIR_OBJ)/%.o:		$(DIR_SRC)/%.c Makefile
+			@printf "\033[0;33m\r🔨 $< ✅ \033[0m"
+			@$(CC) -MMD $(CFLAGS) -c $< -o $@
+
+${NAME}:	${OBJS}
+	$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) $(MLX_D)$(MLX) $(LIBFT_D)$(LIBFT) -o $(NAME)
+			clear
+
+c clean:
+			@make clean -s -C $(LIB)libft
+			@make clean -s -C $(LIB)libvector
+			@$(RM) $(DIR_MLX)/build
+			${RM} ./src/obj
+			clear
+
+f fclean:		clean
+			@make fclean -s -C $(LIB)libft
+			@make fclean -s -C $(LIB)libvector
+			@${RM} ${NAME}
+
+r re:			fclean all
+
+PHONY:		all clean fclean re f c r
+.SILENT:
