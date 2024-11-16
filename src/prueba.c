@@ -31,7 +31,6 @@ void	hook(void* param)
 {
 	mlx_t* mlx;
 
-	printf("%p\n", x);
 	mlx = param;
 	if (mlx_is_key_down(mlx, MLX_KEY_P))
 		mlx_delete_image(mlx, g_img);

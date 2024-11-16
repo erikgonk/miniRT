@@ -6,7 +6,7 @@
 #    By: erigonza <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/05 11:52:11 by erigonza          #+#    #+#              #
-#    Updated: 2024/11/12 12:19:40 by erigonza         ###   ########.fr        #
+#    Updated: 2024/11/16 19:34:15 by erigonza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,14 +18,14 @@ DEP_D			:= $(SRC_D)dep/
 LIBFT_D			:= ./lib/libft/
 MLX_D			:= ./lib/MLX42/build/
 
-FILES			:= main2.c
+FILES			:= main.c
 SRCS			:= $(addprefix $(SRC_D), $(FILES))
 
 OBJS            := $(addprefix $(OBJ_D), $(FILES:.c=.o))
 DEPS			:= $(addprefix $(DEP_D), $(FILES:.c=.d))
 
 CC				:= cc
-CFLAGS			:= -g #-Wall -Wextra -Werror -fsanitize=address
+CFLAGS			:= -g  -fsanitize=address #-Wall -Wextra -Werror
 
 LIB				:= lib/
 

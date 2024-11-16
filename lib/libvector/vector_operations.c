@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   vector_operations.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/20 13:29:36 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/03/10 17:47:58 by mgarcia-         ###   ########.fr       */
+/*   Created: 2024/11/16 18:33:01 by erigonza          #+#    #+#             */
+/*   Updated: 2024/11/16 18:33:03 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libvct.h"
 
-t_p3		vdefine(double x, double y, double z)
+t_p3	vdefine(double x, double y, double z)
 {
 	t_p3	vector;
 
@@ -22,7 +22,7 @@ t_p3		vdefine(double x, double y, double z)
 	return (vector);
 }
 
-t_p3		vadd(t_p3 a, t_p3 b)
+t_p3	vadd(t_p3 a, t_p3 b)
 {
 	t_p3	p;
 
@@ -32,7 +32,7 @@ t_p3		vadd(t_p3 a, t_p3 b)
 	return (p);
 }
 
-t_p3		vsubstract(t_p3 a, t_p3 b)
+t_p3	vsubstract(t_p3 a, t_p3 b)
 {
 	t_p3	p;
 
@@ -42,12 +42,12 @@ t_p3		vsubstract(t_p3 a, t_p3 b)
 	return (p);
 }
 
-double		dot(t_p3 a, t_p3 b)
+double	dot(t_p3 a, t_p3 b)
 {
 	return (a.x * b.x + a.y * b.y + a.z * b.z);
 }
 
-t_p3		cross(t_p3 a, t_p3 b)
+t_p3	cross(t_p3 a, t_p3 b)
 {
 	t_p3	cp;
 

@@ -6,14 +6,24 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 12:17:06 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/12 12:48:19 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/16 17:55:29 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/miniRT.h"
 
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
+#define WINDOW_WIDTH 1580
+#define WINDOW_HEIGHT 1080
+
+#define WIDTH 500
+#define HEIGHT 500
+
+void my_keyhook(mlx_key_data_t keydata, void* param)
+{
+	// If we PRESS the 'J' key, print "Hello".
+	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
+		exit(1);
+}
 
 // Function to calculate the dot product of two vectors
 // This helps us determine angles between directions, which we'll need for shading
@@ -79,15 +89,15 @@ int main() {
 
     Vector3 ray_start = { 0.0, 0.0, -5.0 };      // Camera position (where our rays start from)
     Vector3 sphere_center = { 0.0, 0.0, 0.0 };   // Position of the sphere
-    float sphere_radius = 1.0;                   // Radius (size) of the sphere
+    float sphere_radius = 1.4;                   // Radius (size) of the sphere
 
     // Loop through each pixel in the window
     for (int y = 0; y < WINDOW_HEIGHT; y++) {
         for (int x = 0; x < WINDOW_WIDTH; x++) {
             // Set up a direction from the camera to this pixel
             Vector3 ray_direction = {
-                (x - WINDOW_WIDTH / 2.0f) / (float)WINDOW_WIDTH,
-                (y - WINDOW_HEIGHT / 2.0f) / (float)WINDOW_HEIGHT,
+                (x - WINDOW_WIDTH / 2.0f) / (float)WIDTH,
+                (y - WINDOW_HEIGHT / 2.0f) / (float)HEIGHT,
                 1.0
             };
 
@@ -108,11 +118,11 @@ int main() {
                 };
 
                 // Get the normal at the intersection point for shading
-                Vector3 normal = sphere_normal(sphere_center, intersection_point);
+               // Vector3 normal = sphere_normal(sphere_center, intersection_point);
 
                 // Simple shading calculation based on the normal
-                float shade = fmaxf(0.0f, dot(normal, (Vector3){0.0, 0.0, -1.0}));
-                uint32_t color = ((int)(shade * 255) << 16) | ((int)(shade * 255) << 8) | (int)(shade * 255) | 0xFF000000;
+               // float shade = fmaxf(0.0f, dot(normal, (Vector3){0.0, 0.0, -1.0}));
+                uint32_t color = ((int)(25) << 16) | ((int)(25) << 8) | (int)(255) | 0xFF000000;
 
                 // Draw the pixel with the calculated color
                 draw_pixel(img, x, y, color);
@@ -122,6 +132,7 @@ int main() {
     // Display the image
     mlx_image_to_window(mlx, img, 0, 0);
 
+	mlx_key_hook(mlx, &my_keyhook, NULL);
     // Main loop to keep the window open
     mlx_loop(mlx);
 
