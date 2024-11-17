@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/16 19:33:08 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/17 13:06:23 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,37 @@
 # include <sys/stat.h>
 # include <unistd.h>
 
-typedef struct
+#define WINDOW_WIDTH 1580
+#define WINDOW_HEIGHT 1080
+
+#define WIDTH 500
+#define HEIGHT 500
+
+typedef struct s_v3
 {
 	float	x;
 	float	y;
 	float	z;
 }			t_v3;
+
+typedef struct s_data
+{
+	t_v3	ray_start;
+	t_v3	sphere_center;
+	float	sphere_radius;
+}			t_data;
+
+// lib
+t_v3			subtract(t_v3 a, t_v3 b);
+float			dot(t_v3 a, t_v3 b);
+t_v3			vDefine(float x, float y, float z);
+
+// mlx
+void draw_pixel(mlx_image_t* img, int x, int y, uint32_t color);
+
+// sphere
+void	ft_sphere(t_data *data, mlx_image_t *img);
+float sphere_ray_intersect(t_v3 ray_start, t_v3 ray_direction,
+		t_v3 sphere_center, float sphere_radius);
 
 #endif

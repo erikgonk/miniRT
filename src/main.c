@@ -6,26 +6,17 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:12:46 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/16 19:39:16 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/17 13:13:43 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/miniRT.h"
 
-#define WINDOW_WIDTH 1580
-#define WINDOW_HEIGHT 1080
-
-#define WIDTH 500
-#define HEIGHT 500
-
-t_v3	vDefine(float x, float y, float z)
+// Draw a single pixel at position (x, y) with the specified color if within bounds
+void draw_pixel(mlx_image_t* img, int x, int y, uint32_t color)
 {
-	t_v3	vector;
-
-	vector.x = x;
-	vector.y = y;
-	vector.z = z;
-	return (vector);
+    if (x >= 0 && x < WINDOW_WIDTH && y >= 0 && y < WINDOW_HEIGHT)
+        mlx_put_pixel(img, x, y, color);			// Draw the pixel
 }
 
 void my_keyhook(mlx_key_data_t keydata, void* param)
@@ -34,20 +25,29 @@ void my_keyhook(mlx_key_data_t keydata, void* param)
 		exit(1);
 }
 
+void	ft_init(t_data *data)
+{
+	data->ray_start = vDefine(0.0, 0.0, -5.0);		// Camera position (where our rays start from)	
+    data->sphere_center = vDefine(0.0, 0.0, 0.0);   // Position of the sphere
+    data->sphere_radius = 1.4;                   // Radius (size) of the sphere
+}
+
 int	main(int ac, char **av)
 {
-	mlx_t	*mlx;
+	t_data			data;
+	mlx_t			*mlx;
     mlx_image_t		*img;
 
 	mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "miniRT", true);
 	if (!mlx)
 		return ((ft_printf(2, "Failed to initialize MLX42\n")) * 0);
+
 	img = mlx_new_image(mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-    if (!img) {
-        fprintf(stderr, "Failed to create image\n");
-        mlx_terminate(mlx);
-        return EXIT_FAILURE;
-    }
+    if (!img)
+		exit(ft_printf(2, "Failed to create image\n") * 0);
+
+	ft_init(&data);
+	ft_sphere(&data, img);
     mlx_image_to_window(mlx, img, 0, 0);
 	mlx_key_hook(mlx, &my_keyhook, NULL);
     mlx_loop(mlx);
