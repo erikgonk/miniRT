@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/17 16:59:57 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/17 17:59:50 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ typedef struct s_v3
 
 typedef struct s_data
 {
-	t_v3	ray_start;
-	t_v3	sphere_center;
-	float	sphere_radius;
+	t_v3		ray_start;
+	t_v3		sphere_center;
+	float		sphere_radius;
 	uint32_t	color;
 }			t_data;
 

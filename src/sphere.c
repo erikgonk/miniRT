@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 12:41:39 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/17 16:50:34 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/17 17:59:23 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,34 @@ float sphere_ray_intersect(t_v3 ray_start, t_v3 ray_direction,
     return (fmaxf(-b - h, 0.0f));					// Return the closest hit distance
 }
 
+float	calculate_lighting(t_v3 point, t_v3 normal, t_v3 light_position) {
+    // Vector from the point on the sphere to the light source
+    t_v3 light_dir = subtract(light_position, point);
+    
+    // Normalize the light direction
+    float mag = sqrtf(dot(light_dir, light_dir));
+    light_dir.x /= mag;
+    light_dir.y /= mag;
+    light_dir.z /= mag;
+    
+    // Calculate the dot product between the normal and the light direction
+    float intensity = fmaxf(dot(normal, light_dir), 0.0f); // Prevent negative lighting
+    
+    return intensity; // Return the intensity, which will be between 0 and 1
+}
+
 void	ft_sphere(t_data *data, mlx_image_t *img)
 {
 	t_v3		ray_direction;
 	t_v3		intersection_point;
-    float		aR; // aspect ratio
 	float		mag;
 	float		t; 
-	int			y;
-	int			x;
 
-	aR = (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT;					// Calculate aspect ratio
-	y = -1;
+	float aR = (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT;					// Calculate aspect ratio
+	int y = -1;
 	while (++y < WINDOW_HEIGHT)											// Loop through each pixel in the window
 	{
-		x = -1;
+		int x = -1;
 		while (++x < WINDOW_WIDTH)
 		{
             t_v3 ray_direction = vDefine(								// Set up a direction from the camera to this pixel
