@@ -6,11 +6,11 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 12:17:06 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/16 17:55:29 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/17 15:21:01 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/miniRT.h"
+#include "../inc/mini.h"
 
 #define WINDOW_WIDTH 1580
 #define WINDOW_HEIGHT 1080

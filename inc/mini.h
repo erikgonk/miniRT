@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   miniRT.h                                           :+:      :+:    :+:   */
+/*   mini.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/17 16:59:57 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/17 15:20:42 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,31 +33,26 @@ typedef struct s_v3
 	float	x;
 	float	y;
 	float	z;
-}			t_v3;
+}			Vector3;
 
 typedef struct s_data
 {
-	t_v3	ray_start;
-	t_v3	sphere_center;
+	Vector3	ray_start;
+	Vector3	sphere_center;
 	float	sphere_radius;
-	uint32_t	color;
 }			t_data;
 
-// utils
-int	er(char *s, char *av);
-
 // lib
-t_v3			subtract(t_v3 a, t_v3 b);
-float			dot(t_v3 a, t_v3 b);
-t_v3			vDefine(float x, float y, float z);
+Vector3			subtract(Vector3 a, Vector3 b);
+float			dot(Vector3 a, Vector3 b);
+Vector3			vDefine(float x, float y, float z);
 
 // mlx
 void draw_pixel(mlx_image_t* img, int x, int y, uint32_t color);
-void my_keyhook(mlx_key_data_t keydata, void* param);
 
 // sphere
 void	ft_sphere(t_data *data, mlx_image_t *img);
-float sphere_ray_intersect(t_v3 ray_start, t_v3 ray_direction,
-		t_v3 sphere_center, float sphere_radius);
+float sphere_ray_intersect(Vector3 ray_start, Vector3 ray_direction,
+		Vector3 sphere_center, float sphere_radius);
 
 #endif
