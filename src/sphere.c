@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 12:41:39 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/18 12:55:07 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/18 16:55:31 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,18 @@ float sphere_ray_intersect(t_v3 ray_start, t_v3 ray_direction,
     return (fmaxf(-b - h, 0.0f));					// Return the closest hit distance
 }
 
+int is_in_shadow(t_sphere *sp, t_v3 point, t_light *light) {
+    t_v3 light_dir = subtract(light->pos, point);
+    float mag = sqrtf(dot(light_dir, light_dir));
+    light_dir = vDefine(light_dir.x / mag, light_dir.y / mag, light_dir.z / mag);
+
+    // Cast a shadow ray from the point to the light source
+    float t = sphere_ray_intersect(point, light_dir, sp->sphere_center, sp->sphere_radius);
+    
+    // If the ray intersects the sphere before reaching the light, it's in shadow
+    return (t > 0.0f && t < mag);
+}
+
 uint32_t	new_light(t_light *l, t_sphere *sp, t_v3 iPoint)
 {
 	float			mag;
@@ -51,6 +63,10 @@ uint32_t	new_light(t_light *l, t_sphere *sp, t_v3 iPoint)
 	// Calculate lighting intensity
 	i = fmaxf(dot(normal, dir), 0.0f) * l->br;
 
+	if (is_in_shadow(sp, iPoint, l))
+		i = 0.0f;  // No light if in shadow
+	else
+		i = fmaxf(dot(normal, dir), 0.0f) * l->br;
 	// Apply lighting intensity to color
 	color = sp->color;
 	uint8_t r = fminf(((color >> 16) & 0xFF) * i, 255);
