@@ -6,7 +6,7 @@
 #    By: erigonza <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/05 11:52:11 by erigonza          #+#    #+#              #
-#    Updated: 2024/11/17 17:00:38 by erigonza         ###   ########.fr        #
+#    Updated: 2024/11/18 10:12:40 by erigonza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ RM				:= rm -fr
 all:		libmlx libs $(NAME)
 
 libmlx:
-			cmake ./lib/MLX42 -B $(MLX_D) && make -C $(MLX_D) -j4
+			@cmake ./lib/MLX42 -B $(MLX_D) && make -C $(MLX_D) -j4
 
 libs:
 			@make -s -C $(LIB)libft
