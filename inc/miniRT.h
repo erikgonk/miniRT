@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/18 12:54:50 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/18 17:15:10 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,8 @@ void my_keyhook(mlx_key_data_t keydata, void* param);
 void	ft_sphere(t_sphere *sp, t_light *light, mlx_image_t *img);
 float sphere_ray_intersect(t_v3 ray_start, t_v3 ray_direction,
 		t_v3 sphere_center, float sphere_radius);
+// ilumination
+int is_in_shadow(t_sphere *sp, t_v3 point, t_light *light);
+uint32_t	new_light(t_light *l, t_sphere *sp, t_v3 iPoint);
 
 #endif

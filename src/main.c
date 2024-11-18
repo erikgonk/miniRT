@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:12:46 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/18 16:50:48 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/18 17:16:17 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,10 @@ int	main(int ac, char **av)
     mlx_image_t		*img;
 
 	data.sp = malloc(sizeof(t_sphere));
-	data.light = malloc(sizeof(t_sphere));
-	if (!data.sp || !data.light)
-		exit(er("error: sp malloc", NULL));
+	data.light = malloc(sizeof(t_light));
+	data.pl = malloc(sizeof(t_plane));
+	if (!data.sp || !data.light || !data.pl)
+		exit(er("error: malloc", NULL));
 
 	mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "miniRT", true);
 	if (!mlx)
