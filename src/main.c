@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:12:46 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/17 18:00:16 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/18 12:51:38 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 
 int	er(char *s, char *argv)
 {
-	while (*s)
-		write(2, s++, 1);
+	ft_printf(2, "%s", RED);
+	if (s)
+		ft_printf(2, "%s", s);
+
+	ft_printf(2, "%s", BOLD);
 	if (argv)
-		while (*argv)
-			write(2, argv++, 1);
-	write(2, "\n", 1);
+		ft_printf(2, " %s", argv);
+	ft_printf(2, "%s\n", RESET);
 	return (1);
 }
 
@@ -27,27 +29,42 @@ void	ft_init(t_data *data, char **av)
 {
 	// data->color = ((int)(255) << 16) | ((int)(230) << 8) | (int)(123);
  //    data->sphere_center = vDefine(0.0, 2.0, 0.0);	// Position of the sphere
-	data->ray_start = vDefine(0.0, 2.0, -4.0);		// Camera position (where our rays start from)	
- 	data->sphere_radius = 1.4;						// Radius (size) of the sphere
-    data->sphere_center = vDefine(
+	data->sp->ray_start = vDefine(0.0, 0.0, 0.0);		// Camera position (where our rays start from)	
+ 	data->sp->sphere_radius = 1.4;						// Radius (size) of the sphere
+    data->sp->sphere_center = vDefine(
         atof(av[1]),  // Sphere X position
         atof(av[2]),  // Sphere Y position
         atof(av[3])   // Sphere Z position
     );
 
-    data->sphere_radius = atof(av[4]);  // Sphere radius
-    data->color = ((atoi(av[5]) << 16) | (atoi(av[6]) << 8) | atoi(av[7]));
+    data->sp->sphere_radius = atof(av[4]);  // Sphere radius
+    data->sp->color = ((atoi(av[5]) << 16) | (atoi(av[6]) << 8) | atoi(av[7]));
+
+    // Initialize light source
+    data->light->pos = vDefine(
+        atof(av[8]),  // Light X position
+        atof(av[9]),  // Light Y position
+        atof(av[10])  // Light Z position
+    );
+    data->light->br = atof(av[11]);  // Light brightness ratio
+    if (data->light->br < 0.0f || data->light->br > 1.0f)
+        er("error: %s: brightness must be in range [0.0, 1.0]", av[11]);
 }
 
-// ./miniRT 0.0 1.5 5.0 1.5 230 232 98
+// make && ./miniRT 0.0 0.0 5.0 1 230 232 255 0.0 -3.0 -1.0 1
 int	main(int ac, char **av)
 {
-	if (ac != 8)
-		exit(er("error: 4 args needed", NULL));
+	if (ac != 12)
+		exit(er("error: 12 args needed", NULL));
 	(void)ac;
 	t_data			data;
 	mlx_t			*mlx;
     mlx_image_t		*img;
+
+	data.sp = malloc(sizeof(t_sphere));
+	data.light = malloc(sizeof(t_sphere));
+	if (!data.sp || !data.light)
+		exit(er("error: sp malloc", NULL));
 
 	mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "miniRT", true);
 	if (!mlx)
@@ -58,7 +75,7 @@ int	main(int ac, char **av)
 		exit(ft_printf(2, "Failed to create image\n") * 0);
 
 	ft_init(&data, av);
-	ft_sphere(&data, img);
+	ft_sphere(data.sp, data.light, img);
     mlx_image_to_window(mlx, img, 0, 0);
 	mlx_key_hook(mlx, &my_keyhook, NULL);
     mlx_loop(mlx);

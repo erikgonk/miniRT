@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 12:41:39 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/17 17:59:23 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/18 12:55:07 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,29 +30,45 @@ float sphere_ray_intersect(t_v3 ray_start, t_v3 ray_direction,
     return (fmaxf(-b - h, 0.0f));					// Return the closest hit distance
 }
 
-float	calculate_lighting(t_v3 point, t_v3 normal, t_v3 light_position) {
-    // Vector from the point on the sphere to the light source
-    t_v3 light_dir = subtract(light_position, point);
-    
-    // Normalize the light direction
-    float mag = sqrtf(dot(light_dir, light_dir));
-    light_dir.x /= mag;
-    light_dir.y /= mag;
-    light_dir.z /= mag;
-    
-    // Calculate the dot product between the normal and the light direction
-    float intensity = fmaxf(dot(normal, light_dir), 0.0f); // Prevent negative lighting
-    
-    return intensity; // Return the intensity, which will be between 0 and 1
+uint32_t	new_light(t_light *l, t_sphere *sp, t_v3 iPoint)
+{
+	float			mag;
+	uint32_t		color; 
+	t_v3			normal;
+	t_v3			dir;	// light dir
+	float			i;		// intensity 
+	
+
+	normal = subtract(iPoint, sp->sphere_center);
+	mag = sqrtf(dot(normal, normal));
+	normal = vDefine(normal.x / mag, normal.y / mag, normal.z / mag);
+
+	// Calculate light direction
+	dir = subtract(l->pos, iPoint);
+	mag = sqrtf(dot(dir, dir));
+	dir = vDefine(dir.x / mag, dir.y / mag, dir.z / mag);
+
+	// Calculate lighting intensity
+	i = fmaxf(dot(normal, dir), 0.0f) * l->br;
+
+	// Apply lighting intensity to color
+	color = sp->color;
+	uint8_t r = fminf(((color >> 16) & 0xFF) * i, 255);
+	uint8_t g = fminf(((color >> 8) & 0xFF) * i, 255);
+	uint8_t b = fminf((color & 0xFF) * i, 255);
+	return ((r << 16) | (g << 8) | b);
 }
 
-void	ft_sphere(t_data *data, mlx_image_t *img)
+void	ft_sphere(t_sphere *sp, t_light *light, mlx_image_t *img)
 {
 	t_v3		ray_direction;
-	t_v3		intersection_point;
+	t_v3		iPoint; // intersection_point
 	float		mag;
 	float		t; 
+	uint32_t	pixelColor;
 
+	if (light->br < 0.0f || light->br > 1.0f)
+		er("normal light\n", NULL);
 	float aR = (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT;					// Calculate aspect ratio
 	int y = -1;
 	while (++y < WINDOW_HEIGHT)											// Loop through each pixel in the window
@@ -60,24 +76,30 @@ void	ft_sphere(t_data *data, mlx_image_t *img)
 		int x = -1;
 		while (++x < WINDOW_WIDTH)
 		{
-            t_v3 ray_direction = vDefine(								// Set up a direction from the camera to this pixel
+            ray_direction = vDefine(								// Set up a direction from the camera to this pixel
                 ((x - WINDOW_WIDTH / 2.0f) / (float)WINDOW_WIDTH) * aR,
                 (y - WINDOW_HEIGHT / 2.0f) / (float)WINDOW_HEIGHT,
                 1.0f
             );
             mag = sqrtf(dot(ray_direction, ray_direction));				// Normalize (scale) the direction to make it a unit vector
-			ray_direction = vDefine(ray_direction.x /= mag,
-									ray_direction.y /= mag,
-									ray_direction.z /= mag);
-            t = sphere_ray_intersect(data->ray_start, ray_direction,	// Check if this ray hits the sphere
-					data->sphere_center, data->sphere_radius);
+			ray_direction = vDefine(ray_direction.x / mag,
+									ray_direction.y / mag,
+									ray_direction.z / mag);
+            t = sphere_ray_intersect(sp->ray_start, ray_direction,	// Check if this ray hits the sphere
+					sp->sphere_center, sp->sphere_radius);
             if (t > 0.0f)												// If t > 0, it means the ray hit the sphere
 			{
-                t_v3 intersection_point = vDefine(
-								data->ray_start.x + t * ray_direction.x,// Find the exact hit point on the sphere
-								data->ray_start.y + t * ray_direction.y,
-								data->ray_start.z + t * ray_direction.z);// Draw the pixel with the calculated color
-                draw_pixel(img, x, y, data->color);
+                iPoint = vDefine(
+								sp->ray_start.x + t * ray_direction.x,// Find the exact hit point on the sphere
+								sp->ray_start.y + t * ray_direction.y,
+								sp->ray_start.z + t * ray_direction.z);// Draw the pixel with the calculated color
+				if (light->br < 0.0f || light->br > 1.0f)
+					draw_pixel(img, x, y, sp->color);
+				else
+				{
+					pixelColor = new_light(light, sp, iPoint);
+					draw_pixel(img, x, y, pixelColor);
+				}
             }
 		}
 	}

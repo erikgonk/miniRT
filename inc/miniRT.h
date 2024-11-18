@@ -6,12 +6,23 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/17 17:59:50 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/18 12:54:50 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
+
+#define RESET	"\033[0m"
+#define BOLD	"\033[1m"
+#define RED_BK	"\033[41m" // background
+#define RED     "\033[31m"
+#define GREEN   "\033[32m"
+#define YELLOW  "\033[1;33m"
+#define BLUE    "\033[34m"
+#define MAGENTA "\033[35m"
+#define CYAN    "\033[36m"
+#define WHITE   "\033[37m"
 
 # include "../lib/MLX42/include/MLX42/MLX42.h"
 # include "../lib/libft/inc/libft.h"
@@ -30,17 +41,44 @@
 
 typedef struct s_v3
 {
-	float	x;
-	float	y;
-	float	z;
+	float				x;
+	float				y;
+	float				z;
 }			t_v3;
+
+typedef struct s_light
+{
+    t_v3 				pos;
+    float				br;		// brightness
+	struct				s_light	*next;
+}			t_light;
+
+typedef struct s_cylinder
+{
+	struct s_cylinder	*next;
+}			t_cylinder;
+
+typedef struct s_plane
+{
+	struct s_plane		*next;
+}			t_plane;
+
+typedef struct s_sphere
+{
+	t_v3				ray_start;
+	t_v3				sphere_center;
+	float				sphere_radius;
+	uint32_t			color;
+	struct s_sphere		*next;
+}			t_sphere;
 
 typedef struct s_data
 {
-	t_v3		ray_start;
-	t_v3		sphere_center;
-	float		sphere_radius;
-	uint32_t	color;
+	t_light				*light;
+	t_plane				*pl;
+	t_cylinder			*cy;
+	t_sphere			*sp;
+	struct s_data   	*next;
 }			t_data;
 
 // utils
@@ -56,7 +94,7 @@ void draw_pixel(mlx_image_t* img, int x, int y, uint32_t color);
 void my_keyhook(mlx_key_data_t keydata, void* param);
 
 // sphere
-void	ft_sphere(t_data *data, mlx_image_t *img);
+void	ft_sphere(t_sphere *sp, t_light *light, mlx_image_t *img);
 float sphere_ray_intersect(t_v3 ray_start, t_v3 ray_direction,
 		t_v3 sphere_center, float sphere_radius);
 
