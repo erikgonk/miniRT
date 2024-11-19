@@ -6,7 +6,7 @@
 #    By: erigonza <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/05 11:52:11 by erigonza          #+#    #+#              #
-#    Updated: 2024/11/18 17:15:26 by erigonza         ###   ########.fr        #
+#    Updated: 2024/11/19 11:29:09 by erigonza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ DEP_D			:= $(SRC_D)dep/
 LIBFT_D			:= ./lib/libft/
 MLX_D			:= ./lib/MLX42/build/
 
-FILES			:= main.c lib.c sphere.c mlx.c ilumination.c
+FILES			:= main.c lib.c sphere.c mlx.c ilumination.c utils.c parsing.c
 SRCS			:= $(addprefix $(SRC_D), $(FILES))
 
 OBJS            := $(addprefix $(OBJ_D), $(FILES:.c=.o))
