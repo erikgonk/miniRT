@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:53:01 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/19 12:45:07 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/20 12:04:19 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,47 +26,46 @@ void	correct_file(char *name)
 	exit (er("error: wrong file name -> ", name));
 }
 
-// int	ft_builtins(t_exec *exec)
-// {
-	// static char		*bts[] = {"t_cam", "t_lihgt", "t_plane", 
-	// 	"t_sphere", "t_cylinder", NULL};
-// 	static char		*bts[] = {"pwd", "echo", "cd", "export",
-// 		"unset", "env", "exit", NULL};
-// 	static int		(*builtins[])(t_exec *) = {ft_pwd, ft_echo,
-// 		ft_cd, ft_export, ft_unset, ft_env, ft_exit};
-// 	int				i;
-
-// 	i = 0;
-// 	while (bts[i] && !ft_strcmp(bts[i], exec->cmd_t->cmd[0]))
-// 		i++;
-// 	if (bts[i])
-// 		builtins[i](exec);
-// 	else
-// 		return (127);
-// 	return (exec->g_exit);
-// }
-
-int	newNode(t_data *data, char *str)
+int	checkObj(t_data *data, char *str)
 {
-	static char		*bts[] = {"A", "C", "L", "sp", "pl", "cy", NULL};
+	static char		*bts[] = {"sp", "pl", "cy", "C", "A", "L", NULL};
 	int				i;
 
 	i = 0;
-	while (bts[i] && !ft_strncmp(bts[i], str, 2))
+	while (bts[i] && !ft_strcmp(bts[i], str))
 		i++;
+	// printf("%s\n%d\n%s\n", bts[i], i, str);
 	if (bts[i])
-		return (0);
-	return (1);
+		return (i);
+	return (50);
+}
+
+t_obj	*chooseObj(t_data *data, t_obj *obj)
+{
+	// do the logic I did to parse obj
+	return (newObj(obj));
+}
+
+void	parseOthers(t_data *data)
+{
+	data->cam = malloc(sizeof(t_sLight));
+	data->sLight = malloc(sizeof(t_aLight));
+	data->aLight = malloc(sizeof(t_cam));
 }
 
 void	parse(t_data *data, char **av)
 {
 	int		fd;
 	char	*str;
+	t_obj	*obj;
 
+	obj = data->obj;
 	fd = open(av[1], O_RDONLY);
 	if (fd < 0)
 		exit(er("error: fd filed", NULL));
+	// data->obj = malloc(sizeof(t_obj));
+	// // if (!data->obj)
+	// 	exit(er("error: malloc", NULL));
 	while (true)
 	{
 		if (str)
@@ -74,27 +73,36 @@ void	parse(t_data *data, char **av)
 		str = get_next_line(fd);
 		if (!str)
 			break ;
-		printf("%s\n", str);
+		if (str[0] == '#')
+			continue ;
+		obj->type  = checkObj(data, str);
+		if (obj->type >= 2)
+			obj = chooseObj(data, obj); // va crea un nuevo nodo cada vez que entra
+		else if (obj->type >= 5)
+			parseOthers(data);
+		else
+			exit (er("error: map not valid", av[1]));
+
 	}
 	exit (er("salio bien", NULL));
 
-	data->sp->ray_start = vDefine(0.0, 0.0, 0.0);		// Camera position (where our rays start from)	
-	data->sp->sphere_radius = 1.4;						// Radius (size) of the sphere
-    data->sp->sphere_center = vDefine(
+	data->obj->ray_start = vDefine(0.0, 0.0, 0.0);		// Camera position (where our rays start from)	
+	data->obj->sphere_radius = 1.4;						// Radius (size) of the sphere
+    data->obj->sphere_center = vDefine(
         atof(av[1]),
         atof(av[2]),
         atof(av[3]));
 
-    data->sp->sphere_radius = atof(av[4]);  // Sphere radius
-    data->sp->color = ((atoi(av[5]) << 16) | (atoi(av[6]) << 8) | atoi(av[7]));
+    data->obj->sphere_radius = atof(av[4]);  // Sphere radius
+    data->obj->color = ((atoi(av[5]) << 16) | (atoi(av[6]) << 8) | atoi(av[7]));
 
     // Initialize light source
-    data->light->pos = vDefine(
+    data->sLight->pos = vDefine(
         atof(av[8]),  // X
         atof(av[9]),  // Y
         atof(av[10])  // Z
     );
-    data->light->br = atof(av[11]);  // Light brightness ratio
-    if (data->light->br < 0.0f || data->light->br > 1.0f)
+    data->sLight->br = atof(av[11]);  // Light brightness ratio
+    if (data->sLight->br < 0.0f || data->sLight->br > 1.0f)
         er("error: %s: brightness must be in range [0.0, 1.0]", av[11]);
 }

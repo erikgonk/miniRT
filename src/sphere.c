@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 12:41:39 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/19 09:45:23 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/20 11:00:58 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ float sphere_ray_intersect(t_v3 ray_start, t_v3 ray_direction,
     return (fmaxf(-b - h, 0.0f));					// Return the closest hit distance
 }
 
-void	ft_sphere(t_sphere *sp, t_light *light, mlx_image_t *img)
+void	ft_sphere(t_obj *obj, t_sLight *light, mlx_image_t *img)
 {
 	t_v3		ray_direction;
 	t_v3		iPoint; // intersection_point
@@ -56,19 +56,19 @@ void	ft_sphere(t_sphere *sp, t_light *light, mlx_image_t *img)
 			ray_direction = vDefine(ray_direction.x / mag,
 									ray_direction.y / mag,
 									ray_direction.z / mag);
-            t = sphere_ray_intersect(sp->ray_start, ray_direction,	// Check if this ray hits the sphere
-					sp->sphere_center, sp->sphere_radius);
+            t = sphere_ray_intersect(obj->ray_start, ray_direction,	// Check if this ray hits the sphere
+					obj->sphere_center, obj->sphere_radius);
             if (t > 0.0f)												// If t > 0, it means the ray hit the sphere
 			{
                 iPoint = vDefine(
-								sp->ray_start.x + t * ray_direction.x,// Find the exact hit point on the sphere
-								sp->ray_start.y + t * ray_direction.y,
-								sp->ray_start.z + t * ray_direction.z);// Draw the pixel with the calculated color
+								obj->ray_start.x + t * ray_direction.x,// Find the exact hit point on the sphere
+								obj->ray_start.y + t * ray_direction.y,
+								obj->ray_start.z + t * ray_direction.z);// Draw the pixel with the calculated color
 				if (light->br < 0.0f || light->br > 1.0f)
-					draw_pixel(img, x, y, sp->color);
+					draw_pixel(img, x, y, obj->color);
 				else
 				{
-					pixelColor = new_light(light, sp, iPoint);
+					pixelColor = new_light(light, obj, iPoint);
 					draw_pixel(img, x, y, pixelColor);
 				}
             }

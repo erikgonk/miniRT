@@ -6,26 +6,26 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 17:14:11 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/18 17:17:06 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/20 11:01:15 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/miniRT.h"
 
-int is_in_shadow(t_sphere *sp, t_v3 point, t_light *light)
+int is_in_shadow(t_obj *obj, t_v3 point, t_sLight *light)
 {
     t_v3 light_dir = subtract(light->pos, point);
     float mag = sqrtf(dot(light_dir, light_dir));
     light_dir = vDefine(light_dir.x / mag, light_dir.y / mag, light_dir.z / mag);
 
     // Cast a shadow ray from the point to the light source
-    float t = sphere_ray_intersect(point, light_dir, sp->sphere_center, sp->sphere_radius);
+    float t = sphere_ray_intersect(point, light_dir, obj->sphere_center, obj->sphere_radius);
     
     // If the ray intersects the sphere before reaching the light, it's in shadow
     return (t > 0.0f && t < mag);
 }
 
-uint32_t	new_light(t_light *l, t_sphere *sp, t_v3 iPoint)
+uint32_t	new_light(t_sLight *l, t_obj *obj, t_v3 iPoint)
 {
 	float			mag;
 	uint32_t		color; 
@@ -34,7 +34,7 @@ uint32_t	new_light(t_light *l, t_sphere *sp, t_v3 iPoint)
 	float			i;		// intensity 
 	
 
-	normal = subtract(iPoint, sp->sphere_center);
+	normal = subtract(iPoint, obj->sphere_center);
 	mag = sqrtf(dot(normal, normal));
 	normal = vDefine(normal.x / mag, normal.y / mag, normal.z / mag);
 
@@ -46,12 +46,12 @@ uint32_t	new_light(t_light *l, t_sphere *sp, t_v3 iPoint)
 	// Calculate lighting intensity
 	i = fmaxf(dot(normal, dir), 0.0f) * l->br;
 
-	if (is_in_shadow(sp, iPoint, l))
+	if (is_in_shadow(obj, iPoint, l))
 		i = 0.0f;  // No light if in shadow
 	else
 		i = fmaxf(dot(normal, dir), 0.0f) * l->br;
 	// Apply lighting intensity to color
-	color = sp->color;
+	color = obj->color;
 	uint8_t r = fminf(((color >> 16) & 0xFF) * i, 255);
 	uint8_t g = fminf(((color >> 8) & 0xFF) * i, 255);
 	uint8_t b = fminf((color & 0xFF) * i, 255);
