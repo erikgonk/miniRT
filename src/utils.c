@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 09:47:50 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/20 11:38:26 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:24:36 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ void	ft_init(t_data *data, char **av)
     data->obj->color = ((atoi(av[5]) << 16) | (atoi(av[6]) << 8) | atoi(av[7]));
 
     // Initialize light source
-    data->light->pos = vDefine(
+    data->sLight->pos = vDefine(
         atof(av[8]),  // X
         atof(av[9]),  // Y
         atof(av[10])  // Z
     );
-    data->light->br = atof(av[11]);  // Light brightness ratio
-    if (data->light->br < 0.0f || data->light->br > 1.0f)
+    data->sLight->br = atof(av[11]);  // Light brightness ratio
+    if (data->sLight->br < 0.0f || data->sLight->br > 1.0f)
         er("error: %s: brightness must be in range [0.0, 1.0]", av[11]);
 }
 

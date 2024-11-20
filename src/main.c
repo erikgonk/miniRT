@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:12:46 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/20 11:38:40 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:24:04 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	main(int ac, char **av)
 	while (obj)
 	{
 		// organizator(obj);
-		ft_sphere(data.obj, data.light, img);
+		ft_sphere(data.obj, data.sLight, img);
 		obj = obj->next;
 	}
     mlx_image_to_window(mlx, img, 0, 0);
