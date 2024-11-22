@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:53:01 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/21 09:47:41 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/22 13:35:04 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,29 +45,34 @@ int	checkObj(t_data *data, char *str)
 	return (50);
 }
 
-void	createObj(t_data *data, t_obj *obj)
+t_obj	*createObj(t_data *data, t_obj *obj, int type)
 {
 // do the logic I did to parse obj (paper)
-	newObj(obj);
+	printf("OBJ\n");
+	obj = newObj(obj);
+	obj->type = type;
+	return (obj);
 }
 
-void	parseOthers(t_data *data)
+void	parseOthers(t_data *data, int type)
 {
-	// data->cam = malloc(sizeof(t_sLight));
-	// data->sLight = malloc(sizeof(t_aLight));
-	// data->aLight = malloc(sizeof(t_cam));
+	printf("OTHER\n");
+	if (type == 3)
+		data->cam = malloc(sizeof(t_sLight));
+	else if (type == 4)
+		data->sLight = malloc(sizeof(t_aLight));
+	else if (type == 5)
+		data->aLight = malloc(sizeof(t_cam));
 }
 
-void	parse(t_data *data, char **av)
+t_obj	*parse(t_data *data, char **av)
 {
 	int		fd;
+	char	type;
 	char	*str = NULL;
 	t_obj	*obj;
+	t_obj	*tmp = NULL;
 
-	data->obj = malloc(sizeof(t_obj));
-	if (!data->obj)
-		exit(er("error: malloc", NULL));
-	obj = data->obj;
 	fd = open(av[1], O_RDONLY);
 	if (fd < 0)
 		exit(er("error: fd filed", NULL));
@@ -80,16 +85,23 @@ void	parse(t_data *data, char **av)
 			break ;
 		if (str[0] == '#')
 			continue ;
-		obj->type  = checkObj(data, str);
-		printf("%d\n", obj->type);
-		if (obj->type <= 2)
-			createObj(data, obj); // va crea un nuevo nodo cada vez que entra
-		else if (obj->type <= 5)
-			parseOthers(data);
+		type  = checkObj(data, str);
+		if (type <= 2 && ft_isspace(str[2]))
+		{
+			tmp = createObj(data, obj, type);
+			if (tmp)
+			{
+				tmp->next = obj;
+				obj = tmp;
+			}
+		}
+		else if (type <= 5 && ft_isspace(str[1]))
+			parseOthers(data, type);
 		else
-			exit (er("error: map not valid", str));
-
+			exit (er("error: map not valid\n", str));
 	}
+	printf("hola\n");
+	close(fd);
 	exit (er("salio bien", NULL));
 
 	data->obj->ray_start = vDefine(0.0, 0.0, 0.0);		// Camera position (where our rays start from)	
