@@ -6,11 +6,17 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:53:01 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/20 12:04:19 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/21 09:47:41 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/miniRT.h"
+
+void	ft_exit(t_data *data)
+{
+	printf("pasa0\n");
+	free(data->obj);
+}
 
 void	correct_file(char *name)
 {
@@ -34,38 +40,37 @@ int	checkObj(t_data *data, char *str)
 	i = 0;
 	while (bts[i] && !ft_strcmp(bts[i], str))
 		i++;
-	// printf("%s\n%d\n%s\n", bts[i], i, str);
 	if (bts[i])
 		return (i);
 	return (50);
 }
 
-t_obj	*chooseObj(t_data *data, t_obj *obj)
+void	createObj(t_data *data, t_obj *obj)
 {
-	// do the logic I did to parse obj
-	return (newObj(obj));
+// do the logic I did to parse obj (paper)
+	newObj(obj);
 }
 
 void	parseOthers(t_data *data)
 {
-	data->cam = malloc(sizeof(t_sLight));
-	data->sLight = malloc(sizeof(t_aLight));
-	data->aLight = malloc(sizeof(t_cam));
+	// data->cam = malloc(sizeof(t_sLight));
+	// data->sLight = malloc(sizeof(t_aLight));
+	// data->aLight = malloc(sizeof(t_cam));
 }
 
 void	parse(t_data *data, char **av)
 {
 	int		fd;
-	char	*str;
+	char	*str = NULL;
 	t_obj	*obj;
 
+	data->obj = malloc(sizeof(t_obj));
+	if (!data->obj)
+		exit(er("error: malloc", NULL));
 	obj = data->obj;
 	fd = open(av[1], O_RDONLY);
 	if (fd < 0)
 		exit(er("error: fd filed", NULL));
-	// data->obj = malloc(sizeof(t_obj));
-	// // if (!data->obj)
-	// 	exit(er("error: malloc", NULL));
 	while (true)
 	{
 		if (str)
@@ -76,12 +81,13 @@ void	parse(t_data *data, char **av)
 		if (str[0] == '#')
 			continue ;
 		obj->type  = checkObj(data, str);
-		if (obj->type >= 2)
-			obj = chooseObj(data, obj); // va crea un nuevo nodo cada vez que entra
-		else if (obj->type >= 5)
+		printf("%d\n", obj->type);
+		if (obj->type <= 2)
+			createObj(data, obj); // va crea un nuevo nodo cada vez que entra
+		else if (obj->type <= 5)
 			parseOthers(data);
 		else
-			exit (er("error: map not valid", av[1]));
+			exit (er("error: map not valid", str));
 
 	}
 	exit (er("salio bien", NULL));
