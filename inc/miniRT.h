@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/22 17:57:31 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/22 18:14:24 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ typedef struct s_data
 //		utils
 int					er(char *s, char *av);
 t_obj				*newObj(t_obj *obj);
-float				ft_atof(char *str);
+float				ft_atof(char *str, int s);
 
 //		parsing
 t_obj				*parse(t_data *data, char **av);

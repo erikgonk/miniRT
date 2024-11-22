@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:53:01 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/22 18:13:40 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/22 18:14:35 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ t_obj	*createObj(t_data *data, t_obj *obj, char *str, int type)
 	// idk how to save everything not doing 1000 functions :/
 	obj = newObj(obj);
 	obj->type = type;
-	whiel ()
 	return (obj);
 }
 
