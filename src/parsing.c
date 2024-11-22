@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:53:01 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/22 13:35:04 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/22 18:13:40 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,15 @@ int	checkObj(t_data *data, char *str)
 	return (50);
 }
 
-t_obj	*createObj(t_data *data, t_obj *obj, int type)
+t_obj	*createObj(t_data *data, t_obj *obj, char *str, int type)
 {
-// do the logic I did to parse obj (paper)
-	printf("OBJ\n");
+	int		i;
+
+	i = 2;
+	// idk how to save everything not doing 1000 functions :/
 	obj = newObj(obj);
 	obj->type = type;
+	whiel ()
 	return (obj);
 }
 
@@ -88,7 +91,7 @@ t_obj	*parse(t_data *data, char **av)
 		type  = checkObj(data, str);
 		if (type <= 2 && ft_isspace(str[2]))
 		{
-			tmp = createObj(data, obj, type);
+			tmp = createObj(data, obj, str, type);
 			if (tmp)
 			{
 				tmp->next = obj;
@@ -100,7 +103,6 @@ t_obj	*parse(t_data *data, char **av)
 		else
 			exit (er("error: map not valid\n", str));
 	}
-	printf("hola\n");
 	close(fd);
 	exit (er("salio bien", NULL));
 

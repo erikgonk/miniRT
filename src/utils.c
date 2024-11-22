@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 09:47:50 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/22 14:10:31 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/22 18:05:38 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	er(char *s, char *argv)
 	return (1);
 }
 
-float	ft_atof(char *str)
+float	ft_atof(char *str, int s) // s = start
 {
 	unsigned int	i;
 	float			res;
@@ -44,7 +44,7 @@ float	ft_atof(char *str)
 	float			divisor;
 	int				sign;
 
-	i = 0;
+	i = s;
 	res = 0.0;
 	fraction = 0.0;
 	divisor = 10.0;
@@ -55,15 +55,15 @@ float	ft_atof(char *str)
 			sign = -1;
 	if (str[i] == '-' || str[i] == '+')
 		i++;
-	while (str[i] >= '0' && str[i] <= '9')
+	while (str[i] >= '0' && str[i] <= '9' && (str[i] != ',' || ft_isspace(str[i]) != 1))
 	{
 		res = (res * 10.0f) + (str[i] - '0');
 		i++;
 	}
-	if (str[i] == '.')
+	if (str[i] == '.' && (str[i] != ',' || ft_isspace(str[i]) != 1))
 	{
 		i++;
-		while (str[i] >= '0' && str[i] <= '9')
+		while (str[i] >= '0' && str[i] <= '9' && (str[i] != ',' || ft_isspace(str[i]) != 1))
 		{
 			fraction += (str[i] - '0') / divisor;
 			divisor *= 10.0f;
