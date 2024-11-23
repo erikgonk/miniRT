@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/23 15:23:57 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/23 16:46:19 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ typedef struct s_sLight
 typedef struct s_obj
 {
 	uint32_t		color;
-	char			type;
+	int				i; // just to use it on the parser
+	char			type; // in case I want to separate the parser and the exec
 	t_v3			pos;
 	t_v3			axis; // orientation pl & cy
 	t_rgb			rgb;

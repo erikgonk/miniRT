@@ -6,17 +6,11 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:53:01 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/23 16:32:04 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/23 16:53:07 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/miniRT.h"
-
-void	ft_exit(t_data *data)
-{
-	printf("pasa0\n");
-	free(data->obj);
-}
 
 void	correct_file(char *name)
 {
@@ -43,6 +37,37 @@ int	checkObj(t_data *data, char *str)
 	if (bts[i])
 		return (i);
 	return (50);
+}
+
+int	cylindreParse(t_obj *obj)
+{
+	printf("cylindre\n");
+	return 0;
+}
+
+int	planeParse(t_obj *obj)
+{
+	printf("Plane\n");
+	return 0;
+}
+
+int	sphereParse(t_obj *obj)
+{
+	printf("sphere\n");
+	return 0;
+}
+
+int	redirObjs(t_obj *obj, int type)
+{
+	static char		*bts[] = {"pwd", "echo", "cd", "export",
+		"unset", "env", "exit", NULL};
+	static int		(*objects[])(t_obj *) = {sphereParse, planeParse, cylindreParse};
+
+	if (bts[type])
+		objects[type](obj);
+	else
+		return (-1);
+	return (0);
 }
 
 int sumParse(char *str, int i, int flag)
@@ -73,7 +98,6 @@ t_obj	*createObj(t_data *data, t_obj *obj, char *str, int type)
 	float		z;
 	int			i;
 	
-	printf("---------------\n");
 	i = sumParse(str, 2, 0);
 	x = ft_atof(str, i);
 	i = sumParse(str, i, 1);
@@ -83,7 +107,7 @@ t_obj	*createObj(t_data *data, t_obj *obj, char *str, int type)
 	i = sumParse(str, i, 2);
 	obj = newObj(obj);
 	obj->pos = vDefine(x, y, z);
-	printf("%f %f %f\n", obj->pos.x, obj->pos.y, obj->pos.z);
+	// redirObjs(obj, type);
 	// obj->type = type;
 	return (obj);
 }
@@ -103,7 +127,7 @@ t_obj	*parse(t_data *data, t_obj *obj, char **av, int fd)
 {
 	char	type;
 	char	*str = NULL;
-	t_obj	*tmp;
+	t_obj	*tmp = NULL;
 
 	while (true)
 	{
@@ -117,9 +141,10 @@ t_obj	*parse(t_data *data, t_obj *obj, char **av, int fd)
 		type  = checkObj(data, str);
 		if (type <= 2 && ft_isspace(str[2]))
 		{
-			tmp = createObj(data, obj, str, type);
+			tmp = createObj(data, tmp, str, type);
 			if (tmp)
 			{
+				printf("aqui peta\n");
 				tmp->next = obj;
 				obj = tmp;
 			}
