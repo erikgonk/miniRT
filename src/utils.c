@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 09:47:50 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/22 18:05:38 by erigonza         ###   ########.fr       */
+/*   Updatej: 2024/11/23 15:01:11 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_obj	*newObj(t_obj *obj)
 {
-	t_obj		*tmp;
+	t_obj	*tmp;
 
 	tmp = malloc(sizeof(*tmp));
 	if (!tmp)
@@ -28,7 +28,6 @@ int	er(char *s, char *argv)
 	ft_printf(2, "%s", RED);
 	if (s)
 		ft_printf(2, "%s", s);
-
 	ft_printf(2, "%s", BOLD);
 	if (argv)
 		ft_printf(2, " %s", argv);
@@ -36,46 +35,51 @@ int	er(char *s, char *argv)
 	return (1);
 }
 
-float	ft_atof(char *str, int s) // s = start
+float	ft_atof_normi(char *str, int i)
 {
-	unsigned int	i;
-	float			res;
-	float			fraction;
-	float			divisor;
-	int				sign;
+	float	fraction;
+	float	divisor;
 
-	i = s;
-	res = 0.0;
 	fraction = 0.0;
 	divisor = 10.0;
-	sign = 1;
-	while (str[i] && ft_isspace(str[2]) == 1)
+	while (str[i] >= '0' && str[i] <= '9' && (str[i] != ','
+			|| ft_isspace(str[i]) != 1))
+	{
+		fraction += (str[i] - '0') / divisor;
+		divisor *= 10.0f;
 		i++;
+	}
+	return (fraction);
+}
+
+float	ft_atof(char *str, int i) // i = start
+{
+	float res;
+	int sign;
+
+	res = 0.0;
+	sign = 1;
+	// while (str[i] && ft_isspace(str[2]) == 1)
+	// 	i++;
 	if (str[i] == '-')
-			sign = -1;
+		sign = -1;
 	if (str[i] == '-' || str[i] == '+')
 		i++;
-	while (str[i] >= '0' && str[i] <= '9' && (str[i] != ',' || ft_isspace(str[i]) != 1))
+	while (str[i] >= '0' && str[i] <= '9' && (str[i] != ','
+			|| ft_isspace(str[i]) != 1))
 	{
 		res = (res * 10.0f) + (str[i] - '0');
 		i++;
 	}
+	// printf("i -> %d\n", i);
 	if (str[i] == '.' && (str[i] != ',' || ft_isspace(str[i]) != 1))
-	{
-		i++;
-		while (str[i] >= '0' && str[i] <= '9' && (str[i] != ',' || ft_isspace(str[i]) != 1))
-		{
-			fraction += (str[i] - '0') / divisor;
-			divisor *= 10.0f;
-			i++;
-		}
-	}
-	return ((res + fraction) * sign);
+		return ((res + ft_atof_normi(str, ++i)) * sign);
+	return (res * sign);
 }
 
 // void	ft_init(t_data *data, char **av)
 // {
-// 	data->obj->ray_start = vDefine(0.0, 0.0, 0.0);		// Camera position (where our rays start from)	
+// 	data->obj->ray_start = vDefine(0.0, 0.0, 0.0);			// Camera position (where our rays start from)
 //  	data->obj->sphere_radius = 1.4;						// Radius (size) of the sphere
 //     data->obj->sphere_center = vDefine(
 //         atof(av[1]),
@@ -95,4 +99,3 @@ float	ft_atof(char *str, int s) // s = start
 //     if (data->sLight->br < 0.0f || data->sLight->br > 1.0f)
 //         er("error: %s: brightness must be in range [0.0, 1.0]", av[11]);
 // }
-

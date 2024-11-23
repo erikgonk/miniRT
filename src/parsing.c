@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:53:01 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/22 18:14:35 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/23 16:32:04 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,46 @@ int	checkObj(t_data *data, char *str)
 	return (50);
 }
 
+int sumParse(char *str, int i, int flag)
+{
+	int		j;
+
+	j = i;
+	while (flag == 0 && str[i] && ft_isspace(str[i]))
+		i++;
+	while (flag == 1 && str[i] && str[i] != ',')
+		i++;
+	while (flag == 2 && str[i] && (str[i] != ',' || ft_isspace(str[i])))
+		i++;
+	if (flag == 1)
+		i++;
+	if (j == i)
+		exit(er("error: parsing:\n", str));
+	// printf("\n%c\n%d\n%s\n", str[i], i, str);
+	if (flag != 2 && !(str[i] >= '0' && str[i] <= '9'))
+		exit(er("error: parsing:\n", str));
+	return (i);
+}
+
 t_obj	*createObj(t_data *data, t_obj *obj, char *str, int type)
 {
-	int		i;
-
-	i = 2;
-	// idk how to save everything not doing 1000 functions :/
+	float		x;
+	float		y;
+	float		z;
+	int			i;
+	
+	printf("---------------\n");
+	i = sumParse(str, 2, 0);
+	x = ft_atof(str, i);
+	i = sumParse(str, i, 1);
+	y = ft_atof(str, i);
+	i = sumParse(str, i, 1);
+	z = ft_atof(str, i);
+	i = sumParse(str, i, 2);
 	obj = newObj(obj);
-	obj->type = type;
+	obj->pos = vDefine(x, y, z);
+	printf("%f %f %f\n", obj->pos.x, obj->pos.y, obj->pos.z);
+	// obj->type = type;
 	return (obj);
 }
 
@@ -67,17 +99,12 @@ void	parseOthers(t_data *data, int type)
 		data->aLight = malloc(sizeof(t_cam));
 }
 
-t_obj	*parse(t_data *data, char **av)
+t_obj	*parse(t_data *data, t_obj *obj, char **av, int fd)
 {
-	int		fd;
 	char	type;
 	char	*str = NULL;
-	t_obj	*obj;
-	t_obj	*tmp = NULL;
+	t_obj	*tmp;
 
-	fd = open(av[1], O_RDONLY);
-	if (fd < 0)
-		exit(er("error: fd filed", NULL));
 	while (true)
 	{
 		if (str)

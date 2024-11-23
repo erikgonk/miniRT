@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:12:46 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/22 13:35:52 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/23 14:55:11 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,15 @@ int	main(int ac, char **av)
 	t_data			data;
 	mlx_t			*mlx;
     mlx_image_t		*img;
+	int				fd;
 
 	if (ac != 2)
 		exit(er("error: 2 args needed", NULL));
 	correct_file(av[1]);
-	data.obj = parse(&data, av);
+	fd = open(av[1], O_RDONLY);
+	if (fd < 0)
+		exit(er("error: fd filed", NULL));
+	data.obj = parse(&data, data.obj, av, fd);
 	mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "miniRT", true);
 	if (!mlx)
 		exit (er("Failed to initialize MLX42", NULL));
