@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/23 16:46:19 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/24 14:28:51 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,11 @@ typedef struct s_obj
 	uint32_t		color;
 	int				i; // just to use it on the parser
 	char			type; // in case I want to separate the parser and the exec
-	t_v3			pos;
-	t_v3			axis; // orientation pl & cy
-	t_rgb			rgb;
+	t_v3			pos; // cp pl cy
+	t_v3			axis; // pl cy | orientation
+	t_rgb			rgb; // sp pl cy
+	float			size; // sp radius | cy diameter
+	float			height; // cy
 //	
 	float			sphere_radius; // size
 	t_v3			ray_start; // Camera position
@@ -113,6 +115,16 @@ float				ft_atof_normi(char *str, int i);
 t_obj				*parse(t_data *data, t_obj *obj, char **av, int fd);
 void				correct_file(char *name);
 
+//		parseACLUtils
+void	createACL(t_data *data, char *str, int type);
+void	createACL(t_data *data, char *str, int type);
+
+//		parseUtils
+int					checkObj(t_data *data, char *str);
+int					sumParse(char *str, int i, int flag);
+char				*floatsParse(t_obj *obj, char *str, int i, int flag);
+int					ft_atoiParse(char *str, int i);
+t_rgb				colorsParse(t_obj *obj, char *str);
 //		lib
 t_v3				subtract(t_v3 a, t_v3 b);
 float				dot(t_v3 a, t_v3 b);
