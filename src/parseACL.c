@@ -6,11 +6,37 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:27:07 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/24 15:06:48 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/24 16:59:24 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/miniRT.h"
+
+int	randomSumParse(char *str, int i)
+{
+	int		j;
+	int		k;
+
+	j = 0;
+	k = 0;
+	while (str[i] && str[i] != ',')
+	{
+		if (ft_isdigit(str[i]))
+			j = 0;
+		if (k >= 2 || j >= 2)
+			exit(er("error: parsing ACL", str));
+		printf("\n\n%s%c\n%d\n", str, str[i], i);
+		if (ft_isspace(str[i]))
+			break ;
+		if (str[i] == '.')
+			j++;
+		else if (str[i] == ',')
+			k++;
+		else if (!ft_isdigit(str[i]))
+		i++;
+	}
+	return (i);
+}
 
 char	*floatsACLParse(t_data *data, char *str, int i, int flag)
 {
@@ -19,16 +45,12 @@ char	*floatsACLParse(t_data *data, char *str, int i, int flag)
 	float		z;
 	char		*tmp;
 	
-	printf("no entiendo\n");
-	while (str && str[i] && ft_isspace(str[i]))
-		i++;
-	if (str)
-		printf("%s\n", str);
-	// i = sumParse(str, i, 0, 0);
+	i = sumParse(str, i, 0, 0);
 	x = ft_atof(str, i);
 	i = sumParse(str, i, 1, 0);
 	y = ft_atof(str, i);
-	i = sumParse(str, i, 1, 0);
+	printf("now it counts:\n");
+	i = randomSumParse(str, i);
 	z = ft_atof(str, i);
 	i = sumParse(str, i, 2, 0);
 	if (flag == 4)
@@ -42,7 +64,7 @@ char	*floatsACLParse(t_data *data, char *str, int i, int flag)
 void	createACL(t_data *data, char *str, int type)
 {
 	int		i;
-	char	*tmp;
+	char	*tmp = NULL;
 	
 	// printf("%d\n", type);
 	if (type == 3) // A
@@ -57,11 +79,14 @@ void	createACL(t_data *data, char *str, int type)
 	{
 		data->cam = malloc(sizeof(t_sLight));
 		tmp = ft_substr(str, sumParse(str, 0, 4, 0), ft_strlen(str));
-		floatsACLParse(data, str, i, type);
+		free(str);
+		str = floatsACLParse(data, tmp, 0, type);
+		printf("sale con \n%s\n", str);
 	}
 	else if (type == 5) // L
 	{
 		data->sLight = malloc(sizeof(t_cam));
+		tmp = ft_substr(str, sumParse(str, 0, 4, 0), ft_strlen(str));
 		floatsACLParse(data, str, i, type);
 	}
 	free(str);

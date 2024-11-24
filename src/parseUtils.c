@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:13:09 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/24 14:59:57 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/24 16:49:11 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int sumParse(char *str, int i, int flag, int j)
 		i++;
 	while ((flag == 1 || flag == 4) && str[i] && str[i++] != ',')
 	{
+		if (flag == 1)
+			printf("\n\n%s%c\n%d\n", str, str[i], i);
 		if (flag == 4 && ft_isspace(str[i]))
 			break ;
 		if (str[i - 1] == '.')

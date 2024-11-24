@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:53:01 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/24 14:54:06 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/24 16:39:03 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,15 @@ t_obj	*createObj(t_data *data, t_obj *obj, char *str, int type)
 	if (type == 0)
 	{
 		obj->size = ft_atof(newStr, 0);
-		obj->i = sumParse(newStr, 0, 2);
+		obj->i = sumParse(newStr, 0, 2, 0);
 		plCyStr = ft_substr(newStr, obj->i, ft_strlen(newStr));
 	}
-	if (type == 2)
+	else if (type == 2)
 	{
 		obj->size = ft_atof(newStr, 0);
-		obj->i = sumParse(plCyStr, 0, 2);
+		obj->i = sumParse(plCyStr, 0, 2, 0);
 		obj->height = ft_atof(newStr, obj->i);
-		obj->i = sumParse(plCyStr, obj->i, 2);
+		obj->i = sumParse(plCyStr, obj->i, 2, 0);
 		free(newStr);
 		newStr = ft_substr(plCyStr, obj->i, ft_strlen(plCyStr));
 	}
