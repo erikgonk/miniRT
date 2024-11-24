@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:53:01 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/24 14:28:55 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/24 14:54:06 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ t_obj	*createObj(t_data *data, t_obj *obj, char *str, int type)
 		newStr = ft_substr(plCyStr, obj->i, ft_strlen(plCyStr));
 	}
 	if (type != 2)
-		obj->rgb = colorsParse(obj, plCyStr);
+		obj->rgb = colorsParse(plCyStr);
 	else
-		obj->rgb = colorsParse(obj, newStr);
+		obj->rgb = colorsParse(newStr);
 	free(newStr);
 	if (plCyStr)
 		free(plCyStr);
@@ -86,7 +86,7 @@ t_obj	*parse(t_data *data, t_obj *obj, char **av, int fd)
 			}
 		}
 		else if (type <= 5 && ft_isspace(str[1]))
-			createACL(data, str, type);
+			createACL(data, ft_substr(str, 1, ft_strlen(str)), type);
 		else
 			exit (er("error: map not valid\n", str));
 	}

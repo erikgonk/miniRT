@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:13:09 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/24 14:21:37 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/24 14:59:57 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	checkObj(t_data *data, char *str)
 {
-	static char		*bts[] = {"sp", "pl", "cy", "C", "A", "L", NULL};
+	static char		*bts[] = {"sp", "pl", "cy", "A", "C", "L", NULL};
 	int				i;
 
 	i = 0;
@@ -25,18 +25,19 @@ int	checkObj(t_data *data, char *str)
 	return (50);
 }
 
-int sumParse(char *str, int i, int flag)
+int sumParse(char *str, int i, int flag, int j)
 {
-	int		j;
-
-	j = 0;
-	while (flag == 0 && str[i] && ft_isspace(str[i]))
+	while ((flag == 0 || flag == 4) && str[i] && ft_isspace(str[i]))
 		i++;
-	while (flag == 1 && str[i] && str[i++] != ',')
+	while ((flag == 1 || flag == 4) && str[i] && str[i++] != ',')
+	{
+		if (flag == 4 && ft_isspace(str[i]))
+			break ;
 		if (str[i - 1] == '.')
 			j++;
 		else if (!ft_isdigit(str[i - 1]))
 			exit(er("error: 1 parsing:\n", str));
+	}
 	while (flag == 2 && str[i] && !ft_isspace(str[i++]))
 	{
 		if (!ft_isdigit(str[i - 1]) && str[i - 1] != '.')
@@ -44,7 +45,7 @@ int sumParse(char *str, int i, int flag)
 		else if (str[i - 1] == '.')
 			j++;
 	}
-	while (flag == 2 && str[i] && ft_isspace(str[i]))
+	while ((flag == 2 || flag == 4) && str[i] && ft_isspace(str[i]))
 		i++;
 	if (flag != 2 && str[i] && !ft_isdigit(str[i]) || j >= 2)
 		exit(er("error: map parsing:\n", str));
@@ -58,13 +59,13 @@ char	*floatsParse(t_obj *obj, char *str, int i, int flag)
 	float		z;
 	char		*tmp;
 	
-	i = sumParse(str, i, 0);
+	i = sumParse(str, i, 0, 0);
 	x = ft_atof(str, i);
-	i = sumParse(str, i, 1);
+	i = sumParse(str, i, 1, 0);
 	y = ft_atof(str, i);
-	i = sumParse(str, i, 1);
+	i = sumParse(str, i, 1, 0);
 	z = ft_atof(str, i);
-	i = sumParse(str, i, 2);
+	i = sumParse(str, i, 2, 0);
 	if (flag == 0)
 		obj->pos = vDefine(x, y, z);
 	else if (flag == 1)
@@ -100,7 +101,7 @@ int	ft_atoiParse(char *str, int i)
 	return (res);
 }
 
-t_rgb	colorsParse(t_obj *obj, char *str)
+t_rgb	colorsParse(char *str)
 {
 	t_rgb		rgb;
 	int			i;
