@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:13:09 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/24 16:49:11 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/25 12:40:06 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,14 @@ int	checkObj(t_data *data, char *str)
 
 int sumParse(char *str, int i, int flag, int j)
 {
+	// 0 skips spaces
+	// 1 skips 1 float
+	// 2 skips a 3 floats
+	// 4 skips spaces and 1 float
 	while ((flag == 0 || flag == 4) && str[i] && ft_isspace(str[i]))
 		i++;
 	while ((flag == 1 || flag == 4) && str[i] && str[i++] != ',')
 	{
-		if (flag == 1)
-			printf("\n\n%s%c\n%d\n", str, str[i], i);
 		if (flag == 4 && ft_isspace(str[i]))
 			break ;
 		if (str[i - 1] == '.')
@@ -81,11 +83,10 @@ int	ft_atoiParse(char *str, int i)
 	int				res;
 	int				sign;
 
-	i = 0;
 	res = 0;
 	sign = 1;
 	if (!str)
-		exit (er("error: parse colors\n", NULL));
+		exit (er("error: parse atoi\n", NULL));
 	if (str[i] == ',')
 		i++;
 	else if (str[i] == '-')
@@ -93,7 +94,7 @@ int	ft_atoiParse(char *str, int i)
 	if (str[i] == '-' || str[i] == '+')
 		i++;
 	if (!ft_isdigit(str[i]))
-		exit (er("error: parse colors\n", str));
+		exit (er("error: parse atoi\n", str));
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		res = (res * 10) + (str[i] - 48);
@@ -110,10 +111,10 @@ t_rgb	colorsParse(char *str)
 
 	i = 0;
 	rgb.r = ft_atoiParse(str, i);
-	while (str[i] != ',')
+	while (str[i] && str[i] != ',')
 		i++;
 	rgb.g = ft_atoiParse(str, i);
-	while (str[i] != ',')
+	while (str[i] && str[i] != ',')
 		i++;
 	rgb.b = ft_atoiParse(str, i);
 	return (rgb);

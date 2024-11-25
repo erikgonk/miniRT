@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:27:07 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/24 16:59:24 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/25 12:41:47 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	randomSumParse(char *str, int i)
 			j = 0;
 		if (k >= 2 || j >= 2)
 			exit(er("error: parsing ACL", str));
-		printf("\n\n%s%c\n%d\n", str, str[i], i);
 		if (ft_isspace(str[i]))
 			break ;
 		if (str[i] == '.')
@@ -33,8 +32,11 @@ int	randomSumParse(char *str, int i)
 		else if (str[i] == ',')
 			k++;
 		else if (!ft_isdigit(str[i]))
+			exit(er("error: parsing ACL", str));
 		i++;
 	}
+	if (str[i] && str[i] == ',')
+		i++;
 	return (i);
 }
 
@@ -49,7 +51,6 @@ char	*floatsACLParse(t_data *data, char *str, int i, int flag)
 	x = ft_atof(str, i);
 	i = sumParse(str, i, 1, 0);
 	y = ft_atof(str, i);
-	printf("now it counts:\n");
 	i = randomSumParse(str, i);
 	z = ft_atof(str, i);
 	i = sumParse(str, i, 2, 0);
@@ -66,7 +67,7 @@ void	createACL(t_data *data, char *str, int type)
 	int		i;
 	char	*tmp = NULL;
 	
-	// printf("%d\n", type);
+	i = 0;
 	if (type == 3) // A
 	{
 		data->aLight = malloc(sizeof(t_aLight));
@@ -78,18 +79,24 @@ void	createACL(t_data *data, char *str, int type)
 	else if (type == 4) // C
 	{
 		data->cam = malloc(sizeof(t_sLight));
-		tmp = ft_substr(str, sumParse(str, 0, 4, 0), ft_strlen(str));
+		i = sumParse(str, 0, 0, 0);
+		tmp = floatsACLParse(data, str, 0, type);
 		free(str);
 		str = floatsACLParse(data, tmp, 0, type);
-		printf("sale con \n%s\n", str);
+		data->cam->fov = ft_atoiParse(str, 0);
 	}
 	else if (type == 5) // L
 	{
 		data->sLight = malloc(sizeof(t_cam));
-		tmp = ft_substr(str, sumParse(str, 0, 4, 0), ft_strlen(str));
-		floatsACLParse(data, str, i, type);
+		i = sumParse(str, 0, 0, 0);
+		tmp = floatsACLParse(data, str, 0, type);
+		data->sLight->br = ft_atof(tmp, 0);
+		free(str);
+		str = ft_substr(tmp, sumParse(tmp, 0, 2, 0), ft_strlen(tmp));
+		data->sLight->rgb = colorsParse(str);
 	}
-	free(str);
+	if (str)
+		free(str);
 	if (tmp)
 		free(tmp);
 }

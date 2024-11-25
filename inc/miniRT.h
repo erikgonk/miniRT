@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/24 15:00:18 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/25 12:13:09 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ typedef struct s_rgb
 
 typedef struct s_cam
 {
-	int				fov;
 	t_v3			pos;
+	int				fov;
 	t_v3			axis; // orientation
 }					t_cam;
 

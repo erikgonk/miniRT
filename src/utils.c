@@ -59,8 +59,8 @@ float	ft_atof(char *str, int i) // i = start
 
 	res = 0.0;
 	sign = 1;
-	// while (str[i] && ft_isspace(str[2]) == 1)
-	// 	i++;
+	while (str[i] && ft_isspace(str[2]) == 1)
+		i++;
 	if (str[i] == '-')
 		sign = -1;
 	if (str[i] == '-' || str[i] == '+')
