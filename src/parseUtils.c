@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:13:09 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/25 12:40:06 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/26 17:21:33 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int sumParse(char *str, int i, int flag, int j)
 {
 	// 0 skips spaces
 	// 1 skips 1 float
-	// 2 skips a 3 floats
+	// 2 skips 3 floats
 	// 4 skips spaces and 1 float
 	while ((flag == 0 || flag == 4) && str[i] && ft_isspace(str[i]))
 		i++;

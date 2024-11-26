@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:53:01 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/26 09:46:32 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/26 17:13:25 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,14 +85,10 @@ t_obj	*parse(t_data *data, t_obj *obj, char **av, int fd)
 				obj = tmp;
 			}
 		}
-		else if (type <= 5 && ft_isspace(str[1]))
-		{
-			// aLight
-			// cam
-			// sLight
-			createACL(data, ft_substr(str, 1, ft_strlen(str)), type);
-		}
-		else
+		createALight(data->aLight, str, type);
+		createCam(data->cam, str, type);
+		createSLight(data->sLight, str, type);
+		if (type >= 5)	
 			exit (er("error: map not valid\n", str));
 		if (type == 0)
 			printf("%s%f, %f, %f\n%f\n%hhu, %hhu, %hhu\n", str, obj->pos.x, obj->pos.y, obj->pos.z, obj->size, obj->rgb.r, obj->rgb.g, obj->rgb.b);
