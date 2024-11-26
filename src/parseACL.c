@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:27:07 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/26 08:46:59 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/26 08:59:37 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	createACL(t_data *data, char *str, int type)
 	char	*tmp = NULL;
 	
 	i = 0;
+	printf("%s", str);
 	if (type == 3) // A
 	{
 		data->aLight = malloc(sizeof(t_aLight));
@@ -75,6 +76,7 @@ void	createACL(t_data *data, char *str, int type)
 		i = sumParse(str, 0, 4, 0);
 		tmp = ft_substr(str, i, ft_strlen(str));
 		data->aLight->rgb = colorsParse(tmp);
+		printf("%f\n%hhu, %hhu, %hhu\n", data->aLight->br, data->aLight->rgb.r, data->aLight->rgb.g, data->aLight->rgb.b);
 	}
 	else if (type == 4) // C
 	{
@@ -84,6 +86,7 @@ void	createACL(t_data *data, char *str, int type)
 		free(str);
 		str = floatsACLParse(data, tmp, 0, type);
 		data->cam->fov = ft_atoiParse(str, 0);
+		printf("%f, %f, %f\n%f\n%f, %f, %f\n", data->cam->pos.x, data->cam->pos.y, data->cam->pos.z, data->cam->fov, data->cam->axis.x, data->cam->axis.y);
 	}
 	else if (type == 5) // L
 	{
@@ -94,6 +97,7 @@ void	createACL(t_data *data, char *str, int type)
 		free(str);
 		str = ft_substr(tmp, sumParse(tmp, 0, 2, 0), ft_strlen(tmp));
 		data->sLight->rgb = colorsParse(str);
+		printf("%f, %f, %f\n%f\n%hhu, %hhu, %hhu\n", data->sLight->pos.x, data->sLight->pos.y, data->sLight->pos.z, data->sLight->br, data->sLight->rgb.r, data->sLight->rgb.g, data->sLight->rgb.b);
 	}
 	if (str)
 		free(str);
