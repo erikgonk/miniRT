@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:53:01 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/25 12:42:05 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/26 08:46:47 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,17 @@ t_obj	*parse(t_data *data, t_obj *obj, char **av, int fd)
 			createACL(data, ft_substr(str, 1, ft_strlen(str)), type);
 		else
 			exit (er("error: map not valid\n", str));
+		if (type == 0)
+			printf("%s%f, %f, %f\n%f\n%hhu, %hhu, %hhu\n", str, obj->pos.x, obj->pos.y, obj->pos.z, obj->size, obj->rgb.r, obj->rgb.g, obj->rgb.b);
+		else if (type == 1)
+			printf("%s%f, %f, %f\n%f, %f, %f\n%hhu, %hhu, %hhu\n", str, obj->pos.x, obj->pos.y, obj->pos.z, obj->axis.x, obj->axis.y, obj->axis.z, obj->rgb.r, obj->rgb.g, obj->rgb.b);
+		else if (type == 2)
+			printf("%s%f, %f, %f\n%f, %f, %f\n%f, %f\n%hhu, %hhu, %hhu\n", str, obj->pos.x, obj->pos.y, obj->pos.z, obj->axis.x, obj->axis.y, obj->axis.z, obj->size, obj->height, obj->rgb.r, obj->rgb.g, obj->rgb.b);
+		// else if (type == 3)
+		// 	printf("%s%f\n%hhu, %hhu, %hhu\n", data->aLight->br, data->aLight->rgb.r, data->aLight->rgb.g, data->aLight->rgb.b);
+		// else if (type == 4)
+			// printf("%s%f\n%hhu, %hhu, %hhu\n", data->aLigth->br, data->aLigth->rgb.r, data->aLigth->rgb.g, data->aLigth->rgb.b);
+		// else if (type == 5)
 	}
 	close(fd);
 	exit (er("salio bien", NULL));
