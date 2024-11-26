@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/25 12:13:09 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/26 09:44:00 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,7 @@ t_obj				*parse(t_data *data, t_obj *obj, char **av, int fd);
 void				correct_file(char *name);
 
 //		parseACLUtils
-void	createACL(t_data *data, char *str, int type);
-void	createACL(t_data *data, char *str, int type);
+void				createACL(t_data *data, char *str, int type);
 
 //		parseUtils
 int					checkObj(t_data *data, char *str);

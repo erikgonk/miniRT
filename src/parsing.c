@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:53:01 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/26 08:46:47 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/26 09:43:37 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ t_obj	*parse(t_data *data, t_obj *obj, char **av, int fd)
 		// else if (type == 3)
 		// 	printf("%s%f\n%hhu, %hhu, %hhu\n", data->aLight->br, data->aLight->rgb.r, data->aLight->rgb.g, data->aLight->rgb.b);
 		// else if (type == 4)
-			// printf("%s%f\n%hhu, %hhu, %hhu\n", data->aLigth->br, data->aLigth->rgb.r, data->aLigth->rgb.g, data->aLigth->rgb.b);
+			// printf("%s%f\n%hhu, %hhu, %hhu\n", data->aLight->br, data->aLight->rgb.r, data->aLight->rgb.g, data->aLight->rgb.b);
 		// else if (type == 5)
 	}
 	close(fd);
