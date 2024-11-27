@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:53:01 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/26 17:13:25 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/27 17:56:33 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,18 +86,18 @@ t_obj	*parse(t_data *data, t_obj *obj, char **av, int fd)
 			}
 		}
 		createALight(data->aLight, str, type);
-		createCam(data->cam, str, type);
+		// if (type == 4)
+		// 	printf("%s%f, %f, %f\n%d\n%f. %f, %f\n", str, data->cam->pos.x, data->cam->pos.y, data->cam->pos.z, data->cam->pos, data->cam->axis.x, data->cam->axis.y, data->cam->axis.z);
+		createCam(data->cam, ft_substr(str, 1, ft_strlen(str)), type);
 		createSLight(data->sLight, str, type);
-		if (type >= 5)	
-			exit (er("error: map not valid\n", str));
-		if (type == 0)
-			printf("%s%f, %f, %f\n%f\n%hhu, %hhu, %hhu\n", str, obj->pos.x, obj->pos.y, obj->pos.z, obj->size, obj->rgb.r, obj->rgb.g, obj->rgb.b);
-		else if (type == 1)
-			printf("%s%f, %f, %f\n%f, %f, %f\n%hhu, %hhu, %hhu\n", str, obj->pos.x, obj->pos.y, obj->pos.z, obj->axis.x, obj->axis.y, obj->axis.z, obj->rgb.r, obj->rgb.g, obj->rgb.b);
-		else if (type == 2)
-			printf("%s%f, %f, %f\n%f, %f, %f\n%f, %f\n%hhu, %hhu, %hhu\n", str, obj->pos.x, obj->pos.y, obj->pos.z, obj->axis.x, obj->axis.y, obj->axis.z, obj->size, obj->height, obj->rgb.r, obj->rgb.g, obj->rgb.b);
-		// else if (type == 3)
-		// 	printf("%s%f\n%hhu, %hhu, %hhu\n", data->aLight->br, data->aLight->rgb.r, data->aLight->rgb.g, data->aLight->rgb.b);
+		// if (type >= 5)	
+		// 	exit (er("error: map not valid\n", str));
+		// if (type == 0)
+		// 	printf("%s%f, %f, %f\n%f\n%hhu, %hhu, %hhu\n", str, obj->pos.x, obj->pos.y, obj->pos.z, obj->size, obj->rgb.r, obj->rgb.g, obj->rgb.b);
+		// else if (type == 1)
+		// 	printf("%s%f, %f, %f\n%f, %f, %f\n%hhu, %hhu, %hhu\n", str, obj->pos.x, obj->pos.y, obj->pos.z, obj->axis.x, obj->axis.y, obj->axis.z, obj->rgb.r, obj->rgb.g, obj->rgb.b);
+		// else if (type == 2)
+		// 	printf("%s%f, %f, %f\n%f, %f, %f\n%f, %f\n%hhu, %hhu, %hhu\n", str, obj->pos.x, obj->pos.y, obj->pos.z, obj->axis.x, obj->axis.y, obj->axis.z, obj->size, obj->height, obj->rgb.r, obj->rgb.g, obj->rgb.b);
 		// else if (type == 4)
 			// printf("%s%f\n%hhu, %hhu, %hhu\n", data->aLight->br, data->aLight->rgb.r, data->aLight->rgb.g, data->aLight->rgb.b);
 		// else if (type == 5)

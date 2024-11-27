@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:13:09 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/26 17:21:33 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/27 18:00:23 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int sumParse(char *str, int i, int flag, int j)
 	// 1 skips 1 float
 	// 2 skips 3 floats
 	// 4 skips spaces and 1 float
+	printf("%s%c - %d\n", str, str[i], i);
 	while ((flag == 0 || flag == 4) && str[i] && ft_isspace(str[i]))
 		i++;
 	while ((flag == 1 || flag == 4) && str[i] && str[i++] != ',')
@@ -51,7 +52,8 @@ int sumParse(char *str, int i, int flag, int j)
 	}
 	while ((flag == 2 || flag == 4) && str[i] && ft_isspace(str[i]))
 		i++;
-	if (flag != 2 && str[i] && !ft_isdigit(str[i]) || j >= 2)
+	// printf("%s%c - i -> %d\n", str, str[i], i);
+	if (flag != 2 && (str[i] && !ft_isdigit(str[i])) || j >= 2)
 		exit(er("error: map parsing:\n", str));
 	return (i);
 }
