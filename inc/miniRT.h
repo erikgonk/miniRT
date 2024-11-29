@@ -6,13 +6,14 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/26 17:14:20 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/29 10:46:34 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
 
+#include <cstdlib>
 # define RESET "\033[0m"
 # define BOLD "\033[1m"
 # define RED_BK "\033[41m" // background
@@ -39,10 +40,11 @@
 
 # define WIDTH 500
 # define HEIGHT 500
+# define SP 0
+# define PL 1
+# define CY 2
 
-# define SP 32
-# define PL 33
-# define CY 34
+// t_rgb[800][600] image;
 
 typedef struct s_v3
 {
@@ -53,9 +55,9 @@ typedef struct s_v3
 
 typedef struct s_rgb
 {
-	char			r;
-	char			g;
-	char			b;
+	unsigned char			r;
+	unsigned char			g;
+	unsigned char			b;
 }					t_rgb;
 
 typedef struct s_cam
@@ -82,13 +84,13 @@ typedef struct s_sLight
 typedef struct s_obj
 {
 	uint32_t		color;
-	int				i; // just to use it on the parser
-	char			type; // in case I want to separate the parser and the exec
-	t_v3			pos; // cp pl cy
-	t_v3			axis; // pl cy | orientation
-	t_rgb			rgb; // sp pl cy
-	float			size; // sp radius | cy diameter
-	float			height; // cy
+	int				i;			// just to use it on the parser
+	char			type;		// in case I want to separate the parser and the exec
+	t_v3			pos;		// cp pl cy
+	t_v3			axis;		// pl cy | orientation
+	t_rgb			rgb;		// sp pl cy
+	float			size;		// sp radius | cy diameter
+	float			height;		// cy
 //	
 	float			sphere_radius; // size
 	t_v3			ray_start; // Camera position
@@ -116,9 +118,7 @@ t_obj				*parse(t_data *data, t_obj *obj, char **av, int fd);
 void				correct_file(char *name);
 
 //		parseACLUtils
-void	createCam(t_cam *cam, char *str, int type);
-void	createALight(t_aLight *light, char *str, int type);
-void	createSLight(t_sLight *light, char *str, int type);
+void				createACL(t_data *data, char *str, int type);
 
 //		parseUtils
 int					checkObj(t_data *data, char *str);
