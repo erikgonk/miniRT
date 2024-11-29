@@ -6,14 +6,13 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/29 10:46:34 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/29 11:42:34 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
 
-#include <cstdlib>
 # define RESET "\033[0m"
 # define BOLD "\033[1m"
 # define RED_BK "\033[41m" // background
@@ -104,7 +103,6 @@ typedef struct s_data
 	t_cam			*cam;
 	t_sLight		*sLight;
 	t_obj			*obj;
-	struct s_data	*next;
 }					t_data;
 
 //		utils
@@ -118,7 +116,11 @@ t_obj				*parse(t_data *data, t_obj *obj, char **av, int fd);
 void				correct_file(char *name);
 
 //		parseACLUtils
-void				createACL(t_data *data, char *str, int type);
+// void				createACL(t_data *data, char *str, int type);
+
+void	createCam(t_cam *cam, char *str, int type);
+void	createALight(t_aLight *light, char *str, int type);
+void	createSLight(t_sLight *light, char *str, int type);
 
 //		parseUtils
 int					checkObj(t_data *data, char *str);

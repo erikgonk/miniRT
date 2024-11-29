@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:27:07 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/27 18:04:47 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/29 12:51:07 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,11 @@ void	createCam(t_cam *cam, char *str, int type)
 	i = 0;
 	if (type != 4)
 		return ;
-	cam = malloc(sizeof(t_sLight));
+	cam = malloc(sizeof(t_cam));
 	i = sumParse(str, 0, 0, 0);
 	cam->pos = floatsACLParse(str, 0);
-	tmp = ft_substr(str, sumParse(str, 0, 0, 0), ft_strlen(str));
+	tmp = ft_substr(str, sumParse(str, 0, 2, 0), ft_strlen(str));
+	printf("%s", tmp);
 	free(str);
 	str = NULL;
 	cam->axis = floatsACLParse(tmp, 0);
@@ -76,9 +77,7 @@ void	createCam(t_cam *cam, char *str, int type)
 	cam->fov = ft_atoiParse(str, 0);
 	free(str);
 	free(tmp);
-	// printf("%f, %f, %f\n%d\n%f. %f, %f\n", cam->pos.x, cam->pos.y, cam->pos.z, cam->pos, cam->axis.x, cam->axis.y, cam->axis.z);
-	// printf("%f, %f, %f\n%f\n%hhu, %hhu, %hhu\n", data->sLight->pos.x, data->sLight->pos.y, data->sLight->pos.z, data->sLight->br, data->sLight->rgb.r, data->sLight->rgb.g, data->sLight->rgb.b);
-	// printf("%f, %f, %f\n%f\n%f, %f, %f\n", cam->pos.x, cam->pos.y, cam->pos.z, cam->fov, cam->axis.x, cam->axis.y);
+	printf("%f, %f, %f\n%f. %f, %f\n%d\n", cam->pos.x, cam->pos.y, cam->pos.z, cam->axis.x, cam->axis.y, cam->axis.z, cam->fov);
 }
 
 void	createALight(t_aLight *light, char *str, int type)
@@ -111,7 +110,7 @@ void	createSLight(t_sLight *light, char *str, int type)
 	// i = 0;
 	// if (type != 5)
 	// 	return ;
-	// light = malloc(sizeof(t_cam));
+	// light = malloc(sizeof(t_sLight));
 	// i = sumParse(str, 0, 0, 0);
 	// tmp = floatsACLParse(data, str, 0, 5);
 	// light->br = ft_atof(tmp, 0);

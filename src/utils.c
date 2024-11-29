@@ -18,7 +18,7 @@ t_obj	*newObj(t_obj *obj)
 
 	tmp = malloc(sizeof(*tmp));
 	if (!tmp)
-		return (NULL);
+		exit (er("error: malloc", NULL));
 	tmp->next = NULL;
 	return (tmp);
 }
