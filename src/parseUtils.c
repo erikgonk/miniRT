@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:13:09 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/27 18:00:23 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/29 13:58:06 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,41 @@ int	checkObj(t_data *data, char *str)
 	return (50);
 }
 
+// skips a row of 3 floats and returns the point where it stops
+int	skipFloats(char *str, int i, int j, int k) // str | i (start) | j . (0) | k , (0)
+{
+	if (!str[i] || !ft_isspace(str[i]))
+		exit(er("error: wrong map", NULL));
+	while (str[i] && ft_isspace(str[i]))
+		i++;
+	while (str[i])
+	{
+		if (str[i] == '.')
+			j++;
+		else if (str[i] == ',')
+			k++;
+		if ((j > 2 || k > 2) || (ft_isspace(str[i]) && k != 2))
+			exit(er("error: wrong map", str));
+		else if (str[i + 1] && ((str[i] == '.' || str[i] == ',') && ft_isdigit(str[i + 1])))
+			exit(er("error: wrong map", str));
+		else if (str[i + 1] && (str[i] == '-' || str[i] == '+') && ft_isdigit(str[i + 1]))
+			exit(er("error: wrong map", str));
+		else if (j == 2 && ft_isspace(str[i]))
+			break ;
+		i++;
+	}
+	if (!str[i])
+		exit(er("error: wrong map", str));
+	return (i);
+}
+
 int sumParse(char *str, int i, int flag, int j)
 {
 	// 0 skips spaces
 	// 1 skips 1 float
 	// 2 skips 3 floats
 	// 4 skips spaces and 1 float
-	printf("%s%c - %d\n", str, str[i], i);
+	// printf("%s%c - %d\n", str, str[i], i);
 	while ((flag == 0 || flag == 4) && str[i] && ft_isspace(str[i]))
 		i++;
 	while ((flag == 1 || flag == 4) && str[i] && str[i++] != ',')
