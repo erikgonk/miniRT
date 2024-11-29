@@ -6,14 +6,13 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/29 10:46:34 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/29 11:11:00 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
 
-#include <cstdlib>
 # define RESET "\033[0m"
 # define BOLD "\033[1m"
 # define RED_BK "\033[41m" // background
