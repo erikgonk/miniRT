@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:27:07 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/29 12:51:07 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/30 13:02:02 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,38 +68,38 @@ void	createCam(t_cam *cam, char *str, int type)
 	cam = malloc(sizeof(t_cam));
 	i = sumParse(str, 0, 0, 0);
 	cam->pos = floatsACLParse(str, 0);
-	tmp = ft_substr(str, sumParse(str, 0, 2, 0), ft_strlen(str));
-	printf("%s", tmp);
+	tmp = ft_substr(str, skipFloats(str, 0, 0, 0), ft_strlen(str));
 	free(str);
 	str = NULL;
 	cam->axis = floatsACLParse(tmp, 0);
-	str = ft_substr(tmp, sumParse(tmp, 0, 0, 0), ft_strlen(tmp));
-	cam->fov = ft_atoiParse(str, 0);
+	str = ft_substr(tmp, skipFloats(tmp, 0, 0, 0), ft_strlen(tmp));
+	cam->fov = ft_atoiParse(str, 0, 1);
 	free(str);
 	free(tmp);
-	printf("%f, %f, %f\n%f. %f, %f\n%d\n", cam->pos.x, cam->pos.y, cam->pos.z, cam->axis.x, cam->axis.y, cam->axis.z, cam->fov);
+	printf("pos -> %f, %f, %f\naxis -> %f. %f, %f\nfov -> %d\n", cam->pos.x, cam->pos.y, cam->pos.z, cam->axis.x, cam->axis.y, cam->axis.z, cam->fov);
 }
 
-void	createALight(t_aLight *light, char *str, int type)
+void	createALight(t_aLight *aLight, char *str, int type)
 {
-	// int		i;
-	// char	*tmp = NULL;
-	// 
-	// i = 0;
-	// if (type != 3)
-	// 	return ;
-	// light = malloc(sizeof(t_aLight));
-	// light->br = ft_atof(str, 0);
-	// i = sumParse(str, 0, 4, 0);
-	// tmp = ft_substr(str, i, ft_strlen(str));
-	// light->rgb = colorsParse(tmp);
-	// if (str)
-	// 	free(str);
-	// if (tmp)
-	// 	free(tmp);
+	int		i;
+	char	*tmp = NULL;
 
-	// printf("%f, %f, %f\n%f\n%hhu, %hhu, %hhu\n", data->sLight->pos.x, data->sLight->pos.y, data->sLight->pos.z, data->sLight->br, data->sLight->rgb.r, data->sLight->rgb.g, data->sLight->rgb.b);
-	// printf("%f\n%hhu, %hhu, %hhu\n", data->aLight->br, data->aLight->rgb.r, data->aLight->rgb.g, data->aLight->rgb.b);
+	i = 0;
+	if (type != 3)
+		return ;
+	aLight = malloc(sizeof(t_aLight));
+	aLight->br = ft_atof(str, 0);
+	// i = sumParse(str, 0, 4, 0);
+	printf("%s", str);
+	tmp = ft_substr(str, skipFloat(str, 1, 0), ft_strlen(str));
+	aLight->rgb = colorsParse(tmp);
+	printf("pasa\n");
+	if (str)
+		free(str);
+	if (tmp)
+		free(tmp);
+	printf("%f\n%hhu, %hhu, %hhu\n", aLight->br, aLight->rgb.r, aLight->rgb.g, aLight->rgb.b);
+	printf("de aqui sale entonces?\n");
 }
 
 void	createSLight(t_sLight *light, char *str, int type)

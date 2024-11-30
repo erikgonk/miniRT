@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/29 11:42:34 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/30 13:00:25 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,15 +118,17 @@ void				correct_file(char *name);
 //		parseACLUtils
 // void				createACL(t_data *data, char *str, int type);
 
-void	createCam(t_cam *cam, char *str, int type);
-void	createALight(t_aLight *light, char *str, int type);
-void	createSLight(t_sLight *light, char *str, int type);
+void				createCam(t_cam *cam, char *str, int type);
+void				createALight(t_aLight *aLight, char *str, int type);
+void				createSLight(t_sLight *light, char *str, int type);
 
 //		parseUtils
+int					skipFloats(char *str, int i, int j, int k);
+int					skipFloat(char *str, int i, int j);
 int					checkObj(t_data *data, char *str);
 int					sumParse(char *str, int i, int flag, int j);
 char				*floatsParse(t_obj *obj, char *str, int i, int flag);
-int					ft_atoiParse(char *str, int i);
+int					ft_atoiParse(char *str, int i, int flag);
 t_rgb				colorsParse(char *str);
 //		lib
 t_v3				subtract(t_v3 a, t_v3 b);
