@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 18:33:09 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/30 13:41:49 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/11/30 13:48:05 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define LIBVCT_H
 
 # include <math.h>
-# include "../../inc/miniRT.h"
 
 typedef struct s_v3
 {
