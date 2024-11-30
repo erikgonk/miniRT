@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:53:01 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/29 12:51:00 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/30 15:45:37 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,35 +28,35 @@ void	correct_file(char *name)
 
 t_obj	*createObj(t_data *data, t_obj *obj, char *str, int type)
 {
-	char		*newStr;
-	char		*plCyStr = NULL;
+	char		*tmp;
+	char		*tmp2 = NULL;
 
 	obj = newObj(obj);
-	newStr = floatsParse(obj, str, 2, 0);
-	if (type != 0)
-		plCyStr = floatsParse(obj, newStr, 0, 1);
-	if (type == 0)
+	tmp = floatsParse(obj, str, 2, 0);
+	if (type != 0) // pl & cy
+		tmp2 = floatsParse(obj, tmp, 0, 1);
+	if (type == 0) // sp
 	{
-		obj->size = ft_atof(newStr, 0);
-		obj->i = sumParse(newStr, 0, 2, 0);
-		plCyStr = ft_substr(newStr, obj->i, ft_strlen(newStr));
+		obj->size = ft_atof(tmp, 0);
+		obj->i = sumParse(tmp, 0, 2, 0);
+		tmp2 = ft_substr(tmp, obj->i, ft_strlen(tmp));
 	}
-	else if (type == 2)
+	else if (type == 2) // cy
 	{
-		obj->size = ft_atof(newStr, 0);
-		obj->i = sumParse(plCyStr, 0, 2, 0);
-		obj->height = ft_atof(newStr, obj->i);
-		obj->i = sumParse(plCyStr, obj->i, 2, 0);
-		free(newStr);
-		newStr = ft_substr(plCyStr, obj->i, ft_strlen(plCyStr));
+		obj->size = ft_atof(tmp2, 0);
+		obj->i = sumParse(tmp2, 0, 2, 0);
+		obj->height = ft_atof(tmp2, obj->i);
+		obj->i = sumParse(tmp2, obj->i, 2, 0);
+		free(tmp);
+		tmp = ft_substr(tmp2, obj->i, ft_strlen(tmp2));
 	}
-	if (type != 2)
-		obj->rgb = colorsParse(plCyStr);
-	else
-		obj->rgb = colorsParse(newStr);
-	free(newStr);
-	if (plCyStr)
-		free(plCyStr);
+	if (type != 2) // sp & pl
+		obj->rgb = colorsParse(tmp2);
+	else // cy
+		obj->rgb = colorsParse(tmp);
+	free(tmp);
+	if (tmp2)
+		free(tmp2);
 	return (obj);
 }
 
@@ -85,19 +85,23 @@ t_obj	*parse(t_data *data, t_obj *obj, char **av, int fd)
 				obj = tmp;
 			}
 		}
-		createCam(data->cam, ft_substr(str, 1, ft_strlen(str)), type);
-		createALight(data->aLight, str, type);
-		createSLight(data->sLight, str, type);
-		// if (type == 0)
-		// 	printf("%s%f, %f, %f\n%f\n%hhu, %hhu, %hhu\n", str, obj->pos.x, obj->pos.y, obj->pos.z, obj->size, obj->rgb.r, obj->rgb.g, obj->rgb.b);
-		// else if (type == 1)
-		// 	printf("%s%f, %f, %f\n%f, %f, %f\n%hhu, %hhu, %hhu\n", str, obj->pos.x, obj->pos.y, obj->pos.z, obj->axis.x, obj->axis.y, obj->axis.z, obj->rgb.r, obj->rgb.g, obj->rgb.b);
-		// else if (type == 2)
-		// 	printf("%s%f, %f, %f\n%f, %f, %f\n%f, %f\n%hhu, %hhu, %hhu\n", str, obj->pos.x, obj->pos.y, obj->pos.z, obj->axis.x, obj->axis.y, obj->axis.z, obj->size, obj->height, obj->rgb.r, obj->rgb.g, obj->rgb.b);
-		// else if (type == 4)
-			// printf("%s%f\n%hhu, %hhu, %hhu\n", data->aLight->br, data->aLight->rgb.r, data->aLight->rgb.g, data->aLight->rgb.b);
-		// else if (type >= 5)	
-		// 	exit (er("error: map not valid\n", str));
+		createALight(data, str, type);
+		createCam(data, ft_substr(str, 1, ft_strlen(str)), type);
+		createSLight(data, str, type);
+		// if (type == 0) // sp
+		// 	printf("%s		%f, %f, %f %f %hhu, %hhu, %hhu\n", str, obj->pos.x, obj->pos.y, obj->pos.z, obj->size, obj->rgb.r, obj->rgb.g, obj->rgb.b);
+		// if (type == 1) // pl
+		// 	printf("%s		%f, %f, %f %f, %f, %f %hhu, %hhu, %hhu\n", str, obj->pos.x, obj->pos.y, obj->pos.z, obj->axis.x, obj->axis.y, obj->axis.z, obj->rgb.r, obj->rgb.g, obj->rgb.b);
+		// if (type == 2) // cy
+		// 	printf("%s		%f, %f, %f %f, %f, %f %f, %f %hhu, %hhu, %hhu\n", str, obj->pos.x, obj->pos.y, obj->pos.z, obj->axis.x, obj->axis.y, obj->axis.z, obj->size, obj->height, obj->rgb.r, obj->rgb.g, obj->rgb.b);
+		// printf("aqui\n");
+		// if (type == 3) // A
+		// 	printf("%s%f %hhu, %hhu, %hhu\n", str, data->aLight->br, data->aLight->rgb.r, data->aLight->rgb.g, data->aLight->rgb.b);
+		// printf("paso\n");
+		// if (type == 4) // Cam
+		// 	printf("%s%f %f %f %f %f %f %d\n", str, data->cam->pos.x, data->cam->pos.y, data->cam->pos.z, data->cam->axis.x, data->cam->axis.y, data->cam->axis.z, data->cam->fov);
+		// if (type == 5)	// L
+		// 	printf("%s%f %f %f %f %hhu, %hhu, %hhu\n", str, data->sLight->pos.x, data->sLight->pos.y, data->sLight->pos.z, data->sLight->br, data->sLight->rgb.r, data->sLight->rgb.g, data->sLight->rgb.b);
 	}
 	close(fd);
 	exit (er("salio bien", NULL));

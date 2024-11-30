@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/30 13:00:25 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/30 15:40:00 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,15 +118,17 @@ void				correct_file(char *name);
 //		parseACLUtils
 // void				createACL(t_data *data, char *str, int type);
 
-void				createCam(t_cam *cam, char *str, int type);
-void				createALight(t_aLight *aLight, char *str, int type);
-void				createSLight(t_sLight *light, char *str, int type);
+void				createCam(t_data *data, char *str, int type);
+void				createALight(t_data *data, char *str, int type);
+void				createSLight(t_data *data, char *str, int type);
 
-//		parseUtils
+//		parse sum to i
+int					skipColor(char *str, int i, int j, int flag);
 int					skipFloats(char *str, int i, int j, int k);
 int					skipFloat(char *str, int i, int j);
-int					checkObj(t_data *data, char *str);
 int					sumParse(char *str, int i, int flag, int j);
+//		parseUtils
+int					checkObj(t_data *data, char *str);
 char				*floatsParse(t_obj *obj, char *str, int i, int flag);
 int					ft_atoiParse(char *str, int i, int flag);
 t_rgb				colorsParse(char *str);
