@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:27:07 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/30 15:42:08 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/30 16:30:45 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,14 @@ t_v3	floatsACLParse(char *str, int i)
 	return (vDefine(x, y, z));
 }
 
-void	createCam(t_data *data, char *str, int type)
+t_cam	*createCam(t_data *data, char *str, int type)
 {
 	t_cam	*cam;
 	char	*tmp = NULL;
 	
 	cam = data->cam;
 	if (type != 4 || (str[1] && !ft_isspace(str[1])))
-		return ;
+		return NULL;
 	cam = malloc(sizeof(t_cam));
 	cam->pos = floatsACLParse(str, 1);
 	tmp = ft_substr(str, skipFloats(str, 0, 0, 0), ft_strlen(str));
@@ -74,26 +74,28 @@ void	createCam(t_data *data, char *str, int type)
 	cam->fov = ft_atoiParse(str, 0, 1);
 	free(str);
 	free(tmp);
+	return (cam);
 	// printf("		%f, %f, %f %f. %f, %f %d\n\n", cam->pos.x, cam->pos.y, cam->pos.z, cam->axis.x, cam->axis.y, cam->axis.z, cam->fov);
 }
 
-void	createALight(t_data *data, char *str, int type)
+t_aLight	*createALight(t_data *data, char *str, int type)
 {
 	t_aLight	*aLight;
 	char		*tmp = NULL;
 
 	aLight = data->aLight;
 	if (type != 3 || (str[1] && !ft_isspace(str[1])))
-		return ;
+		return (NULL);
 	aLight = malloc(sizeof(t_aLight));
 	aLight->br = ft_atof(str, 1);
 	tmp = ft_substr(str, skipFloat(str, 1, 0), ft_strlen(str));
 	aLight->rgb = colorsParse(tmp);
 	free(tmp);
+	return (aLight);
 	// printf("%s		%f %hhu, %hhu, %hhu\n\n", str, aLight->br, aLight->rgb.r, aLight->rgb.g, aLight->rgb.b);
 }
 
-void	createSLight(t_data *data, char *str, int type)
+t_sLight	*createSLight(t_data *data, char *str, int type)
 {
 	t_sLight	*sLight;
 	int			i;
@@ -102,7 +104,7 @@ void	createSLight(t_data *data, char *str, int type)
 	sLight = data->sLight;
 	i = 0;
 	if (type != 5 || (str[1] && !ft_isspace(str[1])))
-		return ;
+		return (NULL);
 	sLight = malloc(sizeof(t_sLight));
 	sLight->pos = floatsACLParse(str, 1);
 	tmp = ft_substr(str, skipFloats(str, 1, 0, 0), ft_strlen(str));
@@ -113,4 +115,5 @@ void	createSLight(t_data *data, char *str, int type)
 	// free(str);
 	// free(tmp);
 	// printf("		%f, %f, %f %f %hhu, %hhu, %hhu\n\n", sLight->pos.x, sLight->pos.y, sLight->pos.z, sLight->br, sLight->rgb.r, sLight->rgb.g, sLight->rgb.b);
+	return (sLight);
 }

@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/30 15:40:00 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/30 16:28:41 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,9 +118,9 @@ void				correct_file(char *name);
 //		parseACLUtils
 // void				createACL(t_data *data, char *str, int type);
 
-void				createCam(t_data *data, char *str, int type);
-void				createALight(t_data *data, char *str, int type);
-void				createSLight(t_data *data, char *str, int type);
+t_cam				*createCam(t_data *data, char *str, int type);
+t_aLight			*createALight(t_data *data, char *str, int type);
+t_sLight			*createSLight(t_data *data, char *str, int type);
 
 //		parse sum to i
 int					skipColor(char *str, int i, int j, int flag);
