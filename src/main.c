@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:12:46 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/23 14:55:11 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/01 14:37:47 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,15 @@ int	main(int ac, char **av)
 	fd = open(av[1], O_RDONLY);
 	if (fd < 0)
 		exit(er("error: fd filed", NULL));
-	data.obj = parse(&data, data.obj, av, fd);
+	parse(&data, data.obj, av, fd);
+	// printf("%f, %f, %f %f %hhu, %hhu, %hhu\n", data.obj->pos.x, data.obj->pos.y, data.obj->pos.z, data.obj->size, data.obj->rgb.r, data.obj->rgb.g, data.obj->rgb.b);
+	// printf("hola\n");
+	// printf("%f, %f, %f %f, %f, %f %hhu, %hhu, %hhu\n", data.obj->pos.x, data.obj->pos.y, data.obj->pos.z, data.obj->axis.x, data.obj->axis.y, data.obj->axis.z, data.obj->rgb.r, data.obj->rgb.g, data.obj->rgb.b);
+	// printf("%f, %f, %f %f, %f, %f %f, %f %hhu, %hhu, %hhu\n", data.obj->pos.x, data.obj->pos.y, data.obj->pos.z, data.obj->axis.x, data.obj->axis.y, data.obj->axis.z, data.obj->size, data.obj->height, data.obj->rgb.r, data.obj->rgb.g, data.obj->rgb.b);
+	printf("%f %hhu, %hhu, %hhu\n", data.aLight->br, data.aLight->rgb.r, data.aLight->rgb.g, data.aLight->rgb.b);
+	printf("%f %f %f %f %f %f %d\n", data.cam->pos.x, data.cam->pos.y, data.cam->pos.z, data.cam->axis.x, data.cam->axis.y, data.cam->axis.z, data.cam->fov);
+	printf("%f %f %f %f %hhu, %hhu, %hhu\n", data.sLight->pos.x, data.sLight->pos.y, data.sLight->pos.z, data.sLight->br, data.sLight->rgb.r, data.sLight->rgb.g, data.sLight->rgb.b);
+	exit (er("salio bien\n", NULL));
 	mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "miniRT", true);
 	if (!mlx)
 		exit (er("Failed to initialize MLX42", NULL));

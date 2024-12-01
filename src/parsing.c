@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:53:01 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/30 16:31:06 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/01 14:33:09 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_obj	*createObj(t_data *data, t_obj *obj, char *str, int type)
 	return (obj);
 }
 
-t_obj	*parse(t_data *data, t_obj *obj, char **av, int fd)
+void	parse(t_data *data, t_obj *obj, char **av, int fd)
 {
 	char	type;
 	char	*str = NULL;
@@ -86,22 +86,23 @@ t_obj	*parse(t_data *data, t_obj *obj, char **av, int fd)
 			}
 		}
 		data->aLight = createALight(data, str, type);
-		data->cam = createCam(data, ft_substr(str, 1, ft_strlen(str)), type);
+		data->cam = createCam(data, str, type);
 		data->sLight = createSLight(data, str, type);
-		if (type == 0) // sp
-			printf("%s		%f, %f, %f %f %hhu, %hhu, %hhu\n", str, obj->pos.x, obj->pos.y, obj->pos.z, obj->size, obj->rgb.r, obj->rgb.g, obj->rgb.b);
-		if (type == 1) // pl
-			printf("%s		%f, %f, %f %f, %f, %f %hhu, %hhu, %hhu\n", str, obj->pos.x, obj->pos.y, obj->pos.z, obj->axis.x, obj->axis.y, obj->axis.z, obj->rgb.r, obj->rgb.g, obj->rgb.b);
-		if (type == 2) // cy
-			printf("%s		%f, %f, %f %f, %f, %f %f, %f %hhu, %hhu, %hhu\n", str, obj->pos.x, obj->pos.y, obj->pos.z, obj->axis.x, obj->axis.y, obj->axis.z, obj->size, obj->height, obj->rgb.r, obj->rgb.g, obj->rgb.b);
-		if (type == 3) // A
-			printf("%s%f %hhu, %hhu, %hhu\n", str, data->aLight->br, data->aLight->rgb.r, data->aLight->rgb.g, data->aLight->rgb.b);
-		if (type == 4) // Cam
-			printf("%s%f %f %f %f %f %f %d\n", str, data->cam->pos.x, data->cam->pos.y, data->cam->pos.z, data->cam->axis.x, data->cam->axis.y, data->cam->axis.z, data->cam->fov);
-		if (type == 5)	// L
-			printf("%s%f %f %f %f %hhu, %hhu, %hhu\n", str, data->sLight->pos.x, data->sLight->pos.y, data->sLight->pos.z, data->sLight->br, data->sLight->rgb.r, data->sLight->rgb.g, data->sLight->rgb.b);
+		// if (type == 0) // sp
+		// 	printf("str -> %s			%f, %f, %f %f %hhu, %hhu, %hhu\n", str, obj->pos.x, obj->pos.y, obj->pos.z, obj->size, obj->rgb.r, obj->rgb.g, obj->rgb.b);
+		// if (type == 1) // pl
+		// 	printf("str -> %s			%f, %f, %f %f, %f, %f %hhu, %hhu, %hhu\n", str, obj->pos.x, obj->pos.y, obj->pos.z, obj->axis.x, obj->axis.y, obj->axis.z, obj->rgb.r, obj->rgb.g, obj->rgb.b);
+		// if (type == 2) // cy
+		// 	printf("str -> %s			%f, %f, %f %f, %f, %f %f, %f %hhu, %hhu, %hhu\n", str, obj->pos.x, obj->pos.y, obj->pos.z, obj->axis.x, obj->axis.y, obj->axis.z, obj->size, obj->height, obj->rgb.r, obj->rgb.g, obj->rgb.b);
+		// if (type == 3) // A
+		// 	printf("str -> %s			%f %hhu, %hhu, %hhu\n", str, data->aLight->br, data->aLight->rgb.r, data->aLight->rgb.g, data->aLight->rgb.b);
+		// if (type == 4) // Cam
+		// 	printf("str -> %s			%f %f %f %f %f %f %d\n", str, data->cam->pos.x, data->cam->pos.y, data->cam->pos.z, data->cam->axis.x, data->cam->axis.y, data->cam->axis.z, data->cam->fov);
+		// if (type == 5)	// L
+		// 	printf("str -> %s			%f %f %f %f %hhu, %hhu, %hhu\n", str, data->sLight->pos.x, data->sLight->pos.y, data->sLight->pos.z, data->sLight->br, data->sLight->rgb.r, data->sLight->rgb.g, data->sLight->rgb.b);
 	}
 	close(fd);
+	return ;
 	exit (er("salio bien", NULL));
 }
 	// data->obj->ray_start = vDefine(0.0, 0.0, 0.0);		// Camera position (where our rays start from)	

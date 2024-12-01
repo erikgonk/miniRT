@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/30 16:28:41 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/11/30 17:27:06 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ float				ft_atof(char *str, int i);
 float				ft_atof_normi(char *str, int i);
 
 //		parsing
-t_obj				*parse(t_data *data, t_obj *obj, char **av, int fd);
+void				parse(t_data *data, t_obj *obj, char **av, int fd);
 void				correct_file(char *name);
 
 //		parseACLUtils
