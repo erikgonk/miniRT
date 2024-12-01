@@ -6,7 +6,7 @@
 #    By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/05 11:52:11 by erigonza          #+#    #+#              #
-#    Updated: 2024/12/01 20:50:03 by shurtado         ###   ########.fr        #
+#    Updated: 2024/12/01 21:24:23 by shurtado         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ VCT_D			:= ./lib/libvector/
 FILES			:= main.c \
 				 parser/parseACL.c parser/parseSumI.c parser/parseUtils.c parser/parsing.c parser/utils.c \
 				 debug/ilumination.c debug/sphere.c debug/debug_info.c\
-				 window/mlx.c
+				 window/mlx.c \
+				 render/calcs.c render/colour.c render/initialization.c render/intersections.c render/render.c
 SRCS			:= $(addprefix $(SRC_D), $(FILES))
 
 OBJS            := $(addprefix $(OBJ_D), $(FILES:.c=.o))
@@ -55,7 +56,7 @@ libs:
 
 create_dirs:
 			@mkdir -p $(OBJ_D) $(DEP_D)
-			@mkdir -p $(OBJ_D)parser $(OBJ_D)debug $(OBJ_D)window
+			@mkdir -p $(OBJ_D)parser $(OBJ_D)debug $(OBJ_D)window $(OBJ_D)render
 
 $(OBJ_D)%.o:	$(SRC_D)%.c Makefile
 			printf "\033[0;33m\r🔨 $< ✅ \033[0m"
