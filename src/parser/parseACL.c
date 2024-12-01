@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:27:07 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/01 19:44:52 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/01 20:58:36 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void	createSLight(t_data *data, char *str, int type)
 	if (type != 5 || (str[1] && !ft_isspace(str[1])))
 		return ;
 	data->sLight = malloc(sizeof(t_sLight));
+	data->sLight->next = NULL;
 	sLight = data->sLight;
 	sLight->pos = floatsACLParse(str, 1);
 	tmp = ft_substr(str, skipFloats(str, 1, 0, 0), ft_strlen(str));

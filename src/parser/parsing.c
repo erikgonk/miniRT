@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:53:01 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/01 19:45:08 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/01 21:01:19 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,18 +83,6 @@ void	parse(t_data *data, char **av, int fd)
 		createALight(data, str, type);
 		createCam(data, str, type);
 		createSLight(data, str, type);
-		// if (type == 0) // sp
-		// 	printf("str -> %s			%f, %f, %f %f %hhu, %hhu, %hhu\n", str, obj->pos.x, obj->pos.y, obj->pos.z, obj->size, obj->rgb.r, obj->rgb.g, obj->rgb.b);
-		// if (type == 1) // pl
-		// 	printf("str -> %s			%f, %f, %f %f, %f, %f %hhu, %hhu, %hhu\n", str, obj->pos.x, obj->pos.y, obj->pos.z, obj->axis.x, obj->axis.y, obj->axis.z, obj->rgb.r, obj->rgb.g, obj->rgb.b);
-		// if (type == 2) // cy
-		// 	printf("str -> %s			%f, %f, %f %f, %f, %f %f, %f %hhu, %hhu, %hhu\n", str, obj->pos.x, obj->pos.y, obj->pos.z, obj->axis.x, obj->axis.y, obj->axis.z, obj->size, obj->height, obj->rgb.r, obj->rgb.g, obj->rgb.b);
-		// if (type == 3) // A
-		// 	printf("str -> %s			%f %hhu, %hhu, %hhu\n", str, data->aLight->br, data->aLight->rgb.r, data->aLight->rgb.g, data->aLight->rgb.b);
-		// if (type == 4) // Cam
-		// 	printf("str -> %s			%f %f %f %f %f %f %d\n", str, data->cam->pos.x, data->cam->pos.y, data->cam->pos.z, data->cam->axis.x, data->cam->axis.y, data->cam->axis.z, data->cam->fov);
-		// if (type == 5)	// L
-		// 	printf("str -> %s			%f %f %f %f %hhu, %hhu, %hhu\n", str, data->sLight->pos.x, data->sLight->pos.y, data->sLight->pos.z, data->sLight->br, data->sLight->rgb.r, data->sLight->rgb.g, data->sLight->rgb.b);
 	}
 	close(fd);
 }

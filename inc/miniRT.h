@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/01 19:49:13 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/01 20:52:06 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,5 +139,8 @@ float				sphere_ray_intersect(t_v3 ray_start, t_v3 ray_direction,
 //		ilumination
 int					is_in_shadow(t_obj *sp, t_v3 point, t_sLight *light);
 uint32_t			new_light(t_sLight *l, t_obj *sp, t_v3 iPoint);
+
+//debug
+void				print_t_data(t_data *data);
 
 #endif
