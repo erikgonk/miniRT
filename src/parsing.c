@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:53:01 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/01 15:33:43 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/01 15:38:58 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,8 @@ void	parse(t_data *data, char **av, int fd)
 	char	*str = NULL;
 	t_obj	*tmp = NULL;
 	t_obj	*obj = NULL;
-	static int assigned;
 
-	data->obj = obj;
+	obj = data->obj;
 	while (true)
 	{
 		if (str)
@@ -82,14 +81,7 @@ void	parse(t_data *data, char **av, int fd)
 		if (type <= 2 && ft_isspace(str[2]))
 		{
 			tmp = createObj(data, tmp, str, type);
-			if (tmp)
-			{
-				obj = tmp;
-				if (!assigned && ++assigned)
-					data->obj = obj;
-				obj->next = NULL;
-				tmp = NULL;
-			}
+			lstadd_back(data->obj, tmp);
 		}
 		createALight(data, str, type);
 		createCam(data, str, type);
