@@ -6,7 +6,7 @@
 #    By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/05 11:52:11 by erigonza          #+#    #+#              #
-#    Updated: 2024/12/01 18:32:41 by shurtado         ###   ########.fr        #
+#    Updated: 2024/12/01 19:27:36 by shurtado         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ DEP_D			:= $(SRC_D)dep/
 LIBFT_D			:= ./lib/libft/
 MLX_D			:= ./lib/MLX42/build/
 
-FILES			:= main.c lib.c sphere.c mlx.c ilumination.c utils.c parsing.c \
+FILES			:= main.c sphere.c mlx.c ilumination.c utils.c parsing.c \
 					parseACL.c  parseUtils.c parseSumI.c
 SRCS			:= $(addprefix $(SRC_D), $(FILES))
 
@@ -31,6 +31,7 @@ CFLAGS			:= -g -fsanitize=address #-Wall -Wextra -Werror
 LIB				:= lib/
 
 LIBFT			:= libft.a
+LIBVCT          := ./lib/libvector/libvct.a
 
 MLX				:= libmlx42.a
 DIR_MLX			:= ./lib/MLX42
@@ -54,7 +55,7 @@ $(OBJ_D)%.o:	$(SRC_D)%.c Makefile
 			mv $(@:.o=.d) $(DEP_D)
 
 $(NAME):	$(OBJS)
-			$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) $(MLX_D)$(MLX) $(LIBFT_D)$(LIBFT) -o $(NAME)
+			$(CC) $(CFLAGS) $(OBJS) $(LIBFT_D)$(LIBFT) $(MLX_D)$(MLX) $(LIBVCT) $(MLXFLAGS) -o $(NAME)
 			clear
 
 c clean:

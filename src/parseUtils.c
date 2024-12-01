@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parseUtils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:13:09 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/30 15:27:24 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/01 19:13:52 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ char	*floatsParse(t_obj *obj, char *str, int i, int flag)
 	z = ft_atof(str, i);
 	i = sumParse(str, i, 2, 0);
 	if (flag == 0)
-		obj->pos = vDefine(x, y, z);
+		obj->pos = vdefine(x, y, z);
 	else if (flag == 1)
-		obj->axis = vDefine(x, y, z);
+		obj->axis = vdefine(x, y, z);
 	tmp = ft_substr(str, i, ft_strlen(str));
 	return (tmp);
 }

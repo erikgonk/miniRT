@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 09:47:50 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/01 18:19:30 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/01 19:13:52 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,9 @@ float	ft_atof(char *str, int i) // i = start
 
 // void	ft_init(t_data *data, char **av)
 // {
-// 	data->obj->ray_start = vDefine(0.0, 0.0, 0.0);			// Camera position (where our rays start from)
+// 	data->obj->ray_start = vdefine(0.0, 0.0, 0.0);			// Camera position (where our rays start from)
 //  	data->obj->sphere_radius = 1.4;						// Radius (size) of the sphere
-//     data->obj->sphere_center = vDefine(
+//     data->obj->sphere_center = vdefine(
 //         atof(av[1]),
 //         atof(av[2]),
 //         atof(av[3]));
@@ -90,7 +90,7 @@ float	ft_atof(char *str, int i) // i = start
 //     data->obj->color = ((atoi(av[5]) << 16) | (atoi(av[6]) << 8) | atoi(av[7]));
 
 //     // Initialize light source
-//     data->sLight->pos = vDefine(
+//     data->sLight->pos = vdefine(
 //         atof(av[8]),  // X
 //         atof(av[9]),  // Y
 //         atof(av[10])  // Z

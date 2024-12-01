@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 17:14:11 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/01 18:29:54 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/01 19:13:52 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int is_in_shadow(t_obj *obj, t_v3 point, t_sLight *light)
 {
     t_v3 light_dir = subtract(light->pos, point);
     float mag = sqrtf(dot(light_dir, light_dir));
-    light_dir = vDefine(light_dir.x / mag, light_dir.y / mag, light_dir.z / mag);
+    light_dir = vdefine(light_dir.x / mag, light_dir.y / mag, light_dir.z / mag);
 
     // Cast a shadow ray from the point to the light source
     float t = sphere_ray_intersect(point, light_dir, obj->sphere_center, obj->sphere_radius);
@@ -36,12 +36,12 @@ uint32_t	new_light(t_sLight *l, t_obj *obj, t_v3 iPoint)
 
 	normal = subtract(iPoint, obj->sphere_center);
 	mag = sqrtf(dot(normal, normal));
-	normal = vDefine(normal.x / mag, normal.y / mag, normal.z / mag);
+	normal = vdefine(normal.x / mag, normal.y / mag, normal.z / mag);
 
 	// Calculate light direction
 	dir = subtract(l->pos, iPoint);
 	mag = sqrtf(dot(dir, dir));
-	dir = vDefine(dir.x / mag, dir.y / mag, dir.z / mag);
+	dir = vdefine(dir.x / mag, dir.y / mag, dir.z / mag);
 
 	// Calculate lighting intensity
 	i = fmaxf(dot(normal, dir), 0.0f) * l->br;

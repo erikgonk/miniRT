@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/01 19:11:03 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/01 19:12:41 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,10 +127,6 @@ int					checkObj(t_data *data, char *str);
 char				*floatsParse(t_obj *obj, char *str, int i, int flag);
 int					ft_atoiParse(char *str, int i, int flag);
 t_rgb				colorsParse(char *str);
-//		lib
-t_v3				subtract(t_v3 a, t_v3 b);
-float				dot(t_v3 a, t_v3 b);
-t_v3				vDefine(float x, float y, float z);
 
 //		mlx
 void				draw_pixel(mlx_image_t *img, int x, int y, uint32_t color);

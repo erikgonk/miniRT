@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parseACL.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:27:07 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/01 15:05:14 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/01 19:13:08 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ t_v3	floatsACLParse(char *str, int i)
 	i = randomSumParse(str, i);
 	z = ft_atof(str, i);
 	i = sumParse(str, i, 2, 0);
-	return (vDefine(x, y, z));
+	return (vdefine(x, y, z));
 }
 
 void	createALight(t_data *data, char *str, int type)
