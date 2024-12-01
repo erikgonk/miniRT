@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/30 17:27:06 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/01 15:07:23 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ typedef struct s_obj
 	t_rgb			rgb;		// sp pl cy
 	float			size;		// sp radius | cy diameter
 	float			height;		// cy
-//	
+//
 	float			sphere_radius; // size
 	t_v3			ray_start; // Camera position
 	t_v3			sphere_center;
@@ -118,9 +118,9 @@ void				correct_file(char *name);
 //		parseACLUtils
 // void				createACL(t_data *data, char *str, int type);
 
-t_cam				*createCam(t_data *data, char *str, int type);
-t_aLight			*createALight(t_data *data, char *str, int type);
-t_sLight			*createSLight(t_data *data, char *str, int type);
+void				createCam(t_data *data, char *str, int type);
+void				createALight(t_data *data, char *str, int type);
+void				createSLight(t_data *data, char *str, int type);
 
 //		parse sum to i
 int					skipColor(char *str, int i, int j, int flag);

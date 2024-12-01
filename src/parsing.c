@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:53:01 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/01 14:33:09 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/01 15:06:36 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,9 @@ void	parse(t_data *data, t_obj *obj, char **av, int fd)
 				obj = tmp;
 			}
 		}
-		data->aLight = createALight(data, str, type);
-		data->cam = createCam(data, str, type);
-		data->sLight = createSLight(data, str, type);
+		createALight(data, str, type);
+		createCam(data, str, type);
+		createSLight(data, str, type);
 		// if (type == 0) // sp
 		// 	printf("str -> %s			%f, %f, %f %f %hhu, %hhu, %hhu\n", str, obj->pos.x, obj->pos.y, obj->pos.z, obj->size, obj->rgb.r, obj->rgb.g, obj->rgb.b);
 		// if (type == 1) // pl
@@ -105,7 +105,7 @@ void	parse(t_data *data, t_obj *obj, char **av, int fd)
 	return ;
 	exit (er("salio bien", NULL));
 }
-	// data->obj->ray_start = vDefine(0.0, 0.0, 0.0);		// Camera position (where our rays start from)	
+	// data->obj->ray_start = vDefine(0.0, 0.0, 0.0);		// Camera position (where our rays start from)
 	// data->obj->sphere_radius = 1.4;						// Radius (size) of the sphere
  //    data->obj->sphere_center = vDefine(
  //        atof(av[1]),
