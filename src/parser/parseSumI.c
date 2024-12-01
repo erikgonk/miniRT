@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parseSumI.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 13:40:44 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/30 15:07:43 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/01 19:44:57 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/miniRT.h"
+#include "miniRT.h"
 
 int	skipFloat(char *str, int i, int j)
 {

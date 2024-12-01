@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/01 19:12:41 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/01 19:49:13 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 # define WHITE "\033[37m"
 
 # include "../lib/MLX42/include/MLX42/MLX42.h"
-# include "../lib/libft/inc/libft.h"
-# include "../lib/libvector/libvct.h"
+# include "libft.h"
+# include "libvct.h"
 # include <fcntl.h>
 # include <math.h>
 # include <stdio.h>
