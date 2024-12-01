@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:53:01 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/01 15:06:36 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/01 15:33:43 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,15 @@ t_obj	*createObj(t_data *data, t_obj *obj, char *str, int type)
 	return (obj);
 }
 
-void	parse(t_data *data, t_obj *obj, char **av, int fd)
+void	parse(t_data *data, char **av, int fd)
 {
 	char	type;
 	char	*str = NULL;
 	t_obj	*tmp = NULL;
+	t_obj	*obj = NULL;
+	static int assigned;
 
+	data->obj = obj;
 	while (true)
 	{
 		if (str)
@@ -81,8 +84,11 @@ void	parse(t_data *data, t_obj *obj, char **av, int fd)
 			tmp = createObj(data, tmp, str, type);
 			if (tmp)
 			{
-				tmp->next = obj;
 				obj = tmp;
+				if (!assigned && ++assigned)
+					data->obj = obj;
+				obj->next = NULL;
+				tmp = NULL;
 			}
 		}
 		createALight(data, str, type);

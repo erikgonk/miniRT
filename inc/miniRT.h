@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/01 15:07:23 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/01 15:11:52 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ float				ft_atof(char *str, int i);
 float				ft_atof_normi(char *str, int i);
 
 //		parsing
-void				parse(t_data *data, t_obj *obj, char **av, int fd);
+void				parse(t_data *data, char **av, int fd);
 void				correct_file(char *name);
 
 //		parseACLUtils
