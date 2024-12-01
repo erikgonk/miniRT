@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/01 18:15:52 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/01 19:11:03 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 
 # include "../lib/MLX42/include/MLX42/MLX42.h"
 # include "../lib/libft/inc/libft.h"
+# include "../lib/libvector/libvct.h"
 # include <fcntl.h>
 # include <math.h>
 # include <stdio.h>
@@ -44,13 +45,6 @@
 # define CY 2
 
 // t_rgb[800][600] image;
-
-typedef struct s_v3
-{
-	float			x;
-	float			y;
-	float			z;
-}					t_v3;
 
 typedef struct s_rgb
 {
