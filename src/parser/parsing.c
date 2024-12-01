@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:53:01 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/01 21:01:19 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/01 21:06:27 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ t_obj	*createObj(t_data *data, char *str, int type)
 	free(tmp);
 	if (tmp2)
 		free(tmp2);
+	obj->type = (char)type;
 	return (obj);
 }
 

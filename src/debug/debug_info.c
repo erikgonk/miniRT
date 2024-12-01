@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 20:48:16 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/01 20:49:38 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/01 21:09:24 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	print_t_data(t_data *data)
 		t_obj *obj = data->obj;
 		while (obj)
 		{
-			printf("\tType: %c\n", obj->type);
+			printf("\tType: %d\n", obj->type);
 			printf("\tIndex: %d\n", obj->i);
 			print_t_v3("\tPosition", obj->pos);
 			print_t_v3("\tAxis (Orientation)", obj->axis);
@@ -89,7 +89,7 @@ void	print_t_data(t_data *data)
 			printf("\tHeight: %.2f\n", obj->height);
 			printf("\tSphere Radius: %.2f\n", obj->sphere_radius);
 			print_t_v3("\tRay Start (Camera Position)", obj->ray_start);
-			print_t_v3("\tSphere Center", obj->sphere_center);
+			print_t_v3("\tSphere Center\n", obj->sphere_center);
 			obj = obj->next;
 		}
 	}
