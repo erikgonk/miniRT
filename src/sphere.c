@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 12:41:39 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/20 11:00:58 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/01 18:29:36 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/miniRT.h"
-
+/*
 float sphere_ray_intersect(t_v3 ray_start, t_v3 ray_direction,
 		t_v3 sphere_center, float sphere_radius)
 {
@@ -75,3 +75,4 @@ void	ft_sphere(t_obj *obj, t_sLight *light, mlx_image_t *img)
 		}
 	}
 }
+*/

@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ilumination.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 17:14:11 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/20 11:01:15 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/01 18:29:54 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/miniRT.h"
-
+/*
 int is_in_shadow(t_obj *obj, t_v3 point, t_sLight *light)
 {
     t_v3 light_dir = subtract(light->pos, point);
@@ -58,3 +58,4 @@ uint32_t	new_light(t_sLight *l, t_obj *obj, t_v3 iPoint)
 	return ((r << 16) | (g << 8) | b);
 }
 
+*/

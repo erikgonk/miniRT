@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:53:01 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/01 15:38:58 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/01 18:40:07 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,11 @@ void	correct_file(char *name)
 	exit (er("error: wrong file name -> ", name));
 }
 
-t_obj	*createObj(t_data *data, t_obj *obj, char *str, int type)
+t_obj	*createObj(t_data *data, char *str, int type)
 {
 	char		*tmp;
 	char		*tmp2 = NULL;
+	t_obj		*obj;
 
 	obj = newObj(obj);
 	tmp = floatsParse(obj, str, 2, 0);
@@ -63,11 +64,10 @@ t_obj	*createObj(t_data *data, t_obj *obj, char *str, int type)
 void	parse(t_data *data, char **av, int fd)
 {
 	char	type;
-	char	*str = NULL;
-	t_obj	*tmp = NULL;
-	t_obj	*obj = NULL;
+	char	*str;
 
-	obj = data->obj;
+	str = NULL;
+	data->obj = NULL;
 	while (true)
 	{
 		if (str)
@@ -77,12 +77,9 @@ void	parse(t_data *data, char **av, int fd)
 			break ;
 		if (str[0] == '#')
 			continue ;
-		type  = checkObj(data, str);
+		type = checkObj(data, str);
 		if (type <= 2 && ft_isspace(str[2]))
-		{
-			tmp = createObj(data, tmp, str, type);
-			lstadd_back(data->obj, tmp);
-		}
+			objadd_back(&data->obj, createObj(data, str, type));
 		createALight(data, str, type);
 		createCam(data, str, type);
 		createSLight(data, str, type);
@@ -100,8 +97,6 @@ void	parse(t_data *data, char **av, int fd)
 		// 	printf("str -> %s			%f %f %f %f %hhu, %hhu, %hhu\n", str, data->sLight->pos.x, data->sLight->pos.y, data->sLight->pos.z, data->sLight->br, data->sLight->rgb.r, data->sLight->rgb.g, data->sLight->rgb.b);
 	}
 	close(fd);
-	return ;
-	exit (er("salio bien", NULL));
 }
 	// data->obj->ray_start = vDefine(0.0, 0.0, 0.0);		// Camera position (where our rays start from)
 	// data->obj->sphere_radius = 1.4;						// Radius (size) of the sphere

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/01 15:11:52 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/01 18:15:52 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ int					er(char *s, char *av);
 t_obj				*newObj(t_obj *obj);
 float				ft_atof(char *str, int i);
 float				ft_atof_normi(char *str, int i);
+void				objadd_back(t_obj **lst, t_obj *new);
 
 //		parsing
 void				parse(t_data *data, char **av, int fd);

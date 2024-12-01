@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 09:47:50 by erigonza          #+#    #+#             */
-/*   Updatej: 2024/11/23 15:01:11 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/01 18:19:30 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,3 +99,21 @@ float	ft_atof(char *str, int i) // i = start
 //     if (data->sLight->br < 0.0f || data->sLight->br > 1.0f)
 //         er("error: %s: brightness must be in range [0.0, 1.0]", av[11]);
 // }
+
+void	objadd_back(t_obj **lst, t_obj *new)
+{
+	t_obj	*current;
+
+	if (lst)
+	{
+		if (*lst)
+		{
+			current = *lst;
+			while (current->next != NULL)
+				current = current->next;
+			current->next = new;
+		}
+		else
+			*lst = new;
+	}
+}

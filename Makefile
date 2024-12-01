@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+         #
+#    By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/05 11:52:11 by erigonza          #+#    #+#              #
-#    Updated: 2024/12/01 14:40:32 by shurtado         ###   ########.fr        #
+#    Updated: 2024/12/01 18:32:41 by shurtado         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ OBJS            := $(addprefix $(OBJ_D), $(FILES:.c=.o))
 DEPS			:= $(addprefix $(DEP_D), $(FILES:.c=.d))
 
 CC				:= cc
-CFLAGS			:= -g  #-fsanitize=address #-Wall -Wextra -Werror
+CFLAGS			:= -g -fsanitize=address #-Wall -Wextra -Werror
 
 LIB				:= lib/
 
@@ -49,9 +49,9 @@ libs:
 			@mkdir -p $(OBJ_D) $(DEP_D)
 
 $(OBJ_D)%.o:	$(SRC_D)%.c Makefile
-			@printf "\033[0;33m\r🔨 $< ✅ \033[0m"
-			@$(CC) $(CFLAGS) -MMD -o $@ -c $<
-			@mv $(@:.o=.d) $(DEP_D)
+			printf "\033[0;33m\r🔨 $< ✅ \033[0m"
+			$(CC) $(CFLAGS) -MMD -o $@ -c $<
+			mv $(@:.o=.d) $(DEP_D)
 
 $(NAME):	$(OBJS)
 			$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) $(MLX_D)$(MLX) $(LIBFT_D)$(LIBFT) -o $(NAME)
