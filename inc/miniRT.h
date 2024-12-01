@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/01 20:52:06 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/01 21:32:10 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ typedef struct s_data
 	t_sLight		*sLight;
 	t_obj			*obj;
 }					t_data;
+
+# include "render.h"
 
 //		utils
 int					er(char *s, char *av);
