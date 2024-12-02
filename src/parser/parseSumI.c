@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 13:40:44 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/01 19:44:57 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/02 14:15:00 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	skipFloat(char *str, int i, int j)
 {
-	if (!str[i] || !ft_isspace(str[i]))
-		exit(er("error: wrong map: skipFloat", NULL));
+	if (!str[i])
+		exit(er("error: wrong map: skipFloat", str));
 	while (str[i] && ft_isspace(str[i]))
 		i++;
 	while (str[i])
@@ -39,7 +39,7 @@ int	skipFloat(char *str, int i, int j)
 int	skipFloats(char *str, int i, int j, int k) // str | i (start) | j . (0) | k , (0)
 {
 	if (!str[i] || !ft_isspace(str[i]))
-		exit(er("error: wrong map: skipFloats", NULL));
+		exit(er("error: wrong map: skipFloats", str));
 	while (str[i] && ft_isspace(str[i]))
 		i++;
 	while (str[i])
@@ -82,6 +82,22 @@ int	skipColor(char *str, int i, int j, int flag)
 	return (i);
 }
 
+int	erik(char *str, int i)
+{
+	int		j;
+
+	j = 0;
+	while (str[i] && !ft_isspace(str[i++]))
+	{
+		if (!ft_isdigit(str[i - 1]) && str[i - 1] != '.')
+			exit(er("error: 2 parsing:\n", str));
+		else if (str[i - 1] == '.')
+			j++;
+	}
+	while (str[i] && ft_isspace(str[i]))
+		i++;
+	return (i);
+}
 int sumParse(char *str, int i, int flag, int j)
 {
 	// 0 skips spaces

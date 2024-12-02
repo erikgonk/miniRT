@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:53:01 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/02 10:17:34 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/02 14:19:43 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ t_obj	*createObj(t_data *data, char *str, int type)
 	if (type == 0) // sp
 	{
 		obj->size = ft_atof(tmp, 0);
-		obj->i = sumParse(tmp, 0, 2, 0);
-		tmp2 = ft_substr(tmp, obj->i, ft_strlen(tmp));
+		tmp2 = ft_substr(tmp, sumParse(tmp, 0, 2, 0), ft_strlen(tmp));
 	}
 	else if (type == 2) // cy
 	{
@@ -79,6 +78,8 @@ void	parse(t_data *data, char **av, int fd)
 		if (str[0] == '#')
 			continue ;
 		type = checkObj(data, str);
+		if (type > 5)
+			exit (er("error: wrong map: obj type\n", str));
 		if (type <= 2 && ft_isspace(str[2]))
 			objadd_back(&data->obj, createObj(data, str, type));
 		createALight(data, str, type);

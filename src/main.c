@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:12:46 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/02 10:57:35 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/02 14:16:00 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	main(int ac, char **av)
 	print_t_data(data);
 	data->obj->sphere_radius = data->obj->size / 2; // size
 	data->obj->sphere_center = data->obj->pos;
-	// exit(1);
+	exit(1);
 
 	mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "miniRT", true);
 	if (!mlx)
