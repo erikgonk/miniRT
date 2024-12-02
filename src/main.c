@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:12:46 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/01 20:59:45 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/02 10:57:35 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	main(int ac, char **av)
 	mlx_t			*mlx;
     mlx_image_t		*img;
 	int				fd;
+	t_rgb			**img_rgb;
 
 	data = malloc(sizeof(t_data));
 	if (ac != 2)
@@ -28,14 +29,27 @@ int	main(int ac, char **av)
 	if (fd < 0)
 		exit(er("error: fd filed", NULL));
 	parse(data, av, fd);
+	data->obj->pos.z = 0;
 	print_t_data(data);
-	exit(1);
+	data->obj->sphere_radius = data->obj->size / 2; // size
+	data->obj->sphere_center = data->obj->pos;
+	// exit(1);
+
 	mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "miniRT", true);
 	if (!mlx)
 		exit (er("Failed to initialize MLX42", NULL));
 	img = mlx_new_image(mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
     if (!img)
 		exit(er("Failed to create image\n", NULL));
+	img_rgb = render(data, 0, 0);
+	for (int i = 0; i < WINDOW_WIDTH; i++)
+	{
+		for (int j = 0; j < WINDOW_HEIGHT ; j++)
+		{
+			int	a = get_acolour(0, img_rgb[i][j].r, img_rgb[i][j].g, img_rgb[i][j].b);
+			mlx_put_pixel(img, i, j, a);
+		}
+	}
     mlx_image_to_window(mlx, img, 0, 0);
 	mlx_key_hook(mlx, &my_keyhook, NULL);
     mlx_loop(mlx);

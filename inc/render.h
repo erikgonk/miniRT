@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/02 09:58:37 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/02 10:34:51 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_quadratic
 
 
 // Return uint32 colour with alpha.
-uint32_t	get_acolour(t_uchar alpha, t_uchar r, t_uchar g, t_uchar b);
+int	get_acolour(t_uchar alpha, t_uchar r, t_uchar g, t_uchar b);
 //Calcula el pano de proyeccion, a traves del fov.
 t_projplane	*init_projection_plane(t_cam *cam);
 //establece el origen y destino de un array bidimensional de rayos

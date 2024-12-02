@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/02 09:50:00 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/02 10:30:59 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 # include "data.h"
 # include "render.h"
 
-# define WINDOW_WIDTH 1580
+# define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1080
 
 # define WIDTH 500

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parseACL.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:27:07 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/01 20:58:36 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/02 10:12:14 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	createCam(t_data *data, char *str, int type)
 	data->cam = malloc(sizeof(t_cam));
 	data->cam->pos = floatsACLParse(str, 1);
 	tmp = ft_substr(str, skipFloats(str, 1, 0, 0), ft_strlen(str));
-	data->cam->axis = floatsACLParse(tmp, 0);
+	data->cam->axis = normalize(floatsACLParse(tmp, 0));
 	str2 = ft_substr(tmp, skipFloats(tmp, 0, 0, 0), ft_strlen(tmp));
 	data->cam->fov = ft_atoiParse(str2, 0, 1);
 	free(str2);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+         #
+#    By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/05 11:52:11 by erigonza          #+#    #+#              #
-#    Updated: 2024/12/01 21:24:23 by shurtado         ###   ########.fr        #
+#    Updated: 2024/12/02 10:28:35 by shurtado         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,7 @@ create_dirs:
 			@mkdir -p $(OBJ_D) $(DEP_D)
 			@mkdir -p $(OBJ_D)parser $(OBJ_D)debug $(OBJ_D)window $(OBJ_D)render
 
-$(OBJ_D)%.o:	$(SRC_D)%.c Makefile
+$(OBJ_D)%.o:	$(SRC_D)%.c Makefile ./inc/miniRT.h ./inc/data.h ./inc/render.h
 			printf "\033[0;33m\r🔨 $< ✅ \033[0m"
 			$(CC) $(IFLAGS) $(CFLAGS) -MMD -o $@ -c $<
 			mv $(@:.o=.d) $(DEP_D)
