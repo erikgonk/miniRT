@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/01 21:25:02 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/02 09:58:37 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,20 @@ typedef struct s_quadratic
 
 // Return uint32 colour with alpha.
 uint32_t	get_acolour(t_uchar alpha, t_uchar r, t_uchar g, t_uchar b);
+//Calcula el pano de proyeccion, a traves del fov.
 t_projplane	*init_projection_plane(t_cam *cam);
+//establece el origen y destino de un array bidimensional de rayos
 void		init_rays(t_ray **rays, t_projplane *pplane, t_cam *cam);
+//Inicia la estructura de datos para una ecuacion cuadratica
 void		init_quadratic(t_quadratic *quad, float a, float b, float c);
+//Resuelve una ecuacion cuadratica, para almacenar en t1 y t2 las intersecciones si las hay (t > 0)
 bool		solve_quadratic(t_quadratic *quad);
 t_rgb		trace_ray(t_ray *ray, t_data *scene);
+//cambia el colo de un pixel X, teniendo en cuenta el brillo de la luz ambiental.
 t_rgb		apply_ambient_light(t_rgb obj_color, t_aLight *ambient_light);
+//renderiza toda la escena y devuelve un array bidimensional de pixels
 t_rgb		**render(t_data *scene, int x, int y);
+//true si el rayo intesecciona con una esfera.
 bool		intersect_sphere(t_ray *ray, t_obj *sphere, float *t);
 t_rgb		**init_image_(int width, int height);
 
