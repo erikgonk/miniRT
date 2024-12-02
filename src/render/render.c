@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:37:51 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/02 11:46:50 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/02 14:02:08 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,38 +14,23 @@
 #include "render.h"
 
 //Returns bidimensional RGB array to make the final image, x and y must be 0
-t_rgb	**render(t_data *scene, int x, int y)
+int	**render(t_data *scene)
 {
-	t_ray		**rays;
-	t_projplane	*pplane;
-	t_rgb		**image;
+	t_ray	**rays;
+	t_vp	vp;
+	int		**image;
 
-	rays = malloc(sizeof(t_ray *) * WINDOW_WIDTH);
-	for (int i = 0; i < WINDOW_WIDTH; i++)
-	{
-		rays[i] = malloc(sizeof(t_ray) * WINDOW_HEIGHT);
-	}
-	pplane = init_projection_plane(scene->cam);
-	init_rays(rays, pplane, scene->cam);
-	image = init_image_(WINDOW_WIDTH, WINDOW_HEIGHT);
+	vp = init_viewport(scene->cam, WH, HG);
+	rays = init_rays(scene->cam, &vp, WH, HG);
+	image = init_image_(HG, WH);
 	if (!image)
 		return (NULL);
-	x = 0;
-	t_rgb	rgb;
-
-
-	while (x < WINDOW_WIDTH)
+	for (int y = 0; y < HG; y++) // Fila
 	{
-		y = 0;
-		while (y < WINDOW_HEIGHT)
+		for (int x = 0; x < WH; x++) // Columna
 		{
-			rgb = trace_ray(&rays[x][y], scene);
-			image[x][y].r = rgb.r;
-			image[x][y].g = rgb.g;
-			image[x][y].b = rgb.b;
-			y++;
+		    image[y][x] = trace_ray(rays[y][x], scene);
 		}
-		x++;
 	}
 	return (image);
 }

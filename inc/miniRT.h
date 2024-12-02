@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/02 10:30:59 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/02 12:47:12 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,6 @@ uint32_t			new_light(t_sLight *l, t_obj *sp, t_v3 iPoint);
 
 //debug
 void				print_t_data(t_data *data);
+t_data				 *init_example_data(void);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/02 11:58:33 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/02 13:47:51 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,34 +53,28 @@ bool	solve_quadratic(t_quadratic *quad)
  *
  * Retorna un t_rgb que representa el color del píxel correspondiente al rayo.
  */
-t_rgb	trace_ray(t_ray *ray, t_data *scene)
+int trace_ray(t_ray ray, t_obj *objects)
 {
-	t_obj	*obj;
-	float	t_min;
-	t_obj	*closest_obj;
-	t_rgb	background;
-	float	t;
-
-	obj = scene->obj;
-	t_min = INFINITY;
-	closest_obj = NULL;
-	background.r = 0;
-	background.g = 0;
-	background.b = 0;
-	while (obj)
+	float	t_min = INFINITY; // Distancia mínima inicializada en infinito
+	t_obj	*closest_object = NULL;
+	// Iterar sobre todos los objetos
+	for (t_obj *obj = objects; obj; obj = obj->next)
 	{
-		if (obj->type == SP)
+		float t = INFINITY;
+		// Determinar intersección en función del tipo de objeto
+		if (obj->type == 's' && intersect_sphere(ray, obj, &t))
 		{
-			intersect_sphere(ray, obj, &t);
-			if (t > 0 && t < t_min)
+			if (t < t_min)
 			{
 				t_min = t;
-				closest_obj = obj;
+				closest_object = obj;
 			}
 		}
-		obj = obj->next;
+		// Otros tipos de objetos pueden añadirse aquí
+		// e.g., if (obj->type == 'p') intersect_plane(ray, obj, &t);
 	}
-	if (closest_obj)
-		return (apply_ambient_light(closest_obj->rgb, scene->aLight));
-	return (background);
+	// Retornar el color del objeto más cercano, o un color de fondo si no hay intersección
+	if (closest_object)
+		return get_colour(closest_object->rgb);
+	return (0x000000); // Fondo negro
 }

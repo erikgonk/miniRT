@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/02 09:51:44 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/02 12:42:53 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,6 @@ typedef struct s_obj
 	t_rgb			rgb;		// sp pl cy
 	float			size;		// sp radius | cy diameter
 	float			height;		// cy
-//
-	float			sphere_radius; // size
-	t_v3			ray_start; // Camera position
-	t_v3			sphere_center;
 	struct s_obj	*next;
 }					t_obj;
 
