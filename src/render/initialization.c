@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 12:37:59 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/01 13:08:02 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/02 11:42:08 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,8 @@ t_projplane	*init_projection_plane(t_cam *cam)
 	t_v3		up_guide;
 
 	pplane = malloc(sizeof(t_projplane));
-	pplane->distance = PPLANEDISTANCE;
 	fov_radius = cam->fov * M_PI / 180.0f;
-	pplane->width = 2.0f * tan(fov_radius / 2.0f) * pplane->distance;
+	pplane->width = 2.0f * tan(fov_radius / 2.0f) * PPLANEDISTANCE;
 	pplane->height = pplane->width * ((float)WINDOW_HEIGHT / (float)WINDOW_WIDTH);
 	pplane->forward = normalize(cam->axis);
 
@@ -76,7 +75,7 @@ t_ray	calculate_ray(int x, int y, t_projplane *pplane, t_cam *cam)
 	u *= pplane->width;
 	v *= pplane->height;
 
-	point_on_plane = vadd(vadd(scal_x_vec(pplane->distance, pplane->forward), \
+	point_on_plane = vadd(vadd(scal_x_vec(PPLANEDISTANCE, pplane->forward), \
 			scal_x_vec(u, pplane->right)), scal_x_vec(v, pplane->up));
 	ray.origin = cam->pos;
 	ray.direction = normalize(vsubstract(point_on_plane, cam->pos));

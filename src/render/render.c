@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:37:51 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/01 21:19:06 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/02 11:46:50 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_rgb	**render(t_data *scene, int x, int y)
 	if (!image)
 		return (NULL);
 	x = 0;
-	t_rgb	hola;
+	t_rgb	rgb;
 
 
 	while (x < WINDOW_WIDTH)
@@ -39,10 +39,10 @@ t_rgb	**render(t_data *scene, int x, int y)
 		y = 0;
 		while (y < WINDOW_HEIGHT)
 		{
-			hola = trace_ray(&rays[x][y], scene);
-			image[x][y].r = hola.r;
-			image[x][y].g = hola.g;
-			image[x][y].b = hola.b;
+			rgb = trace_ray(&rays[x][y], scene);
+			image[x][y].r = rgb.r;
+			image[x][y].g = rgb.g;
+			image[x][y].b = rgb.b;
 			y++;
 		}
 		x++;

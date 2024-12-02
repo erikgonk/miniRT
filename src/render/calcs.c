@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/01 13:00:52 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/02 11:58:33 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ t_rgb	trace_ray(t_ray *ray, t_data *scene)
 	{
 		if (obj->type == SP)
 		{
-			t = intersect_sphere(ray, obj, &t);
+			intersect_sphere(ray, obj, &t);
 			if (t > 0 && t < t_min)
 			{
 				t_min = t;

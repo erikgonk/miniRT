@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:48:44 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/02 10:57:51 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/02 11:58:29 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ bool	intersect_sphere(t_ray *ray, t_obj *sphere, float *t)
 	t_p3		oc;
 	t_quadratic	quad;
 
+	sphere->sphere_radius = sphere->size / 2;
 	oc = vsubstract(ray->origin, sphere->pos);
 	init_quadratic(&quad, dot(ray->direction, ray->direction), \
 					2.0f * dot(ray->direction, oc), \
@@ -27,20 +28,16 @@ bool	intersect_sphere(t_ray *ray, t_obj *sphere, float *t)
 									sphere->sphere_radius));
 	if (!solve_quadratic(&quad))
 		return (false);
-	int h = 0;
-	int g = 0;
 	if (quad.t1 > 0)
 	{
 		*t = quad.t1;
-		h++;
 	}
 	else if (quad.t2 > 0)
 	{
 		*t = quad.t2;
-		g++;
 	}
 	else
-		return (false);
+		t = NULL;
 	return (true);
 }
 

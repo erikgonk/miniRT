@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:12:46 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/02 10:57:35 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/02 11:27:47 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	main(int ac, char **av)
 	if (fd < 0)
 		exit(er("error: fd filed", NULL));
 	parse(data, av, fd);
-	data->obj->pos.z = 0;
 	print_t_data(data);
 	data->obj->sphere_radius = data->obj->size / 2; // size
 	data->obj->sphere_center = data->obj->pos;

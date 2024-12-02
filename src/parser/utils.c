@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 09:47:50 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/01 19:45:14 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/02 11:59:20 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ float	ft_atof(char *str, int i) // i = start
 		res = (res * 10.0f) + (str[i] - '0');
 		i++;
 	}
-	// printf("i -> %d\n", i);
 	if (str[i] == '.' && (str[i] != ',' || ft_isspace(str[i]) != 1))
 		return ((res + ft_atof_normi(str, ++i)) * sign);
 	return (res * sign);

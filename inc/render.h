@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/02 10:34:51 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/02 11:35:22 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ typedef struct s_projection_plane
 {
 	float	width;
 	float	height;
-	float	distance;
 	t_v3	forward;
 	t_v3	right;
 	t_v3	up;
