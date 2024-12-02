@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug_info.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 20:48:16 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/01 21:09:24 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/02 09:44:49 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ void	print_t_data(t_data *data)
 			printf("\tHeight: %.2f\n", obj->height);
 			printf("\tSphere Radius: %.2f\n", obj->sphere_radius);
 			print_t_v3("\tRay Start (Camera Position)", obj->ray_start);
-			print_t_v3("\tSphere Center\n", obj->sphere_center);
+			print_t_v3("\tSphere Center", obj->sphere_center);
+			printf("\n");
 			obj = obj->next;
 		}
 	}
