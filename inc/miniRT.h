@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/01 21:32:10 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/02 09:50:00 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,8 @@
 # define CYAN "\033[36m"
 # define WHITE "\033[37m"
 
+
 # include "../lib/MLX42/include/MLX42/MLX42.h"
-# include "libft.h"
-# include "libvct.h"
 # include <fcntl.h>
 # include <math.h>
 # include <stdio.h>
@@ -34,6 +33,10 @@
 # include <string.h>
 # include <sys/stat.h>
 # include <unistd.h>
+# include "libft.h"
+# include "libvct.h"
+# include "data.h"
+# include "render.h"
 
 # define WINDOW_WIDTH 1580
 # define WINDOW_HEIGHT 1080
@@ -43,63 +46,6 @@
 # define SP 0
 # define PL 1
 # define CY 2
-
-// t_rgb[800][600] image;
-
-typedef struct s_rgb
-{
-	unsigned char			r;
-	unsigned char			g;
-	unsigned char			b;
-}					t_rgb;
-
-typedef struct s_cam
-{
-	t_v3			pos;
-	int				fov;
-	t_v3			axis; // orientation
-}					t_cam;
-
-typedef struct s_aLight
-{
-	float			br; // brightness
-	t_rgb			rgb;
-}					t_aLight;
-
-typedef struct s_sLight
-{
-	t_v3			pos;
-	float			br; // brightness
-	t_rgb			rgb;
-	struct s_light	*next;
-}					t_sLight;
-
-typedef struct s_obj
-{
-	uint32_t		color;
-	int				i;			// just to use it on the parser
-	char			type;		// in case I want to separate the parser and the exec
-	t_v3			pos;		// cp pl cy
-	t_v3			axis;		// pl cy | orientation
-	t_rgb			rgb;		// sp pl cy
-	float			size;		// sp radius | cy diameter
-	float			height;		// cy
-//
-	float			sphere_radius; // size
-	t_v3			ray_start; // Camera position
-	t_v3			sphere_center;
-	struct s_obj	*next;
-}					t_obj;
-
-typedef struct s_data
-{
-	t_aLight		*aLight;
-	t_cam			*cam;
-	t_sLight		*sLight;
-	t_obj			*obj;
-}					t_data;
-
-# include "render.h"
 
 //		utils
 int					er(char *s, char *av);
