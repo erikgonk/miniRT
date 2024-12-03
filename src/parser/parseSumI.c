@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 13:40:44 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/02 14:15:00 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/03 19:03:51 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ int sumParse(char *str, int i, int flag, int j)
 	}
 	while ((flag == 2 || flag == 4) && str[i] && ft_isspace(str[i]))
 		i++;
+	printf("i -> %")
 	if (flag != 2 && (str[i] && !ft_isdigit(str[i])) || j >= 2)
 		exit(er("error: map parsing:\n", str));
 	return (i);

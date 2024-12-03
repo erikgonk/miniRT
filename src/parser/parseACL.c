@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:27:07 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/02 10:12:14 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/03 18:44:14 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ t_v3	floatsACLParse(char *str, int i)
 	float		z;
 	char		*tmp;
 
+	printf("pasa\n");
+	printf("peta aca\n");
 	i = sumParse(str, i, 0, 0);
 	x = ft_atof(str, i);
 	i = sumParse(str, i, 1, 0);
