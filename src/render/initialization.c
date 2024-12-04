@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialization.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 12:37:59 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/02 14:01:44 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/04 13:58:28 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,33 +24,40 @@
  *
  * Retorna una estructura t_projplane inicializada.
  */
-t_vp init_viewport(t_cam *camera, int width, int height)
+t_vp *init_viewport(t_cam *camera, int width, int height)
 {
-    t_vp viewport;
+    t_vp *viewport = malloc(sizeof(t_vp));
+    if (!viewport)
+    {
+        printf("Error: No se pudo asignar memoria para viewport\n");
+        return NULL;
+    }
+
     float aspect_ratio = (float)width / (float)height;
     float viewport_width = 2.0 * tan((camera->fov * M_PI / 180.0) / 2.0);
     float viewport_height = viewport_width / aspect_ratio;
 
     // Vector "forward" basado en la orientación de la cámara
     t_v3 forward = normalize(camera->axis);
-    t_v3 right = normalize(cross((t_v3){0, 1, 0}, forward)); // Cruz entre 'up' y 'forward'
+    t_v3 arbitrary = (fabs(forward.y) > 0.999) ? (t_v3){1, 0, 0} : (t_v3){0, 1, 0};
+    t_v3 right = normalize(cross(arbitrary, forward));
     t_v3 up = normalize(cross(forward, right));
 
     // Centro del plano de proyección
-    viewport.origin = camera->pos;
+    viewport->origin = camera->pos;
 
     // Calcular las dimensiones físicas del viewport
-	viewport.horizontal = scal_x_vec(viewport_width, right);
-	viewport.vertical = scal_x_vec(viewport_height, up);
+    viewport->horizontal = scal_x_vec(viewport_width, right);
+    viewport->vertical = scal_x_vec(viewport_height, up);
 
-	// Calcular la esquina inferior izquierda
-	viewport.lower_left = vsubstract(
-		vsubstract(
-			vsubstract(viewport.origin, scalar_div(viewport.horizontal, 2)),
-			scalar_div(viewport.vertical, 2)
-		),
-		forward
-	);
+    // Calcular la esquina inferior izquierda
+    viewport->lower_left = vsubstract(
+        vsubstract(
+            vsubstract(viewport->origin, scalar_div(viewport->horizontal, 2)),
+            scalar_div(viewport->vertical, 2)
+        ),
+        forward // Distancia hacia el plano de proyección
+    );
 
     return viewport;
 }
@@ -96,8 +103,12 @@ t_ray	**init_rays(t_cam *camera, t_vp *vp, int width, int height)
 			// Crear el rayo
 			rays[y][x].origin = camera->pos;
 			rays[y][x].direction = normalize(vsubstract(pixel_position, camera->pos));
+			//printf("Ray origin: (%f, %f, %f)\n", rays[y][x].origin.x, rays[y][x].origin.y, rays[y][x].origin.z);
+			//printf("Ray direction: (%f, %f, %f)\n", rays[y][x].direction.x, rays[y][x].direction.y, rays[y][x].direction.z);
 		}
 	}
+
+
 	return rays;
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   calcs.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/02 13:47:51 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/04 16:39:40 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ bool	solve_quadratic(t_quadratic *quad)
 	sqrt_discriminant = sqrtf(quad->discriminant);
 	quad->t1 = (-quad->b - sqrt_discriminant) / (2.0f * quad->a);
 	quad->t2 = (-quad->b + sqrt_discriminant) / (2.0f * quad->a);
+
 	return (true);
 }
 
@@ -53,7 +54,7 @@ bool	solve_quadratic(t_quadratic *quad)
  *
  * Retorna un t_rgb que representa el color del píxel correspondiente al rayo.
  */
-int trace_ray(t_ray ray, t_obj *objects)
+uint32_t trace_ray(t_ray ray, t_obj *objects)
 {
 	float	t_min = INFINITY; // Distancia mínima inicializada en infinito
 	t_obj	*closest_object = NULL;
@@ -73,8 +74,14 @@ int trace_ray(t_ray ray, t_obj *objects)
 		// Otros tipos de objetos pueden añadirse aquí
 		// e.g., if (obj->type == 'p') intersect_plane(ray, obj, &t);
 	}
+
+
+	static int count = 0;
 	// Retornar el color del objeto más cercano, o un color de fondo si no hay intersección
 	if (closest_object)
+	{
+		printf("choques: %d \n", count++);
 		return get_colour(closest_object->rgb);
-	return (0x000000); // Fondo negro
+	}
+	return (0xFF000000); // Fondo negro
 }

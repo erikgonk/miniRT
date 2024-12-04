@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersections.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:48:44 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/02 13:53:29 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/04 16:02:36 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,12 @@ bool	intersect_sphere(t_ray ray, t_obj *sphere, float *t)
 	t_v3		oc;
 	t_quadratic	quad;
 
-	oc = vsubstract(ray.origin, sphere->pos);  // Vector desde el origen del rayo al centro de la esfera
-	// Coeficientes de la ecuación cuadrática
+	oc = vsubstract(ray.origin, sphere->pos);
 	float a = dot(ray.direction, ray.direction);
-	float b = 2.0f * dot(oc, ray.direction);
-	float c = dot(oc, oc) - sphere->size * sphere->size; // size = radio
+	float b = 2.0f * dot(ray.direction, oc);
+	float radius = sphere->size / 2.0f;
+	float c = dot(oc, oc) - (radius * radius);
+	float discriminante = (b * b) - (4 * a * c);
 	init_quadratic(&quad, a, b, c);
 	if (!solve_quadratic(&quad))
 		return (false);

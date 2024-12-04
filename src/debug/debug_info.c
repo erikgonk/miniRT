@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug_info.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 20:48:16 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/02 14:09:20 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/04 15:59:07 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,10 +153,10 @@ t_data *init_example_data(void)
         return NULL;
     *sphere = (t_obj){
         .type = 's',
-        .pos = (t_v3){0.0, 0.0, 20.6},
+        .pos = (t_v3){-50.0, 0.0, 0.0},
         .axis = {0},
         .rgb = (t_rgb){255, 0, 0},
-        .size = 20.0,
+        .size = 10.0,
         .height = 0.0,
         .next = data->obj
     };

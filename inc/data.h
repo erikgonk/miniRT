@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/02 12:42:53 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/04 11:25:00 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct s_sLight
 	t_v3			pos;
 	float			br; // brightness
 	t_rgb			rgb;
-	struct s_light	*next;
+	struct s_sLight	*next;
 }					t_sLight;
 
 typedef struct s_obj

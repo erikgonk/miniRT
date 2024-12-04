@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/02 12:47:12 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/04 12:49:14 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@
 # include "data.h"
 # include "render.h"
 
-# define WINDOW_WIDTH 1920
-# define WINDOW_HEIGHT 1080
+# define WINDOW_WIDTH 800
+# define WINDOW_HEIGHT 600
 
 # define WIDTH 500
 # define HEIGHT 500
