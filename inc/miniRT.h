@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/02 10:30:59 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/04 15:05:20 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void				createSLight(t_data *data, char *str, int type);
 //		parse sum to i
 int					skipColor(char *str, int i, int j, int flag);
 int					skipFloats(char *str, int i, int j, int k);
-int					skipFloat(char *str, int i, int j);
+int					skipFloat(char *str, int i, int j, int flag);
 int					sumParse(char *str, int i, int flag, int j);
 //		parseUtils
 int					checkObj(t_data *data, char *str);

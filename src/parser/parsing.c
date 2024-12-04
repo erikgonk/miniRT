@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:53:01 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/02 14:19:43 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/04 15:29:28 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	parse(t_data *data, char **av, int fd)
 			continue ;
 		type = checkObj(data, str);
 		if (type > 5)
-			exit (er("error: wrong map: obj type\n", str));
+			exit (er("error: wrong map: obj type", str));
 		if (type <= 2 && ft_isspace(str[2]))
 			objadd_back(&data->obj, createObj(data, str, type));
 		createALight(data, str, type);

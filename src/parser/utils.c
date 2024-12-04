@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 09:47:50 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/01 19:45:14 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/04 15:06:03 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	er(char *s, char *argv)
 		ft_printf(2, "%s", s);
 	ft_printf(2, "%s", BOLD);
 	if (argv)
-		ft_printf(2, " %s", argv);
+		ft_printf(2, "\n%s", argv);
 	ft_printf(2, "%s", RESET);
 	return (1);
 }

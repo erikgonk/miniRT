@@ -6,12 +6,13 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:27:07 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/03 18:44:14 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/04 15:20:23 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
+// 
 int	randomSumParse(char *str, int i)
 {
 	int		j;
@@ -24,7 +25,7 @@ int	randomSumParse(char *str, int i)
 		if (ft_isdigit(str[i]))
 			j = 0;
 		if (k >= 2 || j >= 2)
-			exit(er("error: parsing ACL", str));
+			exit(er("error: parsing", str));
 		if (ft_isspace(str[i]))
 			break ;
 		if (str[i] == '.')
@@ -32,7 +33,7 @@ int	randomSumParse(char *str, int i)
 		else if (str[i] == ',')
 			k++;
 		else if (!ft_isdigit(str[i]))
-			exit(er("error: parsing ACL", str));
+			exit(er("error: parsing", str));
 		i++;
 	}
 	if (str[i] && str[i] == ',')
@@ -47,15 +48,15 @@ t_v3	floatsACLParse(char *str, int i)
 	float		z;
 	char		*tmp;
 
-	printf("pasa\n");
-	printf("peta aca\n");
-	i = sumParse(str, i, 0, 0);
+	while (str[i] && ft_isspace(str[i]))
+		i++;
+	if (str[i] && !ft_isdigit(str[i]) && str[i] != '-')
+		exit(er("error: map parsing:\n", str));
 	x = ft_atof(str, i);
-	i = sumParse(str, i, 1, 0);
+	i = skipFloat(str, i, 0, 1);
 	y = ft_atof(str, i);
 	i = randomSumParse(str, i);
 	z = ft_atof(str, i);
-	i = sumParse(str, i, 2, 0);
 	return (vdefine(x, y, z));
 }
 
@@ -67,10 +68,10 @@ void	createALight(t_data *data, char *str, int type)
 		return ;
 	data->aLight = malloc(sizeof(t_aLight));
 	data->aLight->br = ft_atof(str, 1);
-	tmp = ft_substr(str, skipFloat(str, 1, 0), ft_strlen(str));
+	tmp = ft_substr(str, skipFloat(str, 1, 0, 0), ft_strlen(str));
 	data->aLight->rgb = colorsParse(tmp);
 	free(tmp);
-	// printf("%s		%f %hhu, %hhu, %hhu\n\n", str, aLight->br, aLight->rgb.r, aLight->rgb.g, aLight->rgb.b);
+	// printf("%s		%f %hhu, %hhu, %hhu\n\n", str, data->aLight->br, data->aLight->rgb.r, data->aLight->rgb.g, data->aLight->rgb.b);
 }
 
 void	createCam(t_data *data, char *str, int type)
@@ -107,7 +108,7 @@ void	createSLight(t_data *data, char *str, int type)
 	sLight->pos = floatsACLParse(str, 1);
 	tmp = ft_substr(str, skipFloats(str, 1, 0, 0), ft_strlen(str));
 	sLight->br = ft_atof(tmp, 0);
-	str2 = ft_substr(tmp, skipFloat(tmp, 0, 0), ft_strlen(tmp));
+	str2 = ft_substr(tmp, skipFloat(tmp, 0, 0, 0), ft_strlen(tmp));
 	sLight->rgb = colorsParse(str2);
 	free(str2);
 	free(tmp);
