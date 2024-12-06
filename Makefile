@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+         #
+#    By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/05 11:52:11 by erigonza          #+#    #+#              #
-#    Updated: 2024/12/02 10:28:35 by shurtado         ###   ########.fr        #
+#    Updated: 2024/12/06 19:13:07 by shurtado         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ FILES			:= main.c \
 				 parser/parseACL.c parser/parseSumI.c parser/parseUtils.c parser/parsing.c parser/utils.c \
 				 debug/ilumination.c debug/sphere.c debug/debug_info.c\
 				 window/mlx.c \
-				 render/calcs.c render/colour.c render/initialization.c render/intersections.c render/render.c
+				 render/calcs.c render/colour.c render/initialization.c render/intersections.c render/render.c \
+				 render/rays.c render/viewport.c render/free.c
 SRCS			:= $(addprefix $(SRC_D), $(FILES))
 
 OBJS            := $(addprefix $(OBJ_D), $(FILES:.c=.o))

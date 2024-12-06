@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector_operations3.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 18:32:58 by erigonza          #+#    #+#             */
-/*   Updated: 2024/11/30 13:35:09 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/02 13:14:42 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,21 @@ t_p3		z_axis_rotation(t_p3 vec, float angle)
 	rotated.y = vec.x * row2.x + vec.y * row2.y + vec.z * row2.z;
 	rotated.z = vec.x * row3.x + vec.y * row3.y + vec.z * row3.z;
 	return (rotated);
+}
+
+t_v3 scalar_div(t_v3 vec, float scalar)
+{
+	t_v3 result;
+	
+	if (scalar == 0)
+	{
+		result.x = 0;
+		result.y = 0;
+		result.z = 0;
+		return result;
+	}
+	result.x = vec.x / scalar;
+	result.y = vec.y / scalar;
+	result.z = vec.z / scalar;
+	return result;
 }
