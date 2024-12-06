@@ -3,23 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   colour.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 12:19:01 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/02 12:58:02 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/06 19:35:44 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/render.h"
 
-// From 0-255 ARGB colour Returns uint32 colour
+// From 0-255 BRGA colour Returns uint32 colour
 uint32_t	get_acolour(t_uchar alpha, t_uchar r, t_uchar g, t_uchar b)
 {
-	return ((alpha << 24) | (r << 16) | (g << 8) | b);
+	return ((alpha << 24) | (b << 16) | (g << 8) | r);
 }
-int	get_colour(t_rgb color)
+
+uint32_t	get_colour(t_rgb color)
 {
-	 return ((color.r << 16) | (color.g << 8) | color.b);
+	return (get_acolour(255, color.r, color.g, color.b));
 }
 
 /**

@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:12:46 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/04 16:26:34 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/06 19:49:52 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(int ac, char **av)
 	mlx_t			*mlx;
     mlx_image_t		*img;
 	int				fd;
-	int			**img_rgb;
+	uint32_t		**img_rgb;
 
 	/*
 	data = malloc(sizeof(t_data));
@@ -39,36 +39,20 @@ int	main(int ac, char **av)
 	if (!mlx)
 		exit (er("Failed to initialize MLX42", NULL));
 	img = mlx_new_image(mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-    if (!img)
+	if (!img)
+	{
+		mlx_terminate(mlx);
 		exit(er("Failed to create image\n", NULL));
-	img_rgb = render(data);
+	}
+	img_rgb = render(data, 0, 0);
 	if (!img_rgb)
 		exit(er("Failed to render scene", NULL));
-
-	uint32_t *pixels = (uint32_t *)img->pixels;
-	for (int y = 0; y < WINDOW_HEIGHT; y++) 
-	{
-	    for (int x = 0; x < WINDOW_WIDTH; x++) 
-	    {
-	        // Obtener el color de img_rgb
-	        uint32_t rgb = img_rgb[y][x]; // Supongo que el formato es 0xRRGGBB
-	
-	        // Convertir de RGB (0xRRGGBB) a BGRA (0xAABBGGRR)
-	        uint32_t b = (rgb & 0xFF) << 16;     // Mover azul a la posición correcta
-	        uint32_t g = (rgb & 0xFF00);         // Verde queda en su lugar
-	        uint32_t r = (rgb & 0xFF0000) >> 16; // Mover rojo a la posición correcta
-	        uint32_t a = 0xFF000000;             // Alpha fijo en 0xFF (opaco)
-	        uint32_t bgra = a | b | g | r;
-	
-	        // Asignar al buffer de píxeles de MLX42
-	        pixels[y * WINDOW_WIDTH + x] = bgra;
-	    }
-	}
-		img->enabled = true;
-	    mlx_image_to_window(mlx, img, 0, 0);
+	fill_image((uint32_t *)img->pixels, img_rgb);
+	img->enabled = true;
+	mlx_image_to_window(mlx, img, 0, 0);
 	mlx_key_hook(mlx, &my_keyhook, NULL);
-    mlx_loop(mlx);
-    mlx_delete_image(mlx, img);
-    mlx_terminate(mlx);
+	mlx_loop(mlx);
+	mlx_delete_image(mlx, img);
+	mlx_terminate(mlx);
 	exit(0);
 }

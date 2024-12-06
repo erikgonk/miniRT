@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 20:48:16 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/04 15:59:07 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/06 20:02:04 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ t_data *init_example_data(void)
     data->aLight = malloc(sizeof(t_aLight));
     if (!data->aLight)
         return NULL;
-    data->aLight->br = 0.2;
+    data->aLight->br = 0.24f;
     data->aLight->rgb = (t_rgb){255, 255, 255};
 
     // Inicializar Cámara
@@ -125,7 +125,7 @@ t_data *init_example_data(void)
     if (!data->sLight)
         return NULL;
     data->sLight->pos = (t_v3){-40.0, 50.0, 0.0};
-    data->sLight->br = 0.6;
+    data->sLight->br = 0.6f;
     data->sLight->rgb = (t_rgb){10, 0, 255};
     data->sLight->next = NULL;
 
@@ -139,7 +139,7 @@ t_data *init_example_data(void)
     *plane = (t_obj){
         .type = 'p',
         .pos = (t_v3){0.0, 0.0, -10.0},
-        .axis = (t_v3){0.0, 1.0, 0.0},
+        .axis = (t_v3){0.2, 0.99, 0.1},
         .rgb = (t_rgb){0, 0, 225},
         .size = 0.0,
         .height = 0.0,
@@ -168,11 +168,11 @@ t_data *init_example_data(void)
         return NULL;
     *cylinder = (t_obj){
         .type = 'c',
-        .pos = (t_v3){50.0, 0.0, 20.6},
-        .axis = (t_v3){0.0, 0.0, 1.0},
-        .rgb = (t_rgb){10, 0, 255},
-        .size = 14.2,
-        .height = 21.42,
+        .pos = (t_v3){-50.0, 6.9, -550.0},
+        .axis = (t_v3){0.01, 1.0, 0.1},
+        .rgb = (t_rgb){255, 255, 255},
+        .size = 5,
+        .height = 6,
         .next = data->obj
     };
     data->obj = cylinder;
