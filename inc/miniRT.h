@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/04 15:05:20 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/07 14:58:10 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@
 # include "data.h"
 # include "render.h"
 
-# define WINDOW_WIDTH 1920
-# define WINDOW_HEIGHT 1080
+# define WINDOW_WIDTH 800
+# define WINDOW_HEIGHT 600
 
 # define WIDTH 500
 # define HEIGHT 500
@@ -79,6 +79,7 @@ t_rgb				colorsParse(char *str);
 //		mlx
 void				draw_pixel(mlx_image_t *img, int x, int y, uint32_t color);
 void				my_keyhook(mlx_key_data_t keydata, void *param);
+void				fill_image(uint32_t *pixels, uint32_t **img_rgb);
 
 //		sphere
 void				ft_sphere(t_obj *sp, t_sLight *light, mlx_image_t *img);
@@ -90,5 +91,8 @@ uint32_t			new_light(t_sLight *l, t_obj *sp, t_v3 iPoint);
 
 //debug
 void				print_t_data(t_data *data);
+t_data				 *init_example_data(void);
+
+
 
 #endif

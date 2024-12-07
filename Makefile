@@ -6,7 +6,7 @@
 #    By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/05 11:52:11 by erigonza          #+#    #+#              #
-#    Updated: 2024/12/04 14:51:11 by erigonza         ###   ########.fr        #
+#    Updated: 2024/12/07 14:57:54 by shurtado         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ FILES			:= main.c \
 				 parser/parseACL.c parser/parseSumI.c parser/parseUtils.c parser/parsing.c parser/utils.c \
 				 debug/ilumination.c debug/sphere.c debug/debug_info.c\
 				 window/mlx.c \
-				 render/calcs.c render/colour.c render/initialization.c render/intersections.c render/render.c
+				 render/calcs.c render/colour.c render/initialization.c render/intersections.c render/render.c \
+				 render/rays.c render/viewport.c render/free.c
 SRCS			:= $(addprefix $(SRC_D), $(FILES))
 
 OBJS            := $(addprefix $(OBJ_D), $(FILES:.c=.o))

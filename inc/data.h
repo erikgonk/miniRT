@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/04 15:26:06 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/07 14:58:03 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct s_cam
 }					t_cam;
 
 typedef struct s_aLight
-{
+{git checkout -b erik origin/erik
 	float			br; // brightness
 	t_rgb			rgb;
 }					t_aLight;
@@ -41,7 +41,7 @@ typedef struct s_sLight
 	t_v3			pos;
 	float			br; // brightness
 	t_rgb			rgb;
-	struct s_light	*next;
+	struct s_sLight	*next;
 }					t_sLight;
 
 typedef struct s_obj
@@ -54,10 +54,6 @@ typedef struct s_obj
 	t_rgb			rgb;		// sp pl cy
 	float			size;		// sp radius | cy diameter
 	float			height;		// cy
-//
-	float			sphere_radius; // size
-	t_v3			ray_start; // Camera position
-	t_v3			sphere_center;
 	struct s_obj	*next;
 }					t_obj;
 

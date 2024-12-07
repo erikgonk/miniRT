@@ -6,13 +6,13 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:27:07 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/04 15:20:23 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/07 14:59:41 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-// 
+//
 int	randomSumParse(char *str, int i)
 {
 	int		j;
@@ -71,7 +71,6 @@ void	createALight(t_data *data, char *str, int type)
 	tmp = ft_substr(str, skipFloat(str, 1, 0, 0), ft_strlen(str));
 	data->aLight->rgb = colorsParse(tmp);
 	free(tmp);
-	// printf("%s		%f %hhu, %hhu, %hhu\n\n", str, data->aLight->br, data->aLight->rgb.r, data->aLight->rgb.g, data->aLight->rgb.b);
 }
 
 void	createCam(t_data *data, char *str, int type)
@@ -89,7 +88,6 @@ void	createCam(t_data *data, char *str, int type)
 	data->cam->fov = ft_atoiParse(str2, 0, 1);
 	free(str2);
 	free(tmp);
-	// printf("		%f, %f, %f %f. %f, %f %d\n\n", cam->pos.x, cam->pos.y, cam->pos.z, cam->axis.x, cam->axis.y, cam->axis.z, cam->fov);
 }
 
 void	createSLight(t_data *data, char *str, int type)
@@ -112,5 +110,4 @@ void	createSLight(t_data *data, char *str, int type)
 	sLight->rgb = colorsParse(str2);
 	free(str2);
 	free(tmp);
-	// printf("		%f, %f, %f %f %hhu, %hhu, %hhu\n\n", sLight->pos.x, sLight->pos.y, sLight->pos.z, sLight->br, sLight->rgb.r, sLight->rgb.g, sLight->rgb.b);
 }
