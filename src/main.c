@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:12:46 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/07 15:09:39 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/07 15:25:02 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	main(int ac, char **av)
 	int				fd;
 	uint32_t		**img_rgb;
 
-
 	data = malloc(sizeof(t_data));
 	if (ac != 2)
 		exit(er("error: 2 args needed", NULL));
@@ -31,7 +30,9 @@ int	main(int ac, char **av)
 		exit(er("error: fd filed", NULL));
 	parse(data, av, fd);
 
-
+	/*
+*/
+//	data = init_example_data();
 	print_t_data(data);
 	// exit(1);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parseSumI.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 13:40:44 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/04 15:13:53 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/07 15:32:08 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,8 @@ int sumParse(char *str, int i, int flag, int j)
 	}
 	while (flag == 2 && str[i] && !ft_isspace(str[i++]))
 	{
-		if (!ft_isdigit(str[i - 1]) && str[i - 1] != '.')
-			exit(er("error: 2 parsing:\n", str));
+		if (!ft_isdigit(str[i - 1]) && str[i - 1] != '.' && str[i - 1] != '-')
+			exit(er("error: 2 parsing:hola \n", str));
 		else if (str[i - 1] == '.')
 			j++;
 	}
