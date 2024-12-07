@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/04 11:25:00 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/07 14:58:03 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct s_cam
 }					t_cam;
 
 typedef struct s_aLight
-{
+{git checkout -b erik origin/erik
 	float			br; // brightness
 	t_rgb			rgb;
 }					t_aLight;
@@ -49,7 +49,7 @@ typedef struct s_obj
 	uint32_t		color;
 	int				i;			// just to use it on the parser
 	char			type;		// in case I want to separate the parser and the exec
-	t_v3			pos;		// cp pl cy
+	t_v3			pos;		// sp pl cy
 	t_v3			axis;		// pl cy | orientation
 	t_rgb			rgb;		// sp pl cy
 	float			size;		// sp radius | cy diameter
