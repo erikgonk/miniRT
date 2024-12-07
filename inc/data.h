@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/07 14:58:03 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/07 15:10:13 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct s_cam
 }					t_cam;
 
 typedef struct s_aLight
-{git checkout -b erik origin/erik
+{
 	float			br; // brightness
 	t_rgb			rgb;
 }					t_aLight;
