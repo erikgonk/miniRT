@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 17:57:09 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/09 19:25:48 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/09 19:29:07 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,17 @@ void	manage_cam(keys_t key, t_data *data)
 	else
 	{
 		if (key == MLX_KEY_UP)
-			data->cam->pos.y = fminf(data->cam->pos.y + CAMAXISP, CAMAXISMAX);
+			data->cam->axis.y = fminf(data->cam->axis.y + CAMAXISP, CAMAXISMAX);
 		else if (key == MLX_KEY_DOWN)
-			data->cam->pos.y = fmaxf(data->cam->pos.y - CAMAXISP, CAMAXISMIN);
+			data->cam->axis.y = fmaxf(data->cam->axis.y - CAMAXISP, CAMAXISMIN);
 		else if (key == MLX_KEY_LEFT)
-			data->cam->pos.x = fmaxf(data->cam->pos.x - CAMAXISP, CAMAXISMIN);
+			data->cam->axis.x = fmaxf(data->cam->axis.x - CAMAXISP, CAMAXISMIN);
 		else if (key == MLX_KEY_RIGHT)
-			data->cam->pos.x = fminf(data->cam->pos.x + CAMAXISP, CAMAXISMAX);
+			data->cam->axis.x = fminf(data->cam->axis.x + CAMAXISP, CAMAXISMAX);
 		else if (key == MLX_KEY_Z)
-			data->cam->pos.z = fmaxf(data->cam->pos.z - CAMAXISP, CAMAXISMIN);
+			data->cam->axis.z = fmaxf(data->cam->axis.z - CAMAXISP, CAMAXISMIN);
 		else if (key == MLX_KEY_X)
-			data->cam->pos.z = fminf(data->cam->pos.z + CAMAXISP, CAMAXISMAX);
+			data->cam->axis.z = fminf(data->cam->axis.z + CAMAXISP, CAMAXISMAX);
 	}
 	//meter aqui funcion de re-reenderizar
 	print_cam_menu(data);
