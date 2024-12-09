@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/09 17:42:23 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/09 18:14:39 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 # include "libvct.h"
 # include "data.h"
 # include "render.h"
+# include "console.h"
 
 # define WINDOW_WIDTH 800
 # define WINDOW_HEIGHT 600
@@ -87,9 +88,6 @@ float				sphere_ray_intersect(t_v3 ray_start, t_v3 ray_direction,
 //		ilumination
 int					is_in_shadow(t_obj *sp, t_v3 point, t_sLight *light);
 uint32_t			new_light(t_sLight *l, t_obj *sp, t_v3 iPoint);
-
-//Console
-void				run_console(t_data *data, keys_t key);
 
 //debug
 t_data				*init_example_data(void);

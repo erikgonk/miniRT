@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 17:00:06 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/09 17:52:20 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/09 17:58:25 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,5 @@ void	run_console(t_data *data, keys_t key)
 	else if (mode && option == 3)
 		print_obj_menu(data);
 	else if (!mode)
-		manage_submenu(key, option);
+		manage_submenu(key, option, data);
 }
