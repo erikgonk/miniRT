@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 18:12:24 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/09 18:56:57 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/09 19:21:07 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@
 # define CAMAXISMAX 1.00f
 
 # define SPOTPLUS 5
-# define SPOTAXISPLUS 0.01f
-# define SPOTAXISMIN -1.00f
-# define SPOTAXISMAX 1.00f
+# define SLIGHTPLUS 0.01f
+# define SLIGHTMAX	1.0f
+# define SLIGHTMIN	0.0f
 
 # define OBJPLUS 5
-# define OBJAXISPLUS 0.01f
+# define OBJAXISP 0.01f
 # define OBJAXISMIN -1.00f
 # define OBJAXISMAX 1.00f
 

@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 17:57:09 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/09 18:57:36 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/09 19:25:48 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,35 +64,77 @@ void	manage_cam(keys_t key, t_data *data)
 
 void	manage_spot(keys_t key, t_data *data)
 {
-	if (key == MLX_KEY_UP)
-		data->sLight->pos.y += SPOTPLUS;
-	else if (key == MLX_KEY_DOWN)
-		data->sLight->pos.y -= SPOTPLUS;
-	else if (key == MLX_KEY_LEFT)
-		data->sLight->pos.x -= SPOTPLUS;
-	else if (key == MLX_KEY_RIGHT)
-		data->sLight->pos.x += SPOTPLUS;
-	else if (key == MLX_KEY_Z)
-		data->sLight->pos.z -= SPOTPLUS;
-	else if (key == MLX_KEY_X)
-		data->sLight->pos.z += SPOTPLUS;
+	static bool	mode;
+
+	if (key == MLX_KEY_SPACE)
+		mode = !mode;
+	if (!mode)
+	{
+		if (key == MLX_KEY_UP && data->sLight->br < SLIGHTMAX)
+			data->sLight->br = fminf(data->sLight->br + SLIGHTPLUS, SLIGHTMAX);
+		else if (key == MLX_KEY_DOWN && data->sLight->br > SLIGHTMIN)
+			data->sLight->br = fmaxf(data->sLight->br - SLIGHTPLUS, SLIGHTMIN);
+		else if (key == MLX_KEY_RIGHT && data->sLight->br < SLIGHTMAX)
+			data->sLight->br = fminf(data->sLight->br + SLIGHTPLUS, SLIGHTMAX);
+		else if (key == MLX_KEY_LEFT && data->sLight->br > SLIGHTMIN)
+			data->sLight->br = fmaxf(data->sLight->br - SLIGHTPLUS, SLIGHTMIN);
+	}
+	else
+	{
+		if (key == MLX_KEY_UP)
+			data->sLight->pos.y += SPOTPLUS;
+		else if (key == MLX_KEY_DOWN)
+			data->sLight->pos.y -= SPOTPLUS;
+		else if (key == MLX_KEY_LEFT)
+			data->sLight->pos.x -= SPOTPLUS;
+		else if (key == MLX_KEY_RIGHT)
+			data->sLight->pos.x += SPOTPLUS;
+		else if (key == MLX_KEY_Z)
+			data->sLight->pos.z -= SPOTPLUS;
+		else if (key == MLX_KEY_X)
+			data->sLight->pos.z += SPOTPLUS;
+	}
+
 	//meter aqui funcion de re-reenderizar
+	print_spot_menu(data);
 }
 
 void	manage_obj(keys_t key, t_data *data)
 {
-	if (key == MLX_KEY_UP)
-		data->obj->pos.y += OBJPLUS;
-	else if (key == MLX_KEY_DOWN)
-		data->obj->pos.y -= OBJPLUS;
-	else if (key == MLX_KEY_LEFT)
-		data->obj->pos.x -= OBJPLUS;
-	else if (key == MLX_KEY_RIGHT)
-		data->obj->pos.x += OBJPLUS;
-	else if (key == MLX_KEY_Z)
-		data->obj->pos.z -= OBJPLUS;
-	else if (key == MLX_KEY_X)
-		data->obj->pos.z += OBJPLUS;
+	static bool	mode;
+
+	if (key == MLX_KEY_SPACE)
+		mode = !mode;
+	if (!mode)
+	{
+		if (key == MLX_KEY_UP)
+			data->obj->pos.y += OBJPLUS;
+		else if (key == MLX_KEY_DOWN)
+			data->obj->pos.y -= OBJPLUS;
+		else if (key == MLX_KEY_LEFT)
+			data->obj->pos.x -= OBJPLUS;
+		else if (key == MLX_KEY_RIGHT)
+			data->obj->pos.x += OBJPLUS;
+		else if (key == MLX_KEY_Z)
+			data->obj->pos.z -= OBJPLUS;
+		else if (key == MLX_KEY_X)
+			data->obj->pos.z += OBJPLUS;
+	}
+	else
+	{
+		if (key == MLX_KEY_UP)
+			data->obj->axis.y = fminf(data->obj->axis.y + OBJAXISP, OBJAXISMAX);
+		else if (key == MLX_KEY_DOWN)
+			data->obj->axis.y = fmaxf(data->obj->axis.y - OBJAXISP, OBJAXISMIN);
+		else if (key == MLX_KEY_LEFT)
+			data->obj->axis.x = fmaxf(data->obj->axis.x - OBJAXISP, OBJAXISMIN);
+		else if (key == MLX_KEY_RIGHT)
+			data->obj->axis.x = fminf(data->obj->axis.x + OBJAXISP, OBJAXISMAX);
+		else if (key == MLX_KEY_Z)
+			data->obj->axis.z = fmaxf(data->obj->axis.z - OBJAXISP, OBJAXISMIN);
+		else if (key == MLX_KEY_X)
+			data->obj->axis.z = fminf(data->obj->axis.z + OBJAXISP, OBJAXISMAX);
+	}
 	//meter aqui funcion de re-reenderizar
 	print_obj_menu(data);
 }
