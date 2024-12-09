@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 17:57:09 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/09 18:37:03 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/09 18:57:36 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,40 @@ void	manage_alight(keys_t key, t_data *data)
 
 void	manage_cam(keys_t key, t_data *data)
 {
-	if (key == MLX_KEY_UP)
-		data->cam->pos.y += CAMPLUS;
-	else if (key == MLX_KEY_DOWN)
-		data->cam->pos.y -= CAMPLUS;
-	else if (key == MLX_KEY_LEFT)
-		data->cam->pos.x -= CAMPLUS;
-	else if (key == MLX_KEY_RIGHT)
-		data->cam->pos.x += CAMPLUS;
-	else if (key == MLX_KEY_Z)
-		data->cam->pos.z -= CAMPLUS;
-	else if (key == MLX_KEY_X)
-		data->cam->pos.z += CAMPLUS;
+	static bool	mode;
+
+	if (key == MLX_KEY_SPACE)
+		mode = !mode;
+	if (!mode)
+	{
+		if (key == MLX_KEY_UP)
+			data->cam->pos.y += CAMPLUS;
+		else if (key == MLX_KEY_DOWN)
+			data->cam->pos.y -= CAMPLUS;
+		else if (key == MLX_KEY_LEFT)
+			data->cam->pos.x -= CAMPLUS;
+		else if (key == MLX_KEY_RIGHT)
+			data->cam->pos.x += CAMPLUS;
+		else if (key == MLX_KEY_Z)
+			data->cam->pos.z -= CAMPLUS;
+		else if (key == MLX_KEY_X)
+			data->cam->pos.z += CAMPLUS;
+	}
+	else
+	{
+		if (key == MLX_KEY_UP)
+			data->cam->pos.y = fminf(data->cam->pos.y + CAMAXISP, CAMAXISMAX);
+		else if (key == MLX_KEY_DOWN)
+			data->cam->pos.y = fmaxf(data->cam->pos.y - CAMAXISP, CAMAXISMIN);
+		else if (key == MLX_KEY_LEFT)
+			data->cam->pos.x = fmaxf(data->cam->pos.x - CAMAXISP, CAMAXISMIN);
+		else if (key == MLX_KEY_RIGHT)
+			data->cam->pos.x = fminf(data->cam->pos.x + CAMAXISP, CAMAXISMAX);
+		else if (key == MLX_KEY_Z)
+			data->cam->pos.z = fmaxf(data->cam->pos.z - CAMAXISP, CAMAXISMIN);
+		else if (key == MLX_KEY_X)
+			data->cam->pos.z = fminf(data->cam->pos.z + CAMAXISP, CAMAXISMAX);
+	}
 	//meter aqui funcion de re-reenderizar
 	print_cam_menu(data);
 }
