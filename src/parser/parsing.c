@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:53:01 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/04 15:29:28 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/09 11:34:12 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,22 @@ t_obj	*createObj(t_data *data, char *str, int type)
 	t_obj		*obj;
 
 	obj = newObj(obj);
+	obj->type = type;
 	tmp = floatsParse(obj, str, 2, 0);
 	if (type != 0) // pl & cy
 		tmp2 = floatsParse(obj, tmp, 0, 1);
 	if (type == 0) // sp
 	{
 		obj->size = ft_atof(tmp, 0);
+		// here skips  number
 		tmp2 = ft_substr(tmp, sumParse(tmp, 0, 2, 0), ft_strlen(tmp));
 	}
 	else if (type == 2) // cy
 	{
 		obj->size = ft_atof(tmp2, 0);
+		// printf("%s%d %c\n", tmp, obj->i, tmp[obj->i]);
 		obj->i = sumParse(tmp2, 0, 2, 0);
+		// printf("%s%d %c\n", tmp, obj->i, tmp[0]);
 		obj->height = ft_atof(tmp2, obj->i);
 		obj->i = sumParse(tmp2, obj->i, 2, 0);
 		free(tmp);

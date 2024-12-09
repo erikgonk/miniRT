@@ -64,12 +64,12 @@ uint32_t	trace_ray(t_ray ray, t_obj *objects, t_aLight *light)
 	while (obj)
 	{
 		t = INFINITY;
-		if (obj->type == 's' && intersect_sphere(ray, obj, &t) && t < t_min)
+		if (obj->type == 0 && intersect_sphere(ray, obj, &t) && t < t_min)
 		{
 			t_min = t;
 			closest_object = obj;
 		}
-		else if (obj->type == 'p' && intersect_plane(ray, obj, &t) && t < t_min)
+		else if (obj->type == 1 && intersect_plane(ray, obj, &t) && t < t_min)
 		{
 			t_min = t;
 			closest_object = obj;

@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/07 14:58:10 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/09 10:58:32 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,7 @@ void				parse(t_data *data, char **av, int fd);
 void				correct_file(char *name);
 
 //		parseACLUtils
-// void				createACL(t_data *data, char *str, int type);
-
+int					randomSumParse(char *str, int i);
 void				createCam(t_data *data, char *str, int type);
 void				createALight(t_data *data, char *str, int type);
 void				createSLight(t_data *data, char *str, int type);

@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/07 15:10:13 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/09 11:33:18 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_obj
 {
 	uint32_t		color;
 	int				i;			// just to use it on the parser
-	char			type;		// in case I want to separate the parser and the exec
+	int				type;		// in case I want to separate the parser and the exec
 	t_v3			pos;		// sp pl cy
 	t_v3			axis;		// pl cy | orientation
 	t_rgb			rgb;		// sp pl cy

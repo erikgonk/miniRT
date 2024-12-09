@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:13:09 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/04 15:21:06 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/09 11:26:46 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*floatsParse(t_obj *obj, char *str, int i, int flag)
 	// i = sumParse(str, i, 0, 0);
 	while (str[i] && ft_isspace(str[i]))
 		i++;
-	if (str[i] && !ft_isdigit(str[i]) && str[i] != '-')
+	if (str[i] && (!ft_isdigit(str[i]) && str[i] != '-'))
 		exit(er("error: map parsing:\n", str));
 	x = ft_atof(str, i);
 	// i = sumParse(str, i, 1, 0);
@@ -48,7 +48,7 @@ char	*floatsParse(t_obj *obj, char *str, int i, int flag)
 	if (flag == 0)
 		obj->pos = vdefine(x, y, z);
 	else if (flag == 1)
-		obj->axis = normalize(vdefine(x, y, z));
+		obj->axis = vdefine(x, y, z);
 	tmp = ft_substr(str, i, ft_strlen(str));
 	return (tmp);
 }

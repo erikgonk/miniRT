@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 20:48:16 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/07 15:14:23 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/07 15:17:43 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ t_data *init_example_data(void)
     };
     data->obj = plane;
 
-    // Crear la esfera
+    // Crear la esfera.
     t_obj *sphere = malloc(sizeof(t_obj));
     if (!sphere)
         return NULL;
