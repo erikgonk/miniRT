@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 13:40:44 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/07 15:32:08 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/09 11:24:38 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	skipFloat(char *str, int i, int j, int flag)
 	return (i);
 }
 
-// skips a row of 3 floats and returns the point where it stops
+// skips 3 floats | 1.2,4.1,0.0
 int	skipFloats(char *str, int i, int j, int k) // str | i (start) | j . (0) | k , (0)
 {
 	if (!str[i] || !ft_isspace(str[i]))
@@ -66,6 +66,7 @@ int	skipFloats(char *str, int i, int j, int k) // str | i (start) | j . (0) | k 
 	return (i);
 }
 
+// skips 3 colors | 255,23,0
 int	skipColor(char *str, int i, int j, int flag)
 {
 	while (flag == 0 && str[i] && ft_isspace(str[i]))
@@ -85,32 +86,17 @@ int	skipColor(char *str, int i, int j, int flag)
 	return (i);
 }
 
+// skips 3 floats | 1.2,4.1,0.0
 int sumParse(char *str, int i, int flag, int j)
 {
-	// 0 skips spaces
-	// 1 skips 1 float
-	// 2 skips 3 floats
-	// 4 skips spaces and 1 float
-	while ((flag == 0 || flag == 4) && str[i] && ft_isspace(str[i]))
-		i++;
-	while ((flag == 1 || flag == 4) && str[i] && str[i++] != ',') {
-		if (flag == 4 && ft_isspace(str[i]))
-			break ;
-		if (str[i - 1] == '.')
-			j++;
-		else if (!ft_isdigit(str[i - 1]) || str[i + 1] != '-')
-			exit(er("error: 1 parsing:", str));
-	}
-	while (flag == 2 && str[i] && !ft_isspace(str[i++]))
+	while (str[i] && !ft_isspace(str[i++]))
 	{
 		if (!ft_isdigit(str[i - 1]) && str[i - 1] != '.' && str[i - 1] != '-')
 			exit(er("error: 2 parsing:hola \n", str));
 		else if (str[i - 1] == '.')
 			j++;
 	}
-	while ((flag == 2 || flag == 4) && str[i] && ft_isspace(str[i]))
+	while (str[i] && ft_isspace(str[i]))
 		i++;
-	if ((flag != 2 && (str[i] && !(ft_isdigit(str[i]) || str[i] == '-'))) || j >= 2)
-		exit(er("error: map parsing:\n", str));
 	return (i);
 }

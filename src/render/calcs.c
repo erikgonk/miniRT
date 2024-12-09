@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/06 19:59:01 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/09 11:32:47 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,12 @@ uint32_t	trace_ray(t_ray ray, t_obj *objects, t_aLight *light)
 	while (obj)
 	{
 		t = INFINITY;
-		if (obj->type == 's' && intersect_sphere(ray, obj, &t) && t < t_min)
+		if (obj->type == 0 && intersect_sphere(ray, obj, &t) && t < t_min)
 		{
 			t_min = t;
 			closest_object = obj;
 		}
-		else if (obj->type == 'p' && intersect_plane(ray, obj, &t) && t < t_min)
+		else if (obj->type == 1 && intersect_plane(ray, obj, &t) && t < t_min)
 		{
 			t_min = t;
 			closest_object = obj;
