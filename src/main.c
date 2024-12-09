@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:12:46 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/09 11:34:25 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/09 17:43:25 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,9 @@ int	main(int ac, char **av)
 		exit(er("Failed to render scene", NULL));
 	fill_image((uint32_t *)img->pixels, img_rgb);
 	img->enabled = true;
+	run_console(data, MLX_KEY_0);
 	mlx_image_to_window(mlx, img, 0, 0);
-	mlx_key_hook(mlx, &my_keyhook, NULL);
+	mlx_key_hook(mlx, &my_keyhook, data);
 	mlx_loop(mlx);
 	mlx_delete_image(mlx, img);
 	mlx_terminate(mlx);

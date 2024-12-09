@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/09 10:58:32 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/09 17:42:23 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,18 @@ float				sphere_ray_intersect(t_v3 ray_start, t_v3 ray_direction,
 int					is_in_shadow(t_obj *sp, t_v3 point, t_sLight *light);
 uint32_t			new_light(t_sLight *l, t_obj *sp, t_v3 iPoint);
 
-//debug
-void				print_t_data(t_data *data);
-t_data				 *init_example_data(void);
+//Console
+void				run_console(t_data *data, keys_t key);
 
+//debug
+t_data				*init_example_data(void);
+void				print_ambient_light(t_aLight *aLight);
+void				print_camera(t_cam *cam);
+void				print_spot_lights(t_sLight *sLight);
+void				print_objects(t_obj *obj);
+void				print_t_data(t_data *data);
+void				print_t_v3(const char *label, t_v3 vec);
+void				print_t_rgb(const char *label, t_rgb rgb);
 
 
 #endif

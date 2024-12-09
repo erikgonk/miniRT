@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 16:58:38 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/06 19:44:27 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/09 17:47:35 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,6 @@ void my_keyhook(mlx_key_data_t keydata, void* param)
 {
 	if (keydata.key == MLX_KEY_ESCAPE)
 		exit(1);
+	else if ((keydata.key == MLX_KEY_Q || keydata.key == MLX_KEY_W) && keydata.action == MLX_PRESS)
+		run_console((t_data *) param, keydata.key);
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+         #
+#    By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/05 11:52:11 by erigonza          #+#    #+#              #
-#    Updated: 2024/12/07 14:57:54 by shurtado         ###   ########.fr        #
+#    Updated: 2024/12/09 17:03:10 by shurtado         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,10 +22,11 @@ VCT_D			:= ./lib/libvector/
 
 FILES			:= main.c \
 				 parser/parseACL.c parser/parseSumI.c parser/parseUtils.c parser/parsing.c parser/utils.c \
-				 debug/ilumination.c debug/sphere.c debug/debug_info.c\
+				 debug/ilumination.c debug/sphere.c debug/debug_info.c debug/print_items.c \
 				 window/mlx.c \
 				 render/calcs.c render/colour.c render/initialization.c render/intersections.c render/render.c \
-				 render/rays.c render/viewport.c render/free.c
+				 render/rays.c render/viewport.c render/free.c \
+				 console/run_console.c
 SRCS			:= $(addprefix $(SRC_D), $(FILES))
 
 OBJS            := $(addprefix $(OBJ_D), $(FILES:.c=.o))
@@ -57,7 +58,7 @@ libs:
 
 create_dirs:
 			@mkdir -p $(OBJ_D) $(DEP_D)
-			@mkdir -p $(OBJ_D)parser $(OBJ_D)debug $(OBJ_D)window $(OBJ_D)render
+			@mkdir -p $(OBJ_D)parser $(OBJ_D)debug $(OBJ_D)window $(OBJ_D)render $(OBJ_D)console
 
 $(OBJ_D)%.o:	$(SRC_D)%.c Makefile ./inc/miniRT.h ./inc/data.h ./inc/render.h
 			printf "\033[0;33m\r🔨 $< ✅ \033[0m"
