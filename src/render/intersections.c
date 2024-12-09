@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersections.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:48:44 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/06 19:27:34 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/09 13:14:54 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,52 @@ bool	intersect_sphere(t_ray ray, t_obj *sphere, float *t)
 	if (!solve_quadratic(&quad))
 		return (false);
 	if (quad.t1 > 0)
-		*t = quad.t1;
+		*t = quad.t1; // entra y sale
 	else if (quad.t2 > 0)
-		*t = quad.t2;
+		*t = quad.t2; // sale
 	else
 		return (false);
 	return (true);
 }
+
+// bool	intersect_cylinder(t_ray ray, t_obj *cy, float *t)
+// {
+// 	t_v3		oc;
+// 	t_quadratic	quad;
+// 	float		radius;
+// 	float		l;
+
+
+// }
+
+// t_xnode	*ft_intersect_cylinder(t_obj *o, t_ray r)
+// {
+// 	t_quadratics	q;
+// 	t_xnode			*xs;
+// 	double			t;
+
+// 	xs = NULL;
+// 	r = ft_transform_ray(o -> transform_inverse, r);
+// 	q.a = pow(r.direction.x, 2) + pow(r.direction.z, 2);
+// 	if (q.a < EPSILON)
+// 		return (ft_add_caps_cy(o, r, &xs));
+// 	q.b = 2 * r.origin.x * r.direction.x + 2 * r.origin.z * r.direction.z;
+// 	q.c = pow(r.origin.x, 2) + pow(r.origin.z, 2) - 1;
+// 	q.d = pow(q.b, 2) - 4 * q.a * q.c;
+// 	if (q.d >= 0)
+// 	{
+// 		t = (-q.b - sqrt(q.d)) / (2 * q.a);
+// 		if (ft_pt_bound_cycone(o, r, t))
+// 			xs = ft_xnew(o, t);
+// 		if (q.d > 0)
+// 		{
+// 			t = (-q.b + sqrt(q.d)) / (2 * q.a);
+// 			if (ft_pt_bound_cycone(o, r, t))
+// 				ft_xadd_back(&xs, ft_xnew(o, t));
+// 		}
+// 	}
+// 	return (ft_add_caps_cy(o, r, &xs));
+// }
 
 bool	intersect_plane(t_ray ray, t_obj *plane, float *t)
 {
@@ -54,4 +93,3 @@ bool	intersect_plane(t_ray ray, t_obj *plane, float *t)
 		return (false);
 	return (true);
 }
-
