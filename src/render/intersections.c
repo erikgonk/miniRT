@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersections.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:48:44 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/10 12:55:08 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/10 17:18:16 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ bool	intersect_cylinder(t_ray ray, t_obj *cy, float *t)
 	t_quadratic	quad;
 	float		y1;
 	float		y2;
+	float		half_height;
 
 	oc = vsubstract(ray.origin, cy->pos);
 	quad.a = ray.direction.x * ray.direction.x + ray.direction.z * ray.direction.z;
@@ -54,12 +55,13 @@ bool	intersect_cylinder(t_ray ray, t_obj *cy, float *t)
 		return (false);
 	y1 = ray.origin.y + quad.t1 * ray.direction.y;
 	y2 = ray.origin.y + quad.t2 * ray.direction.y;
-	if (y1 > -0.5f && y1 < 0.5f)
+	half_height = cy->height * 0.5f;
+	if (y1 > cy->pos.y - half_height && y1 < cy->pos.y + half_height)
 	{
 		*t = quad.t1;
 		return (true);
 	}
-	if (y2 > -0.5f && y2 < 0.5f)
+	if (y2 > cy->pos.y - half_height && y2 < cy->pos.y + half_height)
 	{
 		*t = quad.t2;
 		return (true);
