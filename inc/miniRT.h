@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/09 18:14:39 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/10 16:38:02 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,7 @@ void				print_t_data(t_data *data);
 void				print_t_v3(const char *label, t_v3 vec);
 void				print_t_rgb(const char *label, t_rgb rgb);
 
+//Main
+void				render_to_mlx(t_data *data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 17:57:09 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/09 19:29:07 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/10 16:47:10 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	manage_alight(keys_t key, t_data *data)
 	else if (key == MLX_KEY_DOWN && data->aLight->br > ALIGHTMIN)
 		data->aLight->br = fmaxf(data->aLight->br - ALIGHTPLUS, ALIGHTMIN);
 	print_alight_menu(data);
-	//meter aqui funcion de re-reenderizar
 }
 
 void	manage_cam(keys_t key, t_data *data)
@@ -58,7 +57,6 @@ void	manage_cam(keys_t key, t_data *data)
 		else if (key == MLX_KEY_X)
 			data->cam->axis.z = fminf(data->cam->axis.z + CAMAXISP, CAMAXISMAX);
 	}
-	//meter aqui funcion de re-reenderizar
 	print_cam_menu(data);
 }
 
@@ -94,8 +92,6 @@ void	manage_spot(keys_t key, t_data *data)
 		else if (key == MLX_KEY_X)
 			data->sLight->pos.z += SPOTPLUS;
 	}
-
-	//meter aqui funcion de re-reenderizar
 	print_spot_menu(data);
 }
 
@@ -135,7 +131,6 @@ void	manage_obj(keys_t key, t_data *data)
 		else if (key == MLX_KEY_X)
 			data->obj->axis.z = fminf(data->obj->axis.z + OBJAXISP, OBJAXISMAX);
 	}
-	//meter aqui funcion de re-reenderizar
 	print_obj_menu(data);
 }
 
@@ -149,4 +144,5 @@ void	manage_submenu(keys_t key, int option, t_data *data)
 		manage_spot(key, data);
 	else if (option == 3)
 		manage_obj(key, data);
+	render_to_mlx(data);
 }
