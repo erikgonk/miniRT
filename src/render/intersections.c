@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:48:44 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/10 17:18:16 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/10 17:48:02 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,35 +69,64 @@ bool	intersect_cylinder(t_ray ray, t_obj *cy, float *t)
 	return (false);
 }
 
-// t_xnode	*ft_intersect_cylinder(t_obj *o, t_ray r)
-// {
-// 	t_quadratics	q;
-// 	t_xnode			*xs;
-// 	double			t;
+/*
+bool	intersect_cylinder(t_ray ray, t_obj *cy, float *t)
+{
+	t_v3		OC;
+	t_v3		D_par;		// Componente paralela del rayo
+	t_v3		D_perp;		// Componente perpendicular del rayo
+	t_v3		OC_par;
+	t_v3		OC_perp;
+	t_quadratic	quad;
+	float		half_height;
+	float		proj;
 
-// 	xs = NULL;
-// 	r = ft_transform_ray(o -> transform_inverse, r);
-// 	q.a = pow(r.direction.x, 2) + pow(r.direction.z, 2);
-// 	if (q.a < EPSILON)
-// 		return (ft_add_caps_cy(o, r, &xs));
-// 	q.b = 2 * r.origin.x * r.direction.x + 2 * r.origin.z * r.direction.z;
-// 	q.c = pow(r.origin.x, 2) + pow(r.origin.z, 2) - 1;
-// 	q.d = pow(q.b, 2) - 4 * q.a * q.c;
+	OC = vsubstract(ray.origin, cy->pos);
+	half_height = cy->height * 0.5f;
 
-	// if (q.d >= 0)
-	// {
-	// 	t = (-q.b - sqrt(q.d)) / (2 * q.a);
-	// 	if (ft_pt_bound_cycone(o, r, t))
-	// 		xs = ft_xnew(o, t);
-	// 	if (q.d > 0)
-	// 	{
-	// 		t = (-q.b + sqrt(q.d)) / (2 * q.a);
-	// 		if (ft_pt_bound_cycone(o, r, t))
-	// 			ft_xadd_back(&xs, ft_xnew(o, t));
-	// 	}
-	// }
-// 	return (ft_add_caps_cy(o, r, &xs));
-// }
+	// Proyecciones
+	D_par = vmul(cy->axis, vdot(ray.direction, cy->axis));
+	D_perp = vsubstract(ray.direction, D_par);
+	OC_par = vmul(cy->axis, vdot(OC, cy->axis));
+	OC_perp = vsubstract(OC, OC_par);
+
+	// Coeficientes cuadráticos
+	quad.a = vdot(D_perp, D_perp);
+	quad.b = 2.0f * vdot(OC_perp, D_perp);
+	quad.c = vdot(OC_perp, OC_perp) - (cy->size / 2.0f) * (cy->size / 2.0f);
+
+	init_quadratic(&quad, quad.a, quad.b, quad.c);
+	if (!solve_quadratic(&quad))
+		return false;
+
+	// Comprobar t1
+	if (quad.t1 > 0.0f)
+	{
+		t_v3 p = vadd(ray.origin, vmul(ray.direction, quad.t1));
+		proj = vdot(vsubstract(p, cy->pos), cy->axis);
+		if (proj > -half_height && proj < half_height)
+		{
+			*t = quad.t1;
+			return true;
+		}
+	}
+
+	// Comprobar t2
+	if (quad.t2 > 0.0f)
+	{
+		t_v3 p = vadd(ray.origin, vmul(ray.direction, quad.t2));
+		proj = vdot(vsubstract(p, cy->pos), cy->axis);
+		if (proj > -half_height && proj < half_height)
+		{
+			*t = quad.t2;
+			return true;
+		}
+	}
+
+	return false;
+}
+
+*/
 
 bool	intersect_plane(t_ray ray, t_obj *plane, float *t)
 {
