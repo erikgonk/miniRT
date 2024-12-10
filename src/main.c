@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:12:46 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/09 17:43:25 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/09 19:51:05 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 int	main(int ac, char **av)
 {
 	t_data			*data;
-	mlx_t			*mlx;
-    mlx_image_t		*img;
 	int				fd;
 	uint32_t		**img_rgb;
 
@@ -30,31 +28,25 @@ int	main(int ac, char **av)
 		exit(er("error: fd filed", NULL));
 	parse(data, av, fd);
 
-	/*
-*/
-//	data = init_example_data();
-	// print_t_data(data);
-	// exit(1);
-
-	mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "miniRT", true);
-	if (!mlx)
+	data->mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "miniRT", true);
+	if (!data->mlx)
 		exit (er("Failed to initialize MLX42", NULL));
-	img = mlx_new_image(mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-	if (!img)
+	data->img = mlx_new_image(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+	if (!data->img)
 	{
-		mlx_terminate(mlx);
+		mlx_terminate(data->mlx);
 		exit(er("Failed to create image\n", NULL));
 	}
 	img_rgb = render(data, 0, 0);
 	if (!img_rgb)
 		exit(er("Failed to render scene", NULL));
-	fill_image((uint32_t *)img->pixels, img_rgb);
-	img->enabled = true;
+	fill_image((uint32_t *)data->img->pixels, img_rgb);
+	data->img->enabled = true;
 	run_console(data, MLX_KEY_0);
-	mlx_image_to_window(mlx, img, 0, 0);
-	mlx_key_hook(mlx, &my_keyhook, data);
-	mlx_loop(mlx);
-	mlx_delete_image(mlx, img);
-	mlx_terminate(mlx);
+	mlx_image_to_window(data->mlx, data->img, 0, 0);
+	mlx_key_hook(data->mlx, &my_keyhook, data);
+	mlx_loop(data->mlx);
+	mlx_delete_image(data->mlx, data->img);
+	mlx_terminate(data->mlx);
 	exit(0);
 }
