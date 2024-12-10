@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   viewport.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:40:08 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/06 19:52:19 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/10 11:34:06 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_vp	*init_viewport(t_cam *camera, int width, int height)
 	aspect_ratio = (float)width / (float)height;
 	viewport->viewport_width = 2.0 * tan((camera->fov * M_PI / 180.0) / 2.0);
 	viewport->viewport_height = viewport->viewport_width / aspect_ratio;
-	forward = normalize(camera->axis);
+	forward = camera->axis;
 	right = calculate_right(forward);
 	up = calculate_up(forward, right);
 	viewport->origin = camera->pos;
