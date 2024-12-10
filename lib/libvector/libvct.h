@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libvct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 18:33:09 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/02 13:15:12 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/10 17:22:57 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ float			vsin(t_p3 a, t_p3 b);
 
 float			vcos(t_p3 a, t_p3 b);
 
-t_p3			scal_x_vec(float n, t_p3 p);
+t_p3			vmul(float n, t_p3 p);
 
 float			distance(t_p3 p1, t_p3 p2);
 

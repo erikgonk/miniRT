@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   viewport.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:40:08 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/10 11:34:06 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/10 17:22:57 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ t_vp	*init_viewport(t_cam *camera, int width, int height)
 	right = calculate_right(forward);
 	up = calculate_up(forward, right);
 	viewport->origin = camera->pos;
-	viewport->horizontal = scal_x_vec(viewport->viewport_width, right);
-	viewport->vertical = scal_x_vec(viewport->viewport_height, up);
+	viewport->horizontal = vmul(viewport->viewport_width, right);
+	viewport->vertical = vmul(viewport->viewport_height, up);
 	viewport->lower_left = vsubstract(vsubstract(vsubstract(viewport->origin, \
 							scalar_div(viewport->horizontal, 2)), \
 							scalar_div(viewport->vertical, 2)), forward);

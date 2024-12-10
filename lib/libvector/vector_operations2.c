@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector_operations2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 18:32:52 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/10 11:30:22 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/10 17:22:57 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ float		vcos(t_p3 a, t_p3 b)
 
 // Escala un vector multiplicándolo por un escalar.
 // Hace un vector mas grande o mas pequeno
-t_p3		scal_x_vec(float n, t_p3 p)
+t_p3		vmul(float n, t_p3 p)
 {
 	t_p3	v;
 
