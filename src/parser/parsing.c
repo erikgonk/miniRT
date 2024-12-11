@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:53:01 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/11 19:50:16 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/11 19:55:36 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ void	correct_file(char *name)
 	else if (name[i] == '.' && name[i + 1] == 'r' && name[i + 2] == 't')
 		return ;
 	exit(er("error: wrong file name -> ", name));
+}
+
+void	checkEnd(t_obj *obj, char *str)
+{
+	printf("%s", str);
 }
 
 t_obj	*createObj(t_data *data, char *str, int type)
@@ -53,9 +58,15 @@ t_obj	*createObj(t_data *data, char *str, int type)
 		tmp = ft_substr(tmp2, obj->i, ft_strlen(tmp2));
 	}
 	if (type != 2) // sp & pl
+	{
+		checkEnd(obj, tmp2);
 		obj->rgb = colorsParse(tmp2);
+	}
 	else // cy
+	{
+		checkEnd(obj, tmp);
 		obj->rgb = colorsParse(tmp);
+	}
 	free(tmp);
 	if (tmp2)
 		free(tmp2);
