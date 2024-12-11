@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   submenu.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 17:57:09 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/10 16:47:10 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/11 10:22:38 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,39 +97,49 @@ void	manage_spot(keys_t key, t_data *data)
 
 void	manage_obj(keys_t key, t_data *data)
 {
-	static bool	mode;
+	static bool			mode;
+	static t_obj		*obj;
 
+	if (!obj)
+		obj = data->obj;
+	if (key == MLX_KEY_N)
+	{
+		if (obj->next)
+			obj = obj->next;
+		else
+			obj = data->obj;
+	}
 	if (key == MLX_KEY_SPACE)
 		mode = !mode;
 	if (!mode)
 	{
 		if (key == MLX_KEY_UP)
-			data->obj->pos.y += OBJPLUS;
+			obj->pos.y += OBJPLUS;
 		else if (key == MLX_KEY_DOWN)
-			data->obj->pos.y -= OBJPLUS;
+			obj->pos.y -= OBJPLUS;
 		else if (key == MLX_KEY_LEFT)
-			data->obj->pos.x -= OBJPLUS;
+			obj->pos.x -= OBJPLUS;
 		else if (key == MLX_KEY_RIGHT)
-			data->obj->pos.x += OBJPLUS;
+			obj->pos.x += OBJPLUS;
 		else if (key == MLX_KEY_Z)
-			data->obj->pos.z -= OBJPLUS;
+			obj->pos.z -= OBJPLUS;
 		else if (key == MLX_KEY_X)
-			data->obj->pos.z += OBJPLUS;
+			obj->pos.z += OBJPLUS;
 	}
 	else
 	{
 		if (key == MLX_KEY_UP)
-			data->obj->axis.y = fminf(data->obj->axis.y + OBJAXISP, OBJAXISMAX);
+			obj->axis.y = fminf(obj->axis.y + OBJAXISP, OBJAXISMAX);
 		else if (key == MLX_KEY_DOWN)
-			data->obj->axis.y = fmaxf(data->obj->axis.y - OBJAXISP, OBJAXISMIN);
+			obj->axis.y = fmaxf(obj->axis.y - OBJAXISP, OBJAXISMIN);
 		else if (key == MLX_KEY_LEFT)
-			data->obj->axis.x = fmaxf(data->obj->axis.x - OBJAXISP, OBJAXISMIN);
+			obj->axis.x = fmaxf(obj->axis.x - OBJAXISP, OBJAXISMIN);
 		else if (key == MLX_KEY_RIGHT)
-			data->obj->axis.x = fminf(data->obj->axis.x + OBJAXISP, OBJAXISMAX);
+			obj->axis.x = fminf(obj->axis.x + OBJAXISP, OBJAXISMAX);
 		else if (key == MLX_KEY_Z)
-			data->obj->axis.z = fmaxf(data->obj->axis.z - OBJAXISP, OBJAXISMIN);
+			obj->axis.z = fmaxf(obj->axis.z - OBJAXISP, OBJAXISMIN);
 		else if (key == MLX_KEY_X)
-			data->obj->axis.z = fminf(data->obj->axis.z + OBJAXISP, OBJAXISMAX);
+			obj->axis.z = fminf(obj->axis.z + OBJAXISP, OBJAXISMAX);
 	}
 	print_obj_menu(data);
 }
