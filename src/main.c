@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:12:46 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/10 16:39:51 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/11 19:50:37 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	main(int ac, char **av)
 	if (fd < 0)
 		exit(er("error: fd filed", NULL));
 	parse(data, av, fd);
-
 	data->mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "miniRT", true);
 	if (!data->mlx)
 		exit (er("Failed to initialize MLX42", NULL));

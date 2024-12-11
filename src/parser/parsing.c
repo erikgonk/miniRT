@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:53:01 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/11 13:40:45 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/11 19:50:16 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,7 @@ t_obj	*createObj(t_data *data, char *str, int type)
 	else if (type == 2) // cy
 	{
 		obj->size = ft_atof(tmp2, 0);
-		// printf("%s%d %c\n", tmp, obj->i, tmp[obj->i]);
 		obj->i = sumParse(tmp2, 0, 2, 0);
-		// printf("%s%d %c\n", tmp, obj->i, tmp[0]);
 		obj->height = ft_atof(tmp2, obj->i);
 		obj->i = sumParse(tmp2, obj->i, 2, 0);
 		free(tmp);
@@ -67,13 +65,12 @@ t_obj	*createObj(t_data *data, char *str, int type)
 
 void	checkParamsACL(t_aLight *aL, t_sLight *sL, t_cam *cam)
 {
-	printf("br -> %d\n", aL->rgb.r);
 	if ((!aL && !sL) || !cam)
 		exit(er("error: ACL left", NULL));
-	else if (aL)
+	if (aL)
 		if (aL->br < 0)
 			exit(er("error: brightness < 0", NULL));
-		else if (aL->rgb.r < 0 || aL->rgb.r > 255)
+		if (aL->rgb.r < 0 || aL->rgb.r > 255)
 			exit(er("error: aL rgb.r <0 / >255", NULL));
 		else if (aL->rgb.g < 0 || aL->rgb.g > 255)
 			exit(er("error: aL rgb.g <0 / >255", NULL));
@@ -129,7 +126,7 @@ void	checkParams(t_data *data)
 		}
 		obj = obj->next;
 	}
-	checkParamsACL(data->sLight, data->sLight, data->cam);
+	checkParamsACL(data->aLight, data->sLight, data->cam);
 }
 
 void	parse(t_data *data, char **av, int fd)
@@ -157,6 +154,6 @@ void	parse(t_data *data, char **av, int fd)
 		createCam(data, str, type);
 		createSLight(data, str, type);
 	}
-	// checkParams(data);
+	checkParams(data);
 	close(fd);
 }
