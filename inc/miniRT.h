@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/10 16:38:02 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:30:48 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,14 @@ void				objadd_back(t_obj **lst, t_obj *new);
 //		parsing
 void				parse(t_data *data, char **av, int fd);
 void				correct_file(char *name);
-
+//		checker
+void				check_end(t_obj *obj, char *str);
+void				check_obj(t_obj *obj);
+void				check_light(t_aLight *aL, t_sLight *sL);
+void				check_params_acl(t_aLight *aL, t_sLight *sL, t_cam *cam);
+void				checkParams(t_data *data);
+//		obj
+t_obj				*createObj(t_data *data, char *str, int type);
 //		parseACLUtils
 int					randomSumParse(char *str, int i);
 void				createCam(t_data *data, char *str, int type);

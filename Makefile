@@ -6,7 +6,7 @@
 #    By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/05 11:52:11 by erigonza          #+#    #+#              #
-#    Updated: 2024/12/09 18:30:52 by shurtado         ###   ########.fr        #
+#    Updated: 2024/12/12 17:22:20 by erigonza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ VCT_D			:= ./lib/libvector/
 
 FILES			:= main.c \
 				 parser/parseACL.c parser/parseSumI.c parser/parseUtils.c parser/parsing.c parser/utils.c \
+				 parser/parseObj.c parser/checkerParse.c \
 				 debug/ilumination.c debug/sphere.c debug/debug_info.c debug/print_items.c \
 				 window/mlx.c \
 				 render/calcs.c render/colour.c render/initialization.c render/intersections.c render/render.c \
