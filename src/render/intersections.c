@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:48:44 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/10 17:48:02 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/12 12:35:02 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,95 +38,59 @@ bool	intersect_sphere(t_ray ray, t_obj *sphere, float *t)
 	return (true);
 }
 
+void	set_cy_axis(t_quadratic *quad, t_obj *cy, t_ray *ray, float radius)
+{
+	t_v3		d_par;
+	t_v3		d_perp;
+	t_v3		oc_par;
+	t_v3		oc_perp;
+
+	d_par = vmul(dot(ray->direction, cy->axis), cy->axis);
+	d_perp = vsubstract(ray->direction, d_par);
+	oc_par = vmul(dot(vsubstract(ray->origin, cy->pos), cy->axis), cy->axis);
+	oc_perp = vsubstract(vsubstract(ray->origin, cy->pos), oc_par);
+	quad->a = dot(d_perp, d_perp);
+	quad->b = 2.0f * dot(oc_perp, d_perp);
+	quad->c = dot(oc_perp, oc_perp) - radius * radius;
+}
+
 bool	intersect_cylinder(t_ray ray, t_obj *cy, float *t)
 {
-	t_v3		oc;
 	t_quadratic	quad;
-	float		y1;
-	float		y2;
 	float		half_height;
+	float		proj;
+	t_v3		p;
 
-	oc = vsubstract(ray.origin, cy->pos);
-	quad.a = ray.direction.x * ray.direction.x + ray.direction.z * ray.direction.z;
-	quad.b = 2.0f * (oc.x * ray.direction.x + oc.z * ray.direction.z);
-	quad.c = oc.x * oc.x + oc.z * oc.z - ((cy->size / 2.0f) * (cy->size / 2.0f));
+	cy->axis = normalize(cy->axis);
+	half_height = cy->height * 0.5f;
+	set_cy_axis(&quad, cy, &ray, (cy->size * 0.5f));
 	init_quadratic(&quad, quad.a, quad.b, quad.c);
 	if (!solve_quadratic(&quad))
 		return (false);
-	y1 = ray.origin.y + quad.t1 * ray.direction.y;
-	y2 = ray.origin.y + quad.t2 * ray.direction.y;
-	half_height = cy->height * 0.5f;
-	if (y1 > cy->pos.y - half_height && y1 < cy->pos.y + half_height)
+	if (quad.t1 > 0.0f)
 	{
-		*t = quad.t1;
-		return (true);
+		p = vadd(ray.origin, vmul(quad.t1, ray.direction));
+		proj = dot(vsubstract(p, cy->pos), cy->axis);
+		if (proj > -half_height && proj < half_height)
+		{
+			*t = quad.t1;
+			return (true);
+		}
 	}
-	if (y2 > cy->pos.y - half_height && y2 < cy->pos.y + half_height)
+	if (quad.t2 > 0.0f)
 	{
-		*t = quad.t2;
-		return (true);
+		p = vadd(ray.origin, vmul(quad.t2, ray.direction));
+		proj = dot(vsubstract(p, cy->pos), cy->axis);
+		if (proj > -half_height && proj < half_height)
+		{
+			*t = quad.t2;
+			return (true);
+		}
 	}
 	return (false);
 }
 
-/*
-bool	intersect_cylinder(t_ray ray, t_obj *cy, float *t)
-{
-	t_v3		OC;
-	t_v3		D_par;		// Componente paralela del rayo
-	t_v3		D_perp;		// Componente perpendicular del rayo
-	t_v3		OC_par;
-	t_v3		OC_perp;
-	t_quadratic	quad;
-	float		half_height;
-	float		proj;
 
-	OC = vsubstract(ray.origin, cy->pos);
-	half_height = cy->height * 0.5f;
-
-	// Proyecciones
-	D_par = vmul(cy->axis, vdot(ray.direction, cy->axis));
-	D_perp = vsubstract(ray.direction, D_par);
-	OC_par = vmul(cy->axis, vdot(OC, cy->axis));
-	OC_perp = vsubstract(OC, OC_par);
-
-	// Coeficientes cuadráticos
-	quad.a = vdot(D_perp, D_perp);
-	quad.b = 2.0f * vdot(OC_perp, D_perp);
-	quad.c = vdot(OC_perp, OC_perp) - (cy->size / 2.0f) * (cy->size / 2.0f);
-
-	init_quadratic(&quad, quad.a, quad.b, quad.c);
-	if (!solve_quadratic(&quad))
-		return false;
-
-	// Comprobar t1
-	if (quad.t1 > 0.0f)
-	{
-		t_v3 p = vadd(ray.origin, vmul(ray.direction, quad.t1));
-		proj = vdot(vsubstract(p, cy->pos), cy->axis);
-		if (proj > -half_height && proj < half_height)
-		{
-			*t = quad.t1;
-			return true;
-		}
-	}
-
-	// Comprobar t2
-	if (quad.t2 > 0.0f)
-	{
-		t_v3 p = vadd(ray.origin, vmul(ray.direction, quad.t2));
-		proj = vdot(vsubstract(p, cy->pos), cy->axis);
-		if (proj > -half_height && proj < half_height)
-		{
-			*t = quad.t2;
-			return true;
-		}
-	}
-
-	return false;
-}
-
-*/
 
 bool	intersect_plane(t_ray ray, t_obj *plane, float *t)
 {
