@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   viewport.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:40:08 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/10 17:22:57 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/13 12:57:48 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ t_vp	*init_viewport(t_cam *camera, int width, int height)
 	t_v3	right;
 	t_v3	up;
 
+	camera->axis = normalize(camera->axis);
 	viewport = malloc(sizeof(t_vp));
 	if (!viewport)
 		return (NULL);

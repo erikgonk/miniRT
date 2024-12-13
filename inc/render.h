@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/06 19:59:56 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/13 12:47:01 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ typedef struct s_quadratic
 	float	t2; //interseccion de salida
 }			t_quadratic;
 
-
 // Return uint32 colour with alpha.
 uint32_t	get_acolour(t_uchar alpha, t_uchar r, t_uchar g, t_uchar b);
 
@@ -68,12 +67,12 @@ t_ray		**init_rays(t_cam *camera, t_vp *vp);
 //Inicia la estructura de datos para una ecuacion cuadratica
 void		init_quadratic(t_quadratic *quad, float a, float b, float c);
 
-//Resuelve una ecuacion cuadratica, 
+//Resuelve una ecuacion cuadratica,
 //para almacenar en t1 y t2 las intersecciones si las hay (t > 0)
 bool		solve_quadratic(t_quadratic *quad);
 
 //lanza un rayo, devuelve el color del objeto, o el de fondo si no choca.
-uint32_t	trace_ray(t_ray ray, t_obj *objects, t_aLight *light);
+uint32_t	trace_ray(t_ray ray, t_obj *objects, t_aLight *light, t_sLight *sLight);
 
 //cambia el colo de un pixel, teniendo en cuenta el brillo de la luz ambiental.
 t_rgb		apply_ambient_light(t_rgb obj_color, t_aLight *ambient_light);
@@ -88,5 +87,8 @@ bool		intersect_plane(t_ray ray, t_obj *plane, float *t);
 
 uint32_t	**init_image_(void);
 void		free_render(t_vp *vp, t_ray **rays);
+
+t_rgb		render_phong(t_ray ray, t_obj *obj, t_sLight *lights);
+
 
 #endif

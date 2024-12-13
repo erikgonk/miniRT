@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:53:01 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/12 17:31:54 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/13 12:52:12 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,4 @@ void	parse(t_data *data, char **av, int fd)
 	}
 	checkParams(data);
 	close(fd);
-	exit (1);
 }

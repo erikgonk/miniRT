@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:48:44 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/13 11:11:09 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/13 12:32:42 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ bool	intersect_sphere(t_ray ray, t_obj *sphere, float *t)
 	return (true);
 }
 
-float	vlength(t_p3 v)
+float	vlength(t_v3 v)
 {
 	return sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
 }
@@ -150,6 +150,7 @@ bool	intersect_plane(t_ray ray, t_obj *plane, float *t)
 	float	numerator;
 	t_v3	oc;
 
+	plane->axis = normalize(plane->axis);
 	denominator = dot(ray.direction, plane->axis);
 	if (fabs(denominator) < 1e-6)
 		return (false);

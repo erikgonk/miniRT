@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/10 12:25:28 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/13 12:46:15 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ bool	solve_quadratic(t_quadratic *quad)
  *
  * Retorna un t_rgb que representa el color del píxel correspondiente al rayo.
  */
-uint32_t	trace_ray(t_ray ray, t_obj *objects, t_aLight *light)
+uint32_t	trace_ray(t_ray ray, t_obj *objects, t_aLight *light, t_sLight *sLight)
 {
 	float	t_min;
 	float	t;
@@ -79,10 +79,9 @@ uint32_t	trace_ray(t_ray ray, t_obj *objects, t_aLight *light)
 			t_min = t;
 			closest_object = obj;
 		}
-
 		obj = obj->next;
 	}
 	if (closest_object)
-		return (get_colour(apply_ambient_light(closest_object->rgb, light)));
+		return (get_colour(render_phong(ray, closest_object, sLight)));
 	return (BLACK);
 }

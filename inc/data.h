@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/09 19:50:59 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/13 12:16:45 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,14 @@ typedef struct s_sLight
 	struct s_sLight	*next;
 }					t_sLight;
 
+typedef struct s_material
+{
+	float	c_ambien; // Coeficiente de reflexión ambiental
+	float	c_diffuse; // Coeficiente de reflexión difusa
+	float	c_specular; // Coeficiente de reflexión especular
+	int		n;   // Exponente especular
+}				t_material;
+
 typedef struct s_obj
 {
 	uint32_t		color;
@@ -52,8 +60,9 @@ typedef struct s_obj
 	t_v3			pos;		// sp pl cy
 	t_v3			axis;		// pl cy | orientation
 	t_rgb			rgb;		// sp pl cy
-	float			size;		// sp radius | cy diameter
+	float			size;		// sp cy diameter
 	float			height;		// cy
+	t_material		material;
 	struct s_obj	*next;
 }					t_obj;
 
