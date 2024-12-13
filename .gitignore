@@ -5,6 +5,7 @@
 miniRT
 .vscode
 .vscode/
+lib/MLX42/build/
 # Prerequisites
 *.d
 
