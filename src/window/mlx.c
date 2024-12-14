@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 16:58:38 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/14 12:51:43 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/14 13:04:05 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,9 @@ void my_keyhook(mlx_key_data_t keydata, void* param)
 	else if (keydata.action == MLX_PRESS)
 	{
 		run_console((t_data *) param, keydata.key);
-		if (mode)
+		if (mode || keydata.key == MLX_KEY_R)
 			render_to_mlx((t_data *) param);
-	}
-	else if (keydata.action == MLX_KEY_R)
-	{
-		mode = !mode;
-		render_to_mlx((t_data *) param);
+		if (keydata.key == MLX_KEY_R)
+			mode = !mode;
 	}
 }
