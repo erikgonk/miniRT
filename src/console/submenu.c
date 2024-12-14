@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 17:57:09 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/14 12:43:34 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/14 12:47:59 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,5 +197,4 @@ void	manage_submenu(keys_t key, int option, t_data *data)
 		manage_spot(key, data);
 	else if (option == 3)
 		manage_obj(key, data);
-	render_to_mlx(data);
 }
