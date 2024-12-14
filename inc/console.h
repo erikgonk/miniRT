@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 18:12:24 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/09 19:21:07 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/14 12:37:11 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # define ALIGHTMIN	0.0f
 
 # define CAMPLUS 5
-# define CAMAXISP 0.01f
+# define CAMAXISP 0.05f
 # define CAMAXISMIN -1.00f
 # define CAMAXISMAX 1.00f
 

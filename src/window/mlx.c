@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 16:58:38 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/09 18:33:07 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/14 12:51:43 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,19 @@ void draw_pixel(mlx_image_t* img, int x, int y, uint32_t color)
 
 void my_keyhook(mlx_key_data_t keydata, void* param)
 {
+	static bool mode;
+
 	if (keydata.key == MLX_KEY_ESCAPE)
 		exit(1);
 	else if (keydata.action == MLX_PRESS)
+	{
 		run_console((t_data *) param, keydata.key);
+		if (mode)
+			render_to_mlx((t_data *) param);
+	}
+	else if (keydata.action == MLX_KEY_R)
+	{
+		mode = !mode;
+		render_to_mlx((t_data *) param);
+	}
 }
