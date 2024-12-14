@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   illumintaion.c                                     :+:      :+:    :+:   */
+/*   illumination.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:09:03 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/13 12:43:00 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/14 13:48:02 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,33 @@ t_material	init_material(void)
 t_v3	get_normal(t_obj *obj, t_v3 point)
 {
 	if (obj->type == SP)
+	{
+		return (normalize(vsubstract(point, obj->pos)));
+	}
+	else if (obj->type == PL)
+	{
+		return (normalize(obj->axis));
+	}
+	else if (obj->type == CY)
+	{
+		// Considerar las tapas del cilindro
+		t_v3 axis_normalized = normalize(obj->axis);
+		t_v3 proj = vmul(dot(vsubstract(point, obj->pos), axis_normalized), axis_normalized);
+
+		// Si el punto está en las tapas
+		if (fabs(dot(vsubstract(point, obj->pos), axis_normalized)) >= obj->height / 2.0)
+			return (axis_normalized);
+
+		// Normal de la superficie lateral
+		return (normalize(vsubstract(vsubstract(point, obj->pos), proj)));
+	}
+	// Default normal if no specific type matches
+	return ((t_v3){0, 0, 0});
+}
+/*
+t_v3	get_normal(t_obj *obj, t_v3 point)
+{
+	if (obj->type == SP)
 		return (normalize(vsubstract(point, obj->pos)));
 	else if (obj->type == PL)
 		return (obj->axis);
@@ -40,7 +67,7 @@ t_v3	get_normal(t_obj *obj, t_v3 point)
 	// Default normal if no specific type matches
 	return ((t_v3){0, 0, 0});
 }
-
+*/
 t_rgb	add_colors(t_rgb c1, t_rgb c2)
 {
 	t_rgb	result;
@@ -104,18 +131,17 @@ t_rgb	phong_illumination(t_obj *obj, t_v3 point, t_v3 normal, t_ray ray, t_sLigh
 
 // Función principal para calcular la iluminación Phong
 // Se llama para cada punto de intersección
-t_rgb	render_phong(t_ray ray, t_obj *obj, t_sLight *lights)
+t_rgb	render_phong(t_ray ray, t_obj *obj, t_sLight *lights, float t)
 {
 	t_v3		point;
 	t_v3		normal;
 	t_sLight	*current_light;
 	t_rgb		pixel;
-	float	t;
 
-
+	obj->axis = normalize(obj->axis);
+	pixel = (t_rgb){0, 0, 0};
 	// Calcular el punto de intersección
 	point = vadd(ray.origin, vmul(t, ray.direction));
-
 	// Obtener la normal en el punto de intersección
 	normal = get_normal(obj, point);
 

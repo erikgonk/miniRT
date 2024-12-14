@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/13 12:47:01 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/14 13:11:48 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ bool		intersect_plane(t_ray ray, t_obj *plane, float *t);
 uint32_t	**init_image_(void);
 void		free_render(t_vp *vp, t_ray **rays);
 
-t_rgb		render_phong(t_ray ray, t_obj *obj, t_sLight *lights);
+t_rgb		render_phong(t_ray ray, t_obj *obj, t_sLight *lights, float t);
 
 
 #endif

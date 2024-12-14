@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   calcs.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/13 12:46:15 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/14 13:36:22 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,6 @@ uint32_t	trace_ray(t_ray ray, t_obj *objects, t_aLight *light, t_sLight *sLight)
 		obj = obj->next;
 	}
 	if (closest_object)
-		return (get_colour(render_phong(ray, closest_object, sLight)));
+		return (get_colour(render_phong(ray, closest_object, sLight, t)));
 	return (BLACK);
 }

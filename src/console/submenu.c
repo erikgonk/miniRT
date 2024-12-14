@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 17:57:09 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/14 12:47:59 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/14 13:43:39 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ void	manage_cam(keys_t key, t_data *data)
 			axisq = fminf(1.0f, axisq + 0.01f);
 	}
 	print_cam_menu(data);
-	print_alight_menu(data);
 	printf("\nincrementos pos= %f\n", posq);
 	printf("incrementos axis= %f\n", axisq);
 }
