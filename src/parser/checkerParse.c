@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:18:36 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/15 13:57:11 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/15 14:08:38 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ void	check_params_acl(t_aLight *aL, t_sLight *sL, t_cam *cam)
 		exit(er("error: cam axis.y <0 / <1", NULL));
 	else if (cam->axis.z < -1 || cam->axis.z > 1)
 		exit(er("error: cam axis.z <0 / <1", NULL));
+	else if (cam->fov < 0)
+		exit(er("error: cam fov <0", NULL));
 }
 
 void	check_obj(t_obj *obj)

@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:27:07 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/15 13:10:45 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/15 15:36:48 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	createCam(t_data *data, char *str, int type)
 {
 	char	*tmp = NULL;
 	char	*str2;
+	int		i;
 
 	if (type != 4 || (str[1] && !ft_isspace(str[1])))
 		return ;
@@ -85,6 +86,14 @@ void	createCam(t_data *data, char *str, int type)
 	data->cam->axis = normalize(floatsACLParse(tmp, 0));
 	str2 = ft_substr(tmp, skipFloats(tmp, 0, 0, 0), ft_strlen(tmp));
 	data->cam->fov = ft_atoiParse(str2, 0, 1);
+	i = 0;
+	while (str2[i] && ft_isspace(str2[i]))
+		i++;
+	while (str2[i] && ft_isdigit(str2[i]))
+		i++;
+	while (str2[i] && str2[i] != '\n')
+		if (!ft_isspace(str2[i++]))
+			exit(er("error: cam fov wrong", str2));
 	free(str2);
 	free(tmp);
 }
