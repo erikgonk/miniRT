@@ -6,12 +6,12 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:36:36 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/10 17:22:57 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/15 17:23:32 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "render.h"
 #include "miniRT.h"
+#include "render.h"
 
 // Subfunción para liberar la memoria en caso de error
 static void	free_rays(t_ray **rays, int rows)
@@ -32,8 +32,8 @@ static void	init_single_ray(t_ray *ray, t_vp *vp, t_cam *camera, float *uv)
 {
 	t_v3	pixel_position;
 
-	pixel_position = vadd(vadd(vp->lower_left, vmul(uv[0], \
-				vp->horizontal)), vmul(uv[1], vp->vertical));
+	pixel_position = vadd(vadd(vp->lower_left, vmul(uv[0], vp->horizontal)),
+			vmul(uv[1], vp->vertical));
 	ray->origin = camera->pos;
 	ray->direction = normalize(vsubstract(pixel_position, camera->pos));
 }

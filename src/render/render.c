@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:37:51 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/13 12:49:19 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/15 17:23:35 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ uint32_t	**render(t_data *scene, int x, int y)
 		x = 0;
 		while (x < WH)
 		{
-			image[y][x] = trace_ray(rays[y][x], scene->obj, scene->aLight, scene->sLight);
+			image[y][x] = trace_ray(rays[y][x], scene->obj, scene->aLight,
+					scene->sLight);
 			x++;
 		}
 		y++;

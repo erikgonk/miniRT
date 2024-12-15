@@ -6,13 +6,13 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/14 13:36:22 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/15 17:23:10 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../inc/miniRT.h"
 #include "../inc/render.h"
 #include "../lib/libvector/libvct.h"
-#include "../inc/miniRT.h"
 
 /**
  * solve_quadratic - Resuelve una ecuación cuadrática
@@ -31,9 +31,10 @@ bool	solve_quadratic(t_quadratic *quad)
 	if (quad->discriminant < 0)
 		return (false);
 	sqrt_discriminant = sqrtf(quad->discriminant);
-	quad->t1 = (-quad->b - sqrt_discriminant) / (2.0f * quad->a); // entrada (entra en la figura)
-	quad->t2 = (-quad->b + sqrt_discriminant) / (2.0f * quad->a); // salida (sale de la figura)
-
+	quad->t1 = (-quad->b - sqrt_discriminant) / (2.0f * quad->a);
+		// entrada (entra en la figura)
+	quad->t2 = (-quad->b + sqrt_discriminant) / (2.0f * quad->a);
+		// salida (sale de la figura)
 	return (true);
 }
 
@@ -51,7 +52,8 @@ bool	solve_quadratic(t_quadratic *quad)
  *
  * Retorna un t_rgb que representa el color del píxel correspondiente al rayo.
  */
-uint32_t	trace_ray(t_ray ray, t_obj *objects, t_aLight *light, t_sLight *sLight)
+uint32_t	trace_ray(t_ray ray, t_obj *objects, t_aLight *light,
+		t_sLight *sLight)
 {
 	float	t_min;
 	float	t;
@@ -74,7 +76,8 @@ uint32_t	trace_ray(t_ray ray, t_obj *objects, t_aLight *light, t_sLight *sLight)
 			t_min = t;
 			closest_object = obj;
 		}
-		else if (obj->type == CY && intersect_cylinder(ray, obj, &t) && t < t_min)
+		else if (obj->type == CY && intersect_cylinder(ray, obj, &t)
+				&& t < t_min)
 		{
 			t_min = t;
 			closest_object = obj;

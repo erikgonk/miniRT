@@ -6,12 +6,12 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:40:08 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/13 12:57:48 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/15 17:23:39 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "render.h"
 #include "miniRT.h"
+#include "render.h"
 
 static t_v3	calculate_up(t_v3 forward, t_v3 right)
 {
@@ -50,8 +50,11 @@ t_vp	*init_viewport(t_cam *camera, int width, int height)
 	viewport->origin = camera->pos;
 	viewport->horizontal = vmul(viewport->viewport_width, right);
 	viewport->vertical = vmul(viewport->viewport_height, up);
-	viewport->lower_left = vsubstract(vsubstract(vsubstract(viewport->origin, \
-							scalar_div(viewport->horizontal, 2)), \
-							scalar_div(viewport->vertical, 2)), forward);
+	viewport->lower_left = vsubstract(vsubstract(vsubstract(viewport->origin,
+															scalar_div(viewport->horizontal,
+																	2)),
+													scalar_div(viewport->vertical,
+															2)),
+										forward);
 	return (viewport);
 }

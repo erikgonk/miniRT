@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 12:19:01 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/06 19:35:44 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/15 17:23:13 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,5 @@ t_rgb	apply_ambient_light(t_rgb obj_color, t_aLight *ambient_light)
 	result.r = fminf(obj_color.r * bright + ambient_light->rgb.r * bright, 255);
 	result.g = fminf(obj_color.g * bright + ambient_light->rgb.g * bright, 255);
 	result.b = fminf(obj_color.b * bright + ambient_light->rgb.b * bright, 255);
-
 	return (result);
 }

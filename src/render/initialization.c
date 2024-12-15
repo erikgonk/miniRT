@@ -6,13 +6,13 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 12:37:59 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/06 18:57:32 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/15 17:23:28 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../inc/miniRT.h"
 #include "../inc/render.h"
 #include "../lib/libvector/libvct.h"
-#include "../inc/miniRT.h"
 
 //init Data for a quadratic equation
 void	init_quadratic(t_quadratic *quad, float a, float b, float c)
