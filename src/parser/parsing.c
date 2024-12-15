@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:53:01 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/13 12:52:12 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/15 17:18:20 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,18 @@ void	correct_file(char *name)
 	while (name[i] != '.' && name[i])
 		i++;
 	if (name[i + 3] || !name[i - 1])
-		exit(er("error: wrong file name -> ", name));
+		exit(er("error: correct_file: wrong file name -> ", name));
 	else if (name[i] == '.' && name[i + 1] == 'r' && name[i + 2] == 't')
 		return ;
-	exit(er("error: wrong file name -> ", name));
+	exit(er("error: correct_file: wrong file name -> ", name));
 }
 
 void	parse(t_data *data, char **av, int fd)
 {
 	char	type;
-	char	*str = NULL;
+	char	*str;
 
+	str = NULL;
 	data->obj = NULL;
 	while (true)
 	{
@@ -41,15 +42,15 @@ void	parse(t_data *data, char **av, int fd)
 			break ;
 		if (str[0] == '#')
 			continue ;
-		type = checkObj(data, str);
+		type = type_obj(data, str);
 		if (type > 5)
-			exit(er("error: wrong map: obj type", str));
+			exit(er("error: parse: wrong map: obj type", str));
 		if (type <= 2 && ft_isspace(str[2]))
-			objadd_back(&data->obj, createObj(data, str, type));
-		createALight(data, str, type);
-		createCam(data, str, type);
-		createSLight(data, str, type);
+			objadd_back(&data->obj, create_obj(data, str, type));
+		create_alight(data, str, type);
+		create_cam(data, str, type);
+		create_slight(data, str, type);
 	}
-	checkParams(data);
+	check_params(data);
 	close(fd);
 }

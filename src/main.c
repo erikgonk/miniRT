@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:12:46 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/11 19:50:37 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/15 16:30:47 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	main(int ac, char **av)
 		exit(er("Failed to create image\n", NULL));
 	}
 	render_to_mlx(data);
-	run_console(data, MLX_KEY_0);
+	// run_console(data, MLX_KEY_0);
 	mlx_key_hook(data->mlx, &my_keyhook, data);
 	mlx_loop(data->mlx);
 	mlx_delete_image(data->mlx, data->img);

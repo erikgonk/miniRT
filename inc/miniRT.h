@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/12 17:30:48 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/15 15:55:54 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@
 
 //		utils
 int					er(char *s, char *av);
-t_obj				*newObj(t_obj *obj);
+t_obj				*new_obj(t_obj *obj);
 float				ft_atof(char *str, int i);
 float				ft_atof_normi(char *str, int i);
 void				objadd_back(t_obj **lst, t_obj *new);
@@ -63,25 +63,25 @@ void				check_end(t_obj *obj, char *str);
 void				check_obj(t_obj *obj);
 void				check_light(t_aLight *aL, t_sLight *sL);
 void				check_params_acl(t_aLight *aL, t_sLight *sL, t_cam *cam);
-void				checkParams(t_data *data);
+void				check_params(t_data *data);
 //		obj
-t_obj				*createObj(t_data *data, char *str, int type);
+t_obj				*create_obj(t_data *data, char *str, int type);
 //		parseACLUtils
-int					randomSumParse(char *str, int i);
-void				createCam(t_data *data, char *str, int type);
-void				createALight(t_data *data, char *str, int type);
-void				createSLight(t_data *data, char *str, int type);
+int					random_sum_parse(char *str, int i);
+void				create_cam(t_data *data, char *str, int type);
+void				create_alight(t_data *data, char *str, int type);
+void				create_slight(t_data *data, char *str, int type);
 
 //		parse sum to i
-int					skipColor(char *str, int i, int j, int flag);
-int					skipFloats(char *str, int i, int j, int k);
-int					skipFloat(char *str, int i, int j, int flag);
-int					sumParse(char *str, int i, int flag, int j);
+int					skip_color(char *str, int i, int j, int flag);
+int					skip_floats(char *str, int i, int j, int k);
+int					skip_float(char *str, int i, int j, int flag);
+int					sum_parse(char *str, int i, int flag, int j);
 //		parseUtils
-int					checkObj(t_data *data, char *str);
-char				*floatsParse(t_obj *obj, char *str, int i, int flag);
-int					ft_atoiParse(char *str, int i, int flag);
-t_rgb				colorsParse(char *str);
+int					type_obj(t_data *data, char *str);
+char				*floats_parse(t_obj *obj, char *str, int i, int flag);
+int					ft_atoi_parse(char *str, int i, int flag);
+t_rgb				colors_parse(char *str);
 
 //		mlx
 void				draw_pixel(mlx_image_t *img, int x, int y, uint32_t color);
