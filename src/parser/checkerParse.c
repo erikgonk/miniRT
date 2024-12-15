@@ -6,7 +6,7 @@
 /*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:18:36 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/12 17:36:43 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/15 13:57:11 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,11 @@ void	check_params_acl(t_aLight *aL, t_sLight *sL, t_cam *cam)
 	if ((!aL && !sL) || !cam)
 		exit(er("error: ACL left", NULL));
 	check_light(aL, sL);
-	if (cam->axis.x < 0 || cam->axis.x > 1)
+	if (cam->axis.x < -1 || cam->axis.x > 1)
 		exit(er("error: cam axis.x <0 / <1", NULL));
-	else if (cam->axis.y < 0 || cam->axis.y > 1)
+	else if (cam->axis.y < -1 || cam->axis.y > 1)
 		exit(er("error: cam axis.y <0 / <1", NULL));
-	else if (cam->axis.z < 0 || cam->axis.z > 1)
+	else if (cam->axis.z < -1 || cam->axis.z > 1)
 		exit(er("error: cam axis.z <0 / <1", NULL));
 }
 
@@ -80,11 +80,11 @@ void	check_obj(t_obj *obj)
 			exit(er("error: sp/cy size <= 0", NULL));
 		else if (obj->type != SP)
 		{
-			if (obj->axis.x < 0 || obj->axis.x > 1)
+			if (obj->axis.x < -1 || obj->axis.x > 1)
 				exit(er("error: pl/cy axis.x <0 / <1", NULL));
-			else if (obj->axis.y < 0 || obj->axis.y > 1)
+			else if (obj->axis.y < -1 || obj->axis.y > 1)
 				exit(er("error: pl/cy axis.y <0 / <1", NULL));
-			else if (obj->axis.z < 0 || obj->axis.z > 1)
+			else if (obj->axis.z < -1 || obj->axis.z > 1)
 				exit(er("error: pl/cy axis.z <0 / <1", NULL));
 			else if (obj->type == CY && obj->height < 0)
 				exit(er("error: cy height < 0", NULL));

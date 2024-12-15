@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 09:47:50 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/07 14:59:30 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/15 13:56:12 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ float	ft_atof_normi(char *str, int i)
 		fraction += (str[i] - '0') / divisor;
 		divisor *= 10.0f;
 		i++;
+		if (str[i] && !(str[i] == ',' || str[i] == '.' || ft_isspace(str[i]) || ft_isdigit(str[i])))
+			exit(er("wrong char between nums", str));
 	}
 	return (fraction);
 }
@@ -70,6 +72,8 @@ float	ft_atof(char *str, int i) // i = start
 	{
 		res = (res * 10.0f) + (str[i] - '0');
 		i++;
+		if (str[i] && !(str[i] == ',' || str[i] == '.' || ft_isspace(str[i]) || ft_isdigit(str[i])))
+			exit(er("wrong char between nums", str));
 	}
 	if (str[i] == '.' && (str[i] != ',' || ft_isspace(str[i]) != 1))
 		return ((res + ft_atof_normi(str, ++i)) * sign);

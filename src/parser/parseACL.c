@@ -6,13 +6,12 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:27:07 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/11 19:50:24 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/15 13:10:45 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-//
 int	randomSumParse(char *str, int i)
 {
 	int		j;

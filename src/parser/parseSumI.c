@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 13:40:44 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/09 11:24:38 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/15 13:13:53 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	skipFloats(char *str, int i, int j, int k) // str | i (start) | j . (0) | k 
 			k++;
 		if ((j > 3 || k > 2) || (ft_isspace(str[i]) && k != 2))
 			exit(er("error: wrong map: too many , or .", str));
-		else if (str[i + 1] && ((str[i] == '.' || str[i] == ',') && !ft_isdigit(str[i + 1])))
+		else if (str[i + 1] && ((str[i] == '.' || str[i] == ',') && (!ft_isdigit(str[i + 1]) && str[i + 1] != '-')))
 			exit(er("error: wrong map: wrong char after , or .", str));
 		else if (str[i + 1] && (str[i] == '-' || str[i] == '+') && !ft_isdigit(str[i + 1]))
 			exit(er("error: wrong map: wrong char after - or +", str));
