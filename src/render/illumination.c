@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:09:03 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/16 01:15:17 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/16 12:26:03 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ bool	scene_shadow(t_data *scene, t_ray *shadow_ray, float max_dist)
 	t_obj	*current_obj;
 	float	t;
 
+	t = INFINITY;
 	current_obj = scene->obj;
 	while (current_obj)
 	{
