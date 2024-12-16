@@ -6,13 +6,40 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:09:03 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/16 12:26:03 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/16 13:51:42 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/miniRT.h"
 #include "../inc/render.h"
 #include "../lib/libvector/libvct.h"
+
+t_rgb	apply_ambient_light(t_rgb color, t_aLight *ambient_light)
+{
+	t_rgb	result;
+
+	result.r = (unsigned char)fminf(color.r * ambient_light->br, 255.0f);
+	result.g = (unsigned char)fminf(color.g * ambient_light->br, 255.0f);
+	result.b = (unsigned char)fminf(color.b * ambient_light->br, 255.0f);
+	return (result);
+}
+
+void	difuse_light(t_rgb *color, t_ray *ray, t_sLight *slight, t_obj *obj, t_v3 dir)
+{
+	t_rgb	dif_color;
+	float	intensity;
+
+	intensity = fmax(dot(dir, ray->normal), 0.0f);
+	if (intensity > 0.0f)
+	{
+		dif_color.r = (unsigned char)(slight->rgb.r * intensity * slight->br);
+		dif_color.g = (unsigned char)(slight->rgb.g * intensity * slight->br);
+		dif_color.b = (unsigned char)(slight->rgb.b * intensity * slight->br);
+		color->r = fmin(color->r + (obj->rgb.r * dif_color.r) / 255, 255);
+		color->g = fmin(color->g + (obj->rgb.g * dif_color.g) / 255, 255);
+		color->b = fmin(color->b + (obj->rgb.b * dif_color.b) / 255, 255);
+	}
+}
 
 bool	scene_shadow(t_data *scene, t_ray *shadow_ray, float max_dist)
 {
@@ -45,39 +72,26 @@ bool	scene_shadow(t_data *scene, t_ray *shadow_ray, float max_dist)
 
 t_rgb	phong(t_data *scene, t_ray *ray, t_obj *obj)
 {
-	t_rgb	color;
-	t_rgb	ambient_color;
-	t_rgb	diffuse_color;
-	t_v3	light_dir;
-	t_v3	shadow_origin;
-	t_ray	shadow_ray;
-	float	diffuse_intensity;
-	float	shadow_t;
+	t_rgb		color;
+	t_v3		shadow_origin;
+	t_ray		shadow_ray;
+	t_sLight	*slight;
 
-	ambient_color.r = (unsigned char)(obj->rgb.r * scene->aLight->br);
-	ambient_color.g = (unsigned char)(obj->rgb.g * scene->aLight->br);
-	ambient_color.b = (unsigned char)(obj->rgb.b * scene->aLight->br);
-	color = ambient_color;
-	for (int i = 0; i < 1; i++)
+	color = apply_ambient_light(obj->rgb, scene->aLight);
+	slight = scene->sLight;
+	while (slight)
 	{
-		light_dir = normalize(vsub(scene->sLight[i].pos, ray->point));
-		shadow_origin = vadd(ray->point, vmul(EPSILON, ray->normal));
+		shadow_origin = vadd(ray->point, vmul(1e-3, ray->normal));
 		shadow_ray.origin = shadow_origin;
-		shadow_ray.direction = light_dir;
-		shadow_t = INFINITY;
+		shadow_ray.direction = normalize(vsub(slight->pos, ray->point));
 		if (scene_shadow(scene, &shadow_ray, \
-			vlength(vsub(scene->sLight[i].pos, ray->point))))
-			continue ;
-		diffuse_intensity = dot(light_dir, ray->normal);
-		if (diffuse_intensity > 0.0f)
+			vlength(vsub(slight->pos, ray->point))))
 		{
-			diffuse_color.r = (unsigned char)(scene->sLight[i].rgb.r * diffuse_intensity * scene->sLight[i].br);
-			diffuse_color.g = (unsigned char)(scene->sLight[i].rgb.g * diffuse_intensity * scene->sLight[i].br);
-			diffuse_color.b = (unsigned char)(scene->sLight[i].rgb.b * diffuse_intensity * scene->sLight[i].br);
-			color.r = fmin(color.r + (obj->rgb.r * diffuse_color.r) / 255, 255);
-			color.g = fmin(color.g + (obj->rgb.g * diffuse_color.g) / 255, 255);
-			color.b = fmin(color.b + (obj->rgb.b * diffuse_color.b) / 255, 255);
+			slight = slight->next;
+			continue ;
 		}
+		difuse_light(&color, ray, slight, obj, shadow_ray.direction);
+		slight = slight->next;
 	}
 	return (color);
 }
