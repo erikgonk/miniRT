@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/16 00:55:30 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/16 01:15:48 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,17 +75,18 @@ t_v3	get_normal(t_obj *obj, t_v3 point)
 	t_v3	proj;
 
 	if (obj->type == SP)
-		return (normalize(vsubstract(point, obj->pos)));
+		return (normalize(vsub(point, obj->pos)));
 	else if (obj->type == PL)
 		return (obj->axis);
 	else if (obj->type == CY)
 	{
-		proj = vmul(dot(vsubstract(point, obj->pos), obj->axis), \
+		proj = vmul(dot(vsub(point, obj->pos), obj->axis), \
 										obj->axis);
-		return (normalize(vsubstract(vsubstract(point, obj->pos), proj)));
+		return (normalize(vsub(vsub(point, obj->pos), proj)));
 	}
 	return ((t_v3){0, 0, 0});
 }
+
 /**
  * trace_ray - Determina el color del píxel intersectado por un rayo.
  * @ray: Puntero al rayo que se desea trazar.
@@ -114,4 +115,3 @@ uint32_t	trace_ray(t_ray ray, t_data *scene)
 	color = phong(scene, &ray, closest_obj);
 	return (get_colour(color));
 }
-

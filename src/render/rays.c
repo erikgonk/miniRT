@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:36:36 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/16 00:10:39 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/16 01:14:24 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	init_single_ray(t_ray *ray, t_vp *vp, t_cam *camera, float *uv)
 	pixel_position = vadd(vadd(vp->lower_left, vmul(uv[0], vp->horizontal)),
 			vmul(uv[1], vp->vertical));
 	ray->origin = camera->pos;
-	ray->direction = normalize(vsubstract(pixel_position, camera->pos));
+	ray->direction = normalize(vsub(pixel_position, camera->pos));
 }
 
 // Subfunción para inicializar una fila de rayos

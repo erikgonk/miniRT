@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:40:08 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/15 20:28:28 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/16 01:14:24 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_vp	*init_viewport(t_cam *camera, int width, int height)
 	viewport->origin = camera->pos;
 	viewport->horizontal = vmul(viewport->viewport_width, frame.right);
 	viewport->vertical = vmul(viewport->viewport_height, frame.up);
-	viewport->lower_left = vsubstract(vsubstract(vsubstract(viewport->origin, \
+	viewport->lower_left = vsub(vsub(vsub(viewport->origin, \
 										scalar_div(viewport->horizontal, 2)), \
 										scalar_div(viewport->vertical, 2)), \
 										frame.forward);

@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 18:33:09 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/15 22:27:22 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/16 01:14:24 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_v3
 
 t_v3			vdefine(float x, float y, float z);
 t_v3			vadd(t_v3 a, t_v3 b);
-t_v3			vsubstract(t_v3 a, t_v3 b);
+t_v3			vsub(t_v3 a, t_v3 b);
 t_v3			vproduct(t_v3 a, t_v3 b);
 float			dot(t_v3 a, t_v3 b);
 t_v3			cross(t_v3 a, t_v3 b);

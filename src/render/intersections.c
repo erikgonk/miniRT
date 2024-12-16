@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:48:44 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/16 00:57:57 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/16 01:14:24 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ bool	calc_quad_sphere(t_obj *sphere, t_ray ray, t_quadratic *quad)
 	t_v3	oc;
 	float	radius;
 
-	oc = vsubstract(ray.origin, sphere->pos);
+	oc = vsub(ray.origin, sphere->pos);
 	quad->a = dot(ray.direction, ray.direction);
 	quad->b = 2.0f * dot(ray.direction, oc);
 	radius = sphere->size / 2.0f;
@@ -41,7 +41,7 @@ bool	hit_sp(t_ray *ray, t_obj *sphere, float *t)
 	else
 		return (false);
 	ray->point = vadd(ray->origin, vmul(*t, ray->direction));
-	ray->normal = normalize(vsubstract(ray->point, sphere->pos));
+	ray->normal = normalize(vsub(ray->point, sphere->pos));
 	return (true);
 }
 
@@ -60,7 +60,7 @@ bool	hit_pl(t_ray *ray, t_obj *plane, float *t)
 	denominator = dot(ray->direction, plane->axis);
 	if (fabs(denominator) < EPSILON)
 		return (false);
-	oc = vsubstract(plane->pos, ray->origin);
+	oc = vsub(plane->pos, ray->origin);
 	numerator = dot(oc, plane->axis);
 	result = numerator / denominator;
 	if (result > EPSILON && result < *t)
@@ -84,13 +84,13 @@ bool	cy_caps(t_ray *ray, t_obj *cy, float *t, float current_t)
 	float	t_cap;
 
 	top_center = vadd(cy->pos, vmul((cy->height * 0.5f), cy->axis));
-	bottom_center = vsubstract(cy->pos, vmul((cy->height * 0.5f), cy->axis));
-	t_cap = dot(vsubstract(top_center, ray->origin), cy->axis)
+	bottom_center = vsub(cy->pos, vmul((cy->height * 0.5f), cy->axis));
+	t_cap = dot(vsub(top_center, ray->origin), cy->axis)
 		/ dot(ray->direction, cy->axis);
 	if (t_cap > EPSILON && t_cap < current_t)
 	{
 		point = vadd(ray->origin, vmul(t_cap, ray->direction));
-		if (vlength(vsubstract(point, top_center)) <= (cy->size
+		if (vlength(vsub(point, top_center)) <= (cy->size
 				* 0.5f))
 		{
 			if (t_cap < *t)
@@ -102,12 +102,12 @@ bool	cy_caps(t_ray *ray, t_obj *cy, float *t, float current_t)
 			return (true);
 		}
 	}
-	t_cap = dot(vsubstract(bottom_center, ray->origin), cy->axis)
+	t_cap = dot(vsub(bottom_center, ray->origin), cy->axis)
 		/ dot(ray->direction, cy->axis);
 	if (t_cap > EPSILON && t_cap < current_t)
 	{
 		point = vadd(ray->origin, vmul(t_cap, ray->direction));
-		if (vlength(vsubstract(point, bottom_center)) <= (cy->size
+		if (vlength(vsub(point, bottom_center)) <= (cy->size
 				* 0.5f))
 		{
 			if (t_cap < *t)
@@ -130,9 +130,9 @@ void	set_cy_axis(t_quadratic *quad, t_obj *cy, t_ray *ray, float radius)
 	t_v3	oc_perp;
 
 	d_par = vmul(dot(ray->direction, cy->axis), cy->axis);
-	d_perp = vsubstract(ray->direction, d_par);
-	oc_par = vmul(dot(vsubstract(ray->origin, cy->pos), cy->axis), cy->axis);
-	oc_perp = vsubstract(vsubstract(ray->origin, cy->pos), oc_par);
+	d_perp = vsub(ray->direction, d_par);
+	oc_par = vmul(dot(vsub(ray->origin, cy->pos), cy->axis), cy->axis);
+	oc_perp = vsub(vsub(ray->origin, cy->pos), oc_par);
 	quad->a = dot(d_perp, d_perp);
 	quad->b = 2.0f * dot(oc_perp, d_perp);
 	quad->c = dot(oc_perp, oc_perp) - radius * radius;
@@ -155,7 +155,7 @@ bool	hit_cy(t_ray *ray, t_obj *cy, float *t)
 		if (quad.t1 > EPSILON)
 		{
 			point = vadd(ray->origin, vmul(quad.t1, ray->direction));
-			proj = dot(vsubstract(point, cy->pos), cy->axis);
+			proj = dot(vsub(point, cy->pos), cy->axis);
 			if (proj > -half_height && proj < half_height)
 			{
 				t_min = quad.t1;
@@ -163,7 +163,7 @@ bool	hit_cy(t_ray *ray, t_obj *cy, float *t)
 				{
 					*t = quad.t1;
 					ray->point = point;
-					ray->normal = normalize(vsubstract(point, \
+					ray->normal = normalize(vsub(point, \
 						vadd(cy->pos, vmul(proj, cy->axis))));
 				}
 			}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector_operations.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 18:33:01 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/13 12:32:42 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/16 01:14:24 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_v3	vadd(t_v3 a, t_v3 b)
 }
 
 // Resta dos vectores 3D y devuelve el vector resultante.
-t_v3	vsubstract(t_v3 a, t_v3 b)
+t_v3	vsub(t_v3 a, t_v3 b)
 {
 	t_v3	p;
 
