@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 12:37:59 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/15 17:23:28 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/15 21:06:55 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,14 @@
 //init Data for a quadratic equation
 void	init_quadratic(t_quadratic *quad, float a, float b, float c)
 {
+	if (fabs(a) < EPSILON)
+	{
+		quad->a = 0.0f;
+		quad->discriminant = -1.0f;
+		quad->t1 = INFINITY;
+		quad->t2 = INFINITY;
+		return ;
+	}
 	quad->a = a;
 	quad->b = b;
 	quad->c = c;

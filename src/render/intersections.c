@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersections.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:48:44 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/15 17:23:30 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/16 00:57:57 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,18 @@ bool	calc_quad_sphere(t_obj *sphere, t_ray ray, t_quadratic *quad)
 	return (true);
 }
 
-bool	intersect_sphere(t_ray ray, t_obj *sphere, float *t)
+bool	hit_sp(t_ray *ray, t_obj *sphere, float *t)
 {
 	t_quadratic	quad;
 
-	if (!calc_quad_sphere(sphere, ray, &quad))
+	if (!calc_quad_sphere(sphere, *ray, &quad))
 		return (false);
-	if (quad.t1 > 0)
-		*t = quad.t1; // entra y sale
-	else if (quad.t2 > 0)
-		*t = quad.t2; // sale
+	if (quad.t1 > EPSILON && quad.t1 < *t)
+		*t = quad.t1;
 	else
 		return (false);
+	ray->point = vadd(ray->origin, vmul(*t, ray->direction));
+	ray->normal = normalize(vsubstract(ray->point, sphere->pos));
 	return (true);
 }
 
@@ -50,36 +50,72 @@ float	vlength(t_v3 v)
 	return (sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
 }
 
-bool	cy_caps(t_ray ray, t_obj *cy, float *t, float current_t)
+bool	hit_pl(t_ray *ray, t_obj *plane, float *t)
+{
+	float	denominator;
+	float	numerator;
+	t_v3	oc;
+	float	result;
+
+	denominator = dot(ray->direction, plane->axis);
+	if (fabs(denominator) < EPSILON)
+		return (false);
+	oc = vsubstract(plane->pos, ray->origin);
+	numerator = dot(oc, plane->axis);
+	result = numerator / denominator;
+	if (result > EPSILON && result < *t)
+	{
+		*t = result;
+		ray->point = vadd(ray->origin, vmul(*t, ray->direction));
+		if (dot(ray->direction, plane->axis) > EPSILON)
+			ray->normal = vmul(-1.0f, plane->axis);
+		else
+			ray->normal = plane->axis;
+		return (true);
+	}
+	return (false);
+}
+
+bool	cy_caps(t_ray *ray, t_obj *cy, float *t, float current_t)
 {
 	t_v3	top_center;
 	t_v3	bottom_center;
-	t_v3	intersection_point;
+	t_v3	point;
 	float	t_cap;
 
 	top_center = vadd(cy->pos, vmul((cy->height * 0.5f), cy->axis));
 	bottom_center = vsubstract(cy->pos, vmul((cy->height * 0.5f), cy->axis));
-	t_cap = dot(vsubstract(top_center, ray.origin), cy->axis)
-		/ dot(ray.direction, cy->axis);
-	if (t_cap > 0.0f && (current_t < 0 || t_cap < current_t))
+	t_cap = dot(vsubstract(top_center, ray->origin), cy->axis)
+		/ dot(ray->direction, cy->axis);
+	if (t_cap > EPSILON && t_cap < current_t)
 	{
-		intersection_point = vadd(ray.origin, vmul(t_cap, ray.direction));
-		if (vlength(vsubstract(intersection_point, top_center)) <= (cy->size
+		point = vadd(ray->origin, vmul(t_cap, ray->direction));
+		if (vlength(vsubstract(point, top_center)) <= (cy->size
 				* 0.5f))
 		{
-			*t = t_cap;
+			if (t_cap < *t)
+			{
+				*t = t_cap;
+				ray->point = point;
+				ray->normal = cy->axis;
+			}
 			return (true);
 		}
 	}
-	t_cap = dot(vsubstract(bottom_center, ray.origin), cy->axis)
-		/ dot(ray.direction, cy->axis);
-	if (t_cap > 0.0f && (current_t < 0 || t_cap < current_t))
+	t_cap = dot(vsubstract(bottom_center, ray->origin), cy->axis)
+		/ dot(ray->direction, cy->axis);
+	if (t_cap > EPSILON && t_cap < current_t)
 	{
-		intersection_point = vadd(ray.origin, vmul(t_cap, ray.direction));
-		if (vlength(vsubstract(intersection_point, bottom_center)) <= (cy->size
+		point = vadd(ray->origin, vmul(t_cap, ray->direction));
+		if (vlength(vsubstract(point, bottom_center)) <= (cy->size
 				* 0.5f))
 		{
-			*t = t_cap;
+			if (t_cap < *t)
+			{
+				*t = t_cap;
+				ray->point = point;
+				ray->normal = vmul(-1.0f, cy->axis);
+			}
 			return (true);
 		}
 	}
@@ -102,63 +138,39 @@ void	set_cy_axis(t_quadratic *quad, t_obj *cy, t_ray *ray, float radius)
 	quad->c = dot(oc_perp, oc_perp) - radius * radius;
 }
 
-bool	intersect_cylinder(t_ray ray, t_obj *cy, float *t)
+bool	hit_cy(t_ray *ray, t_obj *cy, float *t)
 {
 	t_quadratic	quad;
 	float		half_height;
 	float		proj;
-	t_v3		p;
-	bool		hit;
+	float		t_min;
+	t_v3		point;
 
-	hit = false;
-	cy->axis = normalize(cy->axis);
+	t_min = INFINITY;
 	half_height = cy->height * 0.5f;
-	set_cy_axis(&quad, cy, &ray, (cy->size * 0.5f));
+	set_cy_axis(&quad, cy, ray, (cy->size * 0.5f));
 	init_quadratic(&quad, quad.a, quad.b, quad.c);
 	if (solve_quadratic(&quad))
 	{
-		if (quad.t1 > 0.0f)
+		if (quad.t1 > EPSILON)
 		{
-			p = vadd(ray.origin, vmul(quad.t1, ray.direction));
-			proj = dot(vsubstract(p, cy->pos), cy->axis);
+			point = vadd(ray->origin, vmul(quad.t1, ray->direction));
+			proj = dot(vsubstract(point, cy->pos), cy->axis);
 			if (proj > -half_height && proj < half_height)
 			{
-				*t = quad.t1;
-				hit = true;
-			}
-		}
-		if (quad.t2 > 0.0f)
-		{
-			p = vadd(ray.origin, vmul(quad.t2, ray.direction));
-			proj = dot(vsubstract(p, cy->pos), cy->axis);
-			if (proj > -half_height && proj < half_height)
-			{
-				*t = quad.t2;
-				hit = true;
+				t_min = quad.t1;
+				if (t_min < *t)
+				{
+					*t = quad.t1;
+					ray->point = point;
+					ray->normal = normalize(vsubstract(point, \
+						vadd(cy->pos, vmul(proj, cy->axis))));
+				}
 			}
 		}
 	}
-	if (!hit)
-		hit = cy_caps(ray, cy, t, -1);
-	else
-		cy_caps(ray, cy, t, *t);
-	return (hit);
+	if (cy_caps(ray, cy, t, t_min))
+		return (true);
+	return (t_min != INFINITY);
 }
 
-bool	intersect_plane(t_ray ray, t_obj *plane, float *t)
-{
-	float	denominator;
-	float	numerator;
-	t_v3	oc;
-
-	plane->axis = normalize(plane->axis);
-	denominator = dot(ray.direction, plane->axis);
-	if (fabs(denominator) < 1e-6)
-		return (false);
-	oc = vsubstract(plane->pos, ray.origin);
-	numerator = dot(oc, plane->axis);
-	*t = numerator / denominator;
-	if (*t <= 0)
-		return (false);
-	return (true);
-}

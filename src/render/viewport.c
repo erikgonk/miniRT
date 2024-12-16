@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   viewport.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:40:08 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/15 17:23:39 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/15 20:28:28 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,7 @@ t_vp	*init_viewport(t_cam *camera, int width, int height)
 {
 	t_vp	*viewport;
 	float	aspect_ratio;
-	t_v3	forward;
-	t_v3	right;
-	t_v3	up;
+	t_frame	frame;
 
 	camera->axis = normalize(camera->axis);
 	viewport = malloc(sizeof(t_vp));
@@ -44,17 +42,15 @@ t_vp	*init_viewport(t_cam *camera, int width, int height)
 	aspect_ratio = (float)width / (float)height;
 	viewport->viewport_width = 2.0 * tan((camera->fov * M_PI / 180.0) / 2.0);
 	viewport->viewport_height = viewport->viewport_width / aspect_ratio;
-	forward = camera->axis;
-	right = calculate_right(forward);
-	up = calculate_up(forward, right);
+	frame.forward = camera->axis;
+	frame.right = calculate_right(frame.forward);
+	frame.up = calculate_up(frame.forward, frame.right);
 	viewport->origin = camera->pos;
-	viewport->horizontal = vmul(viewport->viewport_width, right);
-	viewport->vertical = vmul(viewport->viewport_height, up);
-	viewport->lower_left = vsubstract(vsubstract(vsubstract(viewport->origin,
-															scalar_div(viewport->horizontal,
-																	2)),
-													scalar_div(viewport->vertical,
-															2)),
-										forward);
+	viewport->horizontal = vmul(viewport->viewport_width, frame.right);
+	viewport->vertical = vmul(viewport->viewport_height, frame.up);
+	viewport->lower_left = vsubstract(vsubstract(vsubstract(viewport->origin, \
+										scalar_div(viewport->horizontal, 2)), \
+										scalar_div(viewport->vertical, 2)), \
+										frame.forward);
 	return (viewport);
 }

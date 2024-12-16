@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/15 17:23:10 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/16 00:55:30 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,65 @@
 bool	solve_quadratic(t_quadratic *quad)
 {
 	float	sqrt_discriminant;
+	float	temp;
 
-	if (quad->discriminant < 0)
+	if (quad->discriminant < 0 || fabs(quad->a) < EPSILON)
 		return (false);
 	sqrt_discriminant = sqrtf(quad->discriminant);
 	quad->t1 = (-quad->b - sqrt_discriminant) / (2.0f * quad->a);
-		// entrada (entra en la figura)
 	quad->t2 = (-quad->b + sqrt_discriminant) / (2.0f * quad->a);
-		// salida (sale de la figura)
+	if (quad->t1 > quad->t2)
+	{
+		temp = quad->t1;
+		quad->t1 = quad->t2;
+		quad->t2 = temp;
+	}
 	return (true);
 }
 
+t_obj	*find_closest_object(t_ray *ray, t_obj *objs, float *t_min)
+{
+	t_obj	*closest_obj;
+	t_obj	*obj;
+	float	t;
+
+	closest_obj = NULL;
+	obj = objs;
+	while (obj)
+	{
+		t = *t_min;
+		if ((obj->type == SP && hit_sp(ray, obj, &t)) \
+		|| (obj->type == PL && hit_pl(ray, obj, &t)) \
+		|| (obj->type == CY && hit_cy(ray, obj, &t) \
+			))
+		{
+			if (t > 0 && t < *t_min)
+			{
+				*t_min = t;
+				closest_obj = obj;
+			}
+		}
+		obj = obj->next;
+	}
+	return (closest_obj);
+}
+
+t_v3	get_normal(t_obj *obj, t_v3 point)
+{
+	t_v3	proj;
+
+	if (obj->type == SP)
+		return (normalize(vsubstract(point, obj->pos)));
+	else if (obj->type == PL)
+		return (obj->axis);
+	else if (obj->type == CY)
+	{
+		proj = vmul(dot(vsubstract(point, obj->pos), obj->axis), \
+										obj->axis);
+		return (normalize(vsubstract(vsubstract(point, obj->pos), proj)));
+	}
+	return ((t_v3){0, 0, 0});
+}
 /**
  * trace_ray - Determina el color del píxel intersectado por un rayo.
  * @ray: Puntero al rayo que se desea trazar.
@@ -52,39 +100,18 @@ bool	solve_quadratic(t_quadratic *quad)
  *
  * Retorna un t_rgb que representa el color del píxel correspondiente al rayo.
  */
-uint32_t	trace_ray(t_ray ray, t_obj *objects, t_aLight *light,
-		t_sLight *sLight)
+uint32_t	trace_ray(t_ray ray, t_data *scene)
 {
 	float	t_min;
-	float	t;
-	t_obj	*obj;
-	t_obj	*closest_object;
+	t_v3	norm;
+	t_obj	*closest_obj;
+	t_rgb	color;
 
 	t_min = INFINITY;
-	closest_object = NULL;
-	obj = objects;
-	while (obj)
-	{
-		t = INFINITY;
-		if (obj->type == SP && intersect_sphere(ray, obj, &t) && t < t_min)
-		{
-			t_min = t;
-			closest_object = obj;
-		}
-		else if (obj->type == PL && intersect_plane(ray, obj, &t) && t < t_min)
-		{
-			t_min = t;
-			closest_object = obj;
-		}
-		else if (obj->type == CY && intersect_cylinder(ray, obj, &t)
-				&& t < t_min)
-		{
-			t_min = t;
-			closest_object = obj;
-		}
-		obj = obj->next;
-	}
-	if (closest_object)
-		return (get_colour(render_phong(ray, closest_object, sLight, t)));
-	return (BLACK);
+	closest_obj = find_closest_object(&ray, scene->obj, &t_min);
+	if (!closest_obj)
+		return (BLACK);
+	color = phong(scene, &ray, closest_obj);
+	return (get_colour(color));
 }
+

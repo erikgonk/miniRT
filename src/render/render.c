@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:37:51 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/15 17:23:35 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/15 20:40:22 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ uint32_t	**render(t_data *scene, int x, int y)
 		x = 0;
 		while (x < WH)
 		{
-			image[y][x] = trace_ray(rays[y][x], scene->obj, scene->aLight,
-					scene->sLight);
+			image[y][x] = trace_ray(rays[y][x], scene);
 			x++;
 		}
 		y++;

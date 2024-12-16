@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:36:36 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/15 17:23:32 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/16 00:10:39 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static t_ray	*init_ray_row(t_cam *camera, t_vp *vp, int y)
 	while (x < WH)
 	{
 		uv[0] = (float)x / (float)(WH - 1);
-		uv[1] = (float)y / (float)(HG - 1);
+		uv[1] = 1.0f - (float)y / (float)(HG - 1);
 		init_single_ray(&row[x], vp, camera, uv);
 		x++;
 	}

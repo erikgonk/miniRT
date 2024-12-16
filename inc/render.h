@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/14 13:11:48 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/15 23:39:07 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,24 +22,34 @@
 # define BLACK 0xFF000000
 
 typedef unsigned char	t_uchar;
-
+# define EPSILON 1e-6
 # ifndef M_PI
 #  define M_PI 3.14159265358979323846
 # endif
 
-typedef struct	s_viewport {
-	t_v3	origin;      // Centro del viewport en el espacio 3D
-	t_v3	horizontal;  // Vector que define el ancho del viewport
-	t_v3	vertical;    // Vector que define la altura del viewport
-	t_v3	lower_left;	// Esquina inferior izquierda del viewport
+typedef struct s_frame
+{
+	t_v3	forward;
+	t_v3	right;
+	t_v3	up;
+}	t_frame;
+
+typedef struct s_viewport
+{
+	t_v3	origin;
+	t_v3	horizontal;
+	t_v3	vertical;
+	t_v3	lower_left;
 	float	viewport_width;
 	float	viewport_height;
-}	t_vp; //Viewport
+}	t_vp;
 
 typedef struct s_ray
 {
 	t_v3	origin;
 	t_v3	direction;
+	t_v3	normal;
+	t_v3	point;
 }				t_ray;
 
 typedef struct s_quadratic
@@ -72,7 +82,7 @@ void		init_quadratic(t_quadratic *quad, float a, float b, float c);
 bool		solve_quadratic(t_quadratic *quad);
 
 //lanza un rayo, devuelve el color del objeto, o el de fondo si no choca.
-uint32_t	trace_ray(t_ray ray, t_obj *objects, t_aLight *light, t_sLight *sLight);
+uint32_t	trace_ray(t_ray ray, t_data *scene);
 
 //cambia el colo de un pixel, teniendo en cuenta el brillo de la luz ambiental.
 t_rgb		apply_ambient_light(t_rgb obj_color, t_aLight *ambient_light);
@@ -81,14 +91,14 @@ t_rgb		apply_ambient_light(t_rgb obj_color, t_aLight *ambient_light);
 uint32_t	**render(t_data *scene, int x, int y);
 
 //true si el rayo intesecciona con x objeto
-bool		intersect_sphere(t_ray ray, t_obj *sphere, float *t);
-bool		intersect_cylinder(t_ray ray, t_obj *cylinder, float *t);
-bool		intersect_plane(t_ray ray, t_obj *plane, float *t);
+bool		hit_sp(t_ray *ray, t_obj *sphere, float *t);
+bool		hit_cy(t_ray *ray, t_obj *cylinder, float *t);
+bool		hit_pl(t_ray *ray, t_obj *plane, float *t);
 
 uint32_t	**init_image_(void);
 void		free_render(t_vp *vp, t_ray **rays);
 
-t_rgb		render_phong(t_ray ray, t_obj *obj, t_sLight *lights, float t);
-
+t_rgb		phong(t_data *scene, t_ray *ray, t_obj *obj);
+float		vlength(t_v3 v);
 
 #endif
