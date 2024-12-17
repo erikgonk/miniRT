@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+         #
+#    By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/05 11:52:11 by erigonza          #+#    #+#              #
-#    Updated: 2024/12/13 12:48:13 by shurtado         ###   ########.fr        #
+#    Updated: 2024/12/17 10:24:18 by shurtado         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ FILES			:= main.c \
 				 window/mlx.c \
 				 render/calcs.c render/colour.c render/initialization.c render/intersections.c render/render.c \
 				 render/rays.c render/viewport.c render/free.c \
-				 render/illumination.c \
+				 render/illumination.c render/cylinder.c \
 				 console/run_console.c console/submenu.c
 SRCS			:= $(addprefix $(SRC_D), $(FILES))
 
