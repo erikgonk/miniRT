@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/17 11:44:39 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/17 17:46:19 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ typedef struct s_a_light
 	t_rgb			rgb;
 }					t_alight;
 
-typedef struct s_s_light
+typedef struct s_light
 {
 	t_v3				pos;
 	float				br;
 	t_rgb				rgb;
-	struct s_s_light	*next;
+	struct s_light	*next;
 }					t_slight;
 
 typedef struct s_obj
@@ -51,7 +51,7 @@ typedef struct s_obj
 	int				type;
 	t_v3			pos;
 	t_v3			axis;
-	t_rgb			rgb;		
+	t_rgb			rgb;
 	float			size;
 	float			height;
 	struct s_obj	*next;

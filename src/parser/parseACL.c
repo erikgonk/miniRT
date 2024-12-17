@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parseACL.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:27:07 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/17 11:43:52 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/17 18:35:01 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,25 +100,31 @@ void	create_cam(t_data *data, char *str, int type)
 	free(tmp);
 }
 
-void	create_slight(t_data *data, char *str, int type)
+void	create_slight(t_slight **s_light, char *str, int type)
 {
-	t_slight	*slight;
-	int			i;
-	char		*tmp;
-	char		*str2;
+	t_slight	*new_light;
+	t_slight	*current;
+	char		*tmp[2];
 
-	tmp = NULL;
-	i = 0;
 	if (type != 5 || (str[1] && !ft_isspace(str[1])))
 		return ;
-	data->s_light = malloc(sizeof(t_slight));
-	data->s_light->next = NULL;
-	slight = data->s_light;
-	slight->pos = floats_acl_parse(str, 1);
-	tmp = ft_substr(str, skip_floats(str, 1, 0, 0), ft_strlen(str));
-	slight->br = ft_atof(tmp, 0);
-	str2 = ft_substr(tmp, skip_float(tmp, 0, 0, 0), ft_strlen(tmp));
-	slight->rgb = colors_parse(str2);
-	free(str2);
-	free(tmp);
+	new_light = malloc(sizeof(t_slight));
+	if (!new_light)
+		exit(er("error: malloc failed for slight", NULL));
+	new_light->pos = floats_acl_parse(str, 1);
+	tmp[0] = ft_substr(str, skip_floats(str, 1, 0, 0), ft_strlen(str));
+	new_light->br = ft_atof(tmp[0], 0);
+	tmp[1] = ft_substr(tmp[0], skip_float(tmp[0], 0, 0, 0), ft_strlen(tmp[0]));
+	new_light->rgb = colors_parse(tmp[1]);
+	new_light->next = NULL;
+	if (*s_light == NULL)
+		*s_light = new_light;
+	else
+	{
+		current = *s_light;
+		while (current->next != NULL)
+			current = current->next;
+		current->next = new_light;
+	}
+	return (free(tmp[1]), free(tmp[0]));
 }

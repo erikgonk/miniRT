@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   illumination.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:09:03 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/17 11:43:52 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/17 17:28:12 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,20 @@
 #include "../inc/render.h"
 #include "../lib/libvector/libvct.h"
 
-t_rgb	apply_ambient_light(t_rgb color, t_alight *ambient_light)
+t_rgb apply_ambient_light(t_rgb obj_color, t_alight *ambient_light)
 {
-	t_rgb	result;
+	t_rgb result;
 
-	result.r = (unsigned char)fminf(color.r * ambient_light->br, 255.0f);
-	result.g = (unsigned char)fminf(color.g * ambient_light->br, 255.0f);
-	result.b = (unsigned char)fminf(color.b * ambient_light->br, 255.0f);
-	return (result);
+
+	float ambient_r = ambient_light->rgb.r / 255.0f;
+	float ambient_g = ambient_light->rgb.g / 255.0f;
+	float ambient_b = ambient_light->rgb.b / 255.0f;
+
+	result.r = (unsigned char)fminf(obj_color.r * ambient_r * ambient_light->br, 255.0f);
+	result.g = (unsigned char)fminf(obj_color.g * ambient_g * ambient_light->br, 255.0f);
+	result.b = (unsigned char)fminf(obj_color.b * ambient_b * ambient_light->br, 255.0f);
+
+	return result;
 }
 
 void	difuse_light(t_rgb *color, t_slight *slight, t_obj *obj, float inty)

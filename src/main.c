@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:12:46 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/17 14:28:39 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/17 18:36:48 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int	main(int ac, char **av)
 	init_data(&data);
 	validate_args_and_open(ac, av, &fd);
 	parse(data, av, fd);
+	close(fd);
 	init_mlx(data);
 	render_to_mlx(data);
 	mlx_key_hook(data->mlx, &my_keyhook, data);

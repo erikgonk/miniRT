@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:53:01 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/15 17:18:20 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/17 18:36:23 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	parse(t_data *data, char **av, int fd)
 
 	str = NULL;
 	data->obj = NULL;
+	data->s_light = NULL;
 	while (true)
 	{
 		if (str)
@@ -49,8 +50,7 @@ void	parse(t_data *data, char **av, int fd)
 			objadd_back(&data->obj, create_obj(data, str, type));
 		create_alight(data, str, type);
 		create_cam(data, str, type);
-		create_slight(data, str, type);
+		create_slight(&data->s_light, str, type);
 	}
 	check_params(data);
-	close(fd);
 }

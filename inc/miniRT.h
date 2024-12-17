@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/17 14:34:57 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/17 18:01:08 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@
 # include "render.h"
 # include "console.h"
 
-# define WINDOW_WIDTH 1920
-# define WINDOW_HEIGHT 1080
+# define WINDOW_WIDTH 800
+# define WINDOW_HEIGHT 600
 
-# define WIDTH 1920
-# define HEIGHT 1080
+# define WIDTH WINDOW_WIDTH
+# define HEIGHT WINDOW_HEIGHT
 # define SP 0
 # define PL 1
 # define CY 2
@@ -69,7 +69,7 @@ t_obj				*create_obj(t_data *data, char *str, int type);
 int					random_sum_parse(char *str, int i);
 void				create_cam(t_data *data, char *str, int type);
 void				create_alight(t_data *data, char *str, int type);
-void				create_slight(t_data *data, char *str, int type);
+void				create_slight(t_slight **s_light, char *str, int type);
 
 //		parse sum to i
 int					skip_color(char *str, int i, int j, int flag);
