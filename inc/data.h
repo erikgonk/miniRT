@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/13 12:16:45 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/17 11:44:39 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,47 +30,38 @@ typedef struct s_cam
 	t_v3			axis; // orientation
 }					t_cam;
 
-typedef struct s_aLight
+typedef struct s_a_light
 {
 	float			br; // brightness
 	t_rgb			rgb;
-}					t_aLight;
+}					t_alight;
 
-typedef struct s_sLight
+typedef struct s_s_light
 {
-	t_v3			pos;
-	float			br; // brightness
-	t_rgb			rgb;
-	struct s_sLight	*next;
-}					t_sLight;
-
-typedef struct s_material
-{
-	float	c_ambien; // Coeficiente de reflexión ambiental
-	float	c_diffuse; // Coeficiente de reflexión difusa
-	float	c_specular; // Coeficiente de reflexión especular
-	int		n;   // Exponente especular
-}				t_material;
+	t_v3				pos;
+	float				br;
+	t_rgb				rgb;
+	struct s_s_light	*next;
+}					t_slight;
 
 typedef struct s_obj
 {
 	uint32_t		color;
-	int				i;			// just to use it on the parser
-	int				type;		// in case I want to separate the parser and the exec
-	t_v3			pos;		// sp pl cy
-	t_v3			axis;		// pl cy | orientation
-	t_rgb			rgb;		// sp pl cy
-	float			size;		// sp cy diameter
-	float			height;		// cy
-	t_material		material;
+	int				i;
+	int				type;
+	t_v3			pos;
+	t_v3			axis;
+	t_rgb			rgb;		
+	float			size;
+	float			height;
 	struct s_obj	*next;
 }					t_obj;
 
 typedef struct s_data
 {
-	t_aLight		*aLight;
+	t_alight		*a_light;
 	t_cam			*cam;
-	t_sLight		*sLight;
+	t_slight		*s_light;
 	t_obj			*obj;
 	mlx_t			*mlx;
 	mlx_image_t		*img;

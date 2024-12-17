@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parseACL.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:27:07 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/15 17:16:22 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/17 11:43:52 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,10 @@ void	create_alight(t_data *data, char *str, int type)
 	tmp = NULL;
 	if (type != 3 || (str[1] && !ft_isspace(str[1])))
 		return ;
-	data->aLight = malloc(sizeof(t_aLight));
-	data->aLight->br = ft_atof(str, 1);
+	data->a_light = malloc(sizeof(t_alight));
+	data->a_light->br = ft_atof(str, 1);
 	tmp = ft_substr(str, skip_float(str, 1, 0, 0), ft_strlen(str));
-	data->aLight->rgb = colors_parse(tmp);
+	data->a_light->rgb = colors_parse(tmp);
 	free(tmp);
 }
 
@@ -102,7 +102,7 @@ void	create_cam(t_data *data, char *str, int type)
 
 void	create_slight(t_data *data, char *str, int type)
 {
-	t_sLight	*slight;
+	t_slight	*slight;
 	int			i;
 	char		*tmp;
 	char		*str2;
@@ -111,9 +111,9 @@ void	create_slight(t_data *data, char *str, int type)
 	i = 0;
 	if (type != 5 || (str[1] && !ft_isspace(str[1])))
 		return ;
-	data->sLight = malloc(sizeof(t_sLight));
-	data->sLight->next = NULL;
-	slight = data->sLight;
+	data->s_light = malloc(sizeof(t_slight));
+	data->s_light->next = NULL;
+	slight = data->s_light;
 	slight->pos = floats_acl_parse(str, 1);
 	tmp = ft_substr(str, skip_floats(str, 1, 0, 0), ft_strlen(str));
 	slight->br = ft_atof(tmp, 0);

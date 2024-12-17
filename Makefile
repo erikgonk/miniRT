@@ -6,7 +6,7 @@
 #    By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/05 11:52:11 by erigonza          #+#    #+#              #
-#    Updated: 2024/12/17 10:24:18 by shurtado         ###   ########.fr        #
+#    Updated: 2024/12/17 11:30:14 by shurtado         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,12 +23,13 @@ VCT_D			:= ./lib/libvector/
 FILES			:= main.c \
 				 parser/parseACL.c parser/parseSumI.c parser/parseUtils.c parser/parsing.c parser/utils.c \
 				 parser/parseObj.c parser/checkerParse.c \
-				 debug/ilumination.c debug/sphere.c debug/debug_info.c debug/print_items.c \
+				 debug/debug_info.c debug/print_items.c \
 				 window/mlx.c \
 				 render/calcs.c render/colour.c render/initialization.c render/intersections.c render/render.c \
 				 render/rays.c render/viewport.c render/free.c \
 				 render/illumination.c render/cylinder.c \
-				 console/run_console.c console/submenu.c
+				 console/run_console.c console/submenu.c console/slight_menu.c console/camera_menu.c \
+				 console/obj_menu.c
 SRCS			:= $(addprefix $(SRC_D), $(FILES))
 
 OBJS            := $(addprefix $(OBJ_D), $(FILES:.c=.o))

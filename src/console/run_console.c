@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 17:00:06 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/09 17:58:25 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/17 11:43:52 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	print_alight_menu(t_data *data)
 {
 	printf("\033[2J\033[H");
-	print_ambient_light(data->aLight);
+	print_ambient_light(data->a_light);
 	printf("\n");
 	printf("\033[30m\033[47mAmbient Light\033[0m");
 }
@@ -31,7 +31,7 @@ void	print_cam_menu(t_data *data)
 void	print_spot_menu(t_data *data)
 {
 	printf("\033[2J\033[H");
-	print_spot_lights(data->sLight);
+	print_spot_lights(data->s_light);
 	printf("\n");
 	printf("\033[30m\033[47mSpot Lights\033[0m");
 }

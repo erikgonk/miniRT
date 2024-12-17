@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/15 15:55:54 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/17 11:43:52 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 # define MAGENTA "\033[35m"
 # define CYAN "\033[36m"
 # define WHITE "\033[37m"
-
 
 # include "../lib/MLX42/include/MLX42/MLX42.h"
 # include <fcntl.h>
@@ -61,8 +60,8 @@ void				correct_file(char *name);
 //		checker
 void				check_end(t_obj *obj, char *str);
 void				check_obj(t_obj *obj);
-void				check_light(t_aLight *aL, t_sLight *sL);
-void				check_params_acl(t_aLight *aL, t_sLight *sL, t_cam *cam);
+void				check_light(t_alight *aL, t_slight *sL);
+void				check_params_acl(t_alight *aL, t_slight *sL, t_cam *cam);
 void				check_params(t_data *data);
 //		obj
 t_obj				*create_obj(t_data *data, char *str, int type);
@@ -89,18 +88,18 @@ void				my_keyhook(mlx_key_data_t keydata, void *param);
 void				fill_image(uint32_t *pixels, uint32_t **img_rgb);
 
 //		sphere
-void				ft_sphere(t_obj *sp, t_sLight *light, mlx_image_t *img);
+void				ft_sphere(t_obj *sp, t_slight *light, mlx_image_t *img);
 float				sphere_ray_intersect(t_v3 ray_start, t_v3 ray_direction,
 						t_v3 sphere_center, float sphere_radius);
 //		ilumination
-int					is_in_shadow(t_obj *sp, t_v3 point, t_sLight *light);
-uint32_t			new_light(t_sLight *l, t_obj *sp, t_v3 iPoint);
+int					is_in_shadow(t_obj *sp, t_v3 point, t_slight *light);
+uint32_t			new_light(t_slight *l, t_obj *sp, t_v3 iPoint);
 
 //debug
 t_data				*init_example_data(void);
-void				print_ambient_light(t_aLight *aLight);
+void				print_ambient_light(t_alight *a_light);
 void				print_camera(t_cam *cam);
-void				print_spot_lights(t_sLight *sLight);
+void				print_spot_lights(t_slight *s_light);
 void				print_objects(t_obj *obj);
 void				print_t_data(t_data *data);
 void				print_t_v3(const char *label, t_v3 vec);

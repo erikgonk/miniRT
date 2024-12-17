@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/15 23:39:07 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/17 11:41:35 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,13 @@ typedef unsigned char	t_uchar;
 # ifndef M_PI
 #  define M_PI 3.14159265358979323846
 # endif
+
+typedef struct s_cap
+{
+	t_v3	cap_center;
+	float	radius;
+	t_v3	cap_normal;
+}	t_cap;
 
 typedef struct s_frame
 {
@@ -85,7 +92,7 @@ bool		solve_quadratic(t_quadratic *quad);
 uint32_t	trace_ray(t_ray ray, t_data *scene);
 
 //cambia el colo de un pixel, teniendo en cuenta el brillo de la luz ambiental.
-t_rgb		apply_ambient_light(t_rgb obj_color, t_aLight *ambient_light);
+t_rgb		apply_ambient_light(t_rgb obj_color, t_alight *ambient_light);
 
 //renderiza toda la escena y devuelve un array bidimensional de pixels
 uint32_t	**render(t_data *scene, int x, int y);

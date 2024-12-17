@@ -6,14 +6,13 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:36:36 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/16 01:14:24 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/17 11:09:41 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 #include "render.h"
 
-// Subfunción para liberar la memoria en caso de error
 static void	free_rays(t_ray **rays, int rows)
 {
 	int	i;
@@ -27,7 +26,6 @@ static void	free_rays(t_ray **rays, int rows)
 	free(rays);
 }
 
-// Subfunción para inicializar un rayo individual
 static void	init_single_ray(t_ray *ray, t_vp *vp, t_cam *camera, float *uv)
 {
 	t_v3	pixel_position;
@@ -38,7 +36,6 @@ static void	init_single_ray(t_ray *ray, t_vp *vp, t_cam *camera, float *uv)
 	ray->direction = normalize(vsub(pixel_position, camera->pos));
 }
 
-// Subfunción para inicializar una fila de rayos
 static t_ray	*init_ray_row(t_cam *camera, t_vp *vp, int y)
 {
 	t_ray	*row;
@@ -59,16 +56,6 @@ static t_ray	*init_ray_row(t_cam *camera, t_vp *vp, int y)
 	return (row);
 }
 
-/**
- * init_rays - Inicializa todos los rayos de la ventana.
- * @rays: Matriz bidimensional donde se almacenarán los rayos.
- * @pplane: Puntero al plano de proyección previamente inicializado.
- * @cam: Puntero a la cámara que define el origen de los rayos.
- *
- * Recorre todos los píxeles de la ventana y genera un rayo para cada uno
- * utilizando el plano de proyección y la cámara. Los rayos son almacenados
- * en la matriz bidimensional proporcionada.
- */
 t_ray	**init_rays(t_cam *camera, t_vp *vp)
 {
 	t_ray	**rays;

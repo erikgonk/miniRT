@@ -6,13 +6,18 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/16 13:50:12 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/17 11:09:07 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/miniRT.h"
 #include "../inc/render.h"
 #include "../lib/libvector/libvct.h"
+
+float	vlength(t_v3 v)
+{
+	return (sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
+}
 
 bool	solve_quadratic(t_quadratic *quad)
 {

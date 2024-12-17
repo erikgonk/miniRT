@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 18:12:24 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/14 12:37:11 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/17 11:41:35 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,8 @@ void	print_alight_menu(t_data *data);
 void	print_cam_menu(t_data *data);
 void	print_spot_menu(t_data *data);
 void	print_obj_menu(t_data *data);
+void	manage_cam(keys_t key, t_data *data);
+void	manage_obj(keys_t key, t_data *data);
+void	manage_spot(keys_t key, t_data *data);
 
 #endif

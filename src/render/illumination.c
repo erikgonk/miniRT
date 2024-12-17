@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:09:03 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/16 13:57:43 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/17 11:43:52 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../inc/render.h"
 #include "../lib/libvector/libvct.h"
 
-t_rgb	apply_ambient_light(t_rgb color, t_aLight *ambient_light)
+t_rgb	apply_ambient_light(t_rgb color, t_alight *ambient_light)
 {
 	t_rgb	result;
 
@@ -24,7 +24,7 @@ t_rgb	apply_ambient_light(t_rgb color, t_aLight *ambient_light)
 	return (result);
 }
 
-void	difuse_light(t_rgb *color, t_sLight *slight, t_obj *obj, float inty)
+void	difuse_light(t_rgb *color, t_slight *slight, t_obj *obj, float inty)
 {
 	t_rgb	dif_color;
 
@@ -72,11 +72,11 @@ t_rgb	phong(t_data *scene, t_ray *ray, t_obj *obj)
 {
 	t_rgb		color;
 	t_ray		shadow_ray;
-	t_sLight	*slight;
+	t_slight	*slight;
 	float		intensity;
 
-	color = apply_ambient_light(obj->rgb, scene->aLight);
-	slight = scene->sLight;
+	color = apply_ambient_light(obj->rgb, scene->a_light);
+	slight = scene->s_light;
 	while (slight)
 	{
 		shadow_ray.origin = vadd(ray->point, vmul(1e-3, ray->normal));

@@ -6,14 +6,13 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:37:51 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/15 20:40:22 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/17 11:09:48 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 #include "render.h"
 
-//Returns bidimensional RGB array to make the final image, x and y must be 0
 uint32_t	**render(t_data *scene, int x, int y)
 {
 	t_ray		**rays;

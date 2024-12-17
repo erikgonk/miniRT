@@ -6,19 +6,19 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 16:51:49 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/09 16:53:01 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/17 11:43:52 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void	print_ambient_light(t_aLight *aLight)
+void	print_ambient_light(t_alight *a_light)
 {
-	if (aLight)
+	if (a_light)
 	{
 		printf("Ambient Light:\n");
-		printf("\tBrightness: %.2f\n", aLight->br);
-		print_t_rgb("\tColor", aLight->rgb);
+		printf("\tBrightness: %.2f\n", a_light->br);
+		print_t_rgb("\tColor", a_light->rgb);
 	}
 	else
 		printf("Ambient Light: NULL\n");
@@ -39,17 +39,17 @@ void	print_camera(t_cam *cam)
 	}
 }
 
-void	print_spot_lights(t_sLight *sLight)
+void	print_spot_lights(t_slight *s_light)
 {
-	if (sLight)
+	if (s_light)
 	{
 		printf("Spot Lights:\n");
-		while (sLight)
+		while (s_light)
 		{
-			print_t_v3("\tPosition", sLight->pos);
-			printf("\tBrightness: %.2f\n", sLight->br);
-			print_t_rgb("\tColor", sLight->rgb);
-			sLight = sLight->next;
+			print_t_v3("\tPosition", s_light->pos);
+			printf("\tBrightness: %.2f\n", s_light->br);
+			print_t_rgb("\tColor", s_light->rgb);
+			s_light = s_light->next;
 		}
 	}
 	else
@@ -88,9 +88,8 @@ void	print_t_data(t_data *data)
 		printf("t_data is NULL\n");
 		return ;
 	}
-
-	print_ambient_light(data->aLight);
+	print_ambient_light(data->a_light);
 	print_camera(data->cam);
-	print_spot_lights(data->sLight);
+	print_spot_lights(data->s_light);
 	print_objects(data->obj);
 }

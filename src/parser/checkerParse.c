@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checkerParse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:18:36 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/15 17:15:16 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/17 11:43:52 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	check_end(t_obj *obj, char *str)
 			exit(er("error: check_end: char after last num", str));
 }
 
-void	check_light(t_aLight *aL, t_sLight *sL)
+void	check_light(t_alight *aL, t_slight *sL)
 {
 	if (aL)
 	{
@@ -56,7 +56,7 @@ void	check_light(t_aLight *aL, t_sLight *sL)
 	}
 }
 
-void	check_params_acl(t_aLight *aL, t_sLight *sL, t_cam *cam)
+void	check_params_acl(t_alight *aL, t_slight *sL, t_cam *cam)
 {
 	if ((!aL && !sL) || !cam)
 		exit(er("error: check_params_acl: ACL left", NULL));
@@ -106,5 +106,5 @@ void	check_params(t_data *data)
 	if (!obj)
 		exit(er("erro: check_params: no obj detected", NULL));
 	check_obj(obj);
-	check_params_acl(data->aLight, data->sLight, data->cam);
+	check_params_acl(data->a_light, data->s_light, data->cam);
 }
