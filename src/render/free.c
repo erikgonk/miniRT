@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 19:02:12 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/17 11:51:30 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/17 14:33:33 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	free_image(uint32_t **image, int height)
 	if (!image)
 		return ;
 	y = 0;
-	while (y < height)
+	while (y < HG)
 	{
 		if (image[y])
 			free(image[y]);
