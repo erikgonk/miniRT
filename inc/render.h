@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/17 11:41:35 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/17 11:52:17 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ bool		hit_pl(t_ray *ray, t_obj *plane, float *t);
 
 uint32_t	**init_image_(void);
 void		free_render(t_vp *vp, t_ray **rays);
+void		free_image(uint32_t **image, int height);
 
 t_rgb		phong(t_data *scene, t_ray *ray, t_obj *obj);
 float		vlength(t_v3 v);

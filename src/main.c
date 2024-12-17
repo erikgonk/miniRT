@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:12:46 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/17 11:30:59 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/17 11:52:43 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	render_to_mlx(t_data *data)
 	if (!data->img->enabled)
 		data->img->enabled = true;
 	mlx_image_to_window(data->mlx, data->img, 0, 0);
+	free_image(img_rgb, HEIGHT);
 }
 
 void	init_data(t_data **data)
