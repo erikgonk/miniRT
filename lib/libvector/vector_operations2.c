@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 18:32:52 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/13 12:32:42 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/18 16:17:53 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_v3		vmul(float n, t_v3 p)
 	t_v3	v;
 
 	v.x = n * p.x;
-	v.y = n * p.y;
-	v.z = n * p.z;
+		v.y = n * p.y;
+		v.z = n * p.z;
 	return (v);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   calcs.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/17 11:09:07 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/18 16:56:47 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,14 @@ bool	solve_quadratic(t_quadratic *quad)
 {
 	float	sqrt_discriminant;
 	float	temp;
+	float	ax2;
 
+	ax2 = 2.0f * quad->a;
 	if (quad->discriminant < 0 || fabs(quad->a) < EPSILON)
 		return (false);
 	sqrt_discriminant = sqrtf(quad->discriminant);
-	quad->t1 = (-quad->b - sqrt_discriminant) / (2.0f * quad->a);
-	quad->t2 = (-quad->b + sqrt_discriminant) / (2.0f * quad->a);
+	quad->t1 = (-quad->b - sqrt_discriminant) / ax2;
+	quad->t2 = (-quad->b + sqrt_discriminant) / ax2;
 	if (quad->t1 > quad->t2)
 	{
 		temp = quad->t1;
@@ -51,7 +53,7 @@ t_obj	*find_closest_object(t_ray *ray, t_obj *objs, float *t_min)
 		t = *t_min;
 		if ((obj->type == SP && hit_sp(ray, obj, &t)) \
 		|| (obj->type == PL && hit_pl(ray, obj, &t)) \
-		|| (obj->type == CY && hit_cy(ray, obj, &t) \
+		|| (obj->type == CY && hit_cy(ray, obj, &t, NULL) \
 			))
 		{
 			if (t > 0 && t < *t_min)

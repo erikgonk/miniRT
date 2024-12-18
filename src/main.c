@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:12:46 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/17 18:36:48 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/18 17:53:59 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 void	render_to_mlx(t_data *data)
 {
 	uint32_t		**img_rgb;
+	t_ll			time;
 
+	time = current_timestamp();
 	img_rgb = render(data, 0, 0);
 	if (!img_rgb)
 		exit(er("Failed to render scene", NULL));
@@ -24,6 +26,9 @@ void	render_to_mlx(t_data *data)
 		data->img->enabled = true;
 	mlx_image_to_window(data->mlx, data->img, 0, 0);
 	free_image(img_rgb, HEIGHT);
+	time = current_timestamp() - time;
+	time /= 100;
+	printf("Ha tardado en reenderizar: %lld\n", time);
 }
 
 void	init_data(t_data **data)
@@ -56,6 +61,44 @@ void	init_mlx(t_data *data)
 	}
 }
 
+void	init_obj(t_data *data)
+{
+	t_obj	*obj;
+
+	obj = data->obj;
+	while (obj)
+	{
+		if (obj->type == PL)
+		{
+			obj->numerator = dot(vsub(obj->pos, data->cam->pos), obj->axis);
+			obj->i_axis = vmul(-1.0f, obj->axis);
+		}
+		else
+		{
+			obj->radius = obj->size * 0.5f;
+			obj->radius2 = obj->radius * obj->radius;
+			obj->axis = normalize(obj->axis);
+			obj->oc_par = vmul(dot(vsub(data->cam->pos, obj->pos), obj->axis), obj->axis);
+			obj->oc_perp = vsub(vsub(data->cam->pos, obj->pos), obj->oc_par);
+			obj->c = dot(obj->oc_perp, obj->oc_perp) - obj->radius2;
+			obj->half_height = obj->height * 0.5f;
+			obj->upper_cap.cap_center = vadd(obj->pos, vmul(obj->half_height, obj->axis));
+			obj->btm_cap.cap_center = vsub(obj->pos, vmul(obj->half_height, obj->axis));
+			obj->upper_cap.radius = obj->size * 0.5f;
+			obj->btm_cap.radius = obj->size * 0.5f;
+			obj->upper_cap.cap_normal = obj->axis;
+			obj->btm_cap.cap_normal = vmul(-1.0f, obj->axis);
+		}
+		obj = obj->next;
+	}
+}
+
+void	init_all(t_data *data)
+{
+	init_obj(data);
+	init_mlx(data);
+}
+
 int	main(int ac, char **av)
 {
 	t_data	*data;
@@ -65,7 +108,7 @@ int	main(int ac, char **av)
 	validate_args_and_open(ac, av, &fd);
 	parse(data, av, fd);
 	close(fd);
-	init_mlx(data);
+	init_all(data);
 	render_to_mlx(data);
 	mlx_key_hook(data->mlx, &my_keyhook, data);
 	mlx_loop(data->mlx);

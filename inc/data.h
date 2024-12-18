@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/17 17:46:19 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/18 17:31:18 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@
 
 # include "libvct.h"
 # include "../lib/MLX42/include/MLX42/MLX42.h"
+
+typedef struct s_cap
+{
+	t_v3	cap_center;
+	float	radius;
+	t_v3	cap_normal;
+}	t_cap;
 
 typedef struct s_rgb
 {
@@ -41,7 +48,7 @@ typedef struct s_light
 	t_v3				pos;
 	float				br;
 	t_rgb				rgb;
-	struct s_light	*next;
+	struct s_light		*next;
 }					t_slight;
 
 typedef struct s_obj
@@ -54,6 +61,18 @@ typedef struct s_obj
 	t_rgb			rgb;
 	float			size;
 	float			height;
+	float			radius; // sp cy
+	float			radius2; // sp cy
+	// t_v3			oc;
+	float			numerator; // pl
+	t_v3			i_axis; // cy
+	t_v3			oc_par; // cy
+	t_v3			oc_perp; // cy
+	t_v3			oc_perp2;
+	float			c; // cy
+	float			half_height;
+	t_cap			upper_cap; // cy
+	t_cap			btm_cap; // cy
 	struct s_obj	*next;
 }					t_obj;
 

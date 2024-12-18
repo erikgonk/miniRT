@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+         #
+#    By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/05 11:52:11 by erigonza          #+#    #+#              #
-#    Updated: 2024/12/17 11:30:14 by shurtado         ###   ########.fr        #
+#    Updated: 2024/12/18 15:21:13 by shurtado         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ VCT_D			:= ./lib/libvector/
 FILES			:= main.c \
 				 parser/parseACL.c parser/parseSumI.c parser/parseUtils.c parser/parsing.c parser/utils.c \
 				 parser/parseObj.c parser/checkerParse.c \
-				 debug/debug_info.c debug/print_items.c \
+				 debug/debug_info.c debug/print_items.c debug/time.c \
 				 window/mlx.c \
 				 render/calcs.c render/colour.c render/initialization.c render/intersections.c render/render.c \
 				 render/rays.c render/viewport.c render/free.c \

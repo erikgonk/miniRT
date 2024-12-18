@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialization.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 12:37:59 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/17 14:32:12 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/18 15:41:44 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,17 @@ uint32_t	**init_image_(void)
 	uint32_t	**image;
 	int			y;
 	int			j;
+	size_t		row_size;
+
 
 	image = malloc(HG * sizeof(uint32_t *));
+	row_size = WH * sizeof(uint32_t);
 	if (!image)
 		return (NULL);
 	y = 0;
 	while (y < HG)
 	{
-		image[y] = malloc(WH * sizeof(uint32_t));
+		image[y] = malloc(row_size);
 		if (!image[y])
 		{
 			j = 0;

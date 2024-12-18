@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/17 18:01:08 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/18 15:19:20 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 # include "data.h"
 # include "render.h"
 # include "console.h"
+# include <sys/time.h>
 
 # define WINDOW_WIDTH 800
 # define WINDOW_HEIGHT 600
@@ -47,6 +48,7 @@
 # define PL 1
 # define CY 2
 
+typedef long long	t_ll;
 //		utils
 int					er(char *s, char *av);
 t_obj				*new_obj(t_obj *obj);
@@ -104,6 +106,7 @@ void				print_objects(t_obj *obj);
 void				print_t_data(t_data *data);
 void				print_t_v3(const char *label, t_v3 vec);
 void				print_t_rgb(const char *label, t_rgb rgb);
+long long			current_timestamp(void);
 
 //Main
 void				render_to_mlx(t_data *data);

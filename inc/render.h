@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/17 11:52:17 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/18 17:31:15 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,6 @@ typedef unsigned char	t_uchar;
 # ifndef M_PI
 #  define M_PI 3.14159265358979323846
 # endif
-
-typedef struct s_cap
-{
-	t_v3	cap_center;
-	float	radius;
-	t_v3	cap_normal;
-}	t_cap;
 
 typedef struct s_frame
 {
@@ -99,7 +92,7 @@ uint32_t	**render(t_data *scene, int x, int y);
 
 //true si el rayo intesecciona con x objeto
 bool		hit_sp(t_ray *ray, t_obj *sphere, float *t);
-bool		hit_cy(t_ray *ray, t_obj *cylinder, float *t);
+bool		hit_cy(t_ray *ray, t_obj *cylinder, float *t, t_v3 *ray_origin);
 bool		hit_pl(t_ray *ray, t_obj *plane, float *t);
 
 uint32_t	**init_image_(void);

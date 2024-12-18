@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:09:03 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/17 17:28:12 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/18 17:53:44 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ bool	scene_shadow(t_data *scene, t_ray *shadow_ray, float max_dist)
 			if (t > EPSILON && t < max_dist)
 				return (true);
 		}
-		else if (current_obj->type == CY && hit_cy(shadow_ray, current_obj, &t))
+		else if (current_obj->type == CY && hit_cy(shadow_ray, current_obj, &t, &shadow_ray->origin))
 		{
 			if (t > EPSILON && t < max_dist)
 				return (true);
