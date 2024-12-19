@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:09:03 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/19 10:32:25 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/19 12:26:24 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ void	difuse_light(t_rgb *color, t_slight *slight, t_obj *obj, float inty)
 
 	if (inty > 0.0f)
 	{
-		dif_color.r = (unsigned char)(slight->rgb.r * inty * slight->br);
-		dif_color.g = (unsigned char)(slight->rgb.g * inty * slight->br);
-		dif_color.b = (unsigned char)(slight->rgb.b * inty * slight->br);
+		dif_color.r = (unsigned char)(slight->rgb_inty.r * inty);
+		dif_color.g = (unsigned char)(slight->rgb_inty.g * inty);
+		dif_color.b = (unsigned char)(slight->rgb_inty.b * inty);
 		color->r = fmin(color->r + (obj->rgb.r * dif_color.r) / 255, 255);
 		color->g = fmin(color->g + (obj->rgb.g * dif_color.g) / 255, 255);
 		color->b = fmin(color->b + (obj->rgb.b * dif_color.b) / 255, 255);

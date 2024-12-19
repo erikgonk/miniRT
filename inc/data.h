@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/19 10:32:13 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/19 12:35:20 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_light
 	t_v3				pos;
 	float				br;
 	t_rgb				rgb;
+	t_rgb				rgb_inty;
 	struct s_light		*next;
 }					t_slight;
 

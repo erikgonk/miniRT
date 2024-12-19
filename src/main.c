@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/03 13:12:46 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/19 10:32:32 by shurtado         ###   ########.fr       */
+/*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
+/*   Updated: 2024/12/19 12:52:00 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,24 @@ void	init_obj(t_data *data)
 	}
 }
 
+void	init_light(t_data *data)
+{
+	t_slight	*slight;
+
+	slight = data->s_light;
+	while (slight)
+	{
+		slight->rgb_inty.r = (unsigned char)(slight->rgb.r * slight->br);
+		slight->rgb_inty.g = (unsigned char)(slight->rgb.g * slight->br);
+		slight->rgb_inty.b = (unsigned char)(slight->rgb.b * slight->br);
+		slight = slight->next;
+	}
+}
+
 void	init_all(t_data *data)
 {
 	init_obj(data);
+	init_light(data);
 	init_mlx(data);
 }
 
