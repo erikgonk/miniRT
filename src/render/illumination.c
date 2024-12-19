@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:09:03 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/18 17:53:44 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/19 10:05:31 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,22 @@
 #include "../inc/render.h"
 #include "../lib/libvector/libvct.h"
 
-t_rgb apply_ambient_light(t_rgb obj_color, t_alight *ambient_light)
+t_rgb	apply_ambient_light(t_rgb obj_color, t_alight *a_light)
 {
-	t_rgb result;
+	t_rgb	result;
+	float	a_r;
+	float	a_g;
+	float	a_b;
 
+	a_r = a_light->rgb.r / 255.0f;
+	a_g = a_light->rgb.g / 255.0f;
+	a_b = a_light->rgb.b / 255.0f;
 
-	float ambient_r = ambient_light->rgb.r / 255.0f;
-	float ambient_g = ambient_light->rgb.g / 255.0f;
-	float ambient_b = ambient_light->rgb.b / 255.0f;
+	result.r = (unsigned char)fminf(obj_color.r * a_r * a_light->br, 255.0f);
+	result.g = (unsigned char)fminf(obj_color.g * a_g * a_light->br, 255.0f);
+	result.b = (unsigned char)fminf(obj_color.b * a_b * a_light->br, 255.0f);
 
-	result.r = (unsigned char)fminf(obj_color.r * ambient_r * ambient_light->br, 255.0f);
-	result.g = (unsigned char)fminf(obj_color.g * ambient_g * ambient_light->br, 255.0f);
-	result.b = (unsigned char)fminf(obj_color.b * ambient_b * ambient_light->br, 255.0f);
-
-	return result;
+	return (result);
 }
 
 void	difuse_light(t_rgb *color, t_slight *slight, t_obj *obj, float inty)
@@ -81,7 +83,7 @@ t_rgb	phong(t_data *scene, t_ray *ray, t_obj *obj)
 	t_slight	*slight;
 	float		intensity;
 
-	color = apply_ambient_light(obj->rgb, scene->a_light);
+	color = obj->rgb;
 	slight = scene->s_light;
 	while (slight)
 	{
