@@ -6,7 +6,7 @@
 #    By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/19 12:51:14 by shurtado          #+#    #+#              #
-#    Updated: 2024/12/19 16:57:52 by shurtado         ###   ########.fr        #
+#    Updated: 2024/12/19 17:01:40 by shurtado         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ OBJS			:= $(patsubst $(SRC_D)%.c,$(OBJ_D)%.o,$(SRCS))
 
 CC				:= cc
 IFLAGS			:= -I$(INC_D) -I$(VCT_D) -I$(LIBFT_D)inc
-CFLAGS			:= -g -fsanitize=address -Wall -Wextra -Werror
+CFLAGS			:= -g #-fsanitize=address -Wall -Wextra -Werror
 
 LIB				:= lib/
 

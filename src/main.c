@@ -6,11 +6,19 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/19 16:56:47 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/19 17:11:22 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+void	last_exit(t_data *data)
+{
+	mlx_delete_image(data->mlx, data->img);
+	mlx_terminate(data->mlx);
+	free_data(data);
+	exit(1);
+}
 
 int	main(int ac, char **av)
 {

@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 16:58:38 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/19 16:59:40 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/19 17:11:08 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	render_to_mlx(t_data *data)
 	free_image_all(img_rgb);
 	time = current_timestamp() - time;
 	time /= 100;
-	printf("Ha tardado en reenderizar: %lld\n", time);
 }
+// printf("Ha tardado en reenderizar: %lld\n", time);
 
 void	fill_image(uint32_t *pixels, uint32_t **img_rgb)
 {
@@ -49,32 +49,6 @@ void	fill_image(uint32_t *pixels, uint32_t **img_rgb)
 		}
 		y++;
 	}
-}
-
-void	free_data(t_data *data)
-{
-	t_obj	*obj;
-
-	obj = data->obj;
-	free(data->cam);
-	free(data->s_light);
-	free(data->a_light);
-	while (data->obj)
-	{
-		data->obj = data->obj->next;
-		free(obj);
-		obj = data->obj;
-	}
-	if (data)
-		free(data);
-}
-
-void	last_exit(t_data *data)
-{
-	mlx_delete_image(data->mlx, data->img);
-	mlx_terminate(data->mlx);
-	free_data(data);
-	exit(1);
 }
 
 void	my_keyhook(mlx_key_data_t keydata, void *param)

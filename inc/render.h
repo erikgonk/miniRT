@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/19 16:22:06 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/19 17:11:51 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ uint32_t				get_colour(t_rgb color);
 //		init_general
 void					init_all(t_data *data);
 void					init_data(t_data **data);
+void					free_data(t_data *data);
 
 //		init_image
 void					init_mlx(t_data *data);

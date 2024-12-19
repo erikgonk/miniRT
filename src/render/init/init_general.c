@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_general.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:34:20 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/19 15:43:35 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/19 17:10:54 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,30 @@ void	init_data(t_data **data)
 	*data = malloc(sizeof(t_data));
 	if (!(*data))
 		exit(er("error: failed to allocate memory", NULL));
+}
+
+void	free_data(t_data *data)
+{
+	t_obj		*obj;
+	t_slight	*slight;
+
+	obj = data->obj;
+	slight = data->s_light;
+	free(data->cam);
+	free(data->a_light);
+	while (data->s_light)
+	{
+		data->s_light = data->s_light->next;
+		free(slight);
+		slight = data->s_light;
+	}
+	free(data->s_light);
+	while (data->obj)
+	{
+		data->obj = data->obj->next;
+		free(obj);
+		obj = data->obj;
+	}
+	if (data)
+		free(data);
 }
