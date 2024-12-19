@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:53:01 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/19 13:35:04 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/19 16:03:10 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	validate_args_and_open(int ac, char **av, int *fd)
 		exit(er("error: fd failed", NULL));
 }
 
-void	parse(t_data *data, char **av, int fd)
+void	parse(t_data *data, int fd)
 {
 	char	type;
 	char	*str;
@@ -53,11 +53,11 @@ void	parse(t_data *data, char **av, int fd)
 			break ;
 		if (str[0] == '#')
 			continue ;
-		type = type_obj(data, str);
+		type = type_obj(str);
 		if (type > 5)
 			exit(er("error: parse: wrong map: obj type", str));
 		if (type <= 2 && ft_isspace(str[2]))
-			objadd_back(&data->obj, create_obj(data, str, type));
+			objadd_back(&data->obj, create_obj(str, type));
 		create_alight(data, str, type);
 		create_cam(data, str, type);
 		create_slight(&data->s_light, str, type);

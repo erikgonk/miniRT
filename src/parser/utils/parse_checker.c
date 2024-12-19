@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checkerParse.c                                     :+:      :+:    :+:   */
+/*   parse_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:18:36 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/17 18:08:17 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/19 16:04:45 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 #include <threads.h>
 
-void	check_end(t_obj *obj, char *str)
+void	check_end(char *str)
 {
 	int	i;
 
 	i = 0;
 	while (str[i] && ft_isspace(str[i]))
 		i++;
-	i = skip_color(str, i, 0, 0);
-	i = skip_color(str, i, 0, 0);
+	i = skip_color(str, i, 0);
+	i = skip_color(str, i, 0);
 	while (str[i] && ft_isdigit(str[i]))
 		i++;
 	while (str[i] && str[i] != '\n')

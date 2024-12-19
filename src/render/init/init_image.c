@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init_image.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 12:37:59 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/19 13:31:51 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/19 16:12:32 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/miniRT.h"
 #include "../inc/render.h"
 #include "../lib/libvector/libvct.h"
-
 
 void	init_mlx(t_data *data)
 {
@@ -36,27 +35,22 @@ uint32_t	**init_image_(void)
 	int			j;
 	size_t		row_size;
 
-
 	image = malloc(HG * sizeof(uint32_t *));
 	row_size = WH * sizeof(uint32_t);
 	if (!image)
 		return (NULL);
-	y = 0;
-	while (y < HG)
+	y = -1;
+	while (++y < HG)
 	{
 		image[y] = malloc(row_size);
 		if (!image[y])
 		{
-			j = 0;
-			while (j < y)
-			{
+			j = -1;
+			while (++j < y)
 				free(image[j]);
-				j++;
-			}
 			free(image);
 			return (NULL);
 		}
-		y++;
 	}
 	return (image);
 }

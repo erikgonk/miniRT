@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_general.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:34:20 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/19 13:34:22 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/19 15:43:35 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

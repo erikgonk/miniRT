@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 19:02:12 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/17 14:33:33 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/19 16:08:11 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/miniRT.h"
 #include "../inc/render.h"
 
-static void	free_rays(t_ray **rays)
+void	free_rays_all(t_ray **rays)
 {
 	int	i;
 
@@ -29,10 +29,10 @@ static void	free_rays(t_ray **rays)
 void	free_render(t_vp *vp, t_ray **rays)
 {
 	free(vp);
-	free_rays(rays);
+	free_rays_all(rays);
 }
 
-void	free_image(uint32_t **image, int height)
+void	free_image_all(uint32_t **image)
 {
 	int	y;
 

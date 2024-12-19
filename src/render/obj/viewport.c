@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   viewport.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:40:08 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/16 01:14:24 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/19 15:52:31 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 #include "render.h"
 
-static t_v3	calculate_up(t_v3 forward, t_v3 right)
+t_v3	calculate_up(t_v3 forward, t_v3 right)
 {
 	return (normalize(cross(forward, right)));
 }
 
-static t_v3	calculate_right(t_v3 forward)
+t_v3	calculate_right(t_v3 forward)
 {
 	t_v3	arbitrary;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   calcs.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/19 13:21:23 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/19 16:06:57 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ float	vlength(t_v3 v)
 {
 	return (sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
 }
-
 
 t_obj	*find_closest_object(t_ray *ray, t_obj *objs, float *t_min)
 {
@@ -67,7 +66,6 @@ t_v3	get_normal(t_obj *obj, t_v3 point)
 uint32_t	trace_ray(t_ray ray, t_data *scene)
 {
 	float	t_min;
-	t_v3	norm;
 	t_obj	*closest_obj;
 	t_rgb	color;
 

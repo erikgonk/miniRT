@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+         #
+#    By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/19 12:51:14 by shurtado          #+#    #+#              #
-#    Updated: 2024/12/19 13:51:30 by shurtado         ###   ########.fr        #
+#    Updated: 2024/12/19 16:09:52 by erigonza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,13 +22,13 @@ VCT_D			:= ./lib/libvector/
 FILES			:= main.c \
 					parser/parser/parser.c \
 					parser/obj/parse_obj.c parser/obj/parse_acl.c \
-					parser/utils/parseSumI.c parser/utils/parseUtils.c parser/utils/utils.c parser/utils/checkerParse.c \
+					parser/utils/parse_sum.c parser/utils/parse_utils.c parser/utils/parse_conversions.c parser/utils/parse_checker.c \
 					render/render/render.c \
 					render/obj/illumination.c render/obj/cylinder.c render/obj/intersections.c render/obj/viewport.c \
 					render/calcs/calcs.c render/calcs/quadratic.c \
 					render/init/init_image.c render/init/init_rays.c render/init/init_general.c render/init/init_obj.c \
 					render/color/color.c \
-					render/utils/free.c \
+					render/free/free.c \
 					console/console/run_console.c \
 					console/menu/submenu.c console/menu/slight_menu.c console/menu/camera_menu.c console/menu/obj_menu.c \
 					debug/debug_info.c debug/print_items.c debug/time.c \
@@ -39,7 +39,7 @@ OBJS			:= $(patsubst $(SRC_D)%.c,$(OBJ_D)%.o,$(SRCS))
 
 CC				:= cc
 IFLAGS			:= -I$(INC_D) -I$(VCT_D) -I$(LIBFT_D)inc
-CFLAGS			:= -g -fsanitize=address #-Wall -Wextra -Werror
+CFLAGS			:= -g -fsanitize=address -Wall -Wextra -Werror
 
 LIB				:= lib/
 
@@ -68,14 +68,14 @@ $(OBJ_D)%.o:	$(SRC_D)%.c Makefile
 
 $(NAME):	$(OBJS)
 			$(CC) $(CFLAGS) $(OBJS) $(LIBFT_D)$(LIBFT) $(MLX_D)$(MLX) $(LIBVCT) $(MLXFLAGS) -o $(NAME)
-			clear
+			@clear
 
 c clean:
 			@make clean -s -C $(LIB)libft
 			@make clean -s -C $(LIB)libvector
 			@$(RM) $(DIR_MLX)/build
 			${RM} ./src/tmp
-			clear
+			@clear
 
 f fclean:		clean
 			@make fclean -s -C $(LIB)libft

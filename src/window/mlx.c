@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 16:58:38 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/19 13:35:48 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/19 16:09:19 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	render_to_mlx(t_data *data)
 	if (!data->img->enabled)
 		data->img->enabled = true;
 	mlx_image_to_window(data->mlx, data->img, 0, 0);
-	free_image(img_rgb, HEIGHT);
+	free_image_all(img_rgb);
 	time = current_timestamp() - time;
 	time /= 100;
 	printf("Ha tardado en reenderizar: %lld\n", time);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 14:00:21 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/18 17:29:23 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/19 16:06:42 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,9 @@ bool	check_cap(t_ray *ray, t_cap cap, float *t)
 	return (false);
 }
 
-bool	cy_caps(t_ray *ray, t_obj *cy, float *t, float current_t)
+bool	cy_caps(t_ray *ray, t_obj *cy, float *t)
 {
-	t_v3	top_center;
-	t_v3	bottom_center;
 	bool	hit;
-
 
 	hit = false;
 	if (check_cap(ray, cy->upper_cap, t))
@@ -112,7 +109,7 @@ bool	hit_cy(t_ray *ray, t_obj *cy, float *t, t_v3 *ray_origin)
 			return (false);
 		t_min = set_ray_t(ray, cy, t, quad.t1);
 	}
-	if (cy_caps(ray, cy, t, t_min))
+	if (cy_caps(ray, cy, t))
 		return (true);
 	return (t_min != INFINITY);
 }

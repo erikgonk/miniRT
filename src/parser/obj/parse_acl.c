@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_acl.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:27:07 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/19 13:52:37 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/19 15:59:22 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ t_v3	floats_acl_parse(char *str, int i)
 	float		x;
 	float		y;
 	float		z;
-	char		*tmp;
 
 	while (str[i] && ft_isspace(str[i]))
 		i++;

@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parseUtils.c                                       :+:      :+:    :+:   */
+/*   parse_conversions.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/24 14:13:09 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/15 23:37:51 by shurtado         ###   ########.fr       */
+/*   Created: 2024/11/19 09:47:50 by erigonza          #+#    #+#             */
+/*   Updated: 2024/12/19 16:04:23 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-int	type_obj(t_data *data, char *str)
+t_rgb	colors_parse(char *str)
 {
-	static char		*bts[] = {"sp", "pl", "cy", "A", "C", "L", NULL};
-	int				i;
+	t_rgb	rgb;
+	int		i;
 
 	i = 0;
-	while (bts[i] && !ft_strcmp(bts[i], str))
+	while (str[i] && ft_isspace(str[i]))
 		i++;
-	if (bts[i])
-		return (i);
-	return (50);
+	rgb.r = ft_atoi_parse(str, i, 1);
+	i = skip_color(str, i, 0);
+	rgb.g = ft_atoi_parse(str, i, 0);
+	i = skip_color(str, i, 0);
+	rgb.b = ft_atoi_parse(str, i, 0);
+	return (rgb);
 }
 
 char	*floats_parse(t_obj *obj, char *str, int i, int flag)
@@ -41,7 +44,7 @@ char	*floats_parse(t_obj *obj, char *str, int i, int flag)
 	y = ft_atof(str, i);
 	i = random_sum_parse(str, i);
 	z = ft_atof(str, i);
-	i = sum_parse(str, i, 2, 0);
+	i = sum_parse(str, i, 0);
 	if (flag == 0)
 		obj->pos = vdefine(x, y, z);
 	else if (flag == 1)
@@ -78,18 +81,49 @@ int	ft_atoi_parse(char *str, int i, int flag)
 	return (res);
 }
 
-t_rgb	colors_parse(char *str)
+float	ft_atof_normi(char *str, int i)
 {
-	t_rgb	rgb;
-	int		i;
+	float	fraction;
+	float	divisor;
 
-	i = 0;
+	fraction = 0.0;
+	divisor = 10.0;
+	while (str[i] >= '0' && str[i] <= '9' && (str[i] != ','
+			|| ft_isspace(str[i]) != 1))
+	{
+		fraction += (str[i] - '0') / divisor;
+		divisor *= 10.0f;
+		i++;
+		if (str[i] && !(str[i] == ',' || str[i] == '.' || ft_isspace(str[i])
+				|| ft_isdigit(str[i])))
+			exit(er("wrong char between nums", str));
+	}
+	return (fraction);
+}
+
+float	ft_atof(char *str, int i) // i = start
+{
+	float		res;
+	int			sign;
+
+	res = 0.0;
+	sign = 1;
 	while (str[i] && ft_isspace(str[i]))
 		i++;
-	rgb.r = ft_atoi_parse(str, i, 1);
-	i = skip_color(str, i, 0, 0);
-	rgb.g = ft_atoi_parse(str, i, 0);
-	i = skip_color(str, i, 0, 0);
-	rgb.b = ft_atoi_parse(str, i, 0);
-	return (rgb);
+	if (str[i] == '-')
+		sign = -1;
+	if (str[i] == '-' || str[i] == '+')
+		i++;
+	while (str[i] >= '0' && str[i] <= '9' && (str[i] != ','
+			|| ft_isspace(str[i]) != 1))
+	{
+		res = (res * 10.0f) + (str[i] - '0');
+		i++;
+		if (str[i] && !(str[i] == ',' || str[i] == '.' || ft_isspace(str[i])
+				|| ft_isdigit(str[i])))
+			exit(er("wrong char between nums", str));
+	}
+	if (str[i] == '.' && (str[i] != ',' || ft_isspace(str[i]) != 1))
+		return ((res + ft_atof_normi(str, ++i)) * sign);
+	return (res * sign);
 }

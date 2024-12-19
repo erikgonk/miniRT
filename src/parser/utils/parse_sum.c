@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parseSumI.c                                        :+:      :+:    :+:   */
+/*   parse_sum.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 13:40:44 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/19 13:52:55 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/19 16:02:28 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	skip_floats(char *str, int i, int j, int k)
 }
 
 // skips 3 colors | 255,23,0
-int	skip_color(char *str, int i, int j, int flag)
+int	skip_color(char *str, int i, int flag)
 {
 	while (flag == 0 && str[i] && ft_isspace(str[i]))
 		i++;
@@ -118,7 +118,7 @@ int	skip_color(char *str, int i, int j, int flag)
 }
 
 // skips 3 floats | 1.2,4.1,0.0
-int	sum_parse(char *str, int i, int flag, int j)
+int	sum_parse(char *str, int i, int j)
 {
 	while (str[i] && !ft_isspace(str[i++]))
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/19 13:49:18 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/19 15:37:01 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 # include "console.h"
 # include "parser.h"
 # include "debug.h"
+# include "window.h"
 
 # define WINDOW_WIDTH 800
 # define WINDOW_HEIGHT 600
@@ -51,11 +52,6 @@
 # define CY 2
 
 typedef long long	t_ll;
-
-//		mlx
-void				draw_pixel(mlx_image_t *img, int x, int y, uint32_t color);
-void				my_keyhook(mlx_key_data_t keydata, void *param);
-void				fill_image(uint32_t *pixels, uint32_t **img_rgb);
 
 //Main
 void				render_to_mlx(t_data *data);

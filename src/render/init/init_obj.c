@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:31:28 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/19 13:32:15 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/19 16:22:28 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,28 @@ void	init_obj(t_data *data)
 			obj->i_axis = vmul(-1.0f, obj->axis);
 		}
 		else
-		{
-			obj->radius = obj->size * 0.5f;
-			obj->radius2 = obj->radius * obj->radius;
-			obj->axis = normalize(obj->axis);
-			obj->oc_par = vmul(dot(vsub(data->cam->pos, obj->pos), obj->axis), obj->axis);
-			obj->oc_perp = vsub(vsub(data->cam->pos, obj->pos), obj->oc_par);
-			obj->c = dot(obj->oc_perp, obj->oc_perp) - obj->radius2;
-			obj->half_height = obj->height * 0.5f;
-			obj->upper_cap.cap_center = vadd(obj->pos, vmul(obj->half_height, obj->axis));
-			obj->btm_cap.cap_center = vsub(obj->pos, vmul(obj->half_height, obj->axis));
-			obj->upper_cap.radius = obj->size * 0.5f;
-			obj->btm_cap.radius = obj->size * 0.5f;
-			obj->upper_cap.cap_normal = obj->axis;
-			obj->btm_cap.cap_normal = vmul(-1.0f, obj->axis);
-		}
+			init_obj_normi(data, obj);
 		obj = obj->next;
 	}
+}
+
+void	init_obj_normi(t_data *data, t_obj *obj)
+{
+	obj->radius = obj->size * 0.5f;
+	obj->radius2 = obj->radius * obj->radius;
+	obj->axis = normalize(obj->axis);
+	obj->oc_par = vmul(dot(vsub(data->cam->pos, obj->pos), obj->axis), \
+						obj->axis);
+	obj->oc_perp = vsub(vsub(data->cam->pos, obj->pos), obj->oc_par);
+	obj->c = dot(obj->oc_perp, obj->oc_perp) - obj->radius2;
+	obj->half_height = obj->height * 0.5f;
+	obj->upper_cap.cap_center = vadd(obj->pos, vmul(obj->half_height, \
+												obj->axis));
+	obj->btm_cap.cap_center = vsub(obj->pos, vmul(obj->half_height, obj->axis));
+	obj->upper_cap.radius = obj->size * 0.5f;
+	obj->btm_cap.radius = obj->size * 0.5f;
+	obj->upper_cap.cap_normal = obj->axis;
+	obj->btm_cap.cap_normal = vmul(-1.0f, obj->axis);
 }
 
 void	init_light(t_data *data)

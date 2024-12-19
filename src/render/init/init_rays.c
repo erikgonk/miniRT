@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rays.c                                             :+:      :+:    :+:   */
+/*   init_rays.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:36:36 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/17 11:09:41 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/19 15:45:27 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 #include "render.h"
 
-static void	free_rays(t_ray **rays, int rows)
+void	free_rays(t_ray **rays, int rows)
 {
 	int	i;
 
@@ -26,7 +26,7 @@ static void	free_rays(t_ray **rays, int rows)
 	free(rays);
 }
 
-static void	init_single_ray(t_ray *ray, t_vp *vp, t_cam *camera, float *uv)
+void	init_single_ray(t_ray *ray, t_vp *vp, t_cam *camera, float *uv)
 {
 	t_v3	pixel_position;
 
@@ -36,7 +36,7 @@ static void	init_single_ray(t_ray *ray, t_vp *vp, t_cam *camera, float *uv)
 	ray->direction = normalize(vsub(pixel_position, camera->pos));
 }
 
-static t_ray	*init_ray_row(t_cam *camera, t_vp *vp, int y)
+t_ray	*init_ray_row(t_cam *camera, t_vp *vp, int y)
 {
 	t_ray	*row;
 	int		x;

@@ -1,31 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   window.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/19 15:56:47 by erigonza         ###   ########.fr       */
+/*   Created: 2024/12/19 15:35:03 by erigonza          #+#    #+#             */
+/*   Updated: 2024/12/19 15:36:37 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#ifndef WINDOW_H
+# define WINDOW_H
 
-int	main(int ac, char **av)
-{
-	t_data	*data;
-	int		fd;
+# include "miniRT.h"
 
-	init_data(&data);
-	validate_args_and_open(ac, av, &fd);
-	parse(data, fd);
-	close(fd);
-	init_all(data);
-	render_to_mlx(data);
-	mlx_key_hook(data->mlx, &my_keyhook, data);
-	mlx_loop(data->mlx);
-	mlx_delete_image(data->mlx, data->img);
-	mlx_terminate(data->mlx);
-	exit(0);
-}
+void			render_to_mlx(t_data *data);
+void			fill_image(uint32_t *pixels, uint32_t **img_rgb);
+void			my_keyhook(mlx_key_data_t keydata, void *param);
+
+#endif
