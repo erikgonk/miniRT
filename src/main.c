@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:12:46 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/19 10:06:23 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/19 10:32:32 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	init_obj(t_data *data)
 	obj = data->obj;
 	while (obj)
 	{
-		obj->rgb = apply_ambient_light(obj->rgb, data->a_light);
+		obj->a_rgb = apply_ambient_light(obj->rgb, data->a_light);
 		if (obj->type == PL)
 		{
 			obj->numerator = dot(vsub(obj->pos, data->cam->pos), obj->axis);

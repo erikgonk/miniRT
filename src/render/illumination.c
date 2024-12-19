@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:09:03 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/19 10:05:31 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/19 10:32:25 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ t_rgb	phong(t_data *scene, t_ray *ray, t_obj *obj)
 	t_slight	*slight;
 	float		intensity;
 
-	color = obj->rgb;
+	color = obj->a_rgb;
 	slight = scene->s_light;
 	while (slight)
 	{

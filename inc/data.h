@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/18 17:31:18 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/19 10:32:13 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_obj
 	t_v3			pos;
 	t_v3			axis;
 	t_rgb			rgb;
+	t_rgb			a_rgb;
 	float			size;
 	float			height;
 	float			radius; // sp cy
