@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:09:03 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/19 10:32:25 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/19 12:02:39 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,9 @@ t_rgb	apply_ambient_light(t_rgb obj_color, t_alight *a_light)
 	a_r = a_light->rgb.r / 255.0f;
 	a_g = a_light->rgb.g / 255.0f;
 	a_b = a_light->rgb.b / 255.0f;
-
 	result.r = (unsigned char)fminf(obj_color.r * a_r * a_light->br, 255.0f);
 	result.g = (unsigned char)fminf(obj_color.g * a_g * a_light->br, 255.0f);
 	result.b = (unsigned char)fminf(obj_color.b * a_b * a_light->br, 255.0f);
-
 	return (result);
 }
 
@@ -56,21 +54,15 @@ bool	scene_shadow(t_data *scene, t_ray *shadow_ray, float max_dist)
 	current_obj = scene->obj;
 	while (current_obj)
 	{
-		if (current_obj->type == SP && hit_sp(shadow_ray, current_obj, &t))
-		{
-			if (t > EPSILON && t < max_dist)
-				return (true);
-		}
-		else if (current_obj->type == CY && hit_cy(shadow_ray, current_obj, &t, &shadow_ray->origin))
-		{
-			if (t > EPSILON && t < max_dist)
-				return (true);
-		}
-		else if (current_obj->type == PL && hit_pl(shadow_ray, current_obj, &t))
-		{
-			if (t > EPSILON && t < max_dist)
-				return (true);
-		}
+		if (current_obj->type == SP && hit_sp(shadow_ray, current_obj, &t) \
+					&& (t > EPSILON && t < max_dist))
+			return (true);
+		else if (current_obj->type == CY && hit_cy(shadow_ray, current_obj, \
+					&t, &shadow_ray->origin) && (t > EPSILON && t < max_dist))
+			return (true);
+		else if (current_obj->type == PL && hit_pl(shadow_ray, current_obj, &t) \
+					&& (t > EPSILON && t < max_dist))
+			return (true);
 		current_obj = current_obj->next;
 	}
 	return (false);

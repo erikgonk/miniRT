@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 12:37:59 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/18 15:41:44 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/19 12:06:04 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,27 +41,48 @@ uint32_t	**init_image_(void)
 	int			j;
 	size_t		row_size;
 
-
 	image = malloc(HG * sizeof(uint32_t *));
 	row_size = WH * sizeof(uint32_t);
 	if (!image)
 		return (NULL);
-	y = 0;
-	while (y < HG)
+	y = -1;
+	while (++y < HG)
 	{
 		image[y] = malloc(row_size);
 		if (!image[y])
 		{
-			j = 0;
-			while (j < y)
-			{
+			j = -1;
+			while (++j < y)
 				free(image[j]);
-				j++;
-			}
 			free(image);
 			return (NULL);
 		}
-		y++;
 	}
 	return (image);
+}
+
+void	init_data(t_data **data)
+{
+	*data = malloc(sizeof(t_data));
+	if (!(*data))
+		exit(er("error: failed to allocate memory", NULL));
+}
+
+void	init_mlx(t_data *data)
+{
+	data->mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "miniRT", true);
+	if (!data->mlx)
+		exit(er("Failed to initialize MLX42", NULL));
+	data->img = mlx_new_image(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+	if (!data->img)
+	{
+		mlx_terminate(data->mlx);
+		exit(er("Failed to create image\n", NULL));
+	}
+}
+
+void	init_all(t_data *data)
+{
+	init_obj(data);
+	init_mlx(data);
 }

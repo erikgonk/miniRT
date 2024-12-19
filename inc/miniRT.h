@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/18 15:19:20 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/19 12:07:40 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@
 # include "console.h"
 # include <sys/time.h>
 
-# define WINDOW_WIDTH 800
-# define WINDOW_HEIGHT 600
+# define WINDOW_WIDTH 1800
+# define WINDOW_HEIGHT 1600
 
 # define WIDTH WINDOW_WIDTH
 # define HEIGHT WINDOW_HEIGHT

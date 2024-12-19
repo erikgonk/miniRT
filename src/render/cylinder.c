@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 14:00:21 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/18 17:29:23 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/19 12:04:17 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ bool	cy_caps(t_ray *ray, t_obj *cy, float *t, float current_t)
 	t_v3	top_center;
 	t_v3	bottom_center;
 	bool	hit;
-
 
 	hit = false;
 	if (check_cap(ray, cy->upper_cap, t))
