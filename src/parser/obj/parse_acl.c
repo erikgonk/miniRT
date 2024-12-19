@@ -1,44 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parseACL.c                                         :+:      :+:    :+:   */
+/*   parse_acl.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:27:07 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/17 18:35:01 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/19 13:52:37 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
-int	random_sum_parse(char *str, int i)
-{
-	int		j;
-	int		k;
-
-	j = 0;
-	k = 0;
-	while (str[i] && str[i] != ',')
-	{
-		if (ft_isdigit(str[i]))
-			j = 0;
-		if (k >= 2 || j >= 2)
-			exit(er("error: random_sum_parse", str));
-		if (ft_isspace(str[i]))
-			break ;
-		if (str[i] == '.')
-			j++;
-		else if (str[i] == ',')
-			k++;
-		else if (!ft_isdigit(str[i]) && str[i] != '-')
-			exit(er("error: random_sum_parse", str));
-		i++;
-	}
-	if (str[i] && str[i] == ',')
-		i++;
-	return (i);
-}
 
 t_v3	floats_acl_parse(char *str, int i)
 {

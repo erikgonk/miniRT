@@ -6,7 +6,7 @@
 #    By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/19 12:51:14 by shurtado          #+#    #+#              #
-#    Updated: 2024/12/19 13:02:51 by shurtado         ###   ########.fr        #
+#    Updated: 2024/12/19 13:51:30 by shurtado         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,15 +20,19 @@ MLX_D			:= ./lib/MLX42/build/
 VCT_D			:= ./lib/libvector/
 
 FILES			:= main.c \
-					parser/parseACL.c parser/parseSumI.c parser/parseUtils.c parser/parsing.c parser/utils.c \
-					parser/parseObj.c parser/checkerParse.c \
+					parser/parser/parser.c \
+					parser/obj/parse_obj.c parser/obj/parse_acl.c \
+					parser/utils/parseSumI.c parser/utils/parseUtils.c parser/utils/utils.c parser/utils/checkerParse.c \
+					render/render/render.c \
+					render/obj/illumination.c render/obj/cylinder.c render/obj/intersections.c render/obj/viewport.c \
+					render/calcs/calcs.c render/calcs/quadratic.c \
+					render/init/init_image.c render/init/init_rays.c render/init/init_general.c render/init/init_obj.c \
+					render/color/color.c \
+					render/utils/free.c \
+					console/console/run_console.c \
+					console/menu/submenu.c console/menu/slight_menu.c console/menu/camera_menu.c console/menu/obj_menu.c \
 					debug/debug_info.c debug/print_items.c debug/time.c \
-					window/mlx.c \
-					render/calcs.c render/colour.c render/initialization.c render/intersections.c render/render.c \
-					render/rays.c render/viewport.c render/free.c \
-					render/illumination.c render/cylinder.c \
-					console/run_console.c console/submenu.c console/slight_menu.c console/camera_menu.c \
-					console/obj_menu.c
+					window/mlx.c
 SRCS			:= $(addprefix $(SRC_D), $(FILES))
 
 OBJS			:= $(patsubst $(SRC_D)%.c,$(OBJ_D)%.o,$(SRCS))

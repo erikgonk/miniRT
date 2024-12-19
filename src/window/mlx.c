@@ -3,14 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   mlx.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 16:58:38 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/17 11:12:03 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/19 13:35:48 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+void	render_to_mlx(t_data *data)
+{
+	uint32_t		**img_rgb;
+	t_ll			time;
+
+	time = current_timestamp();
+	img_rgb = render(data, 0, 0);
+	if (!img_rgb)
+		exit(er("Failed to render scene", NULL));
+	fill_image((uint32_t *)data->img->pixels, img_rgb);
+	if (!data->img->enabled)
+		data->img->enabled = true;
+	mlx_image_to_window(data->mlx, data->img, 0, 0);
+	free_image(img_rgb, HEIGHT);
+	time = current_timestamp() - time;
+	time /= 100;
+	printf("Ha tardado en reenderizar: %lld\n", time);
+}
 
 void	fill_image(uint32_t *pixels, uint32_t **img_rgb)
 {
@@ -30,12 +49,6 @@ void	fill_image(uint32_t *pixels, uint32_t **img_rgb)
 		}
 		y++;
 	}
-}
-
-void	draw_pixel(mlx_image_t *img, int x, int y, uint32_t color)
-{
-	if (x >= 0 && x < WINDOW_WIDTH && y >= 0 && y < WINDOW_HEIGHT)
-		mlx_put_pixel(img, x, y, color);
 }
 
 void	my_keyhook(mlx_key_data_t keydata, void *param)

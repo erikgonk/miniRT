@@ -6,11 +6,39 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 13:40:44 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/15 17:21:52 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/19 13:52:55 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+int	random_sum_parse(char *str, int i)
+{
+	int		j;
+	int		k;
+
+	j = 0;
+	k = 0;
+	while (str[i] && str[i] != ',')
+	{
+		if (ft_isdigit(str[i]))
+			j = 0;
+		if (k >= 2 || j >= 2)
+			exit(er("error: random_sum_parse", str));
+		if (ft_isspace(str[i]))
+			break ;
+		if (str[i] == '.')
+			j++;
+		else if (str[i] == ',')
+			k++;
+		else if (!ft_isdigit(str[i]) && str[i] != '-')
+			exit(er("error: random_sum_parse", str));
+		i++;
+	}
+	if (str[i] && str[i] == ',')
+		i++;
+	return (i);
+}
 
 // skips 1 float | stops when ' '
 int	skip_float(char *str, int i, int j, int flag)

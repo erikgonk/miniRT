@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   initialization.c                                   :+:      :+:    :+:   */
+/*   init_image.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 12:37:59 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/18 15:41:44 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/19 13:31:51 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,18 @@
 #include "../inc/render.h"
 #include "../lib/libvector/libvct.h"
 
-//init Data for a quadratic equation
-void	init_quadratic(t_quadratic *quad, float a, float b, float c)
+
+void	init_mlx(t_data *data)
 {
-	if (fabs(a) < EPSILON)
+	data->mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "miniRT", true);
+	if (!data->mlx)
+		exit(er("Failed to initialize MLX42", NULL));
+	data->img = mlx_new_image(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+	if (!data->img)
 	{
-		quad->a = 0.0f;
-		quad->discriminant = -1.0f;
-		quad->t1 = INFINITY;
-		quad->t2 = INFINITY;
-		return ;
+		mlx_terminate(data->mlx);
+		exit(er("Failed to create image\n", NULL));
 	}
-	quad->a = a;
-	quad->b = b;
-	quad->c = c;
-	quad->discriminant = b * b - 4 * a * c;
-	quad->t1 = INFINITY;
-	quad->t2 = INFINITY;
 }
 
 //Memmory for the final image

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:53:01 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/18 15:25:33 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/19 13:35:04 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,16 @@ void	correct_file(char *name)
 	else if (name[i] == '.' && name[i + 1] == 'r' && name[i + 2] == 't')
 		return ;
 	exit(er("error: correct_file: wrong file name -> ", name));
+}
+
+void	validate_args_and_open(int ac, char **av, int *fd)
+{
+	if (ac != 2)
+		exit(er("error: 2 args needed", NULL));
+	correct_file(av[1]);
+	*fd = open(av[1], O_RDONLY);
+	if (*fd < 0)
+		exit(er("error: fd failed", NULL));
 }
 
 void	parse(t_data *data, char **av, int fd)
