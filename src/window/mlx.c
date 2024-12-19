@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 16:58:38 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/19 16:09:19 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/19 16:59:40 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,38 @@ void	fill_image(uint32_t *pixels, uint32_t **img_rgb)
 	}
 }
 
+void	free_data(t_data *data)
+{
+	t_obj	*obj;
+
+	obj = data->obj;
+	free(data->cam);
+	free(data->s_light);
+	free(data->a_light);
+	while (data->obj)
+	{
+		data->obj = data->obj->next;
+		free(obj);
+		obj = data->obj;
+	}
+	if (data)
+		free(data);
+}
+
+void	last_exit(t_data *data)
+{
+	mlx_delete_image(data->mlx, data->img);
+	mlx_terminate(data->mlx);
+	free_data(data);
+	exit(1);
+}
+
 void	my_keyhook(mlx_key_data_t keydata, void *param)
 {
 	static bool	mode;
 
 	if (keydata.key == MLX_KEY_ESCAPE)
-		exit(1);
+		last_exit(param);
 	else if (keydata.action == MLX_PRESS)
 	{
 		run_console((t_data *) param, keydata.key);

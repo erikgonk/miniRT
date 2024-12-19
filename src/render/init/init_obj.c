@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:31:28 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/19 16:22:28 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/19 16:44:35 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ void	init_obj_normi(t_data *data, t_obj *obj)
 {
 	obj->radius = obj->size * 0.5f;
 	obj->radius2 = obj->radius * obj->radius;
-	obj->axis = normalize(obj->axis);
+	if (obj->type != SP)
+		obj->axis = normalize(obj->axis);
 	obj->oc_par = vmul(dot(vsub(data->cam->pos, obj->pos), obj->axis), \
 						obj->axis);
 	obj->oc_perp = vsub(vsub(data->cam->pos, obj->pos), obj->oc_par);

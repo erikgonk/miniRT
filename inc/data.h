@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/19 12:35:20 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/19 16:41:07 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ typedef struct s_obj
 	float			height;
 	float			radius; // sp cy
 	float			radius2; // sp cy
-	// t_v3			oc;
 	float			numerator; // pl
 	t_v3			i_axis; // cy
 	t_v3			oc_par; // cy
