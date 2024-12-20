@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:09:03 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/19 17:52:20 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/20 09:45:50 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,40 +68,6 @@ bool	scene_shadow(t_data *scene, t_ray *shadow_ray, float max_dist)
 	return (false);
 }
 
-t_v3 vneg(t_v3 v)
-{
-	t_v3 result;
-
-	result.x = -v.x;
-	result.y = -v.y;
-	result.z = -v.z;
-
-	return result;
-}
-
-t_v3 reflect(t_v3 v, t_v3 n)
-{
-    float dot_product;
-    t_v3 result;
-
-    // Calcular el producto escalar (v . n)
-    dot_product = dot(v, n);
-
-    // Aplicar la fórmula de reflexión
-    result.x = v.x - 2 * dot_product * n.x;
-    result.y = v.y - 2 * dot_product * n.y;
-    result.z = v.z - 2 * dot_product * n.z;
-
-    return result;
-}
-
-void specular_light(t_rgb *color, t_slight *slight, float intensity)
-{
-    color->r += slight->rgb.r * intensity;
-    color->g += slight->rgb.g * intensity;
-    color->b += slight->rgb.b * intensity;
-}
-
 t_rgb	phong(t_data *scene, t_ray *ray, t_obj *obj)
 {
 	t_rgb		color;
@@ -123,14 +89,7 @@ t_rgb	phong(t_data *scene, t_ray *ray, t_obj *obj)
 		}
 		intensity = fmax(dot(shadow_ray.direction, ray->normal), 0.0f);
 		difuse_light(&color, slight, obj, intensity);
-		// specular_light(&color, )
-		float		spec_intensity;
-		t_v3		view_dir;
-		t_v3		reflection;
-		view_dir = normalize(vneg(ray->direction));
-		reflection = reflect(vneg(shadow_ray.direction), ray->normal);
-		spec_intensity = pow(fmax(dot(reflection, view_dir), 0.0f), 252);
-		specular_light(&color, slight, spec_intensity);
+		specular_light(&color, slight, ray, &shadow_ray);
 		slight = slight->next;
 	}
 	return (color);
