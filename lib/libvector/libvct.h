@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libvct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 18:33:09 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/16 01:14:24 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/20 10:08:24 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,7 @@ t_v3			x_axis_rotation(t_v3 vec, float angle);
 t_v3			y_axis_rotation(t_v3 vec, float angle);
 t_v3			z_axis_rotation(t_v3 vec, float angle);
 t_v3			scalar_div(t_v3 vec, float scalar);
+t_v3			vneg(t_v3 v);
+t_v3			vrefl(t_v3 v, t_v3 n);
 
 #endif

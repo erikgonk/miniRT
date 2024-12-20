@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: erigonza <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/16 18:32:30 by erigonza          #+#    #+#              #
-#    Updated: 2024/11/16 18:32:33 by erigonza         ###   ########.fr        #
+#    Updated: 2024/12/20 10:08:33 by shurtado         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= libvct.a
 
-SRCS	= vector_operations.c vector_operations2.c vector_operations3.c
+SRCS	= vector_operations.c vector_operations2.c vector_operations3.c vector_operations4.c
 
 OBJS	= ${SRCS:.c=.o}
 
