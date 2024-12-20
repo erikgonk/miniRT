@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_rays.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:36:36 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/19 15:45:27 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/20 10:06:03 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	init_single_ray(t_ray *ray, t_vp *vp, t_cam *camera, float *uv)
 			vmul(uv[1], vp->vertical));
 	ray->origin = camera->pos;
 	ray->direction = normalize(vsub(pixel_position, camera->pos));
+	ray->i_direction = normalize(vneg(ray->direction));
 }
 
 t_ray	*init_ray_row(t_cam *camera, t_vp *vp, int y)

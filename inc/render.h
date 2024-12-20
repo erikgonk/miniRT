@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/19 17:11:51 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/20 10:10:11 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ typedef unsigned char	t_uchar;
 # ifndef M_PI
 #  define M_PI 3.14159265358979323846
 # endif
+
+//MATERIALS
+# define SOLID_S 32
 
 typedef struct s_frame
 {
@@ -48,6 +51,7 @@ typedef struct s_ray
 {
 	t_v3				origin;
 	t_v3				direction;
+	t_v3				i_direction;
 	t_v3				normal;
 	t_v3				point;
 }						t_ray;
