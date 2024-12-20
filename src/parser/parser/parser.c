@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:53:01 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/19 16:03:10 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/20 11:41:28 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,13 @@ void	validate_args_and_open(int ac, char **av, int *fd)
 		exit(er("error: fd failed", NULL));
 }
 
+void	parser_aa(t_data *data, char *str)
+{
+	data->aa = ft_atoi_parse(str, 2, 2);
+	if (data->aa != 0 && data->aa != 3 && data->aa != 5 && data->aa != 9)
+		exit(er("error: anialising: wrong num", str));
+}
+
 void	parse(t_data *data, int fd)
 {
 	char	type;
@@ -54,10 +61,12 @@ void	parse(t_data *data, int fd)
 		if (str[0] == '#')
 			continue ;
 		type = type_obj(str);
-		if (type > 5)
+		if (type > 6)
 			exit(er("error: parse: wrong map: obj type", str));
-		if (type <= 2 && ft_isspace(str[2]))
+		else if (type <= 2 && ft_isspace(str[2]))
 			objadd_back(&data->obj, create_obj(str, type));
+		else if (type == AA)
+			parser_aa(data, str);
 		create_alight(data, str, type);
 		create_cam(data, str, type);
 		create_slight(&data->s_light, str, type);

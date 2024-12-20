@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:09:03 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/20 09:45:50 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/20 11:59:49 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,13 @@ void	difuse_light(t_rgb *color, t_slight *slight, t_obj *obj, float inty)
 	}
 }
 
-bool	scene_shadow(t_data *scene, t_ray *shadow_ray, float max_dist)
+bool	data_shadow(t_data *data, t_ray *shadow_ray, float max_dist)
 {
 	t_obj	*current_obj;
 	float	t;
 
 	t = INFINITY;
-	current_obj = scene->obj;
+	current_obj = data->obj;
 	while (current_obj)
 	{
 		if (current_obj->type == SP && hit_sp(shadow_ray, current_obj, &t) && \
@@ -68,7 +68,7 @@ bool	scene_shadow(t_data *scene, t_ray *shadow_ray, float max_dist)
 	return (false);
 }
 
-t_rgb	phong(t_data *scene, t_ray *ray, t_obj *obj)
+t_rgb	phong(t_data *data, t_ray *ray, t_obj *obj)
 {
 	t_rgb		color;
 	t_ray		shadow_ray;
@@ -76,12 +76,12 @@ t_rgb	phong(t_data *scene, t_ray *ray, t_obj *obj)
 	float		intensity;
 
 	color = obj->a_rgb;
-	slight = scene->s_light;
+	slight = data->s_light;
 	while (slight)
 	{
 		shadow_ray.origin = vadd(ray->point, vmul(1e-3, ray->normal));
 		shadow_ray.direction = normalize(vsub(slight->pos, ray->point));
-		if (scene_shadow(scene, &shadow_ray, vlength(vsub(slight->pos,
+		if (data_shadow(data, &shadow_ray, vlength(vsub(slight->pos,
 						ray->point))))
 		{
 			slight = slight->next;

@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:34:20 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/19 17:10:54 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/20 11:43:34 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	init_data(t_data **data)
 	*data = malloc(sizeof(t_data));
 	if (!(*data))
 		exit(er("error: failed to allocate memory", NULL));
+	(*data)->aa = -1;
 }
 
 void	free_data(t_data *data)

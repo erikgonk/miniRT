@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_conversions.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 09:47:50 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/19 16:04:23 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/20 11:37:01 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,14 @@ int	ft_atoi_parse(char *str, int i, int flag)
 
 	res = 0;
 	sign = 1;
-	while (flag == 1 && str[i] && ft_isspace(str[i]))
+	while ((flag == 1 || flag == 2) && str[i] && ft_isspace(str[i]))
 		i++;
-	if (!str)
-		exit(er("error: atoi: str doesn't exist\n", NULL));
-	if (str[i] == ',')
+	if (str[i] && str[i] == ',' && flag != 2)
 		i++;
 	else if (str[i] == '-')
 		sign = -sign;
+	if (flag == 2 && (!ft_isdigit(str[i]) || (str[i + 1] && str[i + 2])))
+		exit(er("error: atoi: str invalid\n", NULL));
 	if (str[i] == '-' || str[i] == '+')
 		i++;
 	if (!ft_isdigit(str[i]))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   calcs.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/19 16:06:57 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/20 11:59:49 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +63,16 @@ t_v3	get_normal(t_obj *obj, t_v3 point)
 	return ((t_v3){0, 0, 0});
 }
 
-uint32_t	trace_ray(t_ray ray, t_data *scene)
+uint32_t	trace_ray(t_ray ray, t_data *data)
 {
 	float	t_min;
 	t_obj	*closest_obj;
 	t_rgb	color;
 
 	t_min = INFINITY;
-	closest_obj = find_closest_object(&ray, scene->obj, &t_min);
+	closest_obj = find_closest_object(&ray, data->obj, &t_min);
 	if (!closest_obj)
 		return (BLACK);
-	color = phong(scene, &ray, closest_obj);
+	color = phong(data, &ray, closest_obj);
 	return (get_colour(color));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:13:09 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/19 16:03:44 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/20 11:01:02 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	er(char *s, char *argv)
 
 int	type_obj(char *str)
 {
-	static char		*bts[] = {"sp", "pl", "cy", "A", "C", "L", NULL};
+	static char		*bts[] = {"sp", "pl", "cy", "A", "C", "L", "aa", NULL};
 	int				i;
 
 	i = 0;

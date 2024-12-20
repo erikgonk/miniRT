@@ -6,7 +6,7 @@
 #    By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/19 12:51:14 by shurtado          #+#    #+#              #
-#    Updated: 2024/12/20 09:47:00 by shurtado         ###   ########.fr        #
+#    Updated: 2024/12/20 12:40:46 by shurtado         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ OBJS			:= $(patsubst $(SRC_D)%.c,$(OBJ_D)%.o,$(SRCS))
 
 CC				:= cc
 IFLAGS			:= -I$(INC_D) -I$(VCT_D) -I$(LIBFT_D)inc
-CFLAGS			:= #-g -fsanitize=address -Wall -Wextra -Werror
+CFLAGS			:= -g -fsanitize=address #-Wall -Wextra -Werror
 
 LIB				:= lib/
 
@@ -69,14 +69,14 @@ $(OBJ_D)%.o:	$(SRC_D)%.c Makefile
 
 $(NAME):	$(OBJS)
 			$(CC) $(CFLAGS) $(OBJS) $(LIBFT_D)$(LIBFT) $(MLX_D)$(MLX) $(LIBVCT) $(MLXFLAGS) -o $(NAME)
-			@clear
+			# @clear
 
 c clean:
 			@make clean -s -C $(LIB)libft
 			@make clean -s -C $(LIB)libvector
 			@$(RM) $(DIR_MLX)/build
 			${RM} ./src/tmp
-			@clear
+			# @clear
 
 f fclean:		clean
 			@make fclean -s -C $(LIB)libft

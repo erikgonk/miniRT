@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/20 10:10:11 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/20 12:09:33 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ typedef struct s_frame
 
 typedef struct s_viewport
 {
+	float				viewport_width;
+	float				viewport_height;
 	t_v3				origin;
 	t_v3				horizontal;
 	t_v3				vertical;
 	t_v3				lower_left;
-	float				viewport_width;
-	float				viewport_height;
 }						t_vp;
 
 typedef struct s_ray
@@ -71,7 +71,7 @@ float					vlength(t_v3 v);
 t_obj					*find_closest_object(t_ray *ray, t_obj *objs,
 							float *t_min);
 t_v3					get_normal(t_obj *obj, t_v3 point);
-uint32_t				trace_ray(t_ray ray, t_data *scene);
+uint32_t				trace_ray(t_ray ray, t_data *data);
 
 //		quadratic
 void					init_quadratic(t_quadratic *quad, float a, float b,
@@ -102,7 +102,7 @@ void					free_rays(t_ray **rays, int rows);
 void					init_single_ray(t_ray *ray, t_vp *vp, t_cam *camera,
 							float *uv);
 t_ray					*init_ray_row(t_cam *camera, t_vp *vp, int y);
-t_ray					**init_rays(t_cam *camera, t_vp *vp);
+t_ray					***init_rays(t_data *data, t_cam *camera, t_vp *vp);
 
 //		cylinder
 bool					check_cap(t_ray *ray, t_cap cap, float *t);
@@ -118,9 +118,12 @@ bool					hit_cy(t_ray *ray, t_obj *cy, float *t,
 t_rgb					apply_ambient_light(t_rgb obj_color, t_alight *a_light);
 void					difuse_light(t_rgb *color, t_slight *slight, t_obj *obj,
 							float inty);
-bool					scene_shadow(t_data *scene, t_ray *shadow_ray,
+bool					data_shadow(t_data *data, t_ray *shadow_ray,
 							float max_dist);
-t_rgb					phong(t_data *scene, t_ray *ray, t_obj *obj);
+t_rgb					phong(t_data *data, t_ray *ray, t_obj *obj);
+
+//		specular
+void	specular_light(t_rgb *color, t_slight *slight, t_ray *ray, t_ray *s_ray);
 
 //		intersections
 bool					calc_quad_sphere(t_obj *sphere, t_ray ray,
@@ -134,7 +137,7 @@ t_v3					calculate_right(t_v3 forward);
 t_vp					*init_viewport(t_cam *camera, int width, int height);
 
 //		render
-uint32_t				**render(t_data *scene, int x, int y);
+uint32_t				**render(t_data *data, int x, int y);
 
 //		utils
 void					free_rays_all(t_ray **rays);

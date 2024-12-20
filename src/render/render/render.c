@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:37:51 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/19 17:27:13 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/20 12:26:52 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	*process_rows(void *arg)
 		x = 0;
 		while (x < WH)
 		{
-			data->image[y][x] = trace_ray(data->rays[y][x], data->scene);
+			data->image[y][x] = trace_ray(data->rays[y][x], data->data);
 			x++;
 		}
 		y += NUM_THREADS;
@@ -38,7 +38,7 @@ void	*process_rows(void *arg)
 	pthread_exit(NULL);
 }
 
-void	render_with_threads(t_data *scene, t_ray **rays, uint32_t **image)
+void	render_with_threads(t_data *data, t_ray **rays, uint32_t **image)
 {
 	pthread_t		threads[NUM_THREADS];
 	t_thread_data	thread_data[NUM_THREADS];
@@ -49,7 +49,7 @@ void	render_with_threads(t_data *scene, t_ray **rays, uint32_t **image)
 	{
 		thread_data[i].thread_id = i;
 		thread_data[i].rays = rays;
-		thread_data[i].scene = scene;
+		thread_data[i].data = data;
 		thread_data[i].image = image;
 		pthread_create(&threads[i], NULL, process_rows, &thread_data[i]);
 		i++;
@@ -62,19 +62,22 @@ void	render_with_threads(t_data *scene, t_ray **rays, uint32_t **image)
 	}
 }
 
-uint32_t	**render(t_data *scene, int x, int y)
+uint32_t	**render(t_data *data, int x, int y)
 {
-	t_ray		**rays;
+	t_ray		***rays;
 	t_vp		*vp;
 	uint32_t	**image;
 
-	vp = init_viewport(scene->cam, WH, HG);
-	rays = init_rays(scene->cam, vp);
+	(void)x;
+	(void)y;
+	vp = init_viewport(data->cam, WH, HG);
+	rays = init_rays(data, data->cam, vp);
 	image = init_image_();
 	if (!image)
 		return (NULL);
-	render_with_threads(scene, rays, image);
-	free_render(vp, rays);
+	render_with_threads(data, rays[0], image);
+	free_render(vp, *rays);
 	return (image);
 }
+// free ***rays
 

@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/20 10:11:51 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/20 11:05:08 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@
 # define SP 0
 # define PL 1
 # define CY 2
+# define AA 6
 
 typedef long long	t_ll;
 

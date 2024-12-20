@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/19 16:41:07 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/20 11:47:19 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 
 typedef struct s_cap
 {
-	t_v3	cap_center;
 	float	radius;
+	t_v3	cap_center;
 	t_v3	cap_normal;
 }	t_cap;
 
@@ -45,8 +45,8 @@ typedef struct s_a_light
 
 typedef struct s_light
 {
-	t_v3				pos;
 	float				br;
+	t_v3				pos;
 	t_rgb				rgb;
 	t_rgb				rgb_inty;
 	struct s_light		*next;
@@ -54,9 +54,9 @@ typedef struct s_light
 
 typedef struct s_obj
 {
-	uint32_t		color;
 	int				i;
 	int				type;
+	uint32_t		color;
 	t_v3			pos;
 	t_v3			axis;
 	t_rgb			rgb;
@@ -83,6 +83,7 @@ typedef struct s_data
 	t_cam			*cam;
 	t_slight		*s_light;
 	t_obj			*obj;
+	int				aa; // antialising
 	mlx_t			*mlx;
 	mlx_image_t		*img;
 }					t_data;

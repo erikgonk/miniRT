@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:24:39 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/19 17:27:51 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/20 11:59:49 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@
 typedef struct s_thread_data
 {
 	int			thread_id;
-	t_ray		**rays;
-	t_data		*scene;
 	uint32_t	**image;
+	t_ray		**rays;
+	t_data		*data;
 }	t_thread_data;
 
-void	render_with_threads(t_data *scene, t_ray **rays, uint32_t **image);
+void	render_with_threads(t_data *data, t_ray **rays, uint32_t **image);
 void	*process_rows(void *arg);
 
 #endif
