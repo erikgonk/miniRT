@@ -5,9 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/04 17:36:36 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/20 12:41:48 by shurtado         ###   ########.fr       */
+/*   Created: Invalid Date        by              +#+  #+#    #+#             */
+/*   Updated: 2024/12/21 11:45:09 by shurtado         ###   ########.fr       */
 /*                                                                            */
+/* ************************************************************************** */
+
 /* ************************************************************************** */
 
 #include "miniRT.h"
@@ -57,24 +59,11 @@ t_ray	*init_ray_row(t_cam *camera, t_vp *vp, int y)
 	return (row);
 }
 
-t_ray	***init_multiple_rays(t_data *data, t_vp *vp)
+t_ray	**init_rays(t_cam *camera, t_vp *vp)
 {
-	t_ray	***rays;
-	t_v3	origin[data->aa];
-
-	rays = malloc (sizeof(t_ray) * data->aa);
-	return (rays);
-}
-
-t_ray	***init_rays(t_data *data, t_cam *camera, t_vp *vp)
-{
-	t_ray 	***full;
 	t_ray	**rays;
 	int		y;
 
-	if (data->aa != 0)
-		return (init_multiple_rays(data, vp));
-	full = malloc(sizeof(t_ray **) * 2);
 	rays = malloc(HG * sizeof(t_ray *));
 	if (!rays)
 		return (NULL);
@@ -89,7 +78,5 @@ t_ray	***init_rays(t_data *data, t_cam *camera, t_vp *vp)
 		}
 		y++;
 	}
-	full[0] = rays;
-	full[1] = NULL;
-	return (full);
+	return (rays);
 }

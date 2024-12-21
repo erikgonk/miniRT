@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/20 12:09:33 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/21 11:45:53 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void					free_rays(t_ray **rays, int rows);
 void					init_single_ray(t_ray *ray, t_vp *vp, t_cam *camera,
 							float *uv);
 t_ray					*init_ray_row(t_cam *camera, t_vp *vp, int y);
-t_ray					***init_rays(t_data *data, t_cam *camera, t_vp *vp);
+t_ray					**init_rays(t_cam *camera, t_vp *vp);
 
 //		cylinder
 bool					check_cap(t_ray *ray, t_cap cap, float *t);

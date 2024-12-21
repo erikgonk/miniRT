@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:37:51 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/20 12:26:52 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/21 11:46:18 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,20 +64,19 @@ void	render_with_threads(t_data *data, t_ray **rays, uint32_t **image)
 
 uint32_t	**render(t_data *data, int x, int y)
 {
-	t_ray		***rays;
+	t_ray		**rays;
 	t_vp		*vp;
 	uint32_t	**image;
 
 	(void)x;
 	(void)y;
 	vp = init_viewport(data->cam, WH, HG);
-	rays = init_rays(data, data->cam, vp);
+	rays = init_rays(data->cam, vp);
 	image = init_image_();
 	if (!image)
 		return (NULL);
-	render_with_threads(data, rays[0], image);
-	free_render(vp, *rays);
+	render_with_threads(data, rays, image);
+	free_render(vp, rays);
 	return (image);
 }
-// free ***rays
 
