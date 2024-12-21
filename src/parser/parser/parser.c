@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:53:01 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/20 11:41:28 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/21 09:54:46 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	validate_args_and_open(int ac, char **av, int *fd)
 void	parser_aa(t_data *data, char *str)
 {
 	data->aa = ft_atoi_parse(str, 2, 2);
-	if (data->aa != 0 && data->aa != 3 && data->aa != 5 && data->aa != 9)
+	if (data->aa < 1 && data->aa > 200)
 		exit(er("error: anialising: wrong num", str));
 }
 

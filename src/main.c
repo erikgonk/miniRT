@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/20 11:52:09 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/21 09:30:09 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	main(int ac, char **av)
 	t_data	*data;
 	int		fd;
 
+	srand((unsigned int)current_timestamp());
 	init_data(&data);
 	validate_args_and_open(ac, av, &fd);
 	parse(data, fd);

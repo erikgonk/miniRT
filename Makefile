@@ -6,7 +6,7 @@
 #    By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/19 12:51:14 by shurtado          #+#    #+#              #
-#    Updated: 2024/12/20 12:40:46 by shurtado         ###   ########.fr        #
+#    Updated: 2024/12/21 09:53:37 by shurtado         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ FILES			:= main.c \
 					parser/obj/parse_obj.c parser/obj/parse_acl.c \
 					parser/utils/parse_sum.c parser/utils/parse_utils.c parser/utils/parse_conversions.c parser/utils/parse_checker.c \
 					render/render/render.c \
+					render/render/antialiasing.c \
 					render/obj/cylinder.c render/obj/intersections.c render/obj/viewport.c \
 					render/illumination/illumination.c render/illumination/specular.c\
 					render/calcs/calcs.c render/calcs/quadratic.c \

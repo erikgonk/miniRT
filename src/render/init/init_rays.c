@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/04 17:36:36 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/20 12:41:48 by shurtado         ###   ########.fr       */
+/*   Created: 2024/12/20 16:10:17 by shurtado          #+#    #+#             */
+/*   Updated: 2024/12/21 09:44:24 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,22 @@ void	free_rays(t_ray **rays, int rows)
 	free(rays);
 }
 
-void	init_single_ray(t_ray *ray, t_vp *vp, t_cam *camera, float *uv)
+void	init_single_ray(t_ray *ray, t_vp *vp, t_v3 origin, float *uv)
 {
 	t_v3	pixel_position;
 
 	pixel_position = vadd(vadd(vp->lower_left, vmul(uv[0], vp->horizontal)),
 			vmul(uv[1], vp->vertical));
-	ray->origin = camera->pos;
-	ray->direction = normalize(vsub(pixel_position, camera->pos));
+	ray->origin = origin;
+	ray->direction = normalize(vsub(pixel_position, origin));
 	ray->i_direction = normalize(vneg(ray->direction));
 }
 
-t_ray	*init_ray_row(t_cam *camera, t_vp *vp, int y)
+t_ray	*init_ray_row(t_v3	origin, t_vp *vp, int y)
 {
 	t_ray	*row;
 	int		x;
-	float	uv[2];
+	float	*uv;
 
 	row = malloc(WH * sizeof(t_ray));
 	if (!row)
@@ -49,39 +49,25 @@ t_ray	*init_ray_row(t_cam *camera, t_vp *vp, int y)
 	x = 0;
 	while (x < WH)
 	{
-		uv[0] = (float)x / (float)(WH - 1);
-		uv[1] = 1.0f - (float)y / (float)(HG - 1);
-		init_single_ray(&row[x], vp, camera, uv);
+		uv = generate_uv(x, y);
+		init_single_ray(&row[x], vp, origin, uv);
 		x++;
 	}
 	return (row);
 }
 
-t_ray	***init_multiple_rays(t_data *data, t_vp *vp)
+t_ray	**init_rays(t_v3 origin, t_vp *vp)
 {
-	t_ray	***rays;
-	t_v3	origin[data->aa];
-
-	rays = malloc (sizeof(t_ray) * data->aa);
-	return (rays);
-}
-
-t_ray	***init_rays(t_data *data, t_cam *camera, t_vp *vp)
-{
-	t_ray 	***full;
 	t_ray	**rays;
 	int		y;
 
-	if (data->aa != 0)
-		return (init_multiple_rays(data, vp));
-	full = malloc(sizeof(t_ray **) * 2);
 	rays = malloc(HG * sizeof(t_ray *));
 	if (!rays)
 		return (NULL);
 	y = 0;
 	while (y < HG)
 	{
-		rays[y] = init_ray_row(camera, vp, y);
+		rays[y] = init_ray_row(origin, vp, y);
 		if (!rays[y])
 		{
 			free_rays(rays, y);
@@ -89,7 +75,5 @@ t_ray	***init_rays(t_data *data, t_cam *camera, t_vp *vp)
 		}
 		y++;
 	}
-	full[0] = rays;
-	full[1] = NULL;
-	return (full);
+	return (rays);
 }

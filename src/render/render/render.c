@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:37:51 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/20 12:26:52 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/21 10:49:02 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,40 +44,70 @@ void	render_with_threads(t_data *data, t_ray **rays, uint32_t **image)
 	t_thread_data	thread_data[NUM_THREADS];
 	int				i;
 
-	i = 0;
-	while (i < NUM_THREADS)
+	i = -1;
+	while (++i < NUM_THREADS)
 	{
 		thread_data[i].thread_id = i;
 		thread_data[i].rays = rays;
 		thread_data[i].data = data;
 		thread_data[i].image = image;
 		pthread_create(&threads[i], NULL, process_rows, &thread_data[i]);
-		i++;
 	}
-	i = 0;
-	while (i < NUM_THREADS)
-	{
+	i = -1;
+	while (++i < NUM_THREADS)
 		pthread_join(threads[i], NULL);
-		i++;
-	}
 }
 
-uint32_t	**render(t_data *data, int x, int y)
+uint32_t	***init_image_samples(int aa)
+{
+	int			i;
+	uint32_t	***image;
+
+	image = malloc(sizeof(uint32_t **) * (aa + 1));
+	if (!image)
+		return (NULL);
+	image[aa] = NULL;
+	i = -1;
+	while (++i < aa)
+		image[i] = init_image_();
+	return (image);
+}
+
+t_ray	***init_rays_aa(int aa, t_v3 origin, t_vp *vp)
+{
+	int			i;
+	t_ray		***rays;
+
+	rays = malloc(sizeof(t_ray **) * (aa + 1));
+	if (!rays)
+		return (NULL);
+	rays[aa] = NULL;
+	i = -1;
+	while (++i < aa)
+		rays[i] = init_rays(origin, vp);
+	return (rays);
+}
+
+uint32_t	**render(t_data *data)
 {
 	t_ray		***rays;
 	t_vp		*vp;
-	uint32_t	**image;
+	uint32_t	***samples;
+	uint32_t	**i_result;
+	int			i;
 
-	(void)x;
-	(void)y;
+
 	vp = init_viewport(data->cam, WH, HG);
-	rays = init_rays(data, data->cam, vp);
-	image = init_image_();
-	if (!image)
-		return (NULL);
-	render_with_threads(data, rays[0], image);
-	free_render(vp, *rays);
-	return (image);
+	rays = init_rays_aa(data->aa, data->cam->pos, vp);
+	samples = init_image_samples(data->aa);
+	i = -1;
+	while (++i < data->aa)
+	{
+		render_with_threads(data, rays[i], samples[i]);
+		printf("sample %d done\n", i + 1);
+	}
+	i_result = average_samples(samples, data->aa, WH, HG);
+	return (i_result);
 }
 // free ***rays
-
+//	free_render(vp, rays[0]);

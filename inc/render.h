@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/20 12:09:33 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/21 09:52:07 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,10 @@ void					init_light(t_data *data);
 
 //		init_rays
 void					free_rays(t_ray **rays, int rows);
-void					init_single_ray(t_ray *ray, t_vp *vp, t_cam *camera,
+void					init_single_ray(t_ray *ray, t_vp *vp, t_v3 origin,
 							float *uv);
-t_ray					*init_ray_row(t_cam *camera, t_vp *vp, int y);
-t_ray					***init_rays(t_data *data, t_cam *camera, t_vp *vp);
+t_ray					*init_ray_row(t_v3 origin, t_vp *vp, int y);
+t_ray					**init_rays(t_v3 origin, t_vp *vp);
 
 //		cylinder
 bool					check_cap(t_ray *ray, t_cap cap, float *t);
@@ -123,7 +123,8 @@ bool					data_shadow(t_data *data, t_ray *shadow_ray,
 t_rgb					phong(t_data *data, t_ray *ray, t_obj *obj);
 
 //		specular
-void	specular_light(t_rgb *color, t_slight *slight, t_ray *ray, t_ray *s_ray);
+void					specular_light(t_rgb *color, t_slight *slight, \
+										t_ray *ray, t_ray *s_ray);
 
 //		intersections
 bool					calc_quad_sphere(t_obj *sphere, t_ray ray,
@@ -137,7 +138,10 @@ t_v3					calculate_right(t_v3 forward);
 t_vp					*init_viewport(t_cam *camera, int width, int height);
 
 //		render
-uint32_t				**render(t_data *data, int x, int y);
+uint32_t				**render(t_data *data);
+float					*generate_uv(int x, int y);
+uint32_t				**average_samples(uint32_t ***samples, int n_samples, \
+											int width, int height);
 
 //		utils
 void					free_rays_all(t_ray **rays);
