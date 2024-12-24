@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/20 11:59:49 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/24 11:54:24 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,16 @@ t_v3	get_normal(t_obj *obj, t_v3 point)
 	return ((t_v3){0, 0, 0});
 }
 
+t_rgb	combine_colors(t_rgb c_local, t_rgb c_global)
+{
+	t_rgb	c_final;
+
+	c_final.r = fmaxf((c_global.r * G_WEIGHT) + (c_local.r * L_WEIGHT), 255.0f);
+	c_final.g = fmaxf((c_global.g * G_WEIGHT) + (c_local.g * L_WEIGHT), 255.0f);
+	c_final.b = fmaxf((c_global.b * G_WEIGHT) + (c_local.b * L_WEIGHT), 255.0f);
+	return (c_final);
+}
+
 uint32_t	trace_ray(t_ray ray, t_data *data)
 {
 	float	t_min;
@@ -74,5 +84,6 @@ uint32_t	trace_ray(t_ray ray, t_data *data)
 	if (!closest_obj)
 		return (BLACK);
 	color = phong(data, &ray, closest_obj);
+	// final_clolor = combine_colors(color, global_color);
 	return (get_colour(color));
 }

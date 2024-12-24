@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/21 11:45:53 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/24 11:55:27 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 # define RENDER_H
 
 # include "miniRT.h"
-// short alias for window size
-# define WH WINDOW_WIDTH
-# define HG WINDOW_HEIGHT
+
+// Short alias for window size
+# define WH WIDTH
+# define HG HEIGHT
 
 # define PPLANEDISTANCE 1.0f
 # define BLACK 0xFF000000
@@ -27,8 +28,12 @@ typedef unsigned char	t_uchar;
 #  define M_PI 3.14159265358979323846
 # endif
 
-//MATERIALS
+// Materials
 # define SOLID_S 32
+
+// Color Weight
+# define G_WEIGHT 0.7
+# define L_WEIGHT 0.3
 
 typedef struct s_frame
 {
