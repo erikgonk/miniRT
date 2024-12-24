@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 16:58:38 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/20 11:59:49 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/24 12:04:34 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ void	fill_image(uint32_t *pixels, uint32_t **img_rgb)
 	int	index;
 
 	y = 0;
-	while (y < WINDOW_HEIGHT)
+	while (y < W_HG)
 	{
 		x = 0;
-		while (x < WINDOW_WIDTH)
+		while (x < W_WH)
 		{
-			index = y * WINDOW_WIDTH + x;
+			index = y * W_WH+ x;
 			pixels[index] = img_rgb[y][x];
 			x++;
 		}

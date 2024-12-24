@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/20 11:05:08 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/24 12:04:07 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,9 @@
 # include "debug.h"
 # include "window.h"
 
-# define WINDOW_WIDTH 1920
-# define WINDOW_HEIGHT 1080
+# define W_WH 1920
+# define W_HG 1080
 
-# define WIDTH WINDOW_WIDTH
-# define HEIGHT WINDOW_HEIGHT
 # define SP 0
 # define PL 1
 # define CY 2

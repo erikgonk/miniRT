@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid Date        by              +#+  #+#    #+#             */
-/*   Updated: 2024/12/21 11:45:09 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/24 12:03:48 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ t_ray	*init_ray_row(t_cam *camera, t_vp *vp, int y)
 	int		x;
 	float	uv[2];
 
-	row = malloc(WH * sizeof(t_ray));
+	row = malloc(W_WH* sizeof(t_ray));
 	if (!row)
 		return (NULL);
 	x = 0;
-	while (x < WH)
+	while (x < W_WH)
 	{
-		uv[0] = (float)x / (float)(WH - 1);
-		uv[1] = 1.0f - (float)y / (float)(HG - 1);
+		uv[0] = (float)x / (float)(W_WH- 1);
+		uv[1] = 1.0f - (float)y / (float)(W_HG - 1);
 		init_single_ray(&row[x], vp, camera, uv);
 		x++;
 	}
@@ -64,11 +64,11 @@ t_ray	**init_rays(t_cam *camera, t_vp *vp)
 	t_ray	**rays;
 	int		y;
 
-	rays = malloc(HG * sizeof(t_ray *));
+	rays = malloc(W_HG * sizeof(t_ray *));
 	if (!rays)
 		return (NULL);
 	y = 0;
-	while (y < HG)
+	while (y < W_HG)
 	{
 		rays[y] = init_ray_row(camera, vp, y);
 		if (!rays[y])

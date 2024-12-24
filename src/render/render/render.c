@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:37:51 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/21 11:46:18 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/24 12:03:48 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ void	*process_rows(void *arg)
 	data = (t_thread_data *)arg;
 	id = data->thread_id;
 	y = id;
-	while (y < HG)
+	while (y < W_HG)
 	{
 		x = 0;
-		while (x < WH)
+		while (x < W_WH)
 		{
 			data->image[y][x] = trace_ray(data->rays[y][x], data->data);
 			x++;
@@ -70,7 +70,7 @@ uint32_t	**render(t_data *data, int x, int y)
 
 	(void)x;
 	(void)y;
-	vp = init_viewport(data->cam, WH, HG);
+	vp = init_viewport(data->cam, W_WH, W_HG);
 	rays = init_rays(data->cam, vp);
 	image = init_image_();
 	if (!image)

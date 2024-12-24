@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_image.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 12:37:59 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/19 16:12:32 by erigonza         ###   ########.fr       */
+/*   Updated: 2024/12/24 12:04:34 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 
 void	init_mlx(t_data *data)
 {
-	data->mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "miniRT", true);
+	data->mlx = mlx_init(W_WH, W_HG, "miniRT", true);
 	if (!data->mlx)
 		exit(er("Failed to initialize MLX42", NULL));
-	data->img = mlx_new_image(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+	data->img = mlx_new_image(data->mlx, W_WH, W_HG);
 	if (!data->img)
 	{
 		mlx_terminate(data->mlx);
@@ -35,12 +35,12 @@ uint32_t	**init_image_(void)
 	int			j;
 	size_t		row_size;
 
-	image = malloc(HG * sizeof(uint32_t *));
-	row_size = WH * sizeof(uint32_t);
+	image = malloc(W_HG * sizeof(uint32_t *));
+	row_size = W_WH* sizeof(uint32_t);
 	if (!image)
 		return (NULL);
 	y = -1;
-	while (++y < HG)
+	while (++y < W_HG)
 	{
 		image[y] = malloc(row_size);
 		if (!image[y])
