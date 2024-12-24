@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/24 12:43:00 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/24 16:17:31 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef unsigned char	t_uchar;
 # endif
 
 // Materials
-# define SOLID_S 32
+# define SOLID_S 12
 
 // Color Weight
 # define G_WEIGHT 0.7
