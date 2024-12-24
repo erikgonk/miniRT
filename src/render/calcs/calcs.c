@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/24 11:54:24 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/24 13:37:15 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ t_v3	get_normal(t_obj *obj, t_v3 point)
 	return ((t_v3){0, 0, 0});
 }
 
+#define MAX_DEPTH 2
+
 t_rgb	combine_colors(t_rgb c_local, t_rgb c_global)
 {
 	t_rgb	c_final;
@@ -73,17 +75,147 @@ t_rgb	combine_colors(t_rgb c_local, t_rgb c_global)
 	return (c_final);
 }
 
+t_v3 scalar_mult(t_v3 v, float scalar)
+{
+	t_v3 result;
+
+	result.x = v.x * scalar;
+	result.y = v.y * scalar;
+	result.z = v.z * scalar;
+	return result;
+}
+
+t_v3 reflect(t_ray *ray)
+{
+	float	dot_product;
+	t_v3	scaled_normal;
+	t_v3	reflected;
+
+	// Calcular el producto escalar entre el rayo incidente y la normal
+	dot_product = dot(ray->point, ray->normal);
+
+	// Escalar la normal por 2 * dot_product
+	scaled_normal = scalar_mult(ray->normal, 2 * dot_product);
+
+	// Calcular la dirección reflejada
+	reflected = vsub(ray->point, scaled_normal);
+
+	// Normalizar el vector reflejado
+	return normalize(reflected);
+}
+
+float get_reflection_ratio(t_v3 incident, t_v3 normal, float n1, float n2)
+{
+    float cos_theta_i;  // Coseno del ángulo de incidencia
+    float sin_theta_t2; // Cuadrado del seno del ángulo de transmisión
+    float cos_theta_t;  // Coseno del ángulo de transmisión
+    float r_perpendicular;
+    float r_parallel;
+    float reflection_ratio;
+
+    // Calcular el coseno del ángulo de incidencia
+    cos_theta_i = fabs(dot(incident, normal)); // Asegurarse de que sea positivo
+
+    // Usar la Ley de Snell para calcular el seno del ángulo de transmisión
+    sin_theta_t2 = (n1 / n2) * (n1 / n2) * (1.0f - cos_theta_i * cos_theta_i);
+
+    // Verificar si ocurre reflexión total interna
+    if (sin_theta_t2 > 1.0f)
+        return 1.0f; // Reflexión total interna: todo se refleja
+
+    // Calcular el coseno del ángulo de transmisión
+    cos_theta_t = sqrtf(1.0f - sin_theta_t2);
+
+    // Reflectancia para el componente perpendicular
+    r_perpendicular = (n1 * cos_theta_i - n2 * cos_theta_t) /
+                      (n1 * cos_theta_i + n2 * cos_theta_t);
+
+    // Reflectancia para el componente paralelo
+    r_parallel = (n2 * cos_theta_i - n1 * cos_theta_t) /
+                 (n2 * cos_theta_i + n1 * cos_theta_t);
+
+    // Cuadrado de las reflectancias
+    r_perpendicular = r_perpendicular * r_perpendicular;
+    r_parallel = r_parallel * r_parallel;
+
+    // Promediar para obtener el reflection ratio total
+    reflection_ratio = (r_perpendicular + r_parallel) / 2.0f;
+
+    return reflection_ratio;
+}
+
+t_rgb blend_colors(t_rgb color1, t_rgb color2, float weight1, float weight2)
+{
+    t_rgb result;
+    float total_weight;
+
+    // Normalizar los pesos
+    total_weight = weight1 + weight2;
+    if (total_weight > 0)
+    {
+        weight1 /= total_weight;
+        weight2 /= total_weight;
+    }
+
+    // Mezclar los colores según los pesos
+    result.r = fmin(255, fmax(0, color1.r * weight1 + color2.r * weight2));
+    result.g = fmin(255, fmax(0, color1.g * weight1 + color2.g * weight2));
+    result.b = fmin(255, fmax(0, color1.b * weight1 + color2.b * weight2));
+
+    return result;
+}
+
+t_rgb	path_tracer(t_data *data, t_ray ray, t_obj *obj, int m_depth)
+{
+	t_obj	*closest_obj;
+	t_v3	normal;
+	t_ray	new_ray;
+	t_rgb	color = {0, 0, 0};
+	t_rgb	reflected_color = {0, 0, 0};
+	t_rgb	diffuse_color = {0, 0, 0};
+	float	reflection_ratio = 0;
+	float	t_min = INFINITY;
+
+	if (m_depth <= 0)
+		return ((t_rgb){0, 0, 0});
+
+	closest_obj = find_closest_object(&ray, obj, &t_min);
+	if (!closest_obj)
+		return ((t_rgb){0, 0, 0});
+	// Iluminación difusa
+	diffuse_color = phong(data, &ray, closest_obj, 0);
+
+	// Reflexión especular
+	if (closest_obj->metallic > EPSILON)
+	{
+		// Calcular el ratio de reflexión dinámico con Fresnel
+		reflection_ratio = get_reflection_ratio(ray.direction, normal, 1.0f, 1.5f); // Índices: aire (1.0) y material (1.5)
+		reflection_ratio *= closest_obj->metallic; // Escalar según la propiedad del material
+
+		// Calcular el rayo reflejado
+		new_ray.origin = ray.point;
+		new_ray.direction = ray.normal;
+		reflected_color = path_tracer(data, new_ray, obj, m_depth - 1);
+	}
+
+	// Mezclar los colores difuso y reflejado según el ratio de reflexión
+	color = blend_colors(diffuse_color, reflected_color, 1 - reflection_ratio, reflection_ratio);
+
+	return (color);
+}
+
 uint32_t	trace_ray(t_ray ray, t_data *data)
 {
 	float	t_min;
 	t_obj	*closest_obj;
-	t_rgb	color;
+	t_rgb	c_local;
+	t_rgb	c_global;
 
 	t_min = INFINITY;
 	closest_obj = find_closest_object(&ray, data->obj, &t_min);
 	if (!closest_obj)
 		return (BLACK);
-	color = phong(data, &ray, closest_obj);
-	// final_clolor = combine_colors(color, global_color);
-	return (get_colour(color));
+	c_local = phong(data, &ray, closest_obj, 1);
+	c_global = path_tracer(data, ray, closest_obj, MAX_DEPTH);
+	return (get_colour(combine_colors(c_local, c_global)));
 }

@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:31:28 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/19 17:09:08 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/24 12:54:46 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,13 @@ void	init_obj(t_data *data)
 	obj = data->obj;
 	while (obj)
 	{
+		obj->roughness = 0;
+		obj->metallic = 0;
+		obj->glass = 0;
+		if (obj->type == SP)
+			obj->metallic = 1;
+		else if (obj->type == CY)
+			obj->glass = 1.5f;
 		obj->a_rgb = apply_ambient_light(obj->rgb, data->a_light);
 		if (obj->type == PL)
 		{

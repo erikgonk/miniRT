@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/20 11:47:19 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/24 12:12:05 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,9 @@ typedef struct s_obj
 	uint32_t		color;
 	t_v3			pos;
 	t_v3			axis;
+	float			roughness;
+	float			metallic;
+	float			glass;
 	t_rgb			rgb;
 	t_rgb			a_rgb;
 	float			size;

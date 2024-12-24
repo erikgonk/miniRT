@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:09:03 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/20 11:59:49 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/24 12:43:11 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ bool	data_shadow(t_data *data, t_ray *shadow_ray, float max_dist)
 	return (false);
 }
 
-t_rgb	phong(t_data *data, t_ray *ray, t_obj *obj)
+t_rgb	phong(t_data *data, t_ray *ray, t_obj *obj, int spec)
 {
 	t_rgb		color;
 	t_ray		shadow_ray;
@@ -89,7 +89,8 @@ t_rgb	phong(t_data *data, t_ray *ray, t_obj *obj)
 		}
 		intensity = fmax(dot(shadow_ray.direction, ray->normal), 0.0f);
 		difuse_light(&color, slight, obj, intensity);
-		specular_light(&color, slight, ray, &shadow_ray);
+		if (spec)
+			specular_light(&color, slight, ray, &shadow_ray);
 		slight = slight->next;
 	}
 	return (color);
