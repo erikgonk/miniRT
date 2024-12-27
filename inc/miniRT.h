@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/24 12:04:07 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/27 12:12:51 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,10 @@
 # define PL 1
 # define CY 2
 # define AA 6
+
+// Materials
+# define MT 1 // metallic
+# define GL 2 // glass
 
 typedef long long	t_ll;
 

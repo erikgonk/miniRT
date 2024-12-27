@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/24 12:12:05 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/27 12:15:16 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,7 @@ typedef struct s_obj
 	uint32_t		color;
 	t_v3			pos;
 	t_v3			axis;
-	float			roughness;
-	float			metallic;
-	float			glass;
+	float			material;
 	t_rgb			rgb;
 	t_rgb			a_rgb;
 	float			size;
@@ -77,6 +75,8 @@ typedef struct s_obj
 	float			half_height;
 	t_cap			upper_cap; // cy
 	t_cap			btm_cap; // cy
+	t_rgb			rgb_checker;
+	float			board_scale; // -1 if not exits
 	struct s_obj	*next;
 }					t_obj;
 

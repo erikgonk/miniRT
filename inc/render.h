@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/24 16:17:31 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/27 11:35:40 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ typedef struct s_quadratic
 float					vlength(t_v3 v);
 t_obj					*find_closest_object(t_ray *ray, t_obj *objs,
 							float *t_min);
-t_v3					get_normal(t_obj *obj, t_v3 point);
 uint32_t				trace_ray(t_ray ray, t_data *data);
 
 //		quadratic
@@ -83,6 +82,10 @@ bool					solve_quadratic(t_quadratic *quad);
 uint32_t				get_acolour(t_uchar alpha, t_uchar r, t_uchar g,
 							t_uchar b);
 uint32_t				get_colour(t_rgb color);
+
+//		extras
+t_rgb					checkerboard_color(t_v3 point, t_rgb color1,
+							t_rgb color2, float scale);
 
 //		init_general
 void					init_all(t_data *data);
@@ -140,9 +143,10 @@ t_vp					*init_viewport(t_cam *camera, int width, int height);
 //		render
 uint32_t				**render(t_data *data, int x, int y);
 
-//		utils
+//		free
 void					free_rays_all(t_ray **rays);
 void					free_render(t_vp *vp, t_ray **rays);
 void					free_image_all(uint32_t **image);
+
 
 #endif

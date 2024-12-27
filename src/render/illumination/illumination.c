@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:09:03 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/24 12:43:11 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/27 10:57:45 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,10 @@ t_rgb	phong(t_data *data, t_ray *ray, t_obj *obj, int spec)
 	t_slight	*slight;
 	float		intensity;
 
-	color = obj->a_rgb;
+	if (obj->type == PL && obj->board_scale > 0)
+		color = checkerboard_color(ray->point, obj->rgb, obj->rgb_checker, obj->board_scale);
+	else
+		color = obj->a_rgb;
 	slight = data->s_light;
 	while (slight)
 	{

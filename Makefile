@@ -6,7 +6,7 @@
 #    By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/19 12:51:14 by shurtado          #+#    #+#              #
-#    Updated: 2024/12/20 12:40:46 by shurtado         ###   ########.fr        #
+#    Updated: 2024/12/27 10:46:47 by shurtado         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ FILES			:= main.c \
 					render/illumination/illumination.c render/illumination/specular.c\
 					render/calcs/calcs.c render/calcs/quadratic.c \
 					render/init/init_image.c render/init/init_rays.c render/init/init_general.c render/init/init_obj.c \
-					render/color/color.c \
+					render/color/color.c render/color/checker_board.c \
 					render/free/free.c \
 					console/console/run_console.c \
 					console/menu/submenu.c console/menu/slight_menu.c console/menu/camera_menu.c console/menu/obj_menu.c \
@@ -40,7 +40,7 @@ OBJS			:= $(patsubst $(SRC_D)%.c,$(OBJ_D)%.o,$(SRCS))
 
 CC				:= cc
 IFLAGS			:= -I$(INC_D) -I$(VCT_D) -I$(LIBFT_D)inc
-CFLAGS			:= -g -fsanitize=address #-Wall -Wextra -Werror
+CFLAGS			:= -g #-fsanitize=address #-Wall -Wextra -Werror
 
 LIB				:= lib/
 
@@ -85,6 +85,9 @@ f fclean:		clean
 
 r re:			fclean all
 
+v valgrind: $(NAME)
+	@valgrind --leak-check=full --track-origins=yes ./$(NAME)
+
 -include $(OBJS:.o=.d)
 
-.PHONY:		all clean fclean re f c r libs libmlx
+.PHONY:		all clean fclean re f c r libs libmlx v valgrind
