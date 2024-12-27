@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:48:44 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/18 16:19:24 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/27 13:24:02 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ bool	calc_quad_sphere(t_obj *sphere, t_ray ray, t_quadratic *quad)
 	oc = vsub(ray.origin, sphere->pos);
 	quad->a = dot(ray.direction, ray.direction);
 	quad->b = 2.0f * dot(ray.direction, oc);
-	quad->c = dot(oc, oc) - (sphere->radius2);
+	quad->c = dot(oc, oc) - (sphere->calcs.radius2);
 	init_quadratic(quad, quad->a, quad->b, quad->c);
 	if (!solve_quadratic(quad))
 		return (false);
@@ -51,13 +51,13 @@ bool	hit_pl(t_ray *ray, t_obj *plane, float *t)
 	denominator = dot(ray->direction, plane->axis);
 	if (fabs(denominator) < EPSILON)
 		return (false);
-	result = plane->numerator / denominator;
+	result = plane->calcs.numerator / denominator;
 	if (result > EPSILON && result < *t)
 	{
 		*t = result;
 		ray->point = vadd(ray->origin, vmul(*t, ray->direction));
 		if (dot(ray->direction, plane->axis) > EPSILON)
-			ray->normal = plane->i_axis;
+			ray->normal = plane->calcs.i_axis;
 		else
 			ray->normal = plane->axis;
 		return (true);

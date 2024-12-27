@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/27 12:15:16 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/27 13:26:02 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,21 @@ typedef struct s_light
 	struct s_light		*next;
 }					t_slight;
 
-typedef struct s_obj
+typedef struct s_material
 {
-	int				i;
-	int				type;
-	uint32_t		color;
-	t_v3			pos;
-	t_v3			axis;
-	float			material;
-	t_rgb			rgb;
-	t_rgb			a_rgb;
-	float			size;
-	float			height;
+	float			m_type;
+	float			reflectivity;
+	float			transmittance;
+	float			roughness;
+	float			absorption;
+	float			specularity;
+	void			*get_normal;
+	t_rgb			rgb_checker;
+	float			board_scale; // -1 if not exits
+}				t_material;
+
+typedef struct s_calcs
+{
 	float			radius; // sp cy
 	float			radius2; // sp cy
 	float			numerator; // pl
@@ -75,8 +78,21 @@ typedef struct s_obj
 	float			half_height;
 	t_cap			upper_cap; // cy
 	t_cap			btm_cap; // cy
-	t_rgb			rgb_checker;
-	float			board_scale; // -1 if not exits
+}	t_calcs;
+
+typedef struct s_obj
+{
+	int				i;
+	int				type;
+	uint32_t		color;
+	t_v3			pos;
+	t_v3			axis;
+	t_rgb			rgb;
+	t_rgb			a_rgb;
+	float			size;
+	float			height;
+	t_calcs			calcs;
+	t_material		material;
 	struct s_obj	*next;
 }					t_obj;
 
@@ -86,7 +102,7 @@ typedef struct s_data
 	t_cam			*cam;
 	t_slight		*s_light;
 	t_obj			*obj;
-	int				aa; // antialising
+	int				aa; // antialising (check if is useful)
 	mlx_t			*mlx;
 	mlx_image_t		*img;
 }					t_data;

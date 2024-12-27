@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/27 12:12:51 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/27 12:31:45 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,18 +45,23 @@
 # define W_WH 1920
 # define W_HG 1080
 
+//		Obj
 # define SP 0
 # define PL 1
 # define CY 2
-# define AA 6
 
-// Materials
-# define MT 1 // metallic
-# define GL 2 // glass
+//		Extra
+# define AA 6 // Antialiasing
+
+//		Materials
+# define SL 0 // Solid
+# define MT 1 // Metallic
+# define GL 2 // Glass
+# define MR 1 // Mirror
 
 typedef long long	t_ll;
 
-//Main
+//		Main
 void		last_exit(t_data *data);
 
 #endif

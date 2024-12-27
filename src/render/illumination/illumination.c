@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:09:03 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/27 10:57:45 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/27 14:06:32 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,19 @@ bool	data_shadow(t_data *data, t_ray *shadow_ray, float max_dist)
 	return (false);
 }
 
-t_rgb	phong(t_data *data, t_ray *ray, t_obj *obj, int spec)
+t_rgb	phong(t_data *data, t_ray *ray, t_obj *obj)
 {
 	t_rgb		color;
 	t_ray		shadow_ray;
 	t_slight	*slight;
 	float		intensity;
 
-	if (obj->type == PL && obj->board_scale > 0)
-		color = checkerboard_color(ray->point, obj->rgb, obj->rgb_checker, obj->board_scale);
+	if (obj->type == PL && obj->material.board_scale > 0)
+		color = checkerboard_color(ray->point, obj->rgb, obj->material.rgb_checker, obj->material.board_scale);
 	else
 		color = obj->a_rgb;
+	if (obj->type == SP)
+		printf("hola\n");
 	slight = data->s_light;
 	while (slight)
 	{
@@ -92,8 +94,6 @@ t_rgb	phong(t_data *data, t_ray *ray, t_obj *obj, int spec)
 		}
 		intensity = fmax(dot(shadow_ray.direction, ray->normal), 0.0f);
 		difuse_light(&color, slight, obj, intensity);
-		if (spec)
-			specular_light(&color, slight, ray, &shadow_ray);
 		slight = slight->next;
 	}
 	return (color);

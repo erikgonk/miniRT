@@ -6,13 +6,13 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/27 12:17:15 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/27 13:54:07 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/miniRT.h"
-#include "../inc/render.h"
-#include "../lib/libvector/libvct.h"
+#include "../../inc/miniRT.h"
+#include "../../inc/render.h"
+#include "../../lib/libvector/libvct.h"
 
 float	vlength(t_v3 v)
 {
@@ -74,16 +74,9 @@ t_v3 reflect(t_ray *ray)
 	t_v3	scaled_normal;
 	t_v3	reflected;
 
-	// Calcular el producto escalar entre el rayo incidente y la normal
 	dot_product = dot(ray->direction, ray->normal);
-
-	// Escalar la normal por 2 * dot_product
 	scaled_normal = scalar_mult(ray->normal, 2 * dot_product);
-
-	// Calcular la dirección reflejada
 	reflected = vsub(ray->direction, scaled_normal);
-
-	// Normalizar el vector reflejado
 	return normalize(reflected);
 }
 
@@ -118,12 +111,12 @@ t_rgb blend_colors(t_rgb color1, t_rgb color2, t_obj *obj)
 	float	weight1;
 	float	weight2;
 
-	if (obj->material == MT)
+	if (obj->material.m_type == MT)
 	{
 		weight1 = 0.7;
 		weight2 = 0.3;
 	}
-	if (obj->material == GL)
+	if (obj->material.m_type == GL)
 	{
 		weight1 = 0;
 		weight2 = 1;
@@ -136,7 +129,7 @@ t_rgb blend_colors(t_rgb color1, t_rgb color2, t_obj *obj)
 
 float get_reflection_ratio_non_metallic(float cos_theta_i)
 {
-    float R_0 = 0.04; // Reflectancia típica en ángulo normal para dieléctricos
+    float R_0 = 0.04;
     return R_0 + (1 - R_0) * pow(1 - cos_theta_i, 5);
 }
 
@@ -157,12 +150,12 @@ t_rgb	path_tracer(t_data *data, t_ray ray, t_obj *obj, int m_depth)
 	closest_obj = find_closest_object(&ray, obj, &t_min);
 	if (!closest_obj)
 		return ((t_rgb){0, 0, 0});
-	diffuse_color = phong(data, &ray, closest_obj, 0);
+	diffuse_color = phong(data, &ray, closest_obj);
 
-	if (closest_obj->material != 0)
+	if (closest_obj->material.m_type != 0)
 	{
 		reflection_ratio = get_reflection_ratio(ray.direction, ray.normal, 1.0f, 1.5f);
-		// reflection_ratio *= closest_obj->material;
+		// reflection_ratio *= closest_obj->material.m_type;
 		new_ray.origin = vadd(ray.point, vmul(EPSILON, ray.normal));
 		new_ray.direction = reflect(&ray);
 		reflected_color = path_tracer(data, new_ray, closest_obj, m_depth - 1);
@@ -186,6 +179,7 @@ uint32_t	trace_ray(t_ray ray, t_data *data)
 	closest_obj = find_closest_object(&ray, data->obj, &t_min);
 	if (!closest_obj)
 		return (BLACK);
-	c_global = path_tracer(data, ray, closest_obj, MAX_DEPTH);
+	c_global = phong(data, &ray, closest_obj);
+	specular_light(&c_global, data, &ray);
 	return (get_colour(c_global));
 }

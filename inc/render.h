@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/27 11:35:40 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/27 13:53:03 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,10 +124,10 @@ void					difuse_light(t_rgb *color, t_slight *slight, t_obj *obj,
 							float inty);
 bool					data_shadow(t_data *data, t_ray *shadow_ray,
 							float max_dist);
-t_rgb					phong(t_data *data, t_ray *ray, t_obj *obj, int spec);
+t_rgb					phong(t_data *data, t_ray *ray, t_obj *obj);
 
 //		specular
-void	specular_light(t_rgb *color, t_slight *slight, t_ray *ray, t_ray *s_ray);
+void					specular_light(t_rgb *color, t_data *data, t_ray *ray);
 
 //		intersections
 bool					calc_quad_sphere(t_obj *sphere, t_ray ray,
