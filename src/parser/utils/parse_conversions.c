@@ -18,11 +18,11 @@ t_rgb	colors_parse(char *str, int i)
 
 	while (str[i] && ft_isspace(str[i]))
 		i++;
-	rgb.r = ft_atoi_parse(str, i, 1);
+	rgb.r = ft_atoi_parse(str, i, 3);
 	i = skip_color(str, i, 0);
-	rgb.g = ft_atoi_parse(str, i, 0);
+	rgb.g = ft_atoi_parse(str, i, 3);
 	i = skip_color(str, i, 0);
-	rgb.b = ft_atoi_parse(str, i, 0);
+	rgb.b = ft_atoi_parse(str, i, 3);
 	return (rgb);
 }
 
@@ -58,7 +58,7 @@ int	ft_atoi_parse(char *str, int i, int flag)
 
 	res = 0;
 	sign = 1;
-	while ((flag == 1 || flag == 2) && str[i] && ft_isspace(str[i]))
+	while ((flag == 1 || flag == 2 || flag == 3) && str[i] && ft_isspace(str[i]))
 		i++;
 	if (str[i] && str[i] == ',' && flag != 2)
 		i++;
@@ -73,6 +73,8 @@ int	ft_atoi_parse(char *str, int i, int flag)
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		res = (res * 10) + (str[i] - 48);
+		if (flag == 3 && (res > 255 || sign == -1))
+		    exit(er("error: ft_atoi_parse: color not 0-255\n", str));
 		i++;
 	}
 	res *= sign;
