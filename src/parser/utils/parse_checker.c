@@ -11,13 +11,10 @@
 /* ************************************************************************** */
 
 #include "miniRT.h"
-#include <threads.h>
+// #include "threads.h"
 
-void	check_end(char *str)
+void	check_end(char *str, int i)
 {
-	int	i;
-
-	i = 0;
 	while (str[i] && ft_isspace(str[i]))
 		i++;
 	i = skip_color(str, i, 0);

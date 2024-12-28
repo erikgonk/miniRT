@@ -57,7 +57,9 @@
 # define SL 0 // Solid
 # define MT 1 // Metallic
 # define GL 2 // Glass
-# define MR 1 // Mirror
+# define MR 3 // Mirror
+# define CB 4 // Checker Board
+# define BL 5 // Blur
 
 typedef long long	t_ll;
 

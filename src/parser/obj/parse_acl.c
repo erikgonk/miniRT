@@ -40,7 +40,8 @@ void	create_alight(t_data *data, char *str, int type)
 	data->a_light = malloc(sizeof(t_alight));
 	data->a_light->br = ft_atof(str, 1);
 	tmp = ft_substr(str, skip_float(str, 1, 0, 0), ft_strlen(str));
-	data->a_light->rgb = colors_parse(tmp);
+	data->a_light->rgb = colors_parse(tmp, 0);
+	check_end(tmp, 1);
 	free(tmp);
 }
 
@@ -86,7 +87,8 @@ void	create_slight(t_slight **s_light, char *str, int type)
 	tmp[0] = ft_substr(str, skip_floats(str, 1, 0, 0), ft_strlen(str));
 	new_light->br = ft_atof(tmp[0], 0);
 	tmp[1] = ft_substr(tmp[0], skip_float(tmp[0], 0, 0, 0), ft_strlen(tmp[0]));
-	new_light->rgb = colors_parse(tmp[1]);
+	new_light->rgb = colors_parse(tmp[1], 0);
+	check_end(tmp[1], 0);
 	new_light->next = NULL;
 	if (*s_light == NULL)
 		*s_light = new_light;

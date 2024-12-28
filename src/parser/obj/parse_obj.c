@@ -34,10 +34,9 @@ t_obj	*create_obj(char *str, int type)
 {
 	char	*tmp;
 	char	*tmp2;
+	char	*target;
 	t_obj	*obj;
 
-	tmp2 = NULL;
-	obj = NULL;
 	obj = new_obj();
 	obj->type = type;
 	tmp = floats_parse(obj, str, 2, 0);
@@ -45,15 +44,11 @@ t_obj	*create_obj(char *str, int type)
 		tmp2 = floats_parse(obj, tmp, 0, 1);
 	create_obj_normi(obj, &tmp, &tmp2);
 	if (obj->type != CY)
-	{
-		check_end(tmp2);
-		obj->rgb = colors_parse(tmp2);
-	}
+		target = tmp2;
 	else
-	{
-		check_end(tmp);
-		obj->rgb = colors_parse(tmp);
-	}
+		target = tmp;
+	obj->rgb = colors_parse(target, 0);
+	extra_functionalities(obj, target);
 	if (tmp2)
 		free(tmp2);
 	return (free(tmp), obj);

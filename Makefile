@@ -6,7 +6,7 @@
 #    By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/19 12:51:14 by shurtado          #+#    #+#              #
-#    Updated: 2024/12/27 10:46:47 by shurtado         ###   ########.fr        #
+#    Updated: 2024/12/28 11:48:39 by erigonza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ FILES			:= main.c \
 					parser/parser/parser.c \
 					parser/obj/parse_obj.c parser/obj/parse_acl.c \
 					parser/utils/parse_sum.c parser/utils/parse_utils.c parser/utils/parse_conversions.c parser/utils/parse_checker.c \
+					parser/extra_funcs/extra_funcs.c \
 					render/render/render.c \
 					render/obj/cylinder.c render/obj/intersections.c render/obj/viewport.c \
 					render/illumination/illumination.c render/illumination/specular.c\
@@ -40,7 +41,7 @@ OBJS			:= $(patsubst $(SRC_D)%.c,$(OBJ_D)%.o,$(SRCS))
 
 CC				:= cc
 IFLAGS			:= -I$(INC_D) -I$(VCT_D) -I$(LIBFT_D)inc
-CFLAGS			:= -g #-fsanitize=address #-Wall -Wextra -Werror
+CFLAGS			:= -g -fsanitize=address #-Wall -Wextra -Werror
 
 LIB				:= lib/
 

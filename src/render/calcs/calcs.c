@@ -144,6 +144,7 @@ t_rgb	path_tracer(t_data *data, t_ray ray, t_obj *obj, int m_depth)
 	float	t_min = INFINITY;
 	int		flag = 0;
 
+		printf("entra\n");
 	if (m_depth <= 0)
 		return ((t_rgb){0, 0, 0});
 

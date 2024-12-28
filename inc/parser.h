@@ -31,14 +31,14 @@ void				create_cam(t_data *data, char *str, int type);
 void				create_slight(t_slight **s_light, char *str, int type);
 
 //      checker_parse
-void				check_end(char *str);
+void				check_end(char *str, int i);
 void				check_light(t_alight *aL, t_slight *sL);
 void				check_params_acl(t_alight *aL, t_slight *sL, t_cam *cam);
 void				check_obj(t_obj *obj);
 void				check_params(t_data *data);
 
 //      parse_conversions
-t_rgb				colors_parse(char *str);
+t_rgb				colors_parse(char *str, int i);
 char				*floats_parse(t_obj *obj, char *str, int i, int flag);
 int					ft_atoi_parse(char *str, int i, int flag);
 float				ft_atof_normi(char *str, int i);
@@ -56,5 +56,12 @@ int					er(char *s, char *av);
 int					type_obj(char *str);
 t_obj				*new_obj(void);
 void				objadd_back(t_obj **lst, t_obj *new);
+
+//      extra_functionalities
+void                init_materials(t_obj *obj);
+void                skip_colors(char *str, char **res);
+int                 type_extra_func(char *str);
+void                parse_cb(t_obj *obj, char *str);
+void                extra_functionalities(t_obj *obj, char *tmp);
 
 #endif

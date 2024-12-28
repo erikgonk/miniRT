@@ -123,7 +123,7 @@ int	sum_parse(char *str, int i, int j)
 	while (str[i] && !ft_isspace(str[i++]))
 	{
 		if (!ft_isdigit(str[i - 1]) && str[i - 1] != '.' && str[i - 1] != '-')
-			exit(er("error: sum_parse: 2 parsing:hola \n", str));
+			exit(er("error: sum_parse: 2 parsing", str));
 		else if (str[i - 1] == '.')
 			j++;
 	}

@@ -75,12 +75,12 @@ t_rgb	phong(t_data *data, t_ray *ray, t_obj *obj)
 	t_slight	*slight;
 	float		intensity;
 
-	if (obj->type == PL && obj->material.board_scale > 0)
-		color = checkerboard_color(ray->point, obj->rgb, obj->material.rgb_checker, obj->material.board_scale);
+	if (obj->type == PL && obj->material.board_scale != -1)
+		color = checkerboard_color(obj, ray->point);
 	else
 		color = obj->a_rgb;
-	if (obj->type == SP)
-		printf("hola\n");
+	// if (obj->type == SP)
+	// 	printf("hola\n");
 	slight = data->s_light;
 	while (slight)
 	{

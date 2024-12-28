@@ -12,7 +12,6 @@
 
 #include "miniRT.h"
 #include "render.h"
-
 #include "threads.h"
 
 void	*process_rows(void *arg)

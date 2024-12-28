@@ -20,7 +20,6 @@ void	init_obj(t_data *data)
 	while (obj)
 	{
 		obj->material.rgb_checker = (t_rgb){25, 25, 25};
-		obj->material.board_scale = -0.5;
 		obj->material.m_type = SL;
 		if (obj->type == SP)
 			obj->material.m_type = GL;

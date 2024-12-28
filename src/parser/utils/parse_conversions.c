@@ -12,12 +12,10 @@
 
 #include "miniRT.h"
 
-t_rgb	colors_parse(char *str)
+t_rgb	colors_parse(char *str, int i)
 {
 	t_rgb	rgb;
-	int		i;
 
-	i = 0;
 	while (str[i] && ft_isspace(str[i]))
 		i++;
 	rgb.r = ft_atoi_parse(str, i, 1);

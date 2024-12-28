@@ -84,8 +84,7 @@ uint32_t				get_acolour(t_uchar alpha, t_uchar r, t_uchar g,
 uint32_t				get_colour(t_rgb color);
 
 //		extras
-t_rgb					checkerboard_color(t_v3 point, t_rgb color1,
-							t_rgb color2, float scale);
+t_rgb					checkerboard_color(t_obj *obj, t_v3 point);
 
 //		init_general
 void					init_all(t_data *data);
