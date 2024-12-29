@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/27 13:26:02 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/29 10:30:26 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct s_material
 	float			specularity;
 	void			*get_normal;
 	t_rgb			rgb_checker;
-	float			board_scale; // -1 if not exits
+	float			board_scale;
 }				t_material;
 
 typedef struct s_calcs
@@ -103,6 +103,7 @@ typedef struct s_data
 	t_slight		*s_light;
 	t_obj			*obj;
 	int				aa; // antialising (check if is useful)
+	int				bl; // blur
 	mlx_t			*mlx;
 	mlx_image_t		*img;
 }					t_data;

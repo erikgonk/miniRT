@@ -57,16 +57,11 @@ void	parse_cb(t_obj *obj, char *str)
 
 	i = 2;
     obj->material.board_scale = ft_atof(str, i);
-    if (obj->material.board_scale > 1 || obj->material.board_scale < 0)
-        exit(er("error: parse_cb: board size has to be 0-1", NULL));
+	obj->material.board_scale = 1 - obj->material.board_scale;
+    if (obj->material.board_scale > 0.991 || obj->material.board_scale < 0.001)
+        exit(er("error: parse_cb: board size has to be 0.991-0.001", NULL));
     i = skip_float(str, i, 0, 0);
 	obj->material.rgb_checker = colors_parse(str, i);
-	if (obj->material.rgb_checker.r < 0 || obj->material.rgb_checker.r > 255)
-		exit(er("error: parse_cb: rgb.r <0 / >255", NULL));
-	else if (obj->material.rgb_checker.g < 0 || obj->material.rgb_checker.g > 255)
-		exit(er("error: parse_cb: rgb.g <0 / >255", NULL));
-	else if (obj->material.rgb_checker.b < 0 || obj->material.rgb_checker.b > 255)
-		exit(er("error: parse_cb: rgb.b <0/>255", NULL));
 	check_end(str, i);
 }
 
@@ -84,10 +79,8 @@ void	extra_functionalities(t_obj *obj, char *tmp)
 		exit(er("error: extra functs: invalid char after color", str));
 	if (type == CB)
 		parse_cb(obj, str);
-    // else if (type == SL)
     // else if (type == MT)
     // else if (type == GL)
     // else if (type == MR)
-    // else if (type == BL)
 	free(str);
 }

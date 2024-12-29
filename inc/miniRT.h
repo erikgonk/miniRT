@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/27 12:31:45 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/29 10:07:21 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@
 
 //		Extra
 # define AA 6 // Antialiasing
+# define BL 7 // Blur
 
 //		Materials
 # define SL 0 // Solid
@@ -59,7 +60,6 @@
 # define GL 2 // Glass
 # define MR 3 // Mirror
 # define CB 4 // Checker Board
-# define BL 5 // Blur
 
 typedef long long	t_ll;
 

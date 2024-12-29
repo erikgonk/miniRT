@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:53:01 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/27 12:42:11 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/29 10:09:11 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,15 @@ void	validate_args_and_open(int ac, char **av, int *fd)
 		exit(er("error: fd failed", NULL));
 }
 
-void	parser_aa(t_data *data, char *str)
+void	parser_aa_bl(t_data *data, char *str, int type)
 {
-	data->aa = ft_atoi_parse(str, 2, 2);
-	if (data->aa != 0 && data->aa != 3 && data->aa != 5 && data->aa != 9)
-		exit(er("error: anialising: wrong num", str));
+	if (type == AA)
+	{
+		data->aa = ft_atoi_parse(str, 2, 2);
+		if (data->aa != 0 && data->aa != 3 && data->aa != 5 && data->aa != 9)
+			exit(er("error: anialising: wrong num", str));
+	}
+	// else if (type == BL)
 }
 
 void	parse(t_data *data, int fd)
@@ -66,7 +70,7 @@ void	parse(t_data *data, int fd)
 		else if (type <= 2 && ft_isspace(str[2]))
 			objadd_back(&data->obj, create_obj(str, type));
 		else if (type == AA)
-			parser_aa(data, str);
+			parser_aa_bl(data, str, type);
 		create_alight(data, str, type);
 		create_cam(data, str, type);
 		create_slight(&data->s_light, str, type);

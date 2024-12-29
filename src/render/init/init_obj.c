@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:31:28 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/27 13:24:21 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/29 10:29:20 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	init_obj(t_data *data)
 	obj = data->obj;
 	while (obj)
 	{
-		obj->material.rgb_checker = (t_rgb){25, 25, 25};
 		obj->material.m_type = SL;
 		if (obj->type == SP)
 			obj->material.m_type = GL;
