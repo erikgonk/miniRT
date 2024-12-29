@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 20:48:16 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/29 09:12:08 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/29 11:02:19 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ void	print_t_v3(const char *label, t_v3 vec)
 	printf("%s -> x: %.2f, y: %.2f, z: %.2f\n", label, vec.x, vec.y, vec.z);
 }
 
-uint32_t	**render_without_threads(t_data *data, t_ray **rays, uint16_t **image)
+uint32_t	**render_without_threads(t_data *data, t_ray **rays, uint32_t **image)
 {
 	int	y;
 	int	x;
-	
+
 	y = 0;
 	while (y < W_HG)
 	{

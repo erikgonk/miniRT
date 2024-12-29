@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/27 13:54:07 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/29 11:06:17 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,12 @@ uint32_t	trace_ray(t_ray ray, t_data *data)
 	closest_obj = find_closest_object(&ray, data->obj, &t_min);
 	if (!closest_obj)
 		return (BLACK);
-	c_global = phong(data, &ray, closest_obj);
-	specular_light(&c_global, data, &ray);
+	if (closest_obj->material.m_type != -1)
+		
+	else
+	{
+		c_global = phong(data, &ray, closest_obj);
+		specular_light(&c_global, data, &ray);
+	}
 	return (get_colour(c_global));
 }

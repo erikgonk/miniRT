@@ -6,7 +6,7 @@
 #    By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/19 12:51:14 by shurtado          #+#    #+#              #
-#    Updated: 2024/12/29 08:48:25 by shurtado         ###   ########.fr        #
+#    Updated: 2024/12/29 10:59:20 by shurtado         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ FILES			:= main.c \
 					render/obj/cylinder.c render/obj/intersections.c render/obj/viewport.c \
 					render/illumination/illumination.c render/illumination/specular.c\
 					render/calcs/calcs.c render/calcs/quadratic.c \
-					render/init/init_image.c render/init/init_rays.c render/init/init_general.c render/init/init_obj.c \
+					render/init/init_image.c render/init/init_rays.c render/init/init_general.c render/init/init_obj.c render/init/init_materials.c \
 					render/color/color.c render/color/checker_board.c \
 					render/free/free.c \
 					console/console/run_console.c \

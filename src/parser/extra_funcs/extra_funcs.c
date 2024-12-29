@@ -40,7 +40,7 @@ void	skip_colors(char *str, char **res)
 
 int	type_extra_func(char *str)
 {
-	static char		*bts[] = {"sl", "mt", "gl", "mr", "cb", "bl", NULL};
+	static char		*bts[] = {"sl", "mt", "gl", "mr", "cb", "tr", NULL};
 	int				i;
 
 	i = 0;
@@ -68,19 +68,15 @@ void	parse_cb(t_obj *obj, char *str)
 void	extra_functionalities(t_obj *obj, char *tmp)
 {
 	char	*str;
-	int		type;
 
     init_materials(obj);
 	skip_colors(tmp, &str);
 	if (str && (!str[0] || str[0] == '\n'))
 		return (free(str));
-	type = type_extra_func(str);
-	if (type == -1 || !str[1] || (type != CB && str[2] && str[3]))
+	obj->material.m_type = type_extra_func(str);
+	if (obj->material.m_type == -1 || !str[1] || (obj->material.m_type != CB && str[2] && str[3]))
 		exit(er("error: extra functs: invalid char after color", str));
-	if (type == CB)
+	if (obj->material.m_type == CB)
 		parse_cb(obj, str);
-    // else if (type == MT)
-    // else if (type == GL)
-    // else if (type == MR)
 	free(str);
 }

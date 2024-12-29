@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/29 10:07:21 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/29 10:53:08 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@
 # define GL 2 // Glass
 # define MR 3 // Mirror
 # define CB 4 // Checker Board
+# define TR 5 // light transmitence
 
 typedef long long	t_ll;
 

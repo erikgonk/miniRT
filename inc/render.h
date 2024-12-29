@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/27 13:53:03 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/29 11:04:02 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ t_rgb					checkerboard_color(t_obj *obj, t_v3 point);
 //		init_general
 void					init_all(t_data *data);
 void					init_data(t_data **data);
-void					free_data(t_data *data);
 
 //		init_image
 void					init_mlx(t_data *data);
@@ -101,11 +100,14 @@ void					init_obj_normi(t_data *data, t_obj *obj);
 void					init_light(t_data *data);
 
 //		init_rays
-void					free_rays(t_ray **rays, int rows);
 void					init_single_ray(t_ray *ray, t_vp *vp, t_cam *camera,
 							float *uv);
 t_ray					*init_ray_row(t_cam *camera, t_vp *vp, int y);
 t_ray					**init_rays(t_cam *camera, t_vp *vp);
+
+//		init_materials
+void					init_materials_mt_mr(t_obj *obj);
+void					init_materials_render(t_data *data);
 
 //		cylinder
 bool					check_cap(t_ray *ray, t_cap cap, float *t);
@@ -146,6 +148,8 @@ uint32_t				**render(t_data *data, int x, int y);
 void					free_rays_all(t_ray **rays);
 void					free_render(t_vp *vp, t_ray **rays);
 void					free_image_all(uint32_t **image);
+void					free_data(t_data *data);
+void					free_rays(t_ray **rays, int rows);
 
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/29 10:30:26 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/29 10:41:25 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef struct s_light
 
 typedef struct s_material
 {
-	float			m_type;
+	int				m_type;
 	float			reflectivity;
 	float			transmittance;
 	float			roughness;
