@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/29 14:15:05 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/29 17:26:48 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,8 +154,8 @@ t_rgb glass_ray(t_ray *ray, t_obj *closest_object, t_data *data, int depth)
 	reflected_ray.origin = vadd(ray->point, vmul(EPSILON, normal));
 	reflected_ray.direction = reflect(ray->direction, normal);
 
-	reflected_color = path_trace(&reflected_ray, data, depth - 1);
-	refracted_color = path_trace(&refracted_ray, data, depth - 1);
+	reflected_color = path_trace(&reflected_ray, data, depth - 1, closest_object->rgb);
+	refracted_color = path_trace(&refracted_ray, data, depth - 1, closest_object->rgb);
 
 	return color_add(color_mul(reflected_color, kr),
 					 color_mul(refracted_color, 1.0f - kr));
@@ -180,9 +180,9 @@ t_rgb mirror_ray(t_ray *ray, t_obj *closest_object, t_data *data, int depth)
 	new_ray.origin = vadd(ray->point, vmul(EPSILON, normal));
 	new_ray.direction = reflect(ray->direction, normal);
 
-	return color_mul(
-		path_trace(&new_ray, data, depth - 1),
-		closest_object->material.reflectivity);
+	t_rgb	pt = path_trace(&new_ray, data, depth - 1, closest_object->rgb);
+	t_rgb	res = color_mul(pt, closest_object->material.reflectivity);
+	return (res);
 }
 
 t_v3 perturb_vector(t_v3 direction, float roughness, t_v3 normal)
@@ -216,7 +216,7 @@ t_rgb metallic_ray(t_ray *ray, t_obj *closest_object, t_data *data, int depth)
 	}
 
 	return color_mul(
-		path_trace(&new_ray, data, depth - 1),
+		path_trace(&new_ray, data, depth - 1, closest_object->rgb),
 		closest_object->material.reflectivity);
 }
 
@@ -262,7 +262,7 @@ t_rgb diffuse_ray(t_ray *ray, t_obj *closest_object, t_data *data, int depth)
 
 	new_ray.origin = vadd(ray->point, vmul(EPSILON, ray->normal));
 	new_ray.direction = calculate_ray_direction(ray, closest_object);
-	trace_color = path_trace(&new_ray, data, depth - 1);
+	trace_color = path_trace(&new_ray, data, depth - 1, closest_object->rgb);
 	base_color.r = fminf(trace_color.r * (base_color.r / 255), 255);
 	base_color.g = fminf(trace_color.g * (base_color.g / 255), 255);
 	base_color.b = fminf(trace_color.b * (base_color.b / 255), 255);
@@ -292,7 +292,6 @@ t_rgb compute_direct_light(t_obj *obj, t_data *data, t_ray *ray)
 			slight = slight->next;
 			continue;
 		}
-
 		// Calcular intensidad difusa
 		intensity = fmax(0.0f, dot(shadow_ray.direction, ray->normal));
 		result = color_add(result, color_mul(slight->rgb, intensity));
@@ -301,19 +300,22 @@ t_rgb compute_direct_light(t_obj *obj, t_data *data, t_ray *ray)
 	return result;
 }
 
-t_rgb path_trace(t_ray *ray, t_data *data, int depth)
+t_rgb path_trace(t_ray *ray, t_data *data, int depth, t_rgb last)
 {
 	t_obj *closest_object;
 	t_rgb direct_light;
 	t_rgb indirect_light;
+	t_rgb ambient_light;
 	float t;
+	t_rgb result;
 
 	t = INFINITY;
-	if (depth <= 0)
-		return (RGB_BLACK);
 	closest_object = find_closest_object(ray, data->obj, &t);
 	if (!closest_object)
 		return (RGB_BLACK);
+	if (depth <= 0)
+		return (closest_object->rgb);
+	ambient_light = apply_ambient_light(closest_object->rgb, &data->a_light);
 	direct_light = compute_direct_light(closest_object, data, ray);
 	indirect_light = (RGB_BLACK);
 	if (closest_object->material.m_type == -1)
@@ -324,8 +326,9 @@ t_rgb path_trace(t_ray *ray, t_data *data, int depth)
 		indirect_light = mirror_ray(ray, closest_object, data, depth);
 	else if (closest_object->material.m_type == GL)
 		indirect_light = glass_ray(ray, closest_object, data, depth);
-	return color_add(direct_light, indirect_light);
-}
+	result = color_add(color_add(ambient_light, direct_light), indirect_light);
+	return (result);
+	}
 
 
 uint32_t	trace_ray(t_ray ray, t_data *data)
@@ -338,10 +341,11 @@ uint32_t	trace_ray(t_ray ray, t_data *data)
 	closest_obj = find_closest_object(&ray, data->obj, &t_min);
 	if (!closest_obj)
 		return (BLACK);
+
 	if (closest_obj->material.m_type == -1)
 		c_global = phong(data, &ray, closest_obj);
 	else
-		c_global = path_trace(&ray, data, MAX_DEPTH);
+		c_global = path_trace(&ray, data, 5, closest_obj->rgb);
 	if (closest_obj->material.specularity > 0 || closest_obj->material.specularity == -1)
 		specular_light(&c_global, data, &ray);
 	return (get_colour(c_global));

@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 14:00:21 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/27 13:23:46 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/29 17:24:10 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,37 +40,59 @@ bool	cy_caps(t_ray *ray, t_obj *cy, float *t)
 	bool	hit;
 
 	hit = false;
-	if (check_cap(ray, cy->calcs.upper_cap, t))
-		hit = true;
-	if (check_cap(ray, cy->calcs.btm_cap, t))
+	if (check_cap(ray, cy->calcs.upper_cap, t) || check_cap(ray, cy->calcs.btm_cap, t))
 		hit = true;
 	return (hit);
 }
 
+// void set_cy_axis(t_quadratic *quad, t_obj *cy, t_ray *ray, t_ray *ray2)
 void	set_cy_axis(t_quadratic *quad, t_obj *cy, t_ray *ray, t_v3 *ray_origin)
 {
-	t_v3	d_par;
-	t_v3	d_perp;
-	t_v3	oc_par;
-	t_v3	oc_perp;
+    t_v3 d_par;
+    t_v3 d_perp;
+    t_v3 oc_par;
+    t_v3 oc_perp;
 
-	if (ray_origin)
-	{
-		oc_par = vmul(dot(vsub(*ray_origin, cy->pos), cy->axis), cy->axis);
-		oc_perp = vsub(vsub(ray->origin, cy->pos), oc_par);
-		quad->c = dot(oc_perp, oc_perp) - cy->calcs.radius2;
-	}
-	else
-	{
-		oc_par = cy->calcs.oc_par;
-		oc_perp = cy->calcs.oc_perp;
-		quad->c = cy->calcs.c;
-	}
-	d_par = vmul(dot(ray->direction, cy->axis), cy->axis);
-	d_perp = vsub(ray->direction, d_par);
-	quad->a = dot(d_perp, d_perp);
-	quad->b = 2.0f * dot(oc_perp, d_perp);
+    // Vector desde el origen del cilindro al origen del rayo
+    oc_par = vmul(dot(vsub(ray->origin, cy->pos), cy->axis), cy->axis);
+    oc_perp = vsub(vsub(ray->origin, cy->pos), oc_par);
+
+    // Coeficiente c del cuadrático
+    quad->c = dot(oc_perp, oc_perp) - cy->calcs.radius2;
+
+    // Componentes paralelas y perpendiculares de la dirección del rayo
+    d_par = vmul(dot(ray->direction, cy->axis), cy->axis);
+    d_perp = vsub(ray->direction, d_par);
+
+    // Coeficientes a y b del cuadrático
+    quad->a = dot(d_perp, d_perp);
+    quad->b = 2.0f * dot(oc_perp, d_perp);
 }
+
+// void	set_cy_axis(t_quadratic *quad, t_obj *cy, t_ray *ray, t_v3 *ray_origin)
+// {
+// 	t_v3	d_par;
+// 	t_v3	d_perp;
+// 	t_v3	oc_par;
+// 	t_v3	oc_perp;
+
+// 	if (ray_origin)
+// 	{
+// 		oc_par = vmul(dot(vsub(*ray_origin, cy->pos), cy->axis), cy->axis);
+// 		oc_perp = vsub(vsub(ray->origin, cy->pos), oc_par);
+// 		quad->c = dot(oc_perp, oc_perp) - cy->calcs.radius2;
+// 	}
+// 	else
+// 	{
+// 		oc_par = cy->calcs.oc_par;
+// 		oc_perp = cy->calcs.oc_perp;
+// 		quad->c = cy->calcs.c;
+// 	}
+// 	d_par = vmul(dot(ray->direction, cy->axis), cy->axis);
+// 	d_perp = vsub(ray->direction, d_par);
+// 	quad->a = dot(d_perp, d_perp);
+// 	quad->b = 2.0f * dot(oc_perp, d_perp);
+// }
 
 float	set_ray_t(t_ray *ray, t_obj *cy, float *t, float quadt1)
 {
@@ -81,7 +103,7 @@ float	set_ray_t(t_ray *ray, t_obj *cy, float *t, float quadt1)
 	t_min = INFINITY;
 	point = vadd(ray->origin, vmul(quadt1, ray->direction));
 	proj = dot(vsub(point, cy->pos), cy->axis);
-	if (proj > -(cy->calcs.half_height) && proj < cy->calcs.half_height)
+	if (proj > -(cy->calcs.half_height + EPSILON) && proj < cy->calcs.half_height - EPSILON)
 	{
 		t_min = quadt1;
 		if (t_min < *t)
