@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:31:28 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/29 12:47:34 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/29 13:08:35 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ void	init_obj(t_data *data)
 	obj = data->obj;
 	while (obj)
 	{
-		if (obj->type == SP)
-			obj->material.m_type = GL;
 		obj->a_rgb = apply_ambient_light(obj->rgb, data->a_light);
 		if (obj->type == PL)
 		{
