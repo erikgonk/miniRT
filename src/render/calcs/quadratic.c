@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:20:14 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/19 13:21:27 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/29 09:26:34 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,13 @@ bool	solve_quadratic(t_quadratic *quad)
 		temp = quad->t1;
 		quad->t1 = quad->t2;
 		quad->t2 = temp;
+	}
+	if (quad->t1 < EPSILON)
+	{
+		quad->t1 = quad->t2;
+		quad->t2 = INFINITY;
+		if (quad->t1 < EPSILON)
+			return (false);
 	}
 	return (true);
 }

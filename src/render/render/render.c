@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:37:51 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/24 12:03:48 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/29 09:12:34 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ uint32_t	**render(t_data *data, int x, int y)
 	if (!image)
 		return (NULL);
 	render_with_threads(data, rays, image);
+	//render_without_threads(data, rays, image);
 	free_render(vp, rays);
 	return (image);
 }

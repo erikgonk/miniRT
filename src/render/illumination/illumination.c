@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:09:03 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/27 14:06:32 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/29 09:36:29 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,12 @@ t_rgb	phong(t_data *data, t_ray *ray, t_obj *obj)
 		color = checkerboard_color(obj, ray->point);
 	else
 		color = obj->a_rgb;
-	// if (obj->type == SP)
-	// 	printf("hola\n");
+	if (dot(ray->direction, ray->normal) > 0)
+		ray->normal = vmul(-1, ray->normal);
 	slight = data->s_light;
 	while (slight)
 	{
-		shadow_ray.origin = vadd(ray->point, vmul(1e-3, ray->normal));
+		shadow_ray.origin = vadd(ray->point, vmul(1e-4, ray->normal));
 		shadow_ray.direction = normalize(vsub(slight->pos, ray->point));
 		if (data_shadow(data, &shadow_ray, vlength(vsub(slight->pos,
 						ray->point))))

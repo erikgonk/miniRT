@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   debug_info.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 20:48:16 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/17 11:12:52 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/29 09:12:08 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <miniRT.h>
+#include "render.h"
 
 void	print_t_rgb(const char *label, t_rgb rgb)
 {
@@ -20,4 +21,23 @@ void	print_t_rgb(const char *label, t_rgb rgb)
 void	print_t_v3(const char *label, t_v3 vec)
 {
 	printf("%s -> x: %.2f, y: %.2f, z: %.2f\n", label, vec.x, vec.y, vec.z);
+}
+
+uint32_t	**render_without_threads(t_data *data, t_ray **rays, uint16_t **image)
+{
+	int	y;
+	int	x;
+	
+	y = 0;
+	while (y < W_HG)
+	{
+		x = 0;
+		while (x < W_WH)
+		{
+			image[y][x] = trace_ray(rays[y][x], data);
+			x++;
+		}
+		y++;
+	}
+	return (image);
 }
