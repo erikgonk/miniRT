@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 16:58:38 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/24 12:04:34 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/29 14:57:52 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	render_to_mlx(t_data *data)
 		data->img->enabled = true;
 	mlx_image_to_window(data->mlx, data->img, 0, 0);
 	free_image_all(img_rgb);
-	time = current_timestamp() - time;
-	time /= 100;
+	//time = current_timestamp() - time;
+	//time /= 100;
 }
 // printf("Ha tardado en reenderizar: %lld\n", time);
 

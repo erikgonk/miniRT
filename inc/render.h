@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/29 12:34:39 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/29 15:35:44 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,7 @@ void					free_rays(t_ray **rays, int rows);
 //		PATH_TRACER
 t_rgb					path_trace(t_ray *ray, t_data *data, int depth);
 t_v3 random_in_hemisphere(t_v3 normal);
-
+float	*generate_uv(int x, int y);
+uint32_t	**average_samples(uint32_t **sample1, uint32_t **sample2);
 
 #endif

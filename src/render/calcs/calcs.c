@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/29 13:10:20 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/29 14:15:05 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -308,6 +308,7 @@ t_rgb path_trace(t_ray *ray, t_data *data, int depth)
 	t_rgb indirect_light;
 	float t;
 
+	t = INFINITY;
 	if (depth <= 0)
 		return (RGB_BLACK);
 	closest_object = find_closest_object(ray, data->obj, &t);
