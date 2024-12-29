@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/29 10:53:08 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/29 12:46:36 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,11 @@
 # define BL 7 // Blur
 
 //		Materials
-# define SL 0 // Solid
-# define MT 1 // Metallic
-# define GL 2 // Glass
-# define MR 3 // Mirror
-# define CB 4 // Checker Board
-# define TR 5 // light transmitence
+# define MT 0 // Metallic
+# define GL 1 // Glass
+# define MR 2 // Mirror
+# define CB 3 // Checker Board
+# define TR 4 // light transmitence
 
 typedef long long	t_ll;
 

@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/29 11:04:02 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/29 12:34:39 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 # define PPLANEDISTANCE 1.0f
 # define BLACK 0xFF000000
+# define RGB_BLACK (t_rgb){0, 0, 0}
 
 typedef unsigned char	t_uchar;
 # define EPSILON 1e-6
@@ -150,6 +151,10 @@ void					free_render(t_vp *vp, t_ray **rays);
 void					free_image_all(uint32_t **image);
 void					free_data(t_data *data);
 void					free_rays(t_ray **rays, int rows);
+
+//		PATH_TRACER
+t_rgb					path_trace(t_ray *ray, t_data *data, int depth);
+t_v3 random_in_hemisphere(t_v3 normal);
 
 
 #endif

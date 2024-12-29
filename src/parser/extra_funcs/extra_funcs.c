@@ -14,6 +14,7 @@
 
 void    init_materials(t_obj *obj)
 {
+	obj->material.m_type = -1;
     obj->material.reflectivity = -1;
     obj->material.transmittance = -1;
     obj->material.roughness = -1;
@@ -40,7 +41,7 @@ void	skip_colors(char *str, char **res)
 
 int	type_extra_func(char *str)
 {
-	static char		*bts[] = {"sl", "mt", "gl", "mr", "cb", "tr", NULL};
+	static char		*bts[] = {"mt", "gl", "mr", "cb", "tr", NULL};
 	int				i;
 
 	i = 0;
