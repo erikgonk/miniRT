@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/29 17:05:53 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/30 16:12:21 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # define RGB_BLACK (t_rgb){1, 1, 1}
 
 typedef unsigned char	t_uchar;
-# define EPSILON 1e-6
+# define EPSILON 1e-3
 # ifndef M_PI
 #  define M_PI 3.14159265358979323846
 # endif
@@ -153,7 +153,7 @@ void					free_data(t_data *data);
 void					free_rays(t_ray **rays, int rows);
 
 //		PATH_TRACER
-t_rgb					path_trace(t_ray *ray, t_data *data, int depth, t_rgb last_color);
+t_rgb					path_trace(t_ray *ray, t_data *data, int depth);
 t_v3 random_in_hemisphere(t_v3 normal);
 float	*generate_uv(int x, int y);
 uint32_t	**average_samples(uint32_t **sample1, uint32_t **sample2);

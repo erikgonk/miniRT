@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/29 15:37:39 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/30 15:59:36 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ typedef struct s_data
 	int				bl; // blur
 	mlx_t			*mlx;
 	mlx_image_t		*img;
+	bool			trace_flag;
 	uint32_t		**img_last;
 }					t_data;
 

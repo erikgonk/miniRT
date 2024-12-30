@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:09:03 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/30 12:07:57 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/30 16:05:38 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ t_rgb	phong(t_data *data, t_ray *ray, t_obj *obj)
 	slight = data->s_light;
 	while (slight)
 	{
-		shadow_ray.origin = vadd(ray->point, vmul(1e-4, ray->normal));
+		shadow_ray.origin = vadd(ray->point, vmul(1e-3, ray->normal));
 		shadow_ray.direction = normalize(vsub(slight->pos, ray->point));
 		if (data_shadow(data, &shadow_ray, vlength(vsub(slight->pos,
 						ray->point))))
@@ -93,7 +93,6 @@ t_rgb	phong(t_data *data, t_ray *ray, t_obj *obj)
 			continue ;
 		}
 		intensity = fmax(dot(shadow_ray.direction, ray->normal), 0.0f);
-//----------------------------------------------------------------//
 		difuse_light(&color, slight, obj, intensity);
 		slight = slight->next;
 	}
