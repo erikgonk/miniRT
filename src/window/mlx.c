@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 16:58:38 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/29 14:57:52 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/30 17:12:10 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,26 @@ void	fill_image(uint32_t *pixels, uint32_t **img_rgb)
 void	my_keyhook(mlx_key_data_t keydata, void *param)
 {
 	static bool	mode;
+	t_data		*data;
 
+	data = param;
 	if (keydata.key == MLX_KEY_ESCAPE)
-		last_exit(param);
+		last_exit(data);
 	else if (keydata.action == MLX_PRESS)
 	{
-		run_console((t_data *) param, keydata.key);
+		run_console(data, keydata.key);
+		if (keydata.key == MLX_KEY_K)
+		{
+			pthread_mutex_lock(data->m_trace);
+			data->trace_flag = !data->trace_flag;
+			pthread_mutex_unlock(data->m_trace);
+			if (data->img_last)
+				free_image_all(data->img_last);
+			data->img_last = NULL;
+
+		}
 		if (mode || keydata.key == MLX_KEY_R)
-			render_to_mlx((t_data *) param);
+			render_to_mlx(data);
 		if (keydata.key == MLX_KEY_R)
 			mode = !mode;
 	}

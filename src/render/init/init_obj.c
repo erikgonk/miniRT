@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:31:28 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/30 11:01:59 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/30 17:08:15 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	init_obj(t_data *data)
 	obj = data->obj;
 	while (obj)
 	{
-		obj->a_rgb = apply_ambient_light(obj->rgb, data->a_light);
+		if (obj->material.m_type != MR)
+			obj->a_rgb = apply_ambient_light(obj->rgb, data->a_light);
 		if (obj->type == PL)
 		{
 			obj->calcs.numerator = dot(vsub(obj->pos, data->cam->pos), obj->axis);

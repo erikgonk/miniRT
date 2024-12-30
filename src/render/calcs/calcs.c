@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/30 16:12:15 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/30 17:36:01 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,9 +289,10 @@ t_rgb diffuse_ray(t_ray *ray, t_obj *closest_object, t_data *data, int depth)
 
 t_rgb compute_direct_light(t_obj *obj, t_data *data, t_ray *ray, t_rgb color)
 {
-	t_slight *slight;
-	t_ray shadow_ray;
-	float intensity;
+	t_slight	*slight;
+	t_ray		shadow_ray;
+	t_rgb		specular_color;
+	float		intensity;
 
 	slight = data->s_light;
 	while (slight)
@@ -310,9 +311,13 @@ t_rgb compute_direct_light(t_obj *obj, t_data *data, t_ray *ray, t_rgb color)
 		// Calcular intensidad difusa
 		intensity = fmax(0.0f, dot(shadow_ray.direction, ray->normal));
 		difuse_light(&color, slight, obj, intensity);
-
-		// result = color_add(result, color_mul(slight->rgb, intensity));
-		// result = color_mul(result, slight->br);
+		if (obj->material.specularity > 0)
+		{
+			t_v3 reflect_dir = reflect(vmul(-1, shadow_ray.direction), ray->normal); // Vector reflejado
+			t_v3 view_dir = normalize(vmul(-1, ray->direction)); // Hacia la cámara
+			float spec_intensity = pow(fmax(dot(reflect_dir, view_dir), 0.0), obj->material.shininess);
+			specular_color = color_add(specular_color, color_mul(slight->rgb, spec_intensity * obj->material.specularity));
+		}
 		slight = slight->next;
 	}
 	return (color);
@@ -367,11 +372,13 @@ uint32_t	trace_ray(t_ray ray, t_data *data)
 	if (!closest_obj)
 		return (BLACK);
 
-	// if (data->trace_flag)
-		// c_global = phong(data, &ray, closest_obj);
-	// else
+	pthread_mutex_lock(data->m_trace);
+	if (data->trace_flag)
+		c_global = phong(data, &ray, closest_obj);
+	else
 		c_global = path_trace(&ray, data, 2);
+	pthread_mutex_unlock(data->m_trace);
 	// if (closest_obj->material.specularity > 0 || closest_obj->material.specularity == -1)
-	// 	specular_light(&c_global, data, &ray);
+	specular_light(&c_global, data, &ray, closest_obj->material.shininess);
 	return (get_colour(c_global));
 }

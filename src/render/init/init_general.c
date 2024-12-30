@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:34:20 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/30 16:00:48 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/30 17:12:34 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,8 @@ void	init_data(t_data **data)
 	(*data)->a_light->rgb.r = 0;
 	(*data)->a_light->rgb.g = 0;
 	(*data)->a_light->rgb.b = 0;
-	(*data)->trace_flag = true;
+	(*data)->trace_flag = false;
+	(*data)->m_trace = malloc(sizeof(pthread_mutex_t));
+	pthread_mutex_init((*data)->m_trace, NULL);
+	
 }

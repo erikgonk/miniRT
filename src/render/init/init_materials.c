@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:34:20 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/29 13:04:45 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/30 17:49:57 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	init_materials_mt_mr(t_obj *obj)
 		obj->material.roughness = 0.3f;
 		obj->material.absorption = 1.0f;
 		obj->material.specularity = 0.9f;
+		obj->material.shininess = 170;
 	}
 	else if (obj->material.m_type == MR)
 	{
@@ -29,13 +30,14 @@ void	init_materials_mt_mr(t_obj *obj)
 		obj->material.roughness = 0.0f;
 		obj->material.absorption = 0.0f;
 		obj->material.specularity = 1.0f;
+		obj->material.shininess = 500;
 	}
-}
-
-void	init_materials_render(t_data *data)
-{
-	t_obj	*obj;
-
+	else
+	{
+		obj->material.specularity = 0.1f;
+		obj->material.shininess = 50;
+	}
+}	int					shininess;
 	obj = data->obj;
 	while (obj)
 	{
@@ -46,6 +48,7 @@ void	init_materials_render(t_data *data)
 			obj->material.roughness = 0.0f;
 			obj->material.absorption = 0.1f;
 			obj->material.specularity = 0.9f;
+			obj->material.shininess = 150;
 		}
 		else
 			init_materials_mt_mr(obj);
