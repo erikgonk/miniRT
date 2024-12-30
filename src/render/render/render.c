@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:37:51 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/29 16:43:05 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/30 09:24:25 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,22 +76,6 @@ uint32_t	**average_samples(uint32_t **sample1, uint32_t **sample2)
 			res[x][y] = ((uint64_t)sample1[x][y] + (uint64_t)sample2[x][y]) / 2;
 	}
 	return (res);
-}
-
-float	*generate_uv(int x, int y)
-{
-	float	*uv;
-
-	uv = malloc(2 * sizeof(float));
-	if (!uv)
-		return (NULL);
-	// uv[0] = (float)x / (float)(WH - 1) + ((float)rand() \
-			// / (RAND_MAX + 1.0)) / (float)(WH - 1);
-	// uv[1] = 1.0f - (float)y / (float)(HG - 1) + ((float)rand() \
-			// / (RAND_MAX + 1.0)) / (float)(HG - 1);
-	uv[0] = (float)x / (float)(W_WH - 1) + (((float)rand() / (RAND_MAX + 1.0)) / 2.0f) / (float)(W_WH - 1);
-	uv[1] = 1.0f - (float)y / (float)(W_HG - 1) + (((float)rand() / (RAND_MAX + 1.0)) / 2.0f) / (float)(W_HG - 1);
-	return (uv);
 }
 
 uint32_t	**render(t_data *data, int x, int y)

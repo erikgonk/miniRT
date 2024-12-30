@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:09:03 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/29 12:28:52 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/30 12:07:57 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ t_rgb	phong(t_data *data, t_ray *ray, t_obj *obj)
 			continue ;
 		}
 		intensity = fmax(dot(shadow_ray.direction, ray->normal), 0.0f);
+//----------------------------------------------------------------//
 		difuse_light(&color, slight, obj, intensity);
 		slight = slight->next;
 	}

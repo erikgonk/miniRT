@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/29 17:26:48 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/30 12:24:34 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,18 +223,20 @@ t_rgb metallic_ray(t_ray *ray, t_obj *closest_object, t_data *data, int depth)
 
 t_v3 random_in_hemisphere(t_v3 normal)
 {
+	float u1 = (float)rand() / RAND_MAX;
+	float u2 = (float)rand() / RAND_MAX;
+
+	// Convertir a coordenadas esféricas
+	float theta = acos(sqrt(1 - u1)); // Ángulo polar con distribución uniforme
+	float phi = 2 * M_PI * u2;       // Ángulo azimutal
+
+	// Convertir a coordenadas cartesianas
 	t_v3 random_vector;
+	random_vector.x = sin(theta) * cos(phi);
+	random_vector.y = sin(theta) * sin(phi);
+	random_vector.z = cos(theta);
 
-	random_vector.x = ((float)rand() / RAND_MAX) * 2.0f - 1.0f;
-	random_vector.y = ((float)rand() / RAND_MAX) * 2.0f - 1.0f;
-	random_vector.z = ((float)rand() / RAND_MAX) * 2.0f - 1.0f;
-	while (vlength(random_vector) > 1.0f || vlength(random_vector) == 0)
-	{
-		random_vector.x = ((float)rand() / RAND_MAX) * 2.0f - 1.0f;
-		random_vector.y = ((float)rand() / RAND_MAX) * 2.0f - 1.0f;
-		random_vector.z = ((float)rand() / RAND_MAX) * 2.0f - 1.0f;
-	}
-
+	// Alinear el vector al hemisferio definido por la normal
 	if (dot(random_vector, normal) < 0)
 		random_vector = vmul(-1.0f, random_vector);
 
@@ -256,33 +258,46 @@ t_v3 calculate_ray_direction(t_ray *ray, t_obj *obj)
 
 t_rgb diffuse_ray(t_ray *ray, t_obj *closest_object, t_data *data, int depth)
 {
-	t_ray	new_ray;
-	t_rgb	base_color;
-	t_rgb	trace_color;
+	t_ray new_ray;
+	t_v3 normal;
+	t_rgb trace_color;
 
+	// Establecer el origen del nuevo rayo ligeramente fuera de la superficie
 	new_ray.origin = vadd(ray->point, vmul(EPSILON, ray->normal));
-	new_ray.direction = calculate_ray_direction(ray, closest_object);
-	trace_color = path_trace(&new_ray, data, depth - 1, closest_object->rgb);
-	base_color.r = fminf(trace_color.r * (base_color.r / 255), 255);
-	base_color.g = fminf(trace_color.g * (base_color.g / 255), 255);
-	base_color.b = fminf(trace_color.b * (base_color.b / 255), 255);
 
-	return (base_color);
+	// Calcular la normal ajustada según el tipo de objeto
+	if (closest_object->type == CY)
+	{
+		normal = vsub(ray->point, vadd(closest_object->pos,
+					vmul(dot(vsub(ray->point, closest_object->pos), closest_object->axis), closest_object->axis)));
+		normal = normalize(normal);
+	}
+	else
+	{
+		normal = ray->normal;
+	}
+
+	// Generar una dirección aleatoria dentro del hemisferio definido por la normal
+	new_ray.direction = calculate_ray_direction(ray, closest_object);
+
+	// Traza el nuevo rayo y calcula el color reflejado de forma difusa
+	trace_color = path_trace(&new_ray, data, depth - 1, closest_object->rgb);
+
+	// Multiplica el color reflejado por la reflectividad (albedo) del objeto
+	return color_mul(trace_color, closest_object->material.reflectivity);
 }
 
-t_rgb compute_direct_light(t_obj *obj, t_data *data, t_ray *ray)
+t_rgb compute_direct_light(t_obj *obj, t_data *data, t_ray *ray, t_rgb color)
 {
-	t_rgb result;
 	t_slight *slight;
 	t_ray shadow_ray;
 	float intensity;
 
-	result = (t_rgb){0, 0, 0};
 	slight = data->s_light;
 	while (slight)
 	{
 		// Generar un rayo hacia la luz
-		shadow_ray.origin = vadd(ray->point, vmul(EPSILON, ray->normal));
+		shadow_ray.origin = vadd(ray->point, vmul(1e-4, ray->normal));
 		shadow_ray.direction = normalize(vsub(slight->pos, ray->point));
 
 		// Verificar sombras
@@ -294,10 +309,13 @@ t_rgb compute_direct_light(t_obj *obj, t_data *data, t_ray *ray)
 		}
 		// Calcular intensidad difusa
 		intensity = fmax(0.0f, dot(shadow_ray.direction, ray->normal));
-		result = color_add(result, color_mul(slight->rgb, intensity));
+		difuse_light(&color, slight, obj, intensity);
+
+		// result = color_add(result, color_mul(slight->rgb, intensity));
+		// result = color_mul(result, slight->br);
 		slight = slight->next;
 	}
-	return result;
+	return (color);
 }
 
 t_rgb path_trace(t_ray *ray, t_data *data, int depth, t_rgb last)
@@ -305,18 +323,22 @@ t_rgb path_trace(t_ray *ray, t_data *data, int depth, t_rgb last)
 	t_obj *closest_object;
 	t_rgb direct_light;
 	t_rgb indirect_light;
-	t_rgb ambient_light;
 	float t;
 	t_rgb result;
+	t_rgb base_color;
 
 	t = INFINITY;
 	closest_object = find_closest_object(ray, data->obj, &t);
 	if (!closest_object)
 		return (RGB_BLACK);
+
+	if (closest_object->type == PL && closest_object->material.board_scale != -1)
+		base_color = checkerboard_color(closest_object, ray->point);
+	else
+		base_color = closest_object->a_rgb;
 	if (depth <= 0)
-		return (closest_object->rgb);
-	ambient_light = apply_ambient_light(closest_object->rgb, &data->a_light);
-	direct_light = compute_direct_light(closest_object, data, ray);
+		return (RGB_BLACK);
+	direct_light = compute_direct_light(closest_object, data, ray, base_color);
 	indirect_light = (RGB_BLACK);
 	if (closest_object->material.m_type == -1)
 		indirect_light = diffuse_ray(ray, closest_object, data, depth);
@@ -326,7 +348,12 @@ t_rgb path_trace(t_ray *ray, t_data *data, int depth, t_rgb last)
 		indirect_light = mirror_ray(ray, closest_object, data, depth);
 	else if (closest_object->material.m_type == GL)
 		indirect_light = glass_ray(ray, closest_object, data, depth);
-	result = color_add(color_add(ambient_light, direct_light), indirect_light);
+	if (closest_object->material.m_type == MR)
+	{
+		result = color_add(color_add(closest_object->a_rgb, direct_light), indirect_light);
+	}
+	else
+		result = color_add(color_add(base_color, color_add(closest_object->a_rgb, direct_light)), indirect_light);
 	return (result);
 	}
 
@@ -342,10 +369,10 @@ uint32_t	trace_ray(t_ray ray, t_data *data)
 	if (!closest_obj)
 		return (BLACK);
 
-	if (closest_obj->material.m_type == -1)
-		c_global = phong(data, &ray, closest_obj);
-	else
-		c_global = path_trace(&ray, data, 5, closest_obj->rgb);
+	// if (closest_obj->material.m_type == -1)
+		// c_global = phong(data, &ray, closest_obj);
+	// else
+	c_global = path_trace(&ray, data, 2, closest_obj->rgb);
 	if (closest_obj->material.specularity > 0 || closest_obj->material.specularity == -1)
 		specular_light(&c_global, data, &ray);
 	return (get_colour(c_global));
