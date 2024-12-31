@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:37:51 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/30 09:24:25 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/31 13:18:01 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ uint32_t	**render(t_data *data, int x, int y)
 	t_vp		*vp;
 	uint32_t	**image;
 	static int 	flag;
-
 
 	(void)x;
 	(void)y;

@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/30 17:49:49 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/31 13:37:03 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ typedef struct s_calcs
 	t_v3				oc_perp2;
 	float				c; // cy
 	float				half_height;
+	float				hh_e_sum;
+	float				hh_e_res;
 	t_cap				upper_cap; // cy
 	t_cap				btm_cap; // cy
 }	t_calcs;

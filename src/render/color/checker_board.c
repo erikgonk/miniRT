@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 10:40:12 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/29 10:27:20 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/31 13:43:00 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,13 @@
 
 t_rgb checkerboard_color(t_obj *obj, t_v3 point)
 {
-    int x, y;
+    int     x;
+    int     y;
 
-    // Escalar las coordenadas del punto para determinar el tamaño del patrón
     x = (int)floor(point.x * obj->material.board_scale);
-    y = (int)floor(point.z * obj->material.board_scale); // Usamos Z para la otra dimensión en el plano
-    // Alternar colores según la posición
+    y = (int)floor(point.z * obj->material.board_scale);
     if ((x + y) % 2 == 0)
-        return obj->rgb; // Color para las celdas "blancas"
+        return (obj->rgb);
     else
-        return obj->material.rgb_checker; // Color para las celdas "negras"
+        return (obj->material.rgb_checker);
 }

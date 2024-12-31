@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:31:28 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/30 17:08:15 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/31 13:38:50 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ void	init_obj_normi(t_data *data, t_obj *obj)
 	obj->calcs.oc_perp = vsub(vsub(data->cam->pos, obj->pos), obj->calcs.oc_par);
 	obj->calcs.c= dot(obj->calcs.oc_perp, obj->calcs.oc_perp) - obj->calcs.radius2;
 	obj->calcs.half_height = obj->height * 0.5f;
-	obj->calcs.upper_cap.cap_center = vadd(obj->pos, vmul(obj->calcs.half_height, \
+	obj->calcs.hh_e_sum = obj->calcs.half_height + EPSILON;
+	obj->calcs.hh_e_res = obj->calcs.half_height - EPSILON;
+ 	obj->calcs.upper_cap.cap_center = vadd(obj->pos, vmul(obj->calcs.half_height, \
 												obj->axis));
 	obj->calcs.btm_cap.cap_center = vsub(obj->pos, vmul(obj->calcs.half_height, obj->axis));
 	obj->calcs.upper_cap.radius = obj->size * 0.5f;

@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/31 11:38:30 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/31 13:44:20 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -295,15 +295,12 @@ t_rgb compute_direct_light(t_obj *obj, t_data *data, t_ray *ray, t_rgb color)
 	t_rgb		specular_color;
 	float		intensity;
 
-	specular_color = (t_rgb){0, 0, 0};
+	specular_color = RGB_BLACK;
 	slight = data->s_light;
 	while (slight)
 	{
-		// Generar un rayo hacia la luz
 		shadow_ray.origin = vadd(ray->point, vmul(1e-3, ray->normal));
 		shadow_ray.direction = normalize(vsub(slight->pos, ray->point));
-
-		// Verificar sombras
 		if (data_shadow(data, &shadow_ray, vlength(vsub(slight->pos,
 						ray->point))))
 		{
@@ -339,7 +336,6 @@ t_rgb path_trace(t_ray *ray, t_data *data, int depth)
 	closest_object = find_closest_object(ray, data->obj, &t);
 	if (!closest_object)
 		return (RGB_BLACK);
-
 	if (closest_object->type == PL && closest_object->material.board_scale != -1)
 		base_color = checkerboard_color(closest_object, ray->point);
 	else
@@ -347,6 +343,7 @@ t_rgb path_trace(t_ray *ray, t_data *data, int depth)
 	if (depth <= 0)
 		return (RGB_BLACK);
 	direct_light = compute_direct_light(closest_object, data, ray, base_color);
+//------------------------------------------------------------------------------//
 	indirect_light = (RGB_BLACK);
 	if (closest_object->material.m_type == -1)
 		indirect_light = diffuse_ray(ray, closest_object, data, depth);
@@ -374,7 +371,6 @@ uint32_t	trace_ray(t_ray ray, t_data *data)
 	closest_obj = find_closest_object(&ray, data->obj, &t_min);
 	if (!closest_obj)
 		return (BLACK);
-
 	pthread_mutex_lock(data->m_trace);
 	if (data->trace_flag)
 		c_global = phong(data, &ray, closest_obj);
