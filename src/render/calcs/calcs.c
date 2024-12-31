@@ -6,13 +6,14 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/30 17:36:01 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/31 11:38:30 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/miniRT.h"
 #include "../../inc/render.h"
 #include "../../lib/libvector/libvct.h"
+#include <float.h>
 
 float	vlength(t_v3 v)
 {
@@ -223,8 +224,8 @@ t_rgb metallic_ray(t_ray *ray, t_obj *closest_object, t_data *data, int depth)
 
 t_v3 random_in_hemisphere(t_v3 normal)
 {
-	float u1 = (float)rand() / RAND_MAX;
-	float u2 = (float)rand() / RAND_MAX;
+	float u1 = (float)rand() / FLT_MAX;
+	float u2 = (float)rand() / FLT_MAX;
 
 	// Convertir a coordenadas esféricas
 	float theta = acos(sqrt(1 - u1)); // Ángulo polar con distribución uniforme
@@ -294,6 +295,7 @@ t_rgb compute_direct_light(t_obj *obj, t_data *data, t_ray *ray, t_rgb color)
 	t_rgb		specular_color;
 	float		intensity;
 
+	specular_color = (t_rgb){0, 0, 0};
 	slight = data->s_light;
 	while (slight)
 	{
@@ -315,22 +317,23 @@ t_rgb compute_direct_light(t_obj *obj, t_data *data, t_ray *ray, t_rgb color)
 		{
 			t_v3 reflect_dir = reflect(vmul(-1, shadow_ray.direction), ray->normal); // Vector reflejado
 			t_v3 view_dir = normalize(vmul(-1, ray->direction)); // Hacia la cámara
-			float spec_intensity = pow(fmax(dot(reflect_dir, view_dir), 0.0), obj->material.shininess);
+			float spec_intensity = pow(fmax(dot(reflect_dir, view_dir), 0.00), obj->material.shininess);
 			specular_color = color_add(specular_color, color_mul(slight->rgb, spec_intensity * obj->material.specularity));
 		}
 		slight = slight->next;
 	}
-	return (color);
+	return (color_add(color, specular_color));
 }
+			// color = color_add(color, specular_color);
 
 t_rgb path_trace(t_ray *ray, t_data *data, int depth)
 {
-	t_obj *closest_object;
-	t_rgb direct_light;
-	t_rgb indirect_light;
-	float t;
-	t_rgb result;
-	t_rgb base_color;
+	t_obj		*closest_object;
+	t_rgb		direct_light;
+	t_rgb		indirect_light;
+	float		t;
+	t_rgb		result;
+	t_rgb		base_color;
 
 	t = INFINITY;
 	closest_object = find_closest_object(ray, data->obj, &t);
@@ -376,9 +379,7 @@ uint32_t	trace_ray(t_ray ray, t_data *data)
 	if (data->trace_flag)
 		c_global = phong(data, &ray, closest_obj);
 	else
-		c_global = path_trace(&ray, data, 2);
+		c_global = path_trace(&ray, data, MAX_DEPTH);
 	pthread_mutex_unlock(data->m_trace);
-	// if (closest_obj->material.specularity > 0 || closest_obj->material.specularity == -1)
-	specular_light(&c_global, data, &ray, closest_obj->material.shininess);
 	return (get_colour(c_global));
 }
