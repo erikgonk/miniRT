@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/31 11:01:18 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/31 17:20:37 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ void	update_render(void *param)
 	t_data				*data;
 	uint32_t			**new_img;
 	uint32_t			**avrg;
+	t_ll				time;
 
+	time = current_timestamp();
 	data = (t_data *)param;
 	if (!data->img_last)
 		data->img_last = render(data, W_WH, W_HG);
@@ -36,6 +38,8 @@ void	update_render(void *param)
 	fill_image((uint32_t *)data->img->pixels, avrg);
 	free_image_all(avrg);
 	mlx_image_to_window(data->mlx, data->img, 0 ,0);
+	time = current_timestamp() - time;
+	printf("%lld\n", time /= 100);
 }
 
 int	main(int ac, char **av)

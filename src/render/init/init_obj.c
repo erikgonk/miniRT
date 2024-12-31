@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_obj.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:31:28 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/31 13:38:50 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/31 18:26:39 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,26 @@ void	init_obj_normi(t_data *data, t_obj *obj)
 	obj->calcs.btm_cap.radius = obj->size * 0.5f;
 	obj->calcs.upper_cap.cap_normal = obj->axis;
 	obj->calcs.btm_cap.cap_normal = vmul(-1.0f, obj->axis);
+//			refract
+	obj->calcs.etai = 1;
+	obj->calcs.etat = 1.5; // este es el que se pasa por argumento as refractive_index
+	obj->calcs.eta = obj->calcs.etai / obj->calcs.etat;
+	obj->calcs.eta_reverse = obj->calcs.etat / obj->calcs.etai;
+	obj->calcs.eta2 = obj->calcs.eta * obj->calcs.eta; 
+	obj->calcs.eta_reverse2 = obj->calcs.eta_reverse * obj->calcs.eta_reverse;
+//			fresnel
+	obj->calcs.etai_etat = 1 / 1.5; 
+	obj->calcs.etai_etat_reverse = 1.5 / 1;
 }
 
+	// cosi = fmax(-1, fmin(1, dot(dir, normal)));
+	// etai = 1;
+	// etat = refractive_index;
+	// if (cosi > 0)
+	// 	swap(&etai, &etat);
+	// eta = etai / etat;
+	// k = 1 - eta * eta * (1 - cosi * cosi);
+	
 void	init_light(t_data *data)
 {
 	t_slight	*slight;

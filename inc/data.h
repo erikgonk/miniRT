@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/31 13:37:03 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/31 18:26:19 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,16 @@ typedef struct s_calcs
 	float				hh_e_res;
 	t_cap				upper_cap; // cy
 	t_cap				btm_cap; // cy
+//		para refract
+	float				etai;
+	float				etat;
+	float				eta;
+	float				eta_reverse;
+	float				eta2;
+	float				eta_reverse2;
+//		para fresnel	
+	float				etai_etat;
+	float				etai_etat_reverse;
 }	t_calcs;
 
 typedef struct s_obj

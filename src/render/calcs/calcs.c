@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   calcs.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/31 13:44:20 by shurtado         ###   ########.fr       */
+/*   Updated: 2024/12/31 18:43:52 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,24 +78,20 @@ t_rgb color_add(t_rgb c1, t_rgb c2)
 	return result;
 }
 
-t_v3 refract(t_v3 dir, t_v3 normal, float refractive_index)
+t_v3 refract(t_obj *obj, t_v3 dir, t_v3 normal, float refractive_index)
 {
 	float cosi;
-	float etai;
-	float etat;
 	float eta;
 	float k;
 
 	cosi = fmax(-1, fmin(1, dot(dir, normal)));
-	etai = 1;
-	etat = refractive_index;
+	eta = obj->calcs.eta2;
 	if (cosi > 0)
-		swap(&etai, &etat);
-	eta = etai / etat;
-	k = 1 - eta * eta * (1 - cosi * cosi);
+		eta = obj->calcs.eta_reverse2;
+	k = 1 - eta * (1 - cosi * cosi);
 	if (k < 0)
-		return (t_v3){0, 0, 0};
-	return vadd(vmul(eta, dir), vmul(eta * cosi - sqrtf(k), normal));
+		return ((t_v3){0, 0, 0});
+	return (vadd(vmul(eta, dir), vmul(eta * cosi - sqrtf(k), normal)));
 }
 
 t_v3 reflect(t_v3 dir, t_v3 normal)
@@ -103,9 +99,10 @@ t_v3 reflect(t_v3 dir, t_v3 normal)
 	return vsub(dir, vmul(2 * dot(dir, normal), normal));
 }
 
-float fresnel(t_v3 dir, t_v3 normal, float refractive_index)
+float fresnel(t_obj *obj, t_v3 dir, t_v3 normal, float refractive_index)
 {
 	float cosi;
+	float etai_etat;
 	float etai;
 	float etat;
 	float sint;
@@ -113,12 +110,17 @@ float fresnel(t_v3 dir, t_v3 normal, float refractive_index)
 	float Rs;
 	float Rp;
 
+	etat = obj->calcs.etat;
+	etai = obj->calcs.etai;
+	etai_etat = obj->calcs.etai_etat;
 	cosi = fabs(dot(dir, normal));
-	etai = 1;
-	etat = refractive_index;
 	if (dot(dir, normal) > 0)
-		swap(&etai, &etat);
-	sint = etai / etat * sqrtf(fmax(0.f, 1 - cosi * cosi));
+	{
+		etat = obj->calcs.etai;
+		etai = obj->calcs.etat;
+		etai_etat = obj->calcs.etai_etat_reverse;
+	}
+	sint = etai_etat * sqrtf(fmax(0.f, 1 - cosi * cosi));
 	if (sint >= 1)
 		return 1;
 	cost = sqrtf(fmax(0.f, 1 - sint * sint));
@@ -143,46 +145,37 @@ t_rgb glass_ray(t_ray *ray, t_obj *closest_object, t_data *data, int depth)
 		normal = normalize(normal);
 	}
 	else
-	{
 		normal = ray->normal;
-	}
 
-	kr = fresnel(ray->direction, normal, 1.5);
-
+	kr = fresnel(closest_object, ray->direction, normal, 1.5);
 	refracted_ray.origin = vadd(ray->point, vmul(-EPSILON, normal));
-	refracted_ray.direction = refract(ray->direction, normal, 1.5);
-
+	refracted_ray.direction = refract(closest_object, ray->direction, normal, 1.5);
 	reflected_ray.origin = vadd(ray->point, vmul(EPSILON, normal));
 	reflected_ray.direction = reflect(ray->direction, normal);
-
 	reflected_color = path_trace(&reflected_ray, data, depth - 1);
 	refracted_color = path_trace(&refracted_ray, data, depth - 1);
-
 	return color_add(color_mul(reflected_color, kr),
 					 color_mul(refracted_color, 1.0f - kr));
 }
 
 t_rgb mirror_ray(t_ray *ray, t_obj *closest_object, t_data *data, int depth)
 {
-	t_ray new_ray;
-	t_v3 normal;
+	t_ray		new_ray;
+	t_v3		normal;
+	t_rgb		pt;
+	t_rgb		res;
 
-	// Calcular la normal según el tipo de objeto
 	if (closest_object->type == CY)
 	{
 		normal = vsub(ray->point, vadd(closest_object->pos, vmul(dot(vsub(ray->point, closest_object->pos), closest_object->axis), closest_object->axis)));
 		normal = normalize(normal);
 	}
 	else
-	{
 		normal = ray->normal;
-	}
-
 	new_ray.origin = vadd(ray->point, vmul(EPSILON, normal));
 	new_ray.direction = reflect(ray->direction, normal);
-
-	t_rgb	pt = path_trace(&new_ray, data, depth - 1);
-	t_rgb	res = color_mul(pt, closest_object->material.reflectivity);
+	pt = path_trace(&new_ray, data, depth - 1);
+	res = color_mul(pt, closest_object->material.reflectivity);
 	return (res);
 }
 
@@ -195,49 +188,44 @@ t_v3 perturb_vector(t_v3 direction, float roughness, t_v3 normal)
 
 t_rgb metallic_ray(t_ray *ray, t_obj *closest_object, t_data *data, int depth)
 {
-	t_ray new_ray;
-	t_v3 perturbed_direction;
-
+	t_ray		new_ray;
+	t_v3		perturbed_direction;
+	t_v3		adjusted_normal;
+	
 	new_ray.origin = vadd(ray->point, vmul(EPSILON, ray->normal));
 	new_ray.direction = reflect(ray->direction, ray->normal);
-
 	if (closest_object->material.roughness > 0)
 	{
 		if (closest_object->type == CY)
 		{
-			t_v3 adjusted_normal = vsub(ray->point, vadd(closest_object->pos, vmul(dot(vsub(ray->point, closest_object->pos), closest_object->axis), closest_object->axis)));
+			adjusted_normal = vsub(ray->point, vadd(closest_object->pos, vmul(dot(vsub(ray->point, closest_object->pos), closest_object->axis), closest_object->axis)));
 			adjusted_normal = normalize(adjusted_normal);
 			perturbed_direction = perturb_vector(new_ray.direction, closest_object->material.roughness, adjusted_normal);
 		}
 		else
-		{
 			perturbed_direction = perturb_vector(new_ray.direction, closest_object->material.roughness, ray->normal);
-		}
 		new_ray.direction = perturbed_direction;
 	}
 
-	return color_mul(
-		path_trace(&new_ray, data, depth - 1),
-		closest_object->material.reflectivity);
+	return (color_mul(path_trace(&new_ray, data, depth - 1), closest_object->material.reflectivity));
 }
 
 
 t_v3 random_in_hemisphere(t_v3 normal)
 {
-	float u1 = (float)rand() / FLT_MAX;
-	float u2 = (float)rand() / FLT_MAX;
+	t_v3		random_vector;
+	float		u1;
+	float		u2;
+	float		theta;
+	float		phi;
 
-	// Convertir a coordenadas esféricas
-	float theta = acos(sqrt(1 - u1)); // Ángulo polar con distribución uniforme
-	float phi = 2 * M_PI * u2;       // Ángulo azimutal
-
-	// Convertir a coordenadas cartesianas
-	t_v3 random_vector;
+	u1 = (float)rand() / FLT_MAX;
+	u2 = (float)rand() / FLT_MAX;
+	theta = acos(sqrt(1 - u1));
+	phi = 2 * M_PI * u2;
 	random_vector.x = sin(theta) * cos(phi);
 	random_vector.y = sin(theta) * sin(phi);
 	random_vector.z = cos(theta);
-
-	// Alinear el vector al hemisferio definido por la normal
 	if (dot(random_vector, normal) < 0)
 		random_vector = vmul(-1.0f, random_vector);
 
@@ -246,15 +234,16 @@ t_v3 random_in_hemisphere(t_v3 normal)
 
 t_v3 calculate_ray_direction(t_ray *ray, t_obj *obj)
 {
+	t_v3 adjusted_normal;
+
 	if (obj->type == CY)
 	{
-		// Cilindro: ajustar normal según la superficie
-		t_v3 adjusted_normal = vsub(ray->point, vadd(obj->pos, vmul(dot(vsub(ray->point, obj->pos), obj->axis), obj->axis)));
+		adjusted_normal = vsub(ray->point, vadd(obj->pos, vmul(dot(vsub(ray->point, obj->pos), obj->axis), obj->axis)));
 		adjusted_normal = normalize(adjusted_normal);
-		return random_in_hemisphere(adjusted_normal);
+		return (random_in_hemisphere(adjusted_normal));
 	}
 	else
-		return random_in_hemisphere(ray->normal);
+		return (random_in_hemisphere(ray->normal));
 }
 
 t_rgb diffuse_ray(t_ray *ray, t_obj *closest_object, t_data *data, int depth)
@@ -263,10 +252,7 @@ t_rgb diffuse_ray(t_ray *ray, t_obj *closest_object, t_data *data, int depth)
 	t_v3 normal;
 	t_rgb trace_color;
 
-	// Establecer el origen del nuevo rayo ligeramente fuera de la superficie
 	new_ray.origin = vadd(ray->point, vmul(EPSILON, ray->normal));
-
-	// Calcular la normal ajustada según el tipo de objeto
 	if (closest_object->type == CY)
 	{
 		normal = vsub(ray->point, vadd(closest_object->pos,
@@ -274,18 +260,10 @@ t_rgb diffuse_ray(t_ray *ray, t_obj *closest_object, t_data *data, int depth)
 		normal = normalize(normal);
 	}
 	else
-	{
 		normal = ray->normal;
-	}
-
-	// Generar una dirección aleatoria dentro del hemisferio definido por la normal
 	new_ray.direction = calculate_ray_direction(ray, closest_object);
-
-	// Traza el nuevo rayo y calcula el color reflejado de forma difusa
 	trace_color = path_trace(&new_ray, data, depth - 1);
-
-	// Multiplica el color reflejado por la reflectividad (albedo) del objeto
-	return color_mul(trace_color, closest_object->material.reflectivity);
+	return (color_mul(trace_color, closest_object->material.reflectivity));
 }
 
 t_rgb compute_direct_light(t_obj *obj, t_data *data, t_ray *ray, t_rgb color)
@@ -294,34 +272,36 @@ t_rgb compute_direct_light(t_obj *obj, t_data *data, t_ray *ray, t_rgb color)
 	t_ray		shadow_ray;
 	t_rgb		specular_color;
 	float		intensity;
+	t_v3		vsub_pos_point;
+	t_v3		reflect_dir;
+	t_v3		view_dir;
+	float		spec_intensity;
 
 	specular_color = RGB_BLACK;
 	slight = data->s_light;
 	while (slight)
 	{
-		shadow_ray.origin = vadd(ray->point, vmul(1e-3, ray->normal));
-		shadow_ray.direction = normalize(vsub(slight->pos, ray->point));
-		if (data_shadow(data, &shadow_ray, vlength(vsub(slight->pos,
-						ray->point))))
+		vsub_pos_point = vsub(slight->pos, ray->point);
+		shadow_ray.origin = vadd(ray->point, vmul(EPSILON, ray->normal));
+		shadow_ray.direction = normalize(vsub_pos_point);
+		if (data_shadow(data, &shadow_ray, vlength(vsub_pos_point)))
 		{
 			slight = slight->next;
 			continue;
 		}
-		// Calcular intensidad difusa
 		intensity = fmax(0.0f, dot(shadow_ray.direction, ray->normal));
 		difuse_light(&color, slight, obj, intensity);
 		if (obj->material.specularity > 0)
 		{
-			t_v3 reflect_dir = reflect(vmul(-1, shadow_ray.direction), ray->normal); // Vector reflejado
-			t_v3 view_dir = normalize(vmul(-1, ray->direction)); // Hacia la cámara
-			float spec_intensity = pow(fmax(dot(reflect_dir, view_dir), 0.00), obj->material.shininess);
+			reflect_dir = reflect(vmul(-1, shadow_ray.direction), ray->normal);
+			view_dir = normalize(vmul(-1, ray->direction));
+			spec_intensity = pow(fmax(dot(reflect_dir, view_dir), 0.00), obj->material.shininess);
 			specular_color = color_add(specular_color, color_mul(slight->rgb, spec_intensity * obj->material.specularity));
 		}
 		slight = slight->next;
 	}
 	return (color_add(color, specular_color));
 }
-			// color = color_add(color, specular_color);
 
 t_rgb path_trace(t_ray *ray, t_data *data, int depth)
 {
@@ -343,7 +323,7 @@ t_rgb path_trace(t_ray *ray, t_data *data, int depth)
 	if (depth <= 0)
 		return (RGB_BLACK);
 	direct_light = compute_direct_light(closest_object, data, ray, base_color);
-//------------------------------------------------------------------------------//
+// hasta aqui juntos (revisar proximo dia por si ves algo que yo no vi)
 	indirect_light = (RGB_BLACK);
 	if (closest_object->material.m_type == -1)
 		indirect_light = diffuse_ray(ray, closest_object, data, depth);
@@ -353,10 +333,11 @@ t_rgb path_trace(t_ray *ray, t_data *data, int depth)
 		indirect_light = mirror_ray(ray, closest_object, data, depth);
 	else if (closest_object->material.m_type == GL)
 		indirect_light = glass_ray(ray, closest_object, data, depth);
-	if (closest_object->material.m_type == MR)
-		result = color_add(direct_light, indirect_light);
-	else
-		result = color_add(color_add(base_color, color_add(closest_object->a_rgb, direct_light)), indirect_light);
+	// if (closest_object->material.m_type == MR)
+	// 	result = color_add(direct_light, indirect_light);
+	// else
+//		 i don't think we need what is commented above		//
+	result = color_add(color_add(base_color, color_add(closest_object->a_rgb, direct_light)), indirect_light);
 	return (result);
 	}
 
@@ -377,5 +358,6 @@ uint32_t	trace_ray(t_ray ray, t_data *data)
 	else
 		c_global = path_trace(&ray, data, MAX_DEPTH);
 	pthread_mutex_unlock(data->m_trace);
+//------------------------------------------------------------------------------//
 	return (get_colour(c_global));
 }
