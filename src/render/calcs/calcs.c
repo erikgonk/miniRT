@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/02 16:22:03 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/02 17:58:46 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,23 +136,13 @@ t_rgb glass_ray(t_ray *ray, t_obj *closest_object, t_data *data, int depth)
 	t_ray reflected_ray;
 	t_rgb reflected_color;
 	t_rgb refracted_color;
-	t_v3 normal;
 	float kr;
 
-	// Calcular la normal según el tipo de objeto
-	if (closest_object->type == CY)
-	{
-		normal = vsub(ray->point, vadd(closest_object->pos, vmul(dot(vsub(ray->point, closest_object->pos), closest_object->axis), closest_object->axis)));
-		normal = normalize(normal);
-	}
-	else
-		normal = ray->normal;
-
-	kr = fresnel(closest_object, ray->direction, normal, 1.5);
-	refracted_ray.origin = vadd(ray->point, vmul(-EPSILON, normal));
-	refracted_ray.direction = refract(closest_object, ray->direction, normal, 1.5);
-	reflected_ray.origin = vadd(ray->point, vmul(EPSILON, normal));
-	reflected_ray.direction = reflect(ray->direction, normal);
+	kr = fresnel(closest_object, ray->direction, ray->normal, 1.5);
+	refracted_ray.origin = vadd(ray->point, vmul(-EPSILON, ray->normal));
+	refracted_ray.direction = refract(closest_object, ray->direction, ray->normal, 1.5);
+	reflected_ray.origin = vadd(ray->point, vmul(EPSILON, ray->normal));
+	reflected_ray.direction = reflect(ray->direction, ray->normal);
 	reflected_color = path_trace(&reflected_ray, data, depth - 1);
 	refracted_color = path_trace(&refracted_ray, data, depth - 1);
 	return color_add(color_mul(reflected_color, kr),
@@ -166,13 +156,7 @@ t_rgb mirror_ray(t_ray *ray, t_obj *closest_object, t_data *data, int depth)
 	t_rgb		pt;
 	t_rgb		res;
 
-	if (closest_object->type == CY)
-	{
-		normal = vsub(ray->point, vadd(closest_object->pos, vmul(dot(vsub(ray->point, closest_object->pos), closest_object->axis), closest_object->axis)));
-		normal = normalize(normal);
-	}
-	else
-		normal = ray->normal;
+	normal = ray->normal;
 	new_ray.origin = vadd(ray->point, vmul(EPSILON, normal));
 	new_ray.direction = reflect(ray->direction, normal);
 	pt = path_trace(&new_ray, data, depth - 1);
@@ -197,18 +181,9 @@ t_rgb metallic_ray(t_ray *ray, t_obj *closest_object, t_data *data, int depth)
 	new_ray.direction = reflect(ray->direction, ray->normal);
 	if (closest_object->material.roughness > 0)
 	{
-		if (closest_object->type == CY)
-		{
-			adjusted_normal = vsub(ray->point, vadd(closest_object->pos, vmul(dot(vsub(ray->point, closest_object->pos), closest_object->axis), closest_object->axis)));
-			adjusted_normal = normalize(adjusted_normal);
-			perturbed_direction = perturb_vector(new_ray.direction, closest_object->material.roughness, adjusted_normal);
-			new_ray.direction = perturbed_direction;
-		}
-		else if (closest_object->type == SP)
-		{
-			perturbed_direction = perturb_vector(new_ray.direction, closest_object->material.roughness, ray->normal);
-			new_ray.direction = perturbed_direction;
-		}
+
+		perturbed_direction = perturb_vector(new_ray.direction, closest_object->material.roughness, ray->normal);
+		new_ray.direction = perturbed_direction;
 	}
 	return (color_mul(path_trace(&new_ray, data, depth - 1), closest_object->material.reflectivity));
 }
@@ -255,14 +230,7 @@ t_rgb diffuse_ray(t_ray *ray, t_obj *closest_object, t_data *data, int depth)
 	t_rgb trace_color;
 
 	new_ray.origin = vadd(ray->point, vmul(EPSILON, ray->normal));
-	if (closest_object->type == CY)
-	{
-		normal = vsub(ray->point, vadd(closest_object->pos,
-					vmul(dot(vsub(ray->point, closest_object->pos), closest_object->axis), closest_object->axis)));
-		normal = normalize(normal);
-	}
-	else
-		normal = ray->normal;
+	normal = ray->normal;
 	new_ray.direction = calculate_ray_direction(ray, closest_object);
 	trace_color = path_trace(&new_ray, data, depth - 1);
 	return (color_mul(trace_color, closest_object->material.reflectivity));

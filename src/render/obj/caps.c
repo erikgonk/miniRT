@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:09:01 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/02 16:25:27 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/02 17:32:55 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,27 @@ bool	hit_cap(t_ray *ray, t_obj *cap, float *t)
 {
 	float	denominator;
 	float	result;
+	float	numerator;
 	t_v3	point;
 	t_v3	center_to_point;
 
+	numerator = dot(vsub(cap->pos, ray->origin), cap->axis);
 	denominator = dot(ray->direction, cap->axis);
 	if (fabs(denominator) < EPSILON)
 		return (false);
-	result = cap->calcs.numerator / denominator;
+	result = numerator / denominator;
 	if (result > EPSILON && result < *t)
 	{
 		point = vadd(ray->origin, vmul(result, ray->direction));
 		center_to_point = vsub(point, cap->pos);
-		if (length(center_to_point) > cap->size);
+		if (length(center_to_point) > cap->size)
 			return (false);
 		*t = result;
 		ray->point = point;
-		ray->normal = cap->axis;
+		if (dot(ray->direction, cap->axis) > 0)
+			ray->normal = vmul(-1.0f, cap->axis);
+		else
+			ray->normal = cap->axis;
 		return (true);
 	}
 	return (false);

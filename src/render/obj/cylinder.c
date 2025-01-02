@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 14:00:21 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/02 16:30:37 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/02 17:04:17 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ float	set_ray_t(t_ray *ray, t_obj *cy, float *t, t_quadratic quad)
 		ray->point = point;
 		ray->normal = normalize(vsub(point, \
 			vadd(cy->pos, vmul(proj, cy->axis))));
-		if (t_min == quad.t2)
+		if (t_min == quad.t2 && dot(ray->direction, ray->normal) > 0)
 				ray->normal = vmul(-1, ray->normal);
 	}
 	return (t_min);

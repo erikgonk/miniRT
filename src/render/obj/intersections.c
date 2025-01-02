@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:48:44 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/27 13:24:02 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/02 17:35:15 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,13 @@ bool	hit_pl(t_ray *ray, t_obj *plane, float *t)
 {
 	float	denominator;
 	float	result;
+	float	numerator;
 
+	numerator = dot(vsub(plane->pos, ray->origin), plane->axis);
 	denominator = dot(ray->direction, plane->axis);
 	if (fabs(denominator) < EPSILON)
 		return (false);
-	result = plane->calcs.numerator / denominator;
+	result = numerator / denominator;
 	if (result > EPSILON && result < *t)
 	{
 		*t = result;

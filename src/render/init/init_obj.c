@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:31:28 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/02 16:34:02 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/02 17:45:18 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,26 @@ void	make_caps(t_data *data, t_obj *obj)
 
 	tp_cap = malloc(sizeof(t_obj));
 	bt_cap = malloc(sizeof(t_obj));
-	memcpy(tp_cap, obj, sizeof(t_obj));
-	memcpy(bt_cap, obj, sizeof(t_obj));
+	tp_cap->material = obj->material;
+	bt_cap->material = obj->material;
+	tp_cap->rgb = obj->rgb;
+	bt_cap->rgb = obj->rgb;
+	tp_cap->a_rgb = apply_ambient_light(obj->rgb, data->a_light);
+	bt_cap->a_rgb = tp_cap->a_rgb;
 	tp_cap->type = CAP;
 	bt_cap->type = CAP;
 	tp_cap->size = obj->calcs.upper_cap.radius;
 	bt_cap->size = obj->calcs.btm_cap.radius;
 	tp_cap->pos = obj->calcs.upper_cap.cap_center;
 	bt_cap->pos = obj->calcs.btm_cap.cap_center;
-	tp_cap->axis = obj->axis;
-	bt_cap->axis = vmul(-1.0f, obj->axis);
+	tp_cap->axis = obj->calcs.upper_cap.cap_normal;
+	bt_cap->axis = obj->calcs.btm_cap.cap_normal;
 	tp_cap->calcs.upper_cap.cap_normal = obj->calcs.upper_cap.cap_normal;
 	bt_cap->calcs.btm_cap.cap_normal = obj->calcs.btm_cap.cap_normal;
+	tp_cap->calcs.numerator = dot(vsub(tp_cap->pos, data->cam->pos), tp_cap->axis);
+	bt_cap->calcs.numerator = dot(vsub(bt_cap->pos, data->cam->pos), bt_cap->axis);
+	tp_cap->next = NULL;
+	bt_cap->next = NULL;
 	objadd_back(&data->obj, tp_cap);
 	objadd_back(&data->obj, bt_cap);
 }
@@ -49,8 +57,11 @@ void	init_obj(t_data *data)
 			obj->calcs.numerator = dot(vsub(obj->pos, data->cam->pos), obj->axis);
 			obj->calcs.i_axis = vmul(-1.0f, obj->axis);
 		}
-		else if (obj == CY)
+		else if (obj->type == CY)
+		{
+			init_obj_normi(data, obj);
 			make_caps(data, obj);
+		}
 		else
 			init_obj_normi(data, obj);
 		obj = obj->next;
