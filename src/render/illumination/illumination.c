@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   illumination.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:09:03 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/31 17:25:16 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/02 16:22:57 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,13 @@ bool	data_shadow(t_data *data, t_ray *shadow_ray, float max_dist)
 		if (current_obj->type == SP && hit_sp(shadow_ray, current_obj, &t) && \
 				(t > EPSILON && t < max_dist))
 			return (true);
+		else if (current_obj->type == PL && hit_pl(shadow_ray, current_obj, &t) \
+				&& (t > EPSILON && t < max_dist))
+			return (true);
 		else if (current_obj->type == CY && hit_cy(shadow_ray, current_obj, &t, \
 				&shadow_ray->origin) && (t > EPSILON && t < max_dist))
 			return (true);
-		else if (current_obj->type == PL && hit_pl(shadow_ray, current_obj, &t) \
+		else if (current_obj->type == CAP && hit_cap(shadow_ray, current_obj, &t) \
 				&& (t > EPSILON && t < max_dist))
 			return (true);
 		current_obj = current_obj->next;

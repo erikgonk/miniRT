@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:20:14 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/29 09:26:34 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/02 15:24:46 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	init_quadratic(t_quadratic *quad, float a, float b, float c)
 bool	solve_quadratic(t_quadratic *quad)
 {
 	float	sqrt_discriminant;
-	float	temp;
 	float	ax2;
 
 	ax2 = 2.0f * quad->a;
@@ -46,11 +45,7 @@ bool	solve_quadratic(t_quadratic *quad)
 	quad->t1 = (-quad->b - sqrt_discriminant) / ax2;
 	quad->t2 = (-quad->b + sqrt_discriminant) / ax2;
 	if (quad->t1 > quad->t2)
-	{
-		temp = quad->t1;
-		quad->t1 = quad->t2;
-		quad->t2 = temp;
-	}
+		swap(&quad->t1, &quad->t2);
 	if (quad->t1 < EPSILON)
 	{
 		quad->t1 = quad->t2;
@@ -59,4 +54,20 @@ bool	solve_quadratic(t_quadratic *quad)
 			return (false);
 	}
 	return (true);
+}
+
+bool	solve_quadratic2(t_quadratic *quad)
+{
+	float	sqrt_discriminant;
+	float	ax2;
+
+	ax2 = 2.0f * quad->a;
+	if (quad->discriminant < 0 || fabs(quad->a) < EPSILON)
+		return (false);
+	sqrt_discriminant = sqrtf(quad->discriminant);
+	quad->t1 = (-quad->b - sqrt_discriminant) / ax2;
+	quad->t2 = (-quad->b + sqrt_discriminant) / ax2;
+	if (quad->t1 > EPSILON || quad->t2 >EPSILON)
+		return (true);
+	return (false);
 }

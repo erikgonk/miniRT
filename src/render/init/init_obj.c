@@ -3,14 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   init_obj.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:31:28 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/31 18:26:39 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/02 16:34:02 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+void	make_caps(t_data *data, t_obj *obj)
+{
+	t_obj	*tp_cap;
+	t_obj	*bt_cap;
+
+	tp_cap = malloc(sizeof(t_obj));
+	bt_cap = malloc(sizeof(t_obj));
+	memcpy(tp_cap, obj, sizeof(t_obj));
+	memcpy(bt_cap, obj, sizeof(t_obj));
+	tp_cap->type = CAP;
+	bt_cap->type = CAP;
+	tp_cap->size = obj->calcs.upper_cap.radius;
+	bt_cap->size = obj->calcs.btm_cap.radius;
+	tp_cap->pos = obj->calcs.upper_cap.cap_center;
+	bt_cap->pos = obj->calcs.btm_cap.cap_center;
+	tp_cap->axis = obj->axis;
+	bt_cap->axis = vmul(-1.0f, obj->axis);
+	tp_cap->calcs.upper_cap.cap_normal = obj->calcs.upper_cap.cap_normal;
+	bt_cap->calcs.btm_cap.cap_normal = obj->calcs.btm_cap.cap_normal;
+	objadd_back(&data->obj, tp_cap);
+	objadd_back(&data->obj, bt_cap);
+}
 
 void	init_obj(t_data *data)
 {
@@ -26,6 +49,8 @@ void	init_obj(t_data *data)
 			obj->calcs.numerator = dot(vsub(obj->pos, data->cam->pos), obj->axis);
 			obj->calcs.i_axis = vmul(-1.0f, obj->axis);
 		}
+		else if (obj == CY)
+			make_caps(data, obj);
 		else
 			init_obj_normi(data, obj);
 		obj = obj->next;
@@ -57,21 +82,16 @@ void	init_obj_normi(t_data *data, t_obj *obj)
 	obj->calcs.etat = 1.5; // este es el que se pasa por argumento as refractive_index
 	obj->calcs.eta = obj->calcs.etai / obj->calcs.etat;
 	obj->calcs.eta_reverse = obj->calcs.etat / obj->calcs.etai;
-	obj->calcs.eta2 = obj->calcs.eta * obj->calcs.eta; 
+	obj->calcs.eta2 = obj->calcs.eta * obj->calcs.eta;
 	obj->calcs.eta_reverse2 = obj->calcs.eta_reverse * obj->calcs.eta_reverse;
 //			fresnel
-	obj->calcs.etai_etat = 1 / 1.5; 
+	obj->calcs.etai_etat = 1 / 1.5;
 	obj->calcs.etai_etat_reverse = 1.5 / 1;
+//			cb
+	if (obj->material.board_scale != -1)
+		obj->material.rgb_checker = apply_ambient_light(obj->material.rgb_checker, data->a_light);
 }
 
-	// cosi = fmax(-1, fmin(1, dot(dir, normal)));
-	// etai = 1;
-	// etat = refractive_index;
-	// if (cosi > 0)
-	// 	swap(&etai, &etat);
-	// eta = etai / etat;
-	// k = 1 - eta * eta * (1 - cosi * cosi);
-	
 void	init_light(t_data *data)
 {
 	t_slight	*slight;

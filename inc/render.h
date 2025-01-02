@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/30 17:32:20 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/02 16:21:41 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ uint32_t				trace_ray(t_ray ray, t_data *data);
 void					init_quadratic(t_quadratic *quad, float a, float b,
 							float c);
 bool					solve_quadratic(t_quadratic *quad);
+bool					solve_quadratic2(t_quadratic *quad); // para la parte de detras del cy
 
 //		color
 uint32_t				get_acolour(t_uchar alpha, t_uchar r, t_uchar g,
@@ -111,14 +112,13 @@ void					init_materials_mt_mr(t_obj *obj);
 void					init_materials_render(t_data *data);
 
 //		cylinder
-bool					check_cap(t_ray *ray, t_cap cap, float *t);
-bool					cy_caps(t_ray *ray, t_obj *cy, float *t);
 void					set_cy_axis(t_quadratic *quad, t_obj *cy, t_ray *ray,
 							t_v3 *ray_origin);
-float					set_ray_t(t_ray *ray, t_obj *cy, float *t,
-							float quadt1);
+float					set_ray_t(t_ray *ray, t_obj *cy, float *t, t_quadratic quad);
 bool					hit_cy(t_ray *ray, t_obj *cy, float *t,
 							t_v3 *ray_origin);
+//		caps
+bool	hit_cap(t_ray *ray, t_obj *cap, float *t);
 
 //		illumination
 t_rgb					apply_ambient_light(t_rgb obj_color, t_alight *a_light);
@@ -152,10 +152,12 @@ void					free_image_all(uint32_t **image);
 void					free_data(t_data *data);
 void					free_rays(t_ray **rays, int rows);
 
-//		PATH_TRACER
+//		PATH_TRACER  (calcs)
 t_rgb					path_trace(t_ray *ray, t_data *data, int depth);
 t_v3 random_in_hemisphere(t_v3 normal);
 float	*generate_uv(int x, int y);
 uint32_t	**average_samples(uint32_t **sample1, uint32_t **sample2);
+void swap(float *a, float *b);
+
 
 #endif
