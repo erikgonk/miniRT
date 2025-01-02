@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 15:20:14 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/29 10:08:06 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/02 11:22:01 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void				objadd_back(t_obj **lst, t_obj *new);
 void                init_materials(t_obj *obj);
 void                skip_colors(char *str, char **res);
 int                 type_extra_func(char *str);
-void                parse_cb(t_obj *obj, char *str);
+void                parse_cb_em(t_obj *obj, char *str);
 void                extra_functionalities(t_obj *obj, char *tmp);
 
 #endif

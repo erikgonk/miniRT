@@ -6,7 +6,7 @@
 /*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/31 18:26:19 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/02 11:32:59 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_material
 	void				*get_normal;
 	t_rgb				rgb_checker;
 	float				board_scale;
+	float				emision;
 }				t_material;
 
 typedef struct s_calcs

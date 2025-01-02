@@ -41,7 +41,7 @@ void	skip_colors(char *str, char **res)
 
 int	type_extra_func(char *str)
 {
-	static char		*bts[] = {"mt", "gl", "mr", "cb", "tr", NULL};
+	static char		*bts[] = {"mt", "gl", "mr", "cb", "tr", "em", NULL};
 	int				i;
 
 	i = 0;
@@ -52,18 +52,33 @@ int	type_extra_func(char *str)
 	return (-1);
 }
 
-void	parse_cb(t_obj *obj, char *str)
+void	parse_cb_em(t_obj *obj, char *str)
 {
 	int		i;
 
 	i = 2;
-    obj->material.board_scale = ft_atof(str, i);
-	obj->material.board_scale = 1 - obj->material.board_scale;
-    if (obj->material.board_scale > 0.991 || obj->material.board_scale < 0.001)
-        exit(er("error: parse_cb: board size has to be 0.991-0.001", NULL));
-    i = skip_float(str, i, 0, 0);
-	obj->material.rgb_checker = colors_parse(str, i);
-	check_end(str, i);
+	if (obj->material.m_type == CB)
+	{
+		if (obj->type != PL)
+			exit(er("error: just plane can be a checkerboard", str));
+		obj->material.board_scale = ft_atof(str, i);
+		obj->material.board_scale = 1 - obj->material.board_scale;
+		if (obj->material.board_scale > 0.991 || obj->material.board_scale < 0.001)
+			exit(er("error: parse_cb_em: board size has to be 0.991-0.001", NULL));
+		i = skip_float(str, i, 0, 0);
+		obj->material.rgb_checker = colors_parse(str, i);
+		check_end(str, i);
+	}
+	else if (obj->material.m_type == EM)
+	{
+		obj->material.emision = ft_atof(str, i);
+		i = skip_float(str, i, 0, 0);
+		while (str[i] && str[i] != '\n')
+			if (!ft_isspace(str[i++]))
+				exit(er("error: parse_cb_em: char after last num", str));
+		if (obj->material.emision > 1 || obj->material.emision < 0)
+			exit(er("error: parse_cb_em: emision 0-1", str));
+	}
 }
 
 void	extra_functionalities(t_obj *obj, char *tmp)
@@ -75,9 +90,9 @@ void	extra_functionalities(t_obj *obj, char *tmp)
 	if (str && (!str[0] || str[0] == '\n'))
 		return (free(str));
 	obj->material.m_type = type_extra_func(str);
-	if (obj->material.m_type == -1 || !str[1] || (obj->material.m_type != CB && str[2] && str[3]))
+	if (obj->material.m_type == -1 || !str[1] || (obj->material.m_type < CB && str[2] && str[3]))
 		exit(er("error: extra functs: invalid char after color", str));
-	if (obj->material.m_type == CB)
-		parse_cb(obj, str);
+	else if (obj->material.m_type >= CB)
+		parse_cb_em(obj, str);
 	free(str);
 }

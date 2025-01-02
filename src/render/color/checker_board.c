@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker_board.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 10:40:12 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/31 13:43:00 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/02 11:54:23 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

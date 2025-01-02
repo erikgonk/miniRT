@@ -6,7 +6,7 @@
 /*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/31 18:43:52 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/02 12:05:07 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,12 +201,14 @@ t_rgb metallic_ray(t_ray *ray, t_obj *closest_object, t_data *data, int depth)
 			adjusted_normal = vsub(ray->point, vadd(closest_object->pos, vmul(dot(vsub(ray->point, closest_object->pos), closest_object->axis), closest_object->axis)));
 			adjusted_normal = normalize(adjusted_normal);
 			perturbed_direction = perturb_vector(new_ray.direction, closest_object->material.roughness, adjusted_normal);
+			new_ray.direction = perturbed_direction;
 		}
-		else
+		else if (closest_object->type == SP)
+		{
 			perturbed_direction = perturb_vector(new_ray.direction, closest_object->material.roughness, ray->normal);
-		new_ray.direction = perturbed_direction;
+			new_ray.direction = perturbed_direction;			
+		}
 	}
-
 	return (color_mul(path_trace(&new_ray, data, depth - 1), closest_object->material.reflectivity));
 }
 
@@ -228,7 +230,6 @@ t_v3 random_in_hemisphere(t_v3 normal)
 	random_vector.z = cos(theta);
 	if (dot(random_vector, normal) < 0)
 		random_vector = vmul(-1.0f, random_vector);
-
 	return normalize(random_vector);
 }
 
