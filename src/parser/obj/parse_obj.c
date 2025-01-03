@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:02:22 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/02 15:51:42 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/03 10:51:40 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	create_obj_normi(t_obj *obj, char **tmp, char **tmp2)
 		free(*tmp);
 		*tmp = ft_substr(*tmp2, obj->i, ft_strlen(*tmp2));
 	}
+	obj->material.emision = -1;
 }
 
 t_obj	*create_obj(char *str, int type)

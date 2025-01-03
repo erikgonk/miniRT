@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/02 11:32:59 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/03 10:15:47 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ typedef struct s_calcs
 {
 	float				radius; // sp cy
 	float				radius2; // sp cy
-	float				numerator; // pl
 	t_v3				i_axis; // cy
 	t_v3				oc_par; // cy
 	t_v3				oc_perp; // cy
@@ -90,7 +89,7 @@ typedef struct s_calcs
 	float				eta_reverse;
 	float				eta2;
 	float				eta_reverse2;
-//		para fresnel	
+//		para fresnel
 	float				etai_etat;
 	float				etai_etat_reverse;
 }	t_calcs;

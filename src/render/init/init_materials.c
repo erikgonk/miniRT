@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:34:20 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/31 11:16:46 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/03 12:16:42 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	init_materials_mt_mr(t_obj *obj)
 	}
 	else
 	{
+		// obj->material.reflectivity = 0.10f;
 		obj->material.specularity = 0.1f;
 		obj->material.shininess = 50;
 	}

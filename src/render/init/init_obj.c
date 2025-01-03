@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:31:28 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/02 17:45:18 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/03 11:22:06 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ void	make_caps(t_data *data, t_obj *obj)
 	bt_cap->axis = obj->calcs.btm_cap.cap_normal;
 	tp_cap->calcs.upper_cap.cap_normal = obj->calcs.upper_cap.cap_normal;
 	bt_cap->calcs.btm_cap.cap_normal = obj->calcs.btm_cap.cap_normal;
-	tp_cap->calcs.numerator = dot(vsub(tp_cap->pos, data->cam->pos), tp_cap->axis);
-	bt_cap->calcs.numerator = dot(vsub(bt_cap->pos, data->cam->pos), bt_cap->axis);
 	tp_cap->next = NULL;
 	bt_cap->next = NULL;
 	objadd_back(&data->obj, tp_cap);
@@ -53,10 +51,7 @@ void	init_obj(t_data *data)
 		if (obj->material.m_type != MR)
 			obj->a_rgb = apply_ambient_light(obj->rgb, data->a_light);
 		if (obj->type == PL)
-		{
-			obj->calcs.numerator = dot(vsub(obj->pos, data->cam->pos), obj->axis);
 			obj->calcs.i_axis = vmul(-1.0f, obj->axis);
-		}
 		else if (obj->type == CY)
 		{
 			init_obj_normi(data, obj);

@@ -60,7 +60,7 @@ void	parse_cb_em(t_obj *obj, char *str)
 	if (obj->material.m_type == CB)
 	{
 		if (obj->type != PL)
-			exit(er("error: just plane can be a checkerboard", str));
+			exit(er("error: parse_cb_em: just plane can be a checkerboard", str));
 		obj->material.board_scale = ft_atof(str, i);
 		obj->material.board_scale = 1 - obj->material.board_scale;
 		if (obj->material.board_scale > 0.991 || obj->material.board_scale < 0.001)
@@ -91,7 +91,7 @@ void	extra_functionalities(t_obj *obj, char *tmp)
 		return (free(str));
 	obj->material.m_type = type_extra_func(str);
 	if (obj->material.m_type == -1 || !str[1] || (obj->material.m_type < CB && str[2] && str[3]))
-		exit(er("error: extra functs: invalid char after color", str));
+		exit(er("error: extra_functs: invalid char after color", str));
 	else if (obj->material.m_type >= CB)
 		parse_cb_em(obj, str);
 	free(str);
