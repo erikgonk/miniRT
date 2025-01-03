@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/03 10:15:47 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/03 13:52:50 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_material
 	t_rgb				rgb_checker;
 	float				board_scale;
 	float				emision;
+	float				self_emision;
 }				t_material;
 
 typedef struct s_calcs

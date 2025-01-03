@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/03 11:22:11 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/03 13:43:28 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ t_rgb					apply_ambient_light(t_rgb obj_color, t_alight *a_light);
 void					difuse_light(t_rgb *color, t_slight *slight, t_obj *obj,
 							float inty);
 bool					data_shadow(t_data *data, t_ray *shadow_ray,
-							float max_dist);
+							float max_dist, t_obj *self);
 t_rgb					phong(t_data *data, t_ray *ray, t_obj *obj);
 
 //		specular

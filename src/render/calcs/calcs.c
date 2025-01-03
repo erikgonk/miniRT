@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/03 12:29:53 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/03 14:14:34 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ t_obj	*find_closest_object(t_ray *ray, t_obj *objs, float *t_min)
 		if ((obj->type == SP && hit_sp(ray, obj, &t)) \
 		|| (obj->type == PL && hit_pl(ray, obj, &t)) \
 		|| (obj->type == CY && hit_cy(ray, obj, &t, NULL) \
-		|| obj->type == CAP && hit_cap(ray, obj, &t) \
-		))
+		|| obj->type == CAP && hit_cap(ray, obj, &t)))
 		{
 			if (t > 0 && t < *t_min)
 			{
@@ -97,7 +96,7 @@ t_v3 refract(t_obj *obj, t_v3 dir, t_v3 normal, float refractive_index)
 
 t_v3 reflect(t_v3 dir, t_v3 normal)
 {
-	return vsub(dir, vmul(2 * dot(dir, normal), normal));
+	return (vsub(dir, vmul(2 * dot(dir, normal), normal)));
 }
 
 float fresnel(t_obj *obj, t_v3 dir, t_v3 normal, float refractive_index)
@@ -145,8 +144,8 @@ t_rgb glass_ray(t_ray *ray, t_obj *closest_object, t_data *data, int depth)
 	reflected_ray.direction = reflect(ray->direction, ray->normal);
 	reflected_color = path_trace(&reflected_ray, data, depth - 1);
 	refracted_color = path_trace(&refracted_ray, data, depth - 1);
-	return color_add(color_mul(reflected_color, kr),
-					 color_mul(refracted_color, 1.0f - kr));
+	return (color_add(color_mul(reflected_color, kr),
+					 color_mul(refracted_color, 1.0f - kr)));
 }
 
 t_rgb mirror_ray(t_ray *ray, t_obj *closest_object, t_data *data, int depth)
@@ -221,6 +220,30 @@ t_rgb diffuse_ray(t_ray *ray, t_obj *closest_object, t_data *data, int depth)
 	return (color_mul(trace_color, closest_object->material.reflectivity));
 }
 
+t_rgb apply_self_emission(t_obj *obj, t_rgb base_color)
+{
+	if (obj->material.m_type == EM)
+		return color_add(base_color, color_mul(obj->rgb, obj->material.self_emision));
+	return (base_color);
+}
+
+void compute_emissive_light(t_obj *emitter, t_ray *ray, t_rgb *color, t_data *data)
+{
+	t_v3 light_direction = normalize(vsub(emitter->pos, ray->point));
+	float distance = vlength(vsub(emitter->pos, ray->point));
+	t_ray shadow_ray;
+	shadow_ray.origin = vadd(ray->point, vmul(EPSILON, ray->normal));
+	shadow_ray.direction = light_direction;
+	if (!data_shadow(data, &shadow_ray, distance, emitter))
+	{
+		float intensity = fmax(0.0f, dot(light_direction, ray->normal));
+		t_rgb emitted_color = color_mul(emitter->rgb, emitter->material.emision);
+		color->r += fmin(emitted_color.r * intensity, 255);
+		color->g += fmin(emitted_color.g * intensity, 255);
+		color->b += fmin(emitted_color.b * intensity, 255);
+	}
+}
+
 t_rgb compute_direct_light(t_obj *obj, t_data *data, t_ray *ray, t_rgb color)
 {
 	t_slight	*slight;
@@ -231,6 +254,7 @@ t_rgb compute_direct_light(t_obj *obj, t_data *data, t_ray *ray, t_rgb color)
 	t_v3		reflect_dir;
 	t_v3		view_dir;
 	float		spec_intensity;
+	t_obj *current_obj = data->obj;
 
 	specular_color = RGB_BLACK;
 	slight = data->s_light;
@@ -239,7 +263,7 @@ t_rgb compute_direct_light(t_obj *obj, t_data *data, t_ray *ray, t_rgb color)
 		vsub_pos_point = vsub(slight->pos, ray->point);
 		shadow_ray.origin = vadd(ray->point, vmul(EPSILON, ray->normal));
 		shadow_ray.direction = normalize(vsub_pos_point);
-		if (data_shadow(data, &shadow_ray, vlength(vsub_pos_point)))
+		if (data_shadow(data, &shadow_ray, vlength(vsub_pos_point), NULL))
 		{
 			slight = slight->next;
 			continue;
@@ -255,7 +279,17 @@ t_rgb compute_direct_light(t_obj *obj, t_data *data, t_ray *ray, t_rgb color)
 		}
 		slight = slight->next;
 	}
-	return (color_add(color, specular_color));
+	color = color_add(color, specular_color);
+	if (current_obj)
+	{
+		while (current_obj)
+		{
+			if (current_obj->material.m_type == EM && current_obj != obj)
+				compute_emissive_light(current_obj, ray, &color, data);
+			current_obj = current_obj->next;
+		}
+	}
+	return (color);
 }
 
 t_rgb	path_trace(t_ray *ray, t_data *data, int depth)
@@ -279,6 +313,8 @@ t_rgb	path_trace(t_ray *ray, t_data *data, int depth)
 		return (RGB_BLACK);
 	direct_light = compute_direct_light(closest_object, data, ray, base_color);
 	indirect_light = (RGB_BLACK);
+	if (closest_object->material.m_type == EM)
+		base_color = apply_self_emission(closest_object, base_color);
 	if (closest_object->material.m_type == -1)
 		indirect_light = diffuse_ray(ray, closest_object, data, depth);
 	else if (closest_object->material.m_type == MT)
@@ -287,7 +323,7 @@ t_rgb	path_trace(t_ray *ray, t_data *data, int depth)
 		indirect_light = mirror_ray(ray, closest_object, data, depth);
 	else if (closest_object->material.m_type == GL)
 		indirect_light = glass_ray(ray, closest_object, data, depth);
-	result = color_add(color_add(base_color, color_add(closest_object->a_rgb, direct_light)), indirect_light);
+	result = color_add(color_add(base_color, direct_light),indirect_light);
 	return (result);
 }
 

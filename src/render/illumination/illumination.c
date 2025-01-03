@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:09:03 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/02 16:22:57 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/03 13:43:14 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,11 @@ void	difuse_light(t_rgb *color, t_slight *slight, t_obj *obj, float inty)
 		color->r = fmin(color->r + (obj->rgb.r * dif_color.r) / 255, 255);
 		color->g = fmin(color->g + (obj->rgb.g * dif_color.g) / 255, 255);
 		color->b = fmin(color->b + (obj->rgb.b * dif_color.b) / 255, 255);
+		// printf("Spot aporta: %f\n", inty);
 	}
 }
 
-bool	data_shadow(t_data *data, t_ray *shadow_ray, float max_dist)
+bool	data_shadow(t_data *data, t_ray *shadow_ray, float max_dist, t_obj *self)
 {
 	t_obj	*current_obj;
 	float	t;
@@ -54,6 +55,11 @@ bool	data_shadow(t_data *data, t_ray *shadow_ray, float max_dist)
 	current_obj = data->obj;
 	while (current_obj)
 	{
+		if (self && current_obj == self)
+		{
+			current_obj = current_obj->next;
+			continue;
+		}
 		if (current_obj->type == SP && hit_sp(shadow_ray, current_obj, &t) && \
 				(t > EPSILON && t < max_dist))
 			return (true);
@@ -90,7 +96,7 @@ t_rgb	phong(t_data *data, t_ray *ray, t_obj *obj)
 		shadow_ray.origin = vadd(ray->point, vmul(1e-3, ray->normal));
 		shadow_ray.direction = normalize(vsub(slight->pos, ray->point));
 		if (data_shadow(data, &shadow_ray, vlength(vsub(slight->pos,
-						ray->point))))
+						ray->point)), NULL))
 		{
 			slight = slight->next;
 			continue ;

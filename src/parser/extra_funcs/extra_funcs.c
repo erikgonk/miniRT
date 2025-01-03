@@ -78,6 +78,7 @@ void	parse_cb_em(t_obj *obj, char *str)
 				exit(er("error: parse_cb_em: char after last num", str));
 		if (obj->material.emision > 1 || obj->material.emision < 0)
 			exit(er("error: parse_cb_em: emision 0-1", str));
+		obj->material.self_emision = obj->material.emision * 2.5;
 	}
 }
 
