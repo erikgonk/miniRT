@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/03 13:52:50 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/03 18:01:57 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ typedef struct s_obj
 	float				height;
 	t_calcs				calcs;
 	t_material			material;
+	unsigned int		parent;
 	struct s_obj		*next;
 }					t_obj;
 

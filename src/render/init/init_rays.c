@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid Date        by              +#+  #+#    #+#             */
-/*   Updated: 2024/12/29 15:21:02 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/03 17:38:01 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ t_ray	*init_ray_row(t_cam *camera, t_vp *vp, int y)
 	t_ray	*row;
 	int		x;
 	float	uv[2];
+	// float	r_x;
+	// float	r_y;
 
 	row = malloc(W_WH* sizeof(t_ray));
 	if (!row)
@@ -51,8 +53,12 @@ t_ray	*init_ray_row(t_cam *camera, t_vp *vp, int y)
 	x = 0;
 	while (x < W_WH)
 	{
-		uv[0] = (float)x / (float)(W_WH- 1);
-		uv[1] = 1.0f - (float)y / (float)(W_HG - 1);
+		// r_x = (float)rand() / (float)RAND_MAX;
+		// r_y = (float)rand() / (float)RAND_MAX;
+		// uv[0] = ((float)x + r_x) / (float)(W_WH- 1);
+		// uv[1] =  1.0f - ((float)y + r_y) / (float)(W_HG - 1);
+		uv[0] = ((float)x) / (float)(W_WH- 1);
+		uv[1] =  1.0f - ((float)y) / (float)(W_HG - 1);
 		init_single_ray(&row[x], vp, camera, uv);
 		x++;
 	}

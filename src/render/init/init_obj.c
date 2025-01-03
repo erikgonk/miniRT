@@ -6,19 +6,21 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:31:28 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/03 11:22:06 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/03 18:15:19 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void	make_caps(t_data *data, t_obj *obj)
+void	make_caps(t_data *data, t_obj *obj, int parent)
 {
 	t_obj	*tp_cap;
 	t_obj	*bt_cap;
 
 	tp_cap = malloc(sizeof(t_obj));
 	bt_cap = malloc(sizeof(t_obj));
+	tp_cap->parent = parent;
+	bt_cap->parent = parent;
 	tp_cap->material = obj->material;
 	bt_cap->material = obj->material;
 	tp_cap->rgb = obj->rgb;
@@ -43,11 +45,15 @@ void	make_caps(t_data *data, t_obj *obj)
 
 void	init_obj(t_data *data)
 {
-	t_obj	*obj;
+	t_obj		*obj;
+	int			parent;
 
 	obj = data->obj;
+	parent = 0;
 	while (obj)
 	{
+		if (obj->type != CAP)
+			obj->parent = parent;
 		if (obj->material.m_type != MR)
 			obj->a_rgb = apply_ambient_light(obj->rgb, data->a_light);
 		if (obj->type == PL)
@@ -55,10 +61,11 @@ void	init_obj(t_data *data)
 		else if (obj->type == CY)
 		{
 			init_obj_normi(data, obj);
-			make_caps(data, obj);
+			make_caps(data, obj, parent);
 		}
 		else
 			init_obj_normi(data, obj);
+		parent++;
 		obj = obj->next;
 	}
 }

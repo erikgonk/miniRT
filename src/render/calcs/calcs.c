@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/03 14:14:34 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/03 17:42:42 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,18 +229,19 @@ t_rgb apply_self_emission(t_obj *obj, t_rgb base_color)
 
 void compute_emissive_light(t_obj *emitter, t_ray *ray, t_rgb *color, t_data *data)
 {
-	t_v3 light_direction = normalize(vsub(emitter->pos, ray->point));
-	float distance = vlength(vsub(emitter->pos, ray->point));
+	t_v3 light_direction;
+	float distance;
 	t_ray shadow_ray;
+
+	distance = vlength(vsub(emitter->pos, ray->point));
+	light_direction = normalize(vsub(emitter->pos, ray->point));
 	shadow_ray.origin = vadd(ray->point, vmul(EPSILON, ray->normal));
 	shadow_ray.direction = light_direction;
 	if (!data_shadow(data, &shadow_ray, distance, emitter))
 	{
 		float intensity = fmax(0.0f, dot(light_direction, ray->normal));
 		t_rgb emitted_color = color_mul(emitter->rgb, emitter->material.emision);
-		color->r += fmin(emitted_color.r * intensity, 255);
-		color->g += fmin(emitted_color.g * intensity, 255);
-		color->b += fmin(emitted_color.b * intensity, 255);
+		*color = color_add(*color, color_mul(emitted_color, intensity));
 	}
 }
 
@@ -258,6 +259,15 @@ t_rgb compute_direct_light(t_obj *obj, t_data *data, t_ray *ray, t_rgb color)
 
 	specular_color = RGB_BLACK;
 	slight = data->s_light;
+	if (current_obj)
+	{
+		while (current_obj)
+		{
+			if (current_obj->material.m_type == EM && current_obj != obj)
+				compute_emissive_light(current_obj, ray, &color, data);
+			current_obj = current_obj->next;
+		}
+	}
 	while (slight)
 	{
 		vsub_pos_point = vsub(slight->pos, ray->point);
@@ -280,15 +290,6 @@ t_rgb compute_direct_light(t_obj *obj, t_data *data, t_ray *ray, t_rgb color)
 		slight = slight->next;
 	}
 	color = color_add(color, specular_color);
-	if (current_obj)
-	{
-		while (current_obj)
-		{
-			if (current_obj->material.m_type == EM && current_obj != obj)
-				compute_emissive_light(current_obj, ray, &color, data);
-			current_obj = current_obj->next;
-		}
-	}
 	return (color);
 }
 
