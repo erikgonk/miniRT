@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:09:03 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/03 18:16:14 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/03 18:19:15 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ bool	data_shadow(t_data *data, t_ray *shadow_ray, float max_dist, t_obj *self)
 			current_obj = current_obj->next;
 			continue;
 		}
-		else if (current_obj->parent == self->parent)
+		else if (self && current_obj->parent == self->parent)
 		{
 			current_obj = current_obj->next;
 			continue;
