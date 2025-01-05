@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 12:19:01 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/05 10:20:28 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/05 10:43:51 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ uint32_t	get_colour(t_rgb color)
 
 void	unpack(uint32_t color, t_rgb *s)
 {
-	s->r = (color >> 16) & 0xFF;
+	s->b = (color >> 16) & 0xFF;
 	s->g = (color >> 8) & 0xFF;
-	s->b = (color) & 0xFF;
+	s->r = (color) & 0xFF;
 }
 
 uint32_t	average(uint32_t c1, uint32_t c2)
@@ -41,5 +41,5 @@ uint32_t	average(uint32_t c1, uint32_t c2)
 	res.r = (sample1.r + sample2.r) * 0.5;
 	res.g = (sample1.g + sample2.g) * 0.5;
 	res.b = (sample1.b + sample2.b) * 0.5;
-	return ((0xFF << 24) | ((uint32_t)res.r << 16)| ((uint32_t)res.g << 8) | ((uint32_t)res.b));
+	return (get_colour(res));
 }

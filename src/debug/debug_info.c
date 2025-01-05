@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 20:48:16 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/29 11:02:19 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/05 10:54:15 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ uint32_t	**render_without_threads(t_data *data, t_ray **rays, uint32_t **image)
 	int	x;
 
 	y = 0;
-	while (y < W_HG)
+	while (y < data->y)
 	{
 		x = 0;
-		while (x < W_WH)
+		while (x < data->x)
 		{
 			image[y][x] = trace_ray(rays[y][x], data);
 			x++;

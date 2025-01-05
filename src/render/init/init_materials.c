@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:34:20 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/03 13:54:48 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/05 10:49:11 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	init_materials_mt_mr(t_obj *obj)
 	else if (obj->material.m_type == MR)
 	{
 		obj->rgb = RGB_BLACK;
+		obj->a_rgb = RGB_BLACK;
 		obj->material.reflectivity = 1.0f;
 		obj->material.transmittance = 0.0f;
 		obj->material.roughness = 0.0f;

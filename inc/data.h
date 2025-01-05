@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/03 18:01:57 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/05 10:51:37 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,8 @@ typedef struct s_data
 	bool				trace_flag;
 	pthread_mutex_t		*m_trace;
 	uint32_t			**img_last;
+	int					x;
+	int					y;
 }					t_data;
 
 #endif

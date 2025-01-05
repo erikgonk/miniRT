@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/05 08:44:16 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/05 10:54:01 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ void	update_render(void *param)
 	time = current_timestamp();
 	data = (t_data *)param;
 	if (!data->img_last)
-		data->img_last = render(data, W_WH, W_HG);
+		data->img_last = render(data, data->x, data->y);
 	if (!data->img->enabled)
 		data->img->enabled = true;
-	new_img = render(data, W_WH, W_HG);
+	new_img = render(data, data->x, data->y);
 	avrg = average_samples((uint32_t **)data->img_last, new_img);
 	fill_image((uint32_t *)data->img->pixels, avrg);
 	free_image_all(avrg);
