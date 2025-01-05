@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:31:28 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/03 18:15:19 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/05 14:25:15 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ void	make_caps(t_data *data, t_obj *obj, int parent)
 	bt_cap->calcs.btm_cap.cap_normal = obj->calcs.btm_cap.cap_normal;
 	tp_cap->next = NULL;
 	bt_cap->next = NULL;
-	objadd_back(&data->obj, tp_cap);
+	if (obj->type == CY)
+		objadd_back(&data->obj, tp_cap);
 	objadd_back(&data->obj, bt_cap);
 }
 
@@ -58,7 +59,7 @@ void	init_obj(t_data *data)
 			obj->a_rgb = apply_ambient_light(obj->rgb, data->a_light);
 		if (obj->type == PL)
 			obj->calcs.i_axis = vmul(-1.0f, obj->axis);
-		else if (obj->type == CY)
+		else if (obj->type == CY || obj->type == CO)
 		{
 			init_obj_normi(data, obj);
 			make_caps(data, obj, parent);
@@ -109,6 +110,7 @@ void	init_light(t_data *data)
 {
 	t_slight	*slight;
 
+	data->cam->pi2 = 2.0f * M_PI;
 	slight = data->s_light;
 	while (slight)
 	{

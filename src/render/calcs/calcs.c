@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/05 12:20:58 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/05 14:42:02 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,9 @@ t_obj	*find_closest_object(t_ray *ray, t_obj *objs, float *t_min)
 		t = *t_min;
 		if ((obj->type == SP && hit_sp(ray, obj, &t)) \
 		|| (obj->type == PL && hit_pl(ray, obj, &t)) \
-		|| (obj->type == CY && hit_cy(ray, obj, &t, NULL) \
-		|| obj->type == CAP && hit_cap(ray, obj, &t)))
+		|| (obj->type == CY && hit_cy(ray, obj, &t) \
+		|| obj->type == CAP && hit_cap(ray, obj, &t)) \
+		|| obj->type == CO && hit_cone(ray, obj, &t))
 		{
 			if (t > 0 && t < *t_min)
 			{

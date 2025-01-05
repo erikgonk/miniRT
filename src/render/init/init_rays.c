@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid Date        by              +#+  #+#    #+#             */
-/*   Updated: 2025/01/05 13:23:58 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/05 14:10:31 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,20 @@ void	free_rays(t_ray **rays, int rows)
 {
 	int	i;
 
-	i = 0;
-	while (i < rows)
-	{
+	i = -1;
+	while (++i < rows)
 		free(rays[i]);
-		i++;
-	}
 	free(rays);
 }
 
-t_v3	random_in_unit_disk(void)
+t_v3	random_in_unit_disk(t_cam *cam)
 {
 	t_v3	res;
     float theta;
     float r;
 
-	r = sqrt((float)rand() / RAND_MAX);
-	theta = 2.0f * M_PI * ((float)rand() / RAND_MAX);
+	r = sqrt((float)rand() / (float)RAND_MAX);
+	theta = cam->pi2 * ((float)rand() / (float)RAND_MAX);
 	res.x =  r * cos(theta);
 	res.y = r * sin(theta);
     return (res);
@@ -46,25 +43,16 @@ void generate_dof_ray(t_ray *ray, t_cam *cam)
 	t_v3 rd;
 	t_v3 offset;
 	t_v3 focus_point;
-	//a meter en la camara ->
+	t_v3 random_point;
+
 	cam->u = normalize(cross(cam->frame.up,cam->frame.forward));
 	cam->v = cross(cam->frame.forward, cam->u);
-	// Generar un punto aleatorio en el disco de la lente
-	t_v3 random_point = random_in_unit_disk();
-	rd.x = random_point.x * cam->focus_dist;
-	rd.y = random_point.y * cam->focus_dist;
-	rd.z = 0.0f; // En el plano de la lente, no hay componente Z
-
-	// Desplazamiento en el plano de la cámara
+	random_point = random_in_unit_disk(cam);
+	rd.x = random_point.x * cam->aperture * 0.5f;
+	rd.y = random_point.y * cam->aperture * 0.5f;
 	offset = vadd(vmul(rd.x, cam->u), vmul(rd.y, cam->v));
-
-	// Calcular el punto de enfoque en el plano focal
 	focus_point = vadd(ray->origin, vmul(cam->focus_dist, ray->direction));
-
-	// Calcular el nuevo origen del rayo desplazado por el disco de la lente
 	ray->origin = vadd(ray->origin, offset);
-
-	// Calcular la nueva dirección hacia el punto de enfoque desde el nuevo origen
 	ray->direction = normalize(vsub(focus_point, ray->origin));
 }
 

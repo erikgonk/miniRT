@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:02:22 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/03 10:51:40 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/05 14:22:50 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	create_obj_normi(t_obj *obj, char **tmp, char **tmp2)
 		obj->size = ft_atof(*tmp, 0);
 		*tmp2 = ft_substr(*tmp, sum_parse(*tmp, 0, 0), ft_strlen(*tmp));
 	}
-	else if (obj->type == CY)
+	else if (obj->type == CY || obj->type == CO)
 	{
 		obj->size = ft_atof(*tmp2, 0);
 		obj->i = sum_parse(*tmp2, 0, 0);
@@ -44,7 +44,7 @@ t_obj	*create_obj(char *str, int type)
 	if (obj->type != SP)
 		tmp2 = floats_parse(obj, tmp, 0, 1);
 	create_obj_normi(obj, &tmp, &tmp2);
-	if (obj->type != CY)
+	if (obj->type != CY && obj->type != CO)
 		target = tmp2;
 	else
 		target = tmp;

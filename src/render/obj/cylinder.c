@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 14:00:21 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/02 17:04:17 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/05 14:42:00 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,38 +14,7 @@
 #include "../inc/render.h"
 #include "../lib/libvector/libvct.h"
 
-// bool	check_cap(t_ray *ray, t_cap cap, float *t)
-// {
-// 	t_v3	point;
-// 	float	t_cap;
-
-// 	t_cap = dot(vsub(cap.cap_center, ray->origin), cap.cap_normal)
-// 		/ dot(ray->direction, cap.cap_normal);
-// 	if (t_cap > EPSILON && t_cap < *t)
-// 	{
-// 		point = vadd(ray->origin, vmul(t_cap, ray->direction));
-// 		if (vlength(vsub(point, cap.cap_center)) <= cap.radius)
-// 		{
-// 			*t = t_cap;
-// 			ray->point = point;
-// 			ray->normal = cap.cap_normal;
-// 			return (true);
-// 		}
-// 	}
-// 	return (false);
-// }
-
-// bool	cy_caps(t_ray *ray, t_obj *cy, float *t)
-// {
-// 	bool	hit;
-
-// 	hit = false;
-// 	if (check_cap(ray, cy->calcs.upper_cap, t) || check_cap(ray, cy->calcs.btm_cap, t))
-// 		hit = true;
-// 	return (hit);
-// }
-
-void	set_cy_axis(t_quadratic *quad, t_obj *cy, t_ray *ray, t_v3 *ray_origin)
+void	set_cy_axis(t_quadratic *quad, t_obj *cy, t_ray *ray)
 {
 	t_v3	oc_perp;
 	t_v3	d_perp;
@@ -93,13 +62,13 @@ float	set_ray_t(t_ray *ray, t_obj *cy, float *t, t_quadratic quad)
 	return (t_min);
 }
 
-bool	hit_cy(t_ray *ray, t_obj *cy, float *t, t_v3 *ray_origin)
+bool	hit_cy(t_ray *ray, t_obj *cy, float *t)
 {
-	t_quadratic	quad;/*  */
+	t_quadratic	quad;
 	float		t_min;
 
 	t_min = INFINITY;
-	set_cy_axis(&quad, cy, ray, ray_origin);
+	set_cy_axis(&quad, cy, ray);
 	init_quadratic(&quad, quad.a, quad.b, quad.c);
 	if (solve_quadratic2(&quad))
 	{

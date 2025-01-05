@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/05 13:25:22 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/05 14:08:20 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ typedef struct s_cam
 	int					fov;
 	t_v3				axis; // orientation
 	float				focus_dist;
+	float				aperture;
+	float				pi2;
 	t_v3				u;
 	t_v3				v;
 	t_frame				frame;

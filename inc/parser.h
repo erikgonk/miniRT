@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 15:20:14 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/02 11:22:01 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/05 14:21:35 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 void				parse(t_data *data, int fd);
 void				validate_args_and_open(int ac, char **av, int *fd);
 void				correct_file(char *name);
-void				parser_aa_bl(t_data *data, char *str, int type);
 
 //		parse_obj
 void				create_obj_normi(t_obj *obj, char **tmp, char **tmp2);

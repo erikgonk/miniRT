@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:18:36 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/19 16:04:45 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/05 14:23:24 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	check_obj(t_obj *obj)
 				exit(er("error: check_obj: pl/cy axis.y <0 / <1", NULL));
 			else if (obj->axis.z < -1 || obj->axis.z > 1)
 				exit(er("error: check_obj: pl/cy axis.z <0 / <1", NULL));
-			else if (obj->type == CY && obj->height < 0)
+			else if ((obj->type == CY || obj->type == CO) && obj->height < 0)
 				exit(er("error: check_obj: cy height < 0", NULL));
 		}
 		obj = obj->next;

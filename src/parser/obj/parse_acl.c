@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:27:07 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/05 13:21:42 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/05 14:49:10 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ void	create_cam(t_data *data, char *str, int type)
 	while (str2[i] && str2[i] != '\n')
 		if (!ft_isspace(str2[i++]))
 			exit(er("error: create_cam: cam fov wrong", str2));
-	data->cam->focus_dist = 10;
+	data->cam->focus_dist = 0;
+	data->cam->aperture = 0.2;
 	free(str2);
 	free(tmp);
 }

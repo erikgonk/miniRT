@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/05 13:25:40 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/05 14:42:05 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,13 +107,14 @@ void					init_materials_mt_mr(t_obj *obj);
 void					init_materials_render(t_data *data);
 
 //		cylinder
-void					set_cy_axis(t_quadratic *quad, t_obj *cy, t_ray *ray,
-							t_v3 *ray_origin);
+void					set_cy_axis(t_quadratic *quad, t_obj *cy, t_ray *ray);
 float					set_ray_t(t_ray *ray, t_obj *cy, float *t, t_quadratic quad);
-bool					hit_cy(t_ray *ray, t_obj *cy, float *t,
-							t_v3 *ray_origin);
+bool					hit_cy(t_ray *ray, t_obj *cy, float *t);
 //		caps
-bool	hit_cap(t_ray *ray, t_obj *cap, float *t);
+bool					hit_cap(t_ray *ray, t_obj *cap, float *t);
+
+//		cone
+bool					hit_cone(t_ray *ray, t_obj *cap, float *t);
 
 //		illumination
 t_rgb					apply_ambient_light(t_rgb obj_color, t_alight *a_light);
