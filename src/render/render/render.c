@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:37:51 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/31 13:18:01 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/05 08:53:07 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ uint32_t	**average_samples(uint32_t **sample1, uint32_t **sample2)
 	{
 		y = -1;
 		while (++y < W_WH)
-			res[x][y] = ((uint64_t)sample1[x][y] + (uint64_t)sample2[x][y]) / 2;
+			res[x][y] = average(sample1[x][y], sample2[x][y]);
 	}
 	return (res);
 }

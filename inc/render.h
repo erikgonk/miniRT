@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/03 13:43:28 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/05 10:19:15 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ bool					solve_quadratic2(t_quadratic *quad); // para la parte de detras del cy
 uint32_t				get_acolour(t_uchar alpha, t_uchar r, t_uchar g,
 							t_uchar b);
 uint32_t				get_colour(t_rgb color);
+void					unpack(uint32_t color, t_rgb *s);
+uint32_t				average(uint32_t c1, uint32_t c2);
 
 //		extras
 t_rgb					checkerboard_color(t_obj *obj, t_v3 point);

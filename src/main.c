@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/31 17:20:37 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/05 08:44:16 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	main(int ac, char **av)
 	t_data	*data;
 	int		fd;
 
-	srand((unsigned int) current_timestamp());
+	srand((unsigned int) mlx_get_time());
 	init_data(&data);
 	validate_args_and_open(ac, av, &fd);
 	parse(data, fd);
