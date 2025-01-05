@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/05 11:14:22 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/05 13:25:40 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,6 @@ typedef unsigned char	t_uchar;
 // Color Weight
 # define G_WEIGHT 0.7
 # define L_WEIGHT 0.3
-
-typedef struct s_frame
-{
-	t_v3				forward;
-	t_v3				right;
-	t_v3				up;
-}						t_frame;
 
 typedef struct s_viewport
 {

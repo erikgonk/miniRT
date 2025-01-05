@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid Date        by              +#+  #+#    #+#             */
-/*   Updated: 2025/01/05 11:15:08 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/05 13:23:58 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,60 @@ void	free_rays(t_ray **rays, int rows)
 	free(rays);
 }
 
-void	init_single_ray(t_ray *ray, t_vp *vp, t_cam *camera, float *uv)
+t_v3	random_in_unit_disk(void)
+{
+	t_v3	res;
+    float theta;
+    float r;
+
+	r = sqrt((float)rand() / RAND_MAX);
+	theta = 2.0f * M_PI * ((float)rand() / RAND_MAX);
+	res.x =  r * cos(theta);
+	res.y = r * sin(theta);
+    return (res);
+}
+
+void generate_dof_ray(t_ray *ray, t_cam *cam)
+{
+	t_v3 rd;
+	t_v3 offset;
+	t_v3 focus_point;
+	//a meter en la camara ->
+	cam->u = normalize(cross(cam->frame.up,cam->frame.forward));
+	cam->v = cross(cam->frame.forward, cam->u);
+	// Generar un punto aleatorio en el disco de la lente
+	t_v3 random_point = random_in_unit_disk();
+	rd.x = random_point.x * cam->focus_dist;
+	rd.y = random_point.y * cam->focus_dist;
+	rd.z = 0.0f; // En el plano de la lente, no hay componente Z
+
+	// Desplazamiento en el plano de la cámara
+	offset = vadd(vmul(rd.x, cam->u), vmul(rd.y, cam->v));
+
+	// Calcular el punto de enfoque en el plano focal
+	focus_point = vadd(ray->origin, vmul(cam->focus_dist, ray->direction));
+
+	// Calcular el nuevo origen del rayo desplazado por el disco de la lente
+	ray->origin = vadd(ray->origin, offset);
+
+	// Calcular la nueva dirección hacia el punto de enfoque desde el nuevo origen
+	ray->direction = normalize(vsub(focus_point, ray->origin));
+}
+
+void	init_single_ray(t_ray *ray, t_vp *vp, t_cam *cam, float *uv)
 {
 	t_v3	pixel_position;
 
 	pixel_position = vadd(vadd(vp->lower_left, vmul(uv[0], vp->horizontal)),
 			vmul(uv[1], vp->vertical));
-	ray->origin = camera->pos;
-	ray->direction = normalize(vsub(pixel_position, camera->pos));
+	ray->origin = cam->pos;
+	ray->direction = normalize(vsub(pixel_position, cam->pos));
 	ray->i_direction = normalize(vneg(ray->direction));
+	if (cam->focus_dist)
+		generate_dof_ray(ray, cam);
 }
 
-t_ray	*init_ray_row(t_data *data, t_cam *camera, t_vp *vp, int y)
+t_ray	*init_ray_row(t_data *data, t_cam *cam, t_vp *vp, int y)
 {
 	t_ray	*row;
 	int		x;
@@ -59,13 +101,13 @@ t_ray	*init_ray_row(t_data *data, t_cam *camera, t_vp *vp, int y)
 		uv[1] =  1.0f - ((float)y + r_y) / (float)(data->y - 1);
 		// uv[0] = ((float)x) / (float)(data->x- 1);
 		// uv[1] =  1.0f - ((float)y) / (float)(data->y - 1);
-		init_single_ray(&row[x], vp, camera, uv);
+		init_single_ray(&row[x], vp, cam, uv);
 		x++;
 	}
 	return (row);
 }
 
-t_ray	**init_rays(t_data *data, t_cam *camera, t_vp *vp)
+t_ray	**init_rays(t_data *data, t_cam *cam, t_vp *vp)
 {
 	t_ray	**rays;
 	int		y;
@@ -76,7 +118,7 @@ t_ray	**init_rays(t_data *data, t_cam *camera, t_vp *vp)
 	y = 0;
 	while (y < data->y)
 	{
-		rays[y] = init_ray_row(data, camera, vp, y);
+		rays[y] = init_ray_row(data, cam, vp, y);
 		if (!rays[y])
 		{
 			free_rays(rays, y);

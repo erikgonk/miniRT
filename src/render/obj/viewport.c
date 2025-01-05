@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   viewport.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:40:08 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/19 15:52:31 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/05 13:05:54 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ t_vp	*init_viewport(t_cam *camera, int width, int height)
 {
 	t_vp	*viewport;
 	float	aspect_ratio;
-	t_frame	frame;
 
 	camera->axis = normalize(camera->axis);
 	viewport = malloc(sizeof(t_vp));
@@ -42,15 +41,15 @@ t_vp	*init_viewport(t_cam *camera, int width, int height)
 	aspect_ratio = (float)width / (float)height;
 	viewport->viewport_width = 2.0 * tan((camera->fov * M_PI / 180.0) / 2.0);
 	viewport->viewport_height = viewport->viewport_width / aspect_ratio;
-	frame.forward = camera->axis;
-	frame.right = calculate_right(frame.forward);
-	frame.up = calculate_up(frame.forward, frame.right);
+	camera->frame.forward = camera->axis;
+	camera->frame.right = calculate_right(camera->frame.forward);
+	camera->frame.up = calculate_up(camera->frame.forward, camera->frame.right);
 	viewport->origin = camera->pos;
-	viewport->horizontal = vmul(viewport->viewport_width, frame.right);
-	viewport->vertical = vmul(viewport->viewport_height, frame.up);
+	viewport->horizontal = vmul(viewport->viewport_width, camera->frame.right);
+	viewport->vertical = vmul(viewport->viewport_height, camera->frame.up);
 	viewport->lower_left = vsub(vsub(vsub(viewport->origin, \
 										scalar_div(viewport->horizontal, 2)), \
 										scalar_div(viewport->vertical, 2)), \
-										frame.forward);
+										camera->frame.forward);
 	return (viewport);
 }

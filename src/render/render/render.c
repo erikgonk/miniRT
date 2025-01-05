@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:37:51 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/05 11:32:25 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/05 12:18:35 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	*process_rows(void *arg)
 			{
 				pthread_mutex_unlock(data->data->m_god);
 				pthread_exit(NULL);
+				return (NULL);
 			}
 			pthread_mutex_unlock(data->data->m_god);
 			data->image[y][x] = trace_ray(data->rays[y][x], data->data);

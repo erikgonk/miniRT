@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/05 11:26:08 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/05 13:25:22 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,13 @@
 # include <pthread.h>
 # include "libvct.h"
 # include "../lib/MLX42/include/MLX42/MLX42.h"
+
+typedef struct s_frame
+{
+	t_v3				forward;
+	t_v3				right;
+	t_v3				up;
+}						t_frame;
 
 typedef struct s_cap
 {
@@ -36,6 +43,10 @@ typedef struct s_cam
 	t_v3				pos;
 	int					fov;
 	t_v3				axis; // orientation
+	float				focus_dist;
+	t_v3				u;
+	t_v3				v;
+	t_frame				frame;
 }					t_cam;
 
 typedef struct s_a_light
