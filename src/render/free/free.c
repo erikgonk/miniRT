@@ -6,27 +6,27 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 19:02:12 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/29 11:04:34 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/05 11:14:10 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/miniRT.h"
 #include "../inc/render.h"
 
-void	free_render(t_vp *vp, t_ray **rays)
+void	free_render(t_data *data, t_vp *vp, t_ray **rays)
 {
 	free(vp);
-	free_rays_all(rays);
+	free_rays_all(data, rays);
 }
 
-void	free_image_all(uint32_t **image)
+void	free_image_all(t_data *data, uint32_t **image)
 {
 	int	y;
 
 	if (!image)
 		return ;
 	y = 0;
-	while (y < W_HG)
+	while (y < data->y)
 	{
 		if (image[y])
 			free(image[y]);
@@ -61,11 +61,11 @@ void	free_data(t_data *data)
 		free(data);
 }
 
-void	free_rays_all(t_ray **rays)
+void	free_rays_all(t_data *data, t_ray **rays)
 {
 	int	i;
 
-	i = W_HG - 1;
+	i = data->y - 1;
 	while (i >= 0)
 	{
 		free(rays[i]);

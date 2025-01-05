@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/05 10:54:01 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/05 11:13:07 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ void	update_render(void *param)
 	if (!data->img->enabled)
 		data->img->enabled = true;
 	new_img = render(data, data->x, data->y);
-	avrg = average_samples((uint32_t **)data->img_last, new_img);
-	fill_image((uint32_t *)data->img->pixels, avrg);
-	free_image_all(avrg);
+	avrg = average_samples(data, (uint32_t **)data->img_last, new_img);
+	fill_image(data, (uint32_t *)data->img->pixels, avrg);
+	free_image_all(data, avrg);
 	mlx_image_to_window(data->mlx, data->img, 0 ,0);
 	time = current_timestamp() - time;
 	printf("%lld\n", time /= 100);

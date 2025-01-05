@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 12:37:59 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/05 10:56:01 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/05 11:15:03 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,19 @@ void	init_mlx(t_data *data)
 }
 
 //Memmory for the final image
-uint32_t	**init_image_(void)
+uint32_t	**init_image_(t_data *data)
 {
 	uint32_t	**image;
 	int			y;
 	int			j;
 	size_t		row_size;
 
-	image = malloc(W_HG * sizeof(uint32_t *));
-	row_size = W_WH* sizeof(uint32_t);
+	image = malloc(data->y * sizeof(uint32_t *));
+	row_size = data->x* sizeof(uint32_t);
 	if (!image)
 		return (NULL);
 	y = -1;
-	while (++y < W_HG)
+	while (++y < data->y)
 	{
 		image[y] = malloc(row_size);
 		if (!image[y])

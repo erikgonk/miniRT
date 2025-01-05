@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid Date        by              +#+  #+#    #+#             */
-/*   Updated: 2025/01/05 09:06:39 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/05 11:15:08 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	init_single_ray(t_ray *ray, t_vp *vp, t_cam *camera, float *uv)
 	ray->i_direction = normalize(vneg(ray->direction));
 }
 
-t_ray	*init_ray_row(t_cam *camera, t_vp *vp, int y)
+t_ray	*init_ray_row(t_data *data, t_cam *camera, t_vp *vp, int y)
 {
 	t_ray	*row;
 	int		x;
@@ -47,36 +47,36 @@ t_ray	*init_ray_row(t_cam *camera, t_vp *vp, int y)
 	float	r_x;
 	float	r_y;
 
-	row = malloc(W_WH* sizeof(t_ray));
+	row = malloc(data->x * sizeof(t_ray));
 	if (!row)
 		return (NULL);
 	x = 0;
-	while (x < W_WH)
+	while (x < data->x)
 	{
 		r_x = (float)rand() / (float)RAND_MAX;
 		r_y = (float)rand() / (float)RAND_MAX;
-		uv[0] = ((float)x + r_x) / (float)(W_WH- 1);
-		uv[1] =  1.0f - ((float)y + r_y) / (float)(W_HG - 1);
-		// uv[0] = ((float)x) / (float)(W_WH- 1);
-		// uv[1] =  1.0f - ((float)y) / (float)(W_HG - 1);
+		uv[0] = ((float)x + r_x) / (float)(data->x- 1);
+		uv[1] =  1.0f - ((float)y + r_y) / (float)(data->y - 1);
+		// uv[0] = ((float)x) / (float)(data->x- 1);
+		// uv[1] =  1.0f - ((float)y) / (float)(data->y - 1);
 		init_single_ray(&row[x], vp, camera, uv);
 		x++;
 	}
 	return (row);
 }
 
-t_ray	**init_rays(t_cam *camera, t_vp *vp)
+t_ray	**init_rays(t_data *data, t_cam *camera, t_vp *vp)
 {
 	t_ray	**rays;
 	int		y;
 
-	rays = malloc(W_HG * sizeof(t_ray *));
+	rays = malloc(data->y * sizeof(t_ray *));
 	if (!rays)
 		return (NULL);
 	y = 0;
-	while (y < W_HG)
+	while (y < data->y)
 	{
-		rays[y] = init_ray_row(camera, vp, y);
+		rays[y] = init_ray_row(data, camera, vp, y);
 		if (!rays[y])
 		{
 			free_rays(rays, y);

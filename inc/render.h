@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/05 10:19:15 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/05 11:14:22 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void					init_data(t_data **data);
 
 //		init_image
 void					init_mlx(t_data *data);
-uint32_t				**init_image_(void);
+uint32_t				**init_image_(t_data *data);
 
 //		init_obj
 void					init_obj(t_data *data);
@@ -106,8 +106,8 @@ void					init_light(t_data *data);
 //		init_rays
 void					init_single_ray(t_ray *ray, t_vp *vp, t_cam *camera,
 							float *uv);
-t_ray					*init_ray_row(t_cam *camera, t_vp *vp, int y);
-t_ray					**init_rays(t_cam *camera, t_vp *vp);
+t_ray					*init_ray_row(t_data *data, t_cam *camera, t_vp *vp, int y);
+t_ray					**init_rays(t_data *data, t_cam *camera, t_vp *vp);
 
 //		init_materials
 void					init_materials_mt_mr(t_obj *obj);
@@ -148,9 +148,9 @@ t_vp					*init_viewport(t_cam *camera, int width, int height);
 uint32_t				**render(t_data *data, int x, int y);
 
 //		free
-void					free_rays_all(t_ray **rays);
-void					free_render(t_vp *vp, t_ray **rays);
-void					free_image_all(uint32_t **image);
+void					free_rays_all(t_data *data, t_ray **rays);
+void					free_render(t_data *data, t_vp *vp, t_ray **rays);
+void					free_image_all(t_data *data, uint32_t **image);
 void					free_data(t_data *data);
 void					free_rays(t_ray **rays, int rows);
 
@@ -158,7 +158,7 @@ void					free_rays(t_ray **rays, int rows);
 t_rgb					path_trace(t_ray *ray, t_data *data, int depth);
 t_v3 random_in_hemisphere(t_v3 normal);
 float	*generate_uv(int x, int y);
-uint32_t	**average_samples(uint32_t **sample1, uint32_t **sample2);
+uint32_t	**average_samples(t_data *data, uint32_t **sample1, uint32_t **sample2);
 void swap(float *a, float *b);
 
 

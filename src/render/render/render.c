@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:37:51 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/05 08:53:07 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/05 11:15:23 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ void	*process_rows(void *arg)
 	data = (t_thread_data *)arg;
 	id = data->thread_id;
 	y = id;
-	while (y < W_HG)
+	while (y < data->data->y)
 	{
 		x = 0;
-		while (x < W_WH)
+		while (x < data->data->x)
 		{
 			data->image[y][x] = trace_ray(data->rays[y][x], data->data);
 			x++;
@@ -61,18 +61,18 @@ void	render_with_threads(t_data *data, t_ray **rays, uint32_t **image)
 	}
 }
 
-uint32_t	**average_samples(uint32_t **sample1, uint32_t **sample2)
+uint32_t	**average_samples(t_data *data, uint32_t **sample1, uint32_t **sample2)
 {
 	uint32_t	**res;
 	int 		x;
 	int			y;
 
 	x = -1;
-	res = init_image_();
-	while (++x < W_HG)
+	res = init_image_(data);
+	while (++x < data->y)
 	{
 		y = -1;
-		while (++y < W_WH)
+		while (++y < data->x)
 			res[x][y] = average(sample1[x][y], sample2[x][y]);
 	}
 	return (res);
@@ -87,14 +87,14 @@ uint32_t	**render(t_data *data, int x, int y)
 
 	(void)x;
 	(void)y;
-	vp = init_viewport(data->cam, W_WH, W_HG);
-	rays = init_rays(data->cam, vp);
-	image = init_image_();
+	vp = init_viewport(data->cam, data->x, data->y);
+	rays = init_rays(data, data->cam, vp);
+	image = init_image_(data);
 	if (!image)
 	        return (NULL);
 	render_with_threads(data, rays, image);
 	//render_without_threads(data, rays, image);
-	free_render(vp, rays);
+	free_render(data, vp, rays);
 	return (image);
 }
 

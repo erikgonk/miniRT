@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 16:58:38 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/31 17:18:05 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/05 11:15:26 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,29 +21,29 @@ void	render_to_mlx(t_data *data)
 	img_rgb = render(data, 0, 0);
 	if (!img_rgb)
 		exit(er("Failed to render data", NULL));
-	fill_image((uint32_t *)data->img->pixels, img_rgb);
+	fill_image(data, (uint32_t *)data->img->pixels, img_rgb);
 	if (!data->img->enabled)
 		data->img->enabled = true;
 	mlx_image_to_window(data->mlx, data->img, 0, 0);
-	free_image_all(img_rgb);
+	free_image_all(data, img_rgb);
 	// time = current_timestamp() - time;
 	// time /= 100;
 }
 // printf("Ha tardado en reenderizar: %lld\n", time);
 
-void	fill_image(uint32_t *pixels, uint32_t **img_rgb)
+void	fill_image(t_data *data, uint32_t *pixels, uint32_t **img_rgb)
 {
 	int	x;
 	int	y;
 	int	index;
 
 	y = 0;
-	while (y < W_HG)
+	while (y < data->y)
 	{
 		x = 0;
-		while (x < W_WH)
+		while (x < data->x)
 		{
-			index = y * W_WH+ x;
+			index = y * data->x + x;
 			pixels[index] = img_rgb[y][x];
 			x++;
 		}
@@ -68,9 +68,8 @@ void	my_keyhook(mlx_key_data_t keydata, void *param)
 			data->trace_flag = !data->trace_flag;
 			pthread_mutex_unlock(data->m_trace);
 			if (data->img_last)
-				free_image_all(data->img_last);
+				free_image_all(data, data->img_last);
 			data->img_last = NULL;
-
 		}
 		if (mode || keydata.key == MLX_KEY_R)
 			render_to_mlx(data);
