@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:37:51 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/05 12:18:35 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/05 15:02:33 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ uint32_t	**render(t_data *data, int x, int y)
 	t_ray		**rays;
 	t_vp		*vp;
 	uint32_t	**image;
-	static int 	flag;
+	static int	flag;
 
 	(void)x;
 	(void)y;
@@ -100,7 +100,7 @@ uint32_t	**render(t_data *data, int x, int y)
 	rays = init_rays(data, data->cam, vp);
 	image = init_image_(data);
 	if (!image)
-	        return (NULL);
+		return (NULL);
 	render_with_threads(data, rays, image);
 	//render_without_threads(data, rays, image);
 	free_render(data, vp, rays);
