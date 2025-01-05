@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 16:58:38 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/05 11:15:26 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/05 12:05:30 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,22 @@ void	my_keyhook(mlx_key_data_t keydata, void *param)
 			render_to_mlx(data);
 		if (keydata.key == MLX_KEY_R)
 			mode = !mode;
+		if (keydata.key == MLX_KEY_L)
+		{
+			pthread_mutex_lock(data->m_god);
+			data->god = !data->god;
+			pthread_mutex_unlock(data->m_god);
+		}
 	}
+}
+
+void	resise_w(int32_t width, int32_t height, void *param)
+{
+	t_data		*data;
+
+	data = param;
+	pthread_mutex_lock(data->m_god);
+	data->god = false;
+	data->img_last = NULL;
+	pthread_mutex_unlock(data->m_god);
 }

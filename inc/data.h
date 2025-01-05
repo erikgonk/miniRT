@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/05 11:10:16 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/05 11:26:08 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,9 @@ typedef struct s_data
 	uint32_t			**img_last;
 	int					x;
 	int					y;
+	pthread_mutex_t		*m_god;
+	bool				god;
+
 }					t_data;
 
 #endif

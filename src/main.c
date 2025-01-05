@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/05 11:13:07 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/05 12:05:45 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,26 @@ void	update_render(void *param)
 
 	time = current_timestamp();
 	data = (t_data *)param;
+	data->x = data->mlx->width;
+	data->y = data->mlx->height;
+	data->god = true;
+	mlx_resize_image(data->img, data->x, data->y);
 	if (!data->img_last)
 		data->img_last = render(data, data->x, data->y);
 	if (!data->img->enabled)
 		data->img->enabled = true;
 	new_img = render(data, data->x, data->y);
+	if (!data->god)
+		return;
 	avrg = average_samples(data, (uint32_t **)data->img_last, new_img);
+	if (!data->god)
+		return;
 	fill_image(data, (uint32_t *)data->img->pixels, avrg);
+	if (!data->god)
+		return;
 	free_image_all(data, avrg);
+	if (!data->god)
+		return;
 	mlx_image_to_window(data->mlx, data->img, 0 ,0);
 	time = current_timestamp() - time;
 	printf("%lld\n", time /= 100);
@@ -56,6 +68,7 @@ int	main(int ac, char **av)
 	data->img_last = NULL;
 	// render_to_mlx(data);
 	mlx_loop_hook(data->mlx, update_render, data);
+	mlx_resize_hook(data->mlx, &resise_w, data);
 	mlx_key_hook(data->mlx, &my_keyhook, data);
 	mlx_loop(data->mlx);
 }
