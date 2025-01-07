@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/05 15:28:05 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/07 12:15:15 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,28 @@ void	update_render(void *param)
 	printf("%lld\n", time /= 100);
 }
 
+void	init_cone(t_data *data)
+{
+	t_obj	*cone;
+
+	cone = malloc(sizeof(t_obj));
+	if (!cone)
+		return ;
+	cone->type = CO;
+	cone->pos = (t_v3) {-75.0,5.0,-50.0};
+	cone->axis = (t_v3) {0.5,-1,-0.5};
+	cone->axis = normalize(cone->axis);
+	cone->size = 20;
+	if (cone->size < 0 || cone->size > 54)
+		exit (er("error: init_cone: values 0-54", NULL));
+	cone->size += 35; // 35 - 89
+	cone->height = 20;
+	cone->rgb = (t_rgb){50,128,200};
+	cone->material.m_type = -1;
+	cone->next = NULL;
+	objadd_back(&data->obj, cone);
+}
+
 int	main(int ac, char **av)
 {
 	t_data	*data;
@@ -56,6 +78,7 @@ int	main(int ac, char **av)
 	validate_args_and_open(ac, av, &fd);
 	parse(data, fd);
 	close(fd);
+	init_cone(data); // quitar cunado este en parse
 	init_all(data);
 	data->img_last = NULL;
 	// render_to_mlx(data);

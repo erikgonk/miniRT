@@ -6,21 +6,38 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:31:28 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/05 15:28:58 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/07 12:19:08 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void	make_caps(t_data *data, t_obj *obj, int parent)
+void	make_cone_cap(t_obj *cone, t_data *data)
+{
+	t_obj	*cap;
+
+	cap = malloc(sizeof(t_obj));
+	cap->parent = cone->parent;
+	cap->material = cone->material;
+	cap->rgb = cone->rgb;
+	cap->a_rgb = apply_ambient_light(cone->rgb, data->a_light);
+	cap->type = CAP;
+	cap->size = (cone->height * tan((cone->size * 0.5f) * (M_PI / 180.0f)));
+	cap->pos = vadd(cone->pos, vmul(cone->height, cone->axis));
+	cap->axis = cone->axis;
+	cap->next = NULL;
+	objadd_back(&data->obj, cap);
+}
+
+void	make_caps(t_data *data, t_obj *obj)
 {
 	t_obj	*tp_cap;
 	t_obj	*bt_cap;
 
 	tp_cap = malloc(sizeof(t_obj));
 	bt_cap = malloc(sizeof(t_obj));
-	tp_cap->parent = parent;
-	bt_cap->parent = parent;
+	tp_cap->parent = obj->parent;
+	bt_cap->parent = obj->parent;
 	tp_cap->material = obj->material;
 	bt_cap->material = obj->material;
 	tp_cap->rgb = obj->rgb;
@@ -59,11 +76,13 @@ void	init_obj(t_data *data)
 			obj->a_rgb = apply_ambient_light(obj->rgb, data->a_light);
 		if (obj->type == PL)
 			obj->calcs.i_axis = vmul(-1.0f, obj->axis);
-		else if (obj->type == CY || obj->type == CO)
+		else if (obj->type == CY)
 		{
 			init_obj_normi(data, obj);
-			make_caps(data, obj, parent);
+			make_caps(data, obj);
 		}
+		else if (obj->type == CO)
+			make_cone_cap(obj, data);
 		else
 			init_obj_normi(data, obj);
 		parent++;
