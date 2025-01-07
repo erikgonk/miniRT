@@ -6,27 +6,27 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 18:32:58 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/13 12:32:42 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/07 12:30:15 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libvct.h"
 
-float		distance(t_v3 p1, t_v3 p2)
+double		distance(t_v3 p1, t_v3 p2)
 {
-	float d;
+	double d;
 
 	d = sqrt(pow(p2.x - p1.x, 2) + pow(p2.y - p1.y, 2) + pow(p2.z - p1.z, 2));
 	return (d);
 }
 
-t_v3		x_axis_rotation(t_v3 vec, float angle)
+t_v3		x_axis_rotation(t_v3 vec, double angle)
 {
 	t_v3	row1;
 	t_v3	row2;
 	t_v3	row3;
 	t_v3	rotated;
-	float	rad_angle;
+	double	rad_angle;
 
 	rad_angle = angle * M_PI / 180;
 	row1 = (t_v3){1, 0, 0};
@@ -38,13 +38,13 @@ t_v3		x_axis_rotation(t_v3 vec, float angle)
 	return (rotated);
 }
 
-t_v3		y_axis_rotation(t_v3 vec, float angle)
+t_v3		y_axis_rotation(t_v3 vec, double angle)
 {
 	t_v3	row1;
 	t_v3	row2;
 	t_v3	row3;
 	t_v3	rotated;
-	float	rad_angle;
+	double	rad_angle;
 
 	rad_angle = angle * M_PI / 180;
 	row1 = (t_v3){cos(rad_angle), 0, sin(rad_angle)};
@@ -56,13 +56,13 @@ t_v3		y_axis_rotation(t_v3 vec, float angle)
 	return (rotated);
 }
 
-t_v3		z_axis_rotation(t_v3 vec, float angle)
+t_v3		z_axis_rotation(t_v3 vec, double angle)
 {
 	t_v3	row1;
 	t_v3	row2;
 	t_v3	row3;
 	t_v3	rotated;
-	float	rad_angle;
+	double	rad_angle;
 
 	rad_angle = angle * M_PI / 180;
 	row1 = (t_v3){cos(rad_angle), -sin(rad_angle), 0};
@@ -74,7 +74,7 @@ t_v3		z_axis_rotation(t_v3 vec, float angle)
 	return (rotated);
 }
 
-t_v3 scalar_div(t_v3 vec, float scalar)
+t_v3 scalar_div(t_v3 vec, double scalar)
 {
 	t_v3 result;
 

@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:20:14 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/07 12:22:32 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/07 13:02:53 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "libvct.h"
 
 //init Data for a quadratic equation
-void	init_quadratic(t_quadratic *quad, float a, float b, float c)
+void	init_quadratic(t_quadratic *quad, double a, double b, double c)
 {
 	if (fabs(a) < EPSILON)
 	{
@@ -35,13 +35,13 @@ void	init_quadratic(t_quadratic *quad, float a, float b, float c)
 
 bool	solve_quadratic(t_quadratic *quad)
 {
-	float	sqrt_discriminant;
-	float	ax2;
+	double	sqrt_discriminant;
+	double	ax2;
 
 	ax2 = 2.0f * quad->a;
 	if (quad->discriminant < 0 || fabs(quad->a) < EPSILON)
 		return (false);
-	sqrt_discriminant = sqrtf(quad->discriminant);
+	sqrt_discriminant = sqrt(quad->discriminant);
 	quad->t1 = (-quad->b - sqrt_discriminant) / ax2;
 	quad->t2 = (-quad->b + sqrt_discriminant) / ax2;
 	if (quad->t1 > quad->t2)
@@ -58,13 +58,13 @@ bool	solve_quadratic(t_quadratic *quad)
 
 bool	solve_quadratic2(t_quadratic *quad)
 {
-	float	sqrt_discriminant;
-	float	ax2;
+	double	sqrt_discriminant;
+	double	ax2;
 
 	ax2 = 2.0f * quad->a;
 	if (quad->discriminant < 0 || fabs(quad->a) < EPSILON)
 		return (false);
-	sqrt_discriminant = sqrtf(quad->discriminant);
+	sqrt_discriminant = sqrt(quad->discriminant);
 	quad->t1 = (-quad->b - sqrt_discriminant) / ax2;
 	quad->t2 = (-quad->b + sqrt_discriminant) / ax2;
 	if (quad->t1 > EPSILON || quad->t2 >EPSILON)

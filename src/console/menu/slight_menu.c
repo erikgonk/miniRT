@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   slight_menu.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 11:19:56 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/17 11:43:52 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/07 12:41:36 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 void	adjust_spot_brightness(keys_t key, t_data *data)
 {
 	if (key == MLX_KEY_UP && data->s_light->br < SLIGHTMAX)
-		data->s_light->br = fminf(data->s_light->br + SLIGHTPLUS, SLIGHTMAX);
+		data->s_light->br = fmin(data->s_light->br + SLIGHTPLUS, SLIGHTMAX);
 	else if (key == MLX_KEY_DOWN && data->s_light->br > SLIGHTMIN)
-		data->s_light->br = fmaxf(data->s_light->br - SLIGHTPLUS, SLIGHTMIN);
+		data->s_light->br = fmax(data->s_light->br - SLIGHTPLUS, SLIGHTMIN);
 	else if (key == MLX_KEY_RIGHT && data->s_light->br < SLIGHTMAX)
-		data->s_light->br = fminf(data->s_light->br + SLIGHTPLUS, SLIGHTMAX);
+		data->s_light->br = fmin(data->s_light->br + SLIGHTPLUS, SLIGHTMAX);
 	else if (key == MLX_KEY_LEFT && data->s_light->br > SLIGHTMIN)
-		data->s_light->br = fmaxf(data->s_light->br - SLIGHTPLUS, SLIGHTMIN);
+		data->s_light->br = fmax(data->s_light->br - SLIGHTPLUS, SLIGHTMIN);
 }
 
 void	adjust_spot_position(keys_t key, t_data *data)

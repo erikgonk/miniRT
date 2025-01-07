@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   vector_operations.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 18:33:01 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/16 01:14:24 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/07 12:30:15 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libvct.h"
 
 // Crea y devuelve un vector 3D con las coordenadas especificadas.
-t_v3	vdefine(float x, float y, float z)
+t_v3	vdefine(double x, double y, double z)
 {
 	t_v3	vector;
 
@@ -46,7 +46,7 @@ t_v3	vsub(t_v3 a, t_v3 b)
 }
 
 // Calcula y devuelve el producto punto de dos vectores 3D.
-float	dot(t_v3 a, t_v3 b)
+double	dot(t_v3 a, t_v3 b)
 {
 	return (a.x * b.x + a.y * b.y + a.z * b.z);
 }

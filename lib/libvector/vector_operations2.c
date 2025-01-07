@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 18:32:52 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/18 16:17:53 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/07 12:30:15 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // Calcula la magnitud (que tan larga es la flecha)
 // La magnitud de un vector indica qué tan "larga" es esa flecha, y se calcula usando el Teorema de Pitágoras:
 // magnitud = sqrt(x^2 + y^2 + z^2).
-float		mod(t_v3 v)
+double		mod(t_v3 v)
 {
 	return (sqrt(dot(v, v)));
 }
@@ -24,7 +24,7 @@ float		mod(t_v3 v)
 t_v3		normalize(t_v3 p)
 {
 	t_v3	nv;
-	float	mod;
+	double	mod;
 
 	mod = sqrt(p.x * p.x + p.y * p.y + p.z * p.z);
 	nv.x = p.x / mod;
@@ -34,20 +34,20 @@ t_v3		normalize(t_v3 p)
 }
 
 // Calcula el seno del ángulo entre dos vectores.
-float		vsin(t_v3 a, t_v3 b)
+double		vsin(t_v3 a, t_v3 b)
 {
 	return (sqrt(1 - pow(vcos(a, b), 2)));
 }
 
 // Calcula el coseno del ángulo entre dos vectores.
-float		vcos(t_v3 a, t_v3 b)
+double		vcos(t_v3 a, t_v3 b)
 {
 	return (dot(a, b) / (mod(a) * mod(b)));
 }
 
 // Escala un vector multiplicándolo por un escalar.
 // Hace un vector mas grande o mas pequeno
-t_v3		vmul(float n, t_v3 p)
+t_v3		vmul(double n, t_v3 p)
 {
 	t_v3	v;
 

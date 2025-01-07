@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   obj_menu.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 11:21:41 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/17 11:26:04 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/07 12:41:36 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void	adjust_obj_position(keys_t key, t_obj *obj, float *posq)
+void	adjust_obj_position(keys_t key, t_obj *obj, double *posq)
 {
 	if (key == MLX_KEY_UP)
 		obj->pos.y += *posq;
@@ -27,29 +27,29 @@ void	adjust_obj_position(keys_t key, t_obj *obj, float *posq)
 	else if (key == MLX_KEY_X)
 		obj->pos.z += *posq;
 	else if (key == MLX_KEY_MINUS || key == MLX_KEY_KP_SUBTRACT)
-		*posq = fmaxf(1.0f, *posq - 1);
+		*posq = fmax(1.0f, *posq - 1);
 	else if (key == MLX_KEY_KP_ADD || key == MLX_KEY_EQUAL)
-		*posq = fminf(100, *posq + 1);
+		*posq = fmin(100, *posq + 1);
 }
 
-void	adjust_obj_axis(keys_t key, t_obj *obj, float *axisq)
+void	adjust_obj_axis(keys_t key, t_obj *obj, double *axisq)
 {
 	if (key == MLX_KEY_UP)
-		obj->axis.y = fminf(obj->axis.y + *axisq, OBJAXISMAX);
+		obj->axis.y = fmin(obj->axis.y + *axisq, OBJAXISMAX);
 	else if (key == MLX_KEY_DOWN)
-		obj->axis.y = fmaxf(obj->axis.y - *axisq, OBJAXISMIN);
+		obj->axis.y = fmax(obj->axis.y - *axisq, OBJAXISMIN);
 	else if (key == MLX_KEY_LEFT)
-		obj->axis.x = fmaxf(obj->axis.x - *axisq, OBJAXISMIN);
+		obj->axis.x = fmax(obj->axis.x - *axisq, OBJAXISMIN);
 	else if (key == MLX_KEY_RIGHT)
-		obj->axis.x = fminf(obj->axis.x + *axisq, OBJAXISMAX);
+		obj->axis.x = fmin(obj->axis.x + *axisq, OBJAXISMAX);
 	else if (key == MLX_KEY_Z)
-		obj->axis.z = fmaxf(obj->axis.z - *axisq, OBJAXISMIN);
+		obj->axis.z = fmax(obj->axis.z - *axisq, OBJAXISMIN);
 	else if (key == MLX_KEY_X)
-		obj->axis.z = fminf(obj->axis.z + *axisq, OBJAXISMAX);
+		obj->axis.z = fmin(obj->axis.z + *axisq, OBJAXISMAX);
 	else if (key == MLX_KEY_MINUS || key == MLX_KEY_KP_SUBTRACT)
-		*axisq = fmaxf(0.01f, *axisq - 0.01f);
+		*axisq = fmax(0.01f, *axisq - 0.01f);
 	else if (key == MLX_KEY_KP_ADD || key == MLX_KEY_EQUAL)
-		*axisq = fminf(1.0f, *axisq + 0.01f);
+		*axisq = fmin(1.0f, *axisq + 0.01f);
 	obj->axis = normalize(obj->axis);
 }
 
@@ -57,11 +57,11 @@ void	manage_obj(keys_t key, t_data *data)
 {
 	static bool			mode;
 	static t_obj		*obj;
-	static float		posq;
-	static float		axisq;
+	static double		posq;
+	static double		axisq;
 
-	posq = fmaxf(posq, 1.0f);
-	axisq = fmaxf(axisq, 0.001f);
+	posq = fmax(posq, 1.0f);
+	axisq = fmax(axisq, 0.001f);
 	if (!obj)
 		obj = data->obj;
 	if (key == MLX_KEY_N)

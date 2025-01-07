@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:31:28 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/07 12:19:08 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/07 14:54:33 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,15 @@ void	make_cone_cap(t_obj *cone, t_data *data)
 	cap->rgb = cone->rgb;
 	cap->a_rgb = apply_ambient_light(cone->rgb, data->a_light);
 	cap->type = CAP;
-	cap->size = (cone->height * tan((cone->size * 0.5f) * (M_PI / 180.0f)));
+	cap->size = cone->height * tan((cone->size * 0.5f) * (M_PI / 180.0f));
 	cap->pos = vadd(cone->pos, vmul(cone->height, cone->axis));
 	cap->axis = cone->axis;
+	cap->material = cone->material;
 	cap->next = NULL;
 	objadd_back(&data->obj, cap);
+	print_objects(cone);
+	print_objects(cap);
+
 }
 
 void	make_caps(t_data *data, t_obj *obj)

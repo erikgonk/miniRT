@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/05 14:21:17 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/07 15:13:27 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@
 # define CY 2
 # define CAP 3
 # define CO 6
+# define CU 7
 
 //		Materials
 # define MT 0 // Metallic

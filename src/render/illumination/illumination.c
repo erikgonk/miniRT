@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:09:03 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/05 14:42:31 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/07 15:14:53 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,20 @@
 t_rgb	apply_ambient_light(t_rgb obj_color, t_alight *a_light)
 {
 	t_rgb	result;
-	float	a_r;
-	float	a_g;
-	float	a_b;
+	double	a_r;
+	double	a_g;
+	double	a_b;
 
 	a_r = a_light->rgb.r / 255.0f;
 	a_g = a_light->rgb.g / 255.0f;
 	a_b = a_light->rgb.b / 255.0f;
-	result.r = (unsigned char)fminf(obj_color.r * a_r * a_light->br, 255.0f);
-	result.g = (unsigned char)fminf(obj_color.g * a_g * a_light->br, 255.0f);
-	result.b = (unsigned char)fminf(obj_color.b * a_b * a_light->br, 255.0f);
+	result.r = (unsigned char)fmin(obj_color.r * a_r * a_light->br, 255.0f);
+	result.g = (unsigned char)fmin(obj_color.g * a_g * a_light->br, 255.0f);
+	result.b = (unsigned char)fmin(obj_color.b * a_b * a_light->br, 255.0f);
 	return (result);
 }
 
-void	difuse_light(t_rgb *color, t_slight *slight, t_obj *obj, float inty)
+void	difuse_light(t_rgb *color, t_slight *slight, t_obj *obj, double inty)
 {
 	t_rgb	dif_color;
 
@@ -46,10 +46,10 @@ void	difuse_light(t_rgb *color, t_slight *slight, t_obj *obj, float inty)
 	}
 }
 
-bool	data_shadow(t_data *data, t_ray *shadow_ray, float max_dist, t_obj *self)
+bool	data_shadow(t_data *data, t_ray *shadow_ray, double max_dist, t_obj *self)
 {
 	t_obj	*current_obj;
-	float	t;
+	double	t;
 
 	t = INFINITY;
 	current_obj = data->obj;
@@ -79,6 +79,9 @@ bool	data_shadow(t_data *data, t_ray *shadow_ray, float max_dist, t_obj *self)
 		else if (current_obj->type == CO && hit_cone(shadow_ray, current_obj, &t) \
 				&& (t > EPSILON && t < max_dist))
 			return (true);
+		else if (current_obj->type == CU && hit_cube(shadow_ray, current_obj, &t) \
+				&& (t > EPSILON && t < max_dist))
+			return (true);
 		current_obj = current_obj->next;
 	}
 	return (false);
@@ -89,7 +92,7 @@ t_rgb	phong(t_data *data, t_ray *ray, t_obj *obj)
 	t_rgb		color;
 	t_ray		shadow_ray;
 	t_slight	*slight;
-	float		intensity;
+	double		intensity;
 
 	if (obj->type == PL && obj->material.board_scale != -1)
 		color = checkerboard_color(obj, ray->point);

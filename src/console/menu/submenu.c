@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   submenu.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 17:57:09 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/17 11:43:45 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/07 12:41:36 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 void	manage_alight(keys_t key, t_data *data)
 {
-	static float	quantity;
+	static double	quantity;
 
 	if (quantity < 0.01f)
 		quantity = ALIGHTPLUS;
 	if (key == MLX_KEY_UP && data->a_light->br < ALIGHTMAX)
-		data->a_light->br = fminf(data->a_light->br + quantity, ALIGHTMAX);
+		data->a_light->br = fmin(data->a_light->br + quantity, ALIGHTMAX);
 	else if (key == MLX_KEY_DOWN && data->a_light->br > ALIGHTMIN)
-		data->a_light->br = fmaxf(data->a_light->br - quantity, ALIGHTMIN);
+		data->a_light->br = fmax(data->a_light->br - quantity, ALIGHTMIN);
 	else if (key == MLX_KEY_MINUS || key == MLX_KEY_KP_SUBTRACT)
-		quantity = fmaxf(quantity - 0.01f, 0.01);
+		quantity = fmax(quantity - 0.01f, 0.01);
 	else if (key == MLX_KEY_KP_ADD || key == MLX_KEY_EQUAL)
 		quantity += 0.01f;
 	print_alight_menu(data);

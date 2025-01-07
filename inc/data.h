@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/05 14:08:20 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/07 15:27:23 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct s_frame
 
 typedef struct s_cap
 {
-	float				radius;
+	double				radius;
 	t_v3				cap_center;
 	t_v3				cap_normal;
 }	t_cap;
@@ -43,9 +43,9 @@ typedef struct s_cam
 	t_v3				pos;
 	int					fov;
 	t_v3				axis; // orientation
-	float				focus_dist;
-	float				aperture;
-	float				pi2;
+	double				focus_dist;
+	double				aperture;
+	double				pi2;
 	t_v3				u;
 	t_v3				v;
 	t_frame				frame;
@@ -53,13 +53,13 @@ typedef struct s_cam
 
 typedef struct s_a_light
 {
-	float				br; // brightness
+	double				br; // brightness
 	t_rgb				rgb;
 }					t_alight;
 
 typedef struct s_light
 {
-	float				br;
+	double				br;
 	t_v3				pos;
 	t_rgb				rgb;
 	t_rgb				rgb_inty;
@@ -69,44 +69,55 @@ typedef struct s_light
 typedef struct s_material
 {
 	int					m_type;
-	float				reflectivity;
-	float				transmittance;
-	float				roughness;
-	float				absorption;
-	float				specularity;
+	double				reflectivity;
+	double				transmittance;
+	double				roughness;
+	double				absorption;
+	double				specularity;
 	int					shininess;
 	void				*get_normal;
 	t_rgb				rgb_checker;
-	float				board_scale;
-	float				emision;
-	float				self_emision;
+	double				board_scale;
+	double				emision;
+	double				self_emision;
 }				t_material;
 
 typedef struct s_calcs
 {
-	float				radius; // sp cy
-	float				radius2; // sp cy
+	double				radius; // sp cy
+	double				radius2; // sp cy
 	t_v3				i_axis; // cy
 	t_v3				oc_par; // cy
 	t_v3				oc_perp; // cy
 	t_v3				oc_perp2;
-	float				c; // cy
-	float				half_height;
-	float				hh_e_sum;
-	float				hh_e_res;
+	double				c; // cy
+	double				half_height;
+	double				hh_e_sum;
+	double				hh_e_res;
 	t_cap				upper_cap; // cy
 	t_cap				btm_cap; // cy
 //		para refract
-	float				etai;
-	float				etat;
-	float				eta;
-	float				eta_reverse;
-	float				eta2;
-	float				eta_reverse2;
+	double				etai;
+	double				etat;
+	double				eta;
+	double				eta_reverse;
+	double				eta2;
+	double				eta_reverse2;
 //		para fresnel
-	float				etai_etat;
-	float				etai_etat_reverse;
+	double				etai_etat;
+	double				etai_etat_reverse;
 }	t_calcs;
+
+typedef struct s_cube
+{
+	t_v3				size;
+	double				xmin;
+	double				xmax;
+	double				ymin;
+	double				ymax;
+	double				zmin;
+	double				zmax;
+}					t_cube;
 
 typedef struct s_obj
 {
@@ -117,10 +128,11 @@ typedef struct s_obj
 	t_v3				axis;
 	t_rgb				rgb;
 	t_rgb				a_rgb;
-	float				size;
-	float				height;
+	double				size;
+	double				height;
 	t_calcs				calcs;
 	t_material			material;
+	t_cube				cube;
 	unsigned int		parent;
 	struct s_obj		*next;
 }					t_obj;

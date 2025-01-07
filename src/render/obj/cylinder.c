@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 14:00:21 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/05 14:42:00 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/07 12:30:15 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	set_cy_axis(t_quadratic *quad, t_obj *cy, t_ray *ray)
 {
 	t_v3	oc_perp;
 	t_v3	d_perp;
-	float	oc_axis_dot;
-	float	d_axis_dot;
+	double	oc_axis_dot;
+	double	d_axis_dot;
 	t_v3	oc;
 
 	oc = vsub(ray->origin, cy->pos);
@@ -32,11 +32,11 @@ void	set_cy_axis(t_quadratic *quad, t_obj *cy, t_ray *ray)
 	quad->b = 2.0f * dot(oc_perp, d_perp);
 }
 
-float	set_ray_t(t_ray *ray, t_obj *cy, float *t, t_quadratic quad)
+double	set_ray_t(t_ray *ray, t_obj *cy, double *t, t_quadratic quad)
 {
-	float		proj;
+	double		proj;
 	t_v3		point;
-	float		t_min;
+	double		t_min;
 
 	t_min = INFINITY;
 	if (quad.t1 > EPSILON && quad.t1 < quad.t2)
@@ -62,10 +62,10 @@ float	set_ray_t(t_ray *ray, t_obj *cy, float *t, t_quadratic quad)
 	return (t_min);
 }
 
-bool	hit_cy(t_ray *ray, t_obj *cy, float *t)
+bool	hit_cy(t_ray *ray, t_obj *cy, double *t)
 {
 	t_quadratic	quad;
-	float		t_min;
+	double		t_min;
 
 	t_min = INFINITY;
 	set_cy_axis(&quad, cy, ray);

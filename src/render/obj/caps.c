@@ -6,22 +6,22 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:09:01 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/07 10:26:02 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/07 13:02:39 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-float length(t_v3 v)
+double length(t_v3 v)
 {
-	return sqrtf(v.x * v.x + v.y * v.y + v.z * v.z);
+	return sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
 }
 
-bool	hit_cap(t_ray *ray, t_obj *cap, float *t)
+bool	hit_cap(t_ray *ray, t_obj *cap, double *t)
 {
-	float	denominator;
-	float	result;
-	float	numerator;
+	double	denominator;
+	double	result;
+	double	numerator;
 	t_v3	point;
 	t_v3	center_to_point;
 

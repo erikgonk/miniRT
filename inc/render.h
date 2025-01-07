@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/07 12:28:58 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/07 15:16:31 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ typedef unsigned char	t_uchar;
 
 typedef struct s_viewport
 {
-	float				viewport_width;
-	float				viewport_height;
+	double				viewport_width;
+	double				viewport_height;
 	t_v3				origin;
 	t_v3				horizontal;
 	t_v3				vertical;
@@ -53,23 +53,23 @@ typedef struct s_ray
 
 typedef struct s_quadratic
 {
-	float				a;
-	float				b;
-	float				c;
-	float				discriminant;
-	float				t1;
-	float				t2;
+	double				a;
+	double				b;
+	double				c;
+	double				discriminant;
+	double				t1;
+	double				t2;
 }						t_quadratic;
 
 //		calcs
-float					vlength(t_v3 v);
+double					vlength(t_v3 v);
 t_obj					*find_closest_object(t_ray *ray, t_obj *objs,
-							float *t_min);
+							double *t_min);
 uint32_t				trace_ray(t_ray ray, t_data *data);
 
 //		quadratic
-void					init_quadratic(t_quadratic *quad, float a, float b,
-							float c);
+void					init_quadratic(t_quadratic *quad, double a, double b,
+							double c);
 bool					solve_quadratic(t_quadratic *quad);
 bool					solve_quadratic2(t_quadratic *quad); // para la parte de detras del cy
 
@@ -98,7 +98,7 @@ void					init_light(t_data *data);
 
 //		init_rays
 void					init_single_ray(t_ray *ray, t_vp *vp, t_cam *camera,
-							float *uv);
+							double *uv);
 t_ray					*init_ray_row(t_data *data, t_cam *camera, t_vp *vp, int y);
 t_ray					**init_rays(t_data *data, t_cam *camera, t_vp *vp);
 
@@ -108,20 +108,23 @@ void					init_materials_render(t_data *data);
 
 //		cylinder
 void					set_cy_axis(t_quadratic *quad, t_obj *cy, t_ray *ray);
-float					set_ray_t(t_ray *ray, t_obj *cy, float *t, t_quadratic quad);
-bool					hit_cy(t_ray *ray, t_obj *cy, float *t);
+double					set_ray_t(t_ray *ray, t_obj *cy, double *t, t_quadratic quad);
+bool					hit_cy(t_ray *ray, t_obj *cy, double *t);
 //		caps
-bool					hit_cap(t_ray *ray, t_obj *cap, float *t);
+bool					hit_cap(t_ray *ray, t_obj *cap, double *t);
 
 //		cone
-bool					hit_cone(t_ray *ray, t_obj *cap, float *t);
+bool					hit_cone(t_ray *ray, t_obj *cap, double *t);
+
+//		cube
+bool					hit_cube(t_ray *ray, t_obj *cuboid, double *t);
 
 //		illumination
 t_rgb					apply_ambient_light(t_rgb obj_color, t_alight *a_light);
 void					difuse_light(t_rgb *color, t_slight *slight, t_obj *obj,
-							float inty);
+							double inty);
 bool					data_shadow(t_data *data, t_ray *shadow_ray,
-							float max_dist, t_obj *self);
+							double max_dist, t_obj *self);
 t_rgb					phong(t_data *data, t_ray *ray, t_obj *obj);
 
 //		specular
@@ -130,8 +133,8 @@ void					specular_light(t_rgb *color, t_data *data, t_ray *ray, int shinnyness);
 //		intersections
 bool					calc_quad_sphere(t_obj *sphere, t_ray ray,
 							t_quadratic *quad);
-bool					hit_sp(t_ray *ray, t_obj *sphere, float *t);
-bool					hit_pl(t_ray *ray, t_obj *plane, float *t);
+bool					hit_sp(t_ray *ray, t_obj *sphere, double *t);
+bool					hit_pl(t_ray *ray, t_obj *plane, double *t);
 
 //		viewport
 t_v3					calculate_up(t_v3 forward, t_v3 right);
@@ -151,9 +154,9 @@ void					free_rays(t_ray **rays, int rows);
 //		PATH_TRACER  (calcs)
 t_rgb					path_trace(t_ray *ray, t_data *data, int depth);
 t_v3 random_in_hemisphere(t_v3 normal);
-float	*generate_uv(int x, int y);
+double	*generate_uv(int x, int y);
 uint32_t	**average_samples(t_data *data, uint32_t **sample1, uint32_t **sample2);
-void swap(float *a, float *b);
+void swap(double *a, double *b);
 
 
 #endif

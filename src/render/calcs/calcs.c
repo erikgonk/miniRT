@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/05 14:42:02 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/07 15:14:25 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,25 @@
 #include "../../lib/libvector/libvct.h"
 #include <float.h>
 
-float	vlength(t_v3 v)
+double	vlength(t_v3 v)
 {
 	return (sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
 }
 
-void swap(float *a, float *b)
+void swap(double *a, double *b)
 {
-	float temp;
+	double temp;
 
 	temp = *a;
 	*a = *b;
 	*b = temp;
 }
 
-t_obj	*find_closest_object(t_ray *ray, t_obj *objs, float *t_min)
+t_obj	*find_closest_object(t_ray *ray, t_obj *objs, double *t_min)
 {
 	t_obj	*closest_obj;
 	t_obj	*obj;
-	float	t;
+	double	t;
 
 	closest_obj = NULL;
 	obj = objs;
@@ -44,7 +44,8 @@ t_obj	*find_closest_object(t_ray *ray, t_obj *objs, float *t_min)
 		|| (obj->type == PL && hit_pl(ray, obj, &t)) \
 		|| (obj->type == CY && hit_cy(ray, obj, &t) \
 		|| obj->type == CAP && hit_cap(ray, obj, &t)) \
-		|| obj->type == CO && hit_cone(ray, obj, &t))
+		|| obj->type == CO && hit_cone(ray, obj, &t)
+		|| obj->type == CU && hit_cube(ray, obj, &t))
 		{
 			if (t > 0 && t < *t_min)
 			{
@@ -59,7 +60,7 @@ t_obj	*find_closest_object(t_ray *ray, t_obj *objs, float *t_min)
 
 #define MAX_DEPTH 5
 
-t_rgb color_mul(t_rgb c, float factor)
+t_rgb color_mul(t_rgb c, double factor)
 {
 	t_rgb result;
 
@@ -79,11 +80,11 @@ t_rgb color_add(t_rgb c1, t_rgb c2)
 	return result;
 }
 
-t_v3 refract(t_obj *obj, t_v3 dir, t_v3 normal, float refractive_index)
+t_v3 refract(t_obj *obj, t_v3 dir, t_v3 normal, double refractive_index)
 {
-	float cosi;
-	float eta;
-	float k;
+	double cosi;
+	double eta;
+	double k;
 
 	cosi = fmax(-1, fmin(1, dot(dir, normal)));
 	eta = obj->calcs.eta2;
@@ -92,7 +93,7 @@ t_v3 refract(t_obj *obj, t_v3 dir, t_v3 normal, float refractive_index)
 	k = 1 - eta * (1 - cosi * cosi);
 	if (k < 0)
 		return ((t_v3){0, 0, 0});
-	return (vadd(vmul(eta, dir), vmul(eta * cosi - sqrtf(k), normal)));
+	return (vadd(vmul(eta, dir), vmul(eta * cosi - sqrt(k), normal)));
 }
 
 t_v3 reflect(t_v3 dir, t_v3 normal)
@@ -100,16 +101,16 @@ t_v3 reflect(t_v3 dir, t_v3 normal)
 	return (vsub(dir, vmul(2 * dot(dir, normal), normal)));
 }
 
-float fresnel(t_obj *obj, t_v3 dir, t_v3 normal, float refractive_index)
+double fresnel(t_obj *obj, t_v3 dir, t_v3 normal, double refractive_index)
 {
-	float cosi;
-	float etai_etat;
-	float etai;
-	float etat;
-	float sint;
-	float cost;
-	float Rs;
-	float Rp;
+	double cosi;
+	double etai_etat;
+	double etai;
+	double etat;
+	double sint;
+	double cost;
+	double Rs;
+	double Rp;
 
 	etat = obj->calcs.etat;
 	etai = obj->calcs.etai;
@@ -121,10 +122,10 @@ float fresnel(t_obj *obj, t_v3 dir, t_v3 normal, float refractive_index)
 		etai = obj->calcs.etat;
 		etai_etat = obj->calcs.etai_etat_reverse;
 	}
-	sint = etai_etat * sqrtf(fmax(0.f, 1 - cosi * cosi));
+	sint = etai_etat * sqrt(fmax(0.f, 1 - cosi * cosi));
 	if (sint >= 1)
 		return 1;
-	cost = sqrtf(fmax(0.f, 1 - sint * sint));
+	cost = sqrt(fmax(0.f, 1 - sint * sint));
 	Rs = ((etat * cosi) - (etai * cost)) / ((etat * cosi) + (etai * cost));
 	Rp = ((etai * cosi) - (etat * cost)) / ((etai * cosi) + (etat * cost));
 	return (Rs * Rs + Rp * Rp) / 2;
@@ -136,7 +137,7 @@ t_rgb glass_ray(t_ray *ray, t_obj *closest_object, t_data *data, int depth)
 	t_ray reflected_ray;
 	t_rgb reflected_color;
 	t_rgb refracted_color;
-	float kr;
+	double kr;
 
 	kr = fresnel(closest_object, ray->direction, ray->normal, 1.5);
 	refracted_ray.origin = vadd(ray->point, vmul(-EPSILON, ray->normal));
@@ -164,7 +165,7 @@ t_rgb mirror_ray(t_ray *ray, t_obj *closest_object, t_data *data, int depth)
 	return (res);
 }
 
-t_v3 perturb_vector(t_v3 direction, float roughness, t_v3 normal)
+t_v3 perturb_vector(t_v3 direction, double roughness, t_v3 normal)
 {
 	t_v3 random_vector;
 	random_vector = random_in_hemisphere(normal);
@@ -191,13 +192,13 @@ t_rgb metallic_ray(t_ray *ray, t_obj *closest_object, t_data *data, int depth)
 t_v3 random_in_hemisphere(t_v3 normal)
 {
 	t_v3		random_vector;
-	float		u1;
-	float		u2;
-	float		theta;
-	float		phi;
+	double		u1;
+	double		u2;
+	double		theta;
+	double		phi;
 
-	u1 = (float)rand() / FLT_MAX;
-	u2 = (float)rand() / FLT_MAX;
+	u1 = (double)rand() / FLT_MAX;
+	u2 = (double)rand() / FLT_MAX;
 	theta = acos(sqrt(1 - u1));
 	phi = 2 * M_PI * u2;
 	random_vector.x = sin(theta) * cos(phi);
@@ -231,7 +232,7 @@ t_rgb apply_self_emission(t_obj *obj, t_rgb base_color)
 void compute_emissive_light(t_obj *emitter, t_ray *ray, t_rgb *color, t_data *data)
 {
 	t_v3 light_direction;
-	float distance;
+	double distance;
 	t_ray shadow_ray;
 
 	distance = vlength(vsub(emitter->pos, ray->point));
@@ -240,7 +241,7 @@ void compute_emissive_light(t_obj *emitter, t_ray *ray, t_rgb *color, t_data *da
 	shadow_ray.direction = light_direction;
 	if (!data_shadow(data, &shadow_ray, distance, emitter))
 	{
-		float intensity = fmax(0.0f, dot(light_direction, ray->normal));
+		double intensity = fmax(0.0f, dot(light_direction, ray->normal));
 		t_rgb emitted_color = color_mul(emitter->rgb, emitter->material.emision);
 		*color = color_add(*color, color_mul(emitted_color, intensity));
 	}
@@ -251,11 +252,11 @@ t_rgb compute_direct_light(t_obj *obj, t_data *data, t_ray *ray, t_rgb color)
 	t_slight	*slight;
 	t_ray		shadow_ray;
 	t_rgb		specular_color;
-	float		intensity;
+	double		intensity;
 	t_v3		vsub_pos_point;
 	t_v3		reflect_dir;
 	t_v3		view_dir;
-	float		spec_intensity;
+	double		spec_intensity;
 	t_obj *current_obj = data->obj;
 
 	specular_color = RGB_BLACK;
@@ -299,7 +300,7 @@ t_rgb	path_trace(t_ray *ray, t_data *data, int depth)
 	t_obj		*closest_object;
 	t_rgb		direct_light;
 	t_rgb		indirect_light;
-	float		t;
+	double		t;
 	t_rgb		result;
 	t_rgb		base_color;
 
@@ -332,7 +333,7 @@ t_rgb	path_trace(t_ray *ray, t_data *data, int depth)
 
 uint32_t	trace_ray(t_ray ray, t_data *data)
 {
-	float	t_min;
+	double	t_min;
 	t_obj	*closest_obj;
 	t_rgb	c_global;
 

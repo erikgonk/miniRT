@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 10:06:58 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/20 10:08:13 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/07 12:30:15 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_v3	vneg(t_v3 v)
 
 t_v3	vrefl(t_v3 v, t_v3 n)
 {
-	float	dot_product;
+	double	dot_product;
 	t_v3	result;
 
 	dot_product = dot(v, n);

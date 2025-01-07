@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid Date        by              +#+  #+#    #+#             */
-/*   Updated: 2025/01/05 14:10:31 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/07 12:30:15 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ void	free_rays(t_ray **rays, int rows)
 t_v3	random_in_unit_disk(t_cam *cam)
 {
 	t_v3	res;
-    float theta;
-    float r;
+    double theta;
+    double r;
 
-	r = sqrt((float)rand() / (float)RAND_MAX);
-	theta = cam->pi2 * ((float)rand() / (float)RAND_MAX);
+	r = sqrt((double)rand() / (double)RAND_MAX);
+	theta = cam->pi2 * ((double)rand() / (double)RAND_MAX);
 	res.x =  r * cos(theta);
 	res.y = r * sin(theta);
     return (res);
@@ -56,7 +56,7 @@ void generate_dof_ray(t_ray *ray, t_cam *cam)
 	ray->direction = normalize(vsub(focus_point, ray->origin));
 }
 
-void	init_single_ray(t_ray *ray, t_vp *vp, t_cam *cam, float *uv)
+void	init_single_ray(t_ray *ray, t_vp *vp, t_cam *cam, double *uv)
 {
 	t_v3	pixel_position;
 
@@ -73,9 +73,9 @@ t_ray	*init_ray_row(t_data *data, t_cam *cam, t_vp *vp, int y)
 {
 	t_ray	*row;
 	int		x;
-	float	uv[2];
-	float	r_x;
-	float	r_y;
+	double	uv[2];
+	double	r_x;
+	double	r_y;
 
 	row = malloc(data->x * sizeof(t_ray));
 	if (!row)
@@ -83,12 +83,12 @@ t_ray	*init_ray_row(t_data *data, t_cam *cam, t_vp *vp, int y)
 	x = 0;
 	while (x < data->x)
 	{
-		r_x = (float)rand() / (float)RAND_MAX;
-		r_y = (float)rand() / (float)RAND_MAX;
-		uv[0] = ((float)x + r_x) / (float)(data->x- 1);
-		uv[1] =  1.0f - ((float)y + r_y) / (float)(data->y - 1);
-		// uv[0] = ((float)x) / (float)(data->x- 1);
-		// uv[1] =  1.0f - ((float)y) / (float)(data->y - 1);
+		r_x = (double)rand() / (double)RAND_MAX;
+		r_y = (double)rand() / (double)RAND_MAX;
+		uv[0] = ((double)x + r_x) / (double)(data->x- 1);
+		uv[1] =  1.0f - ((double)y + r_y) / (double)(data->y - 1);
+		// uv[0] = ((double)x) / (double)(data->x- 1);
+		// uv[1] =  1.0f - ((double)y) / (double)(data->y - 1);
 		init_single_ray(&row[x], vp, cam, uv);
 		x++;
 	}

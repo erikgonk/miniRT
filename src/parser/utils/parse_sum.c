@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_sum.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 13:40:44 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/19 16:02:28 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/07 12:30:15 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ int	random_sum_parse(char *str, int i)
 	return (i);
 }
 
-// skips 1 float | stops when ' '
-int	skip_float(char *str, int i, int j, int flag)
+// skips 1 double | stops when ' '
+int	skip_double(char *str, int i, int j, int flag)
 {
 	if (!str[i])
-		exit(er("error: skip_float: wrong map: skipFloat", str));
+		exit(er("error: skip_double: wrong map: skipdouble", str));
 	while (str[i] && ft_isspace(str[i]))
 		i++;
 	while (str[i])
@@ -56,22 +56,22 @@ int	skip_float(char *str, int i, int j, int flag)
 		else if (str[i] == '.')
 			j++;
 		else if (!(ft_isdigit(str[i]) || str[i] == '-'))
-			exit(er("error: skip_float: wrong map: just  nums allowed", str));
+			exit(er("error: skip_double: wrong map: just  nums allowed", str));
 		if (j > 1)
-			exit(er("error: skip_float: wrong map: too many .", str));
+			exit(er("error: skip_double: wrong map: too many .", str));
 		else if (str[i + 1] && str[i] == '.' && !ft_isdigit(str[i + 1]))
-			exit(er("error: skip_float: wrong map: wrong char after .", str));
+			exit(er("error: skip_double: wrong map: wrong char after .", str));
 		i++;
 	}
 	return (i);
 }
 
-// skips 3 floats | 1.2,4.1,0.0
+// skips 3 doubles | 1.2,4.1,0.0
 // str | i (start) | j . (0) | k , (0)
-int	skip_floats(char *str, int i, int j, int k)
+int	skip_doubles(char *str, int i, int j, int k)
 {
 	if (!str[i] || !ft_isspace(str[i]))
-		exit(er("error: skip_floats: wrong map: NULL || not space", str));
+		exit(er("error: skip_doubles: wrong map: NULL || not space", str));
 	while (str[i] && ft_isspace(str[i]))
 		i++;
 	while (str[i])
@@ -83,17 +83,17 @@ int	skip_floats(char *str, int i, int j, int k)
 		else if (str[i] == ',')
 			k++;
 		if ((j > 3 || k > 2) || (ft_isspace(str[i]) && k != 2))
-			exit(er("error: skip_floats: too many , or .", str));
+			exit(er("error: skip_doubles: too many , or .", str));
 		else if (str[i + 1] && ((str[i] == '.' || str[i] == ',')
 				&& (!ft_isdigit(str[i + 1]) && str[i + 1] != '-')))
-			exit(er("error: skip_floats: wrong char after , or .", str));
+			exit(er("error: skip_doubles: wrong char after , or .", str));
 		else if (str[i + 1] && (str[i] == '-' || str[i] == '+')
 			&& !ft_isdigit(str[i + 1]))
-			exit(er("error: skip_floats: wrong char after - or +", str));
+			exit(er("error: skip_doubles: wrong char after - or +", str));
 		i++;
 	}
 	if (!str[i])
-		exit(er("error: skip_floats: wrong map: NULL end", str));
+		exit(er("error: skip_doubles: wrong map: NULL end", str));
 	return (i);
 }
 
@@ -117,7 +117,7 @@ int	skip_color(char *str, int i, int flag)
 	return (i);
 }
 
-// skips 3 floats | 1.2,4.1,0.0
+// skips 3 doubles | 1.2,4.1,0.0
 int	sum_parse(char *str, int i, int j)
 {
 	while (str[i] && !ft_isspace(str[i++]))

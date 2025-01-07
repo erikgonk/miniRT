@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:18:36 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/07 12:13:31 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/07 14:53:32 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,18 +78,20 @@ void	check_obj(t_obj *obj)
 			exit(er("error: check_obj: rgb.g <0 / >255", NULL));
 		else if (obj->rgb.b < 0 || obj->rgb.b > 255)
 			exit(er("error: check_obj: rgb.b <0/>255", NULL));
-		else if (obj->type != PL && obj->size <= 0)
+		else if (obj->type != PL && obj->type != CO && obj->size <= 0)
 			exit(er("error: check_obj: sp/cy size <= 0", NULL));
 		else if (obj->type != SP)
 		{
 			if (obj->axis.x < -1 || obj->axis.x > 1)
-				exit(er("error: check_obj: pl/cy axis.x <0 / <1", NULL));
+				exit(er("error: check_obj: pl/cy/co axis.x <0 / <1", NULL));
 			else if (obj->axis.y < -1 || obj->axis.y > 1)
-				exit(er("error: check_obj: pl/cy axis.y <0 / <1", NULL));
+				exit(er("error: check_obj: pl/cy/co axis.y <0 / <1", NULL));
 			else if (obj->axis.z < -1 || obj->axis.z > 1)
-				exit(er("error: check_obj: pl/cy axis.z <0 / <1", NULL));
-			else if ((obj->type == CY || obj->type == CO) && obj->height < 0)
-				exit(er("error: check_obj: cy height < 0", NULL));
+				exit(er("error: check_obj: pl/cy/co axis.z <0 / <1", NULL));
+			else if ((obj->type == CY || obj->type == CO) && obj->height < 1)
+				exit(er("error: check_obj: cy/co height <1", NULL));
+			else if (obj->type == CO && (obj->size > 90 || obj->size < 1))
+				exit(er("error: check_obj: cone size <1", NULL));
 		}
 		obj = obj->next;
 	}

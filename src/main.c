@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/07 12:15:15 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/07 15:35:30 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,26 +46,46 @@ void	update_render(void *param)
 	printf("%lld\n", time /= 100);
 }
 
-void	init_cone(t_data *data)
+void calculate_bounds(t_obj	*obj)
 {
-	t_obj	*cone;
+	t_v3 half_size;
 
-	cone = malloc(sizeof(t_obj));
-	if (!cone)
+	// Calcula el vector de la mitad del tamaño
+	half_size.x = obj->cube.size.x * 0.5;
+	half_size.y = obj->cube.size.y * 0.5;
+	half_size.z = obj->cube.size.z * 0.5;
+
+	// Calcula los valores mínimos y máximos
+	obj->cube.xmin = obj->pos.x - half_size.x;
+	obj->cube.xmax = obj->pos.x + half_size.x;
+
+	obj->cube.ymin = obj->pos.y - half_size.y;
+	obj->cube.ymax = obj->pos.y + half_size.y;
+
+	obj->cube.zmin = obj->pos.z - half_size.z;
+	obj->cube.zmax = obj->pos.z + half_size.z;
+}
+
+void	init_cube(t_data *data)
+{
+	t_obj	*cube;
+
+	cube = malloc(sizeof(t_obj));
+	if (!cube)
 		return ;
-	cone->type = CO;
-	cone->pos = (t_v3) {-75.0,5.0,-50.0};
-	cone->axis = (t_v3) {0.5,-1,-0.5};
-	cone->axis = normalize(cone->axis);
-	cone->size = 20;
-	if (cone->size < 0 || cone->size > 54)
-		exit (er("error: init_cone: values 0-54", NULL));
-	cone->size += 35; // 35 - 89
-	cone->height = 20;
-	cone->rgb = (t_rgb){50,128,200};
-	cone->material.m_type = -1;
-	cone->next = NULL;
-	objadd_back(&data->obj, cone);
+	cube->type = CU;
+	cube->pos = (t_v3) {-75.0,5.0,-50.0};
+	cube->axis = (t_v3) {-0.5,0.3,0.7};
+	cube->axis = normalize(cube->axis);
+	cube->cube.size.x = 50;
+	cube->cube.size.y = 60;
+	cube->cube.size.z = 20;
+	cube->height = 30;
+	cube->rgb = (t_rgb) {50,128,200};
+	cube->material.m_type = -1;
+	calculate_bounds(cube);
+	cube->next = NULL;
+	objadd_back(&data->obj, cube);
 }
 
 int	main(int ac, char **av)
@@ -78,7 +98,7 @@ int	main(int ac, char **av)
 	validate_args_and_open(ac, av, &fd);
 	parse(data, fd);
 	close(fd);
-	init_cone(data); // quitar cunado este en parse
+	init_cube(data); // delete
 	init_all(data);
 	data->img_last = NULL;
 	// render_to_mlx(data);

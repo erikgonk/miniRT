@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 18:12:24 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/19 13:44:49 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/07 12:30:15 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@ void	print_obj_menu(t_data *data);
 void	run_console(t_data *data, keys_t key);
 
 // camera_menu
-void	adjust_camera_pos(keys_t key, t_data *data, float *posq);
-void	adjust_camera_axis(keys_t key, t_data *data, float *axisq);
+void	adjust_camera_pos(keys_t key, t_data *data, double *posq);
+void	adjust_camera_axis(keys_t key, t_data *data, double *axisq);
 void	manage_cam(keys_t key, t_data *data);
 
 // obj_menu
-void	adjust_obj_position(keys_t key, t_obj *obj, float *posq);
-void	adjust_obj_axis(keys_t key, t_obj *obj, float *axisq);
+void	adjust_obj_position(keys_t key, t_obj *obj, double *posq);
+void	adjust_obj_axis(keys_t key, t_obj *obj, double *axisq);
 void	manage_obj(keys_t key, t_data *data);
 
 // slihgt_menu

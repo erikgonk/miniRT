@@ -65,14 +65,14 @@ void	parse_cb_em(t_obj *obj, char *str)
 		obj->material.board_scale = 1 - obj->material.board_scale;
 		if (obj->material.board_scale > 0.991 || obj->material.board_scale < 0.001)
 			exit(er("error: parse_cb_em: board size has to be 0.991-0.001", NULL));
-		i = skip_float(str, i, 0, 0);
+		i = skip_double(str, i, 0, 0);
 		obj->material.rgb_checker = colors_parse(str, i);
 		check_end(str, i);
 	}
 	else if (obj->material.m_type == EM)
 	{
 		obj->material.emision = ft_atof(str, i);
-		i = skip_float(str, i, 0, 0);
+		i = skip_double(str, i, 0, 0);
 		while (str[i] && str[i] != '\n')
 			if (!ft_isspace(str[i++]))
 				exit(er("error: parse_cb_em: char after last num", str));

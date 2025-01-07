@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:40:08 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/05 13:05:54 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/07 12:30:15 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ t_v3	calculate_right(t_v3 forward)
 t_vp	*init_viewport(t_cam *camera, int width, int height)
 {
 	t_vp	*viewport;
-	float	aspect_ratio;
+	double	aspect_ratio;
 
 	camera->axis = normalize(camera->axis);
 	viewport = malloc(sizeof(t_vp));
 	if (!viewport)
 		return (NULL);
-	aspect_ratio = (float)width / (float)height;
+	aspect_ratio = (double)width / (double)height;
 	viewport->viewport_width = 2.0 * tan((camera->fov * M_PI / 180.0) / 2.0);
 	viewport->viewport_height = viewport->viewport_width / aspect_ratio;
 	camera->frame.forward = camera->axis;

@@ -6,24 +6,24 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:27:07 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/05 14:49:10 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/07 12:30:15 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-t_v3	floats_acl_parse(char *str, int i)
+t_v3	doubles_acl_parse(char *str, int i)
 {
-	float		x;
-	float		y;
-	float		z;
+	double		x;
+	double		y;
+	double		z;
 
 	while (str[i] && ft_isspace(str[i]))
 		i++;
 	if (str[i] && !ft_isdigit(str[i]) && str[i] != '-')
-		exit(er("error: floats_acl_parse: map parsing:\n", str));
+		exit(er("error: doubles_acl_parse: map parsing:\n", str));
 	x = ft_atof(str, i);
-	i = skip_float(str, i, 0, 1);
+	i = skip_double(str, i, 0, 1);
 	y = ft_atof(str, i);
 	i = random_sum_parse(str, i);
 	z = ft_atof(str, i);
@@ -39,7 +39,7 @@ void	create_alight(t_data *data, char *str, int type)
 		return ;
 	data->a_light = malloc(sizeof(t_alight));
 	data->a_light->br = ft_atof(str, 1);
-	tmp = ft_substr(str, skip_float(str, 1, 0, 0), ft_strlen(str));
+	tmp = ft_substr(str, skip_double(str, 1, 0, 0), ft_strlen(str));
 	data->a_light->rgb = colors_parse(tmp, 0);
 	check_end(tmp, 1);
 	free(tmp);
@@ -55,10 +55,10 @@ void	create_cam(t_data *data, char *str, int type)
 	if (type != 4 || (str[1] && !ft_isspace(str[1])))
 		return ;
 	data->cam = malloc(sizeof(t_cam));
-	data->cam->pos = floats_acl_parse(str, 1);
-	tmp = ft_substr(str, skip_floats(str, 1, 0, 0), ft_strlen(str));
-	data->cam->axis = normalize(floats_acl_parse(tmp, 0));
-	str2 = ft_substr(tmp, skip_floats(tmp, 0, 0, 0), ft_strlen(tmp));
+	data->cam->pos = doubles_acl_parse(str, 1);
+	tmp = ft_substr(str, skip_doubles(str, 1, 0, 0), ft_strlen(str));
+	data->cam->axis = normalize(doubles_acl_parse(tmp, 0));
+	str2 = ft_substr(tmp, skip_doubles(tmp, 0, 0, 0), ft_strlen(tmp));
 	data->cam->fov = ft_atoi_parse(str2, 0, 1);
 	i = 0;
 	while (str2[i] && ft_isspace(str2[i]))
@@ -85,10 +85,10 @@ void	create_slight(t_slight **s_light, char *str, int type)
 	new_light = malloc(sizeof(t_slight));
 	if (!new_light)
 		exit(er("error: malloc failed for slight", NULL));
-	new_light->pos = floats_acl_parse(str, 1);
-	tmp[0] = ft_substr(str, skip_floats(str, 1, 0, 0), ft_strlen(str));
+	new_light->pos = doubles_acl_parse(str, 1);
+	tmp[0] = ft_substr(str, skip_doubles(str, 1, 0, 0), ft_strlen(str));
 	new_light->br = ft_atof(tmp[0], 0);
-	tmp[1] = ft_substr(tmp[0], skip_float(tmp[0], 0, 0, 0), ft_strlen(tmp[0]));
+	tmp[1] = ft_substr(tmp[0], skip_double(tmp[0], 0, 0, 0), ft_strlen(tmp[0]));
 	new_light->rgb = colors_parse(tmp[1], 0);
 	check_end(tmp[1], 0);
 	new_light->next = NULL;

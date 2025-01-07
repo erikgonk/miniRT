@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:02:22 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/05 14:22:50 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/07 14:50:06 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ t_obj	*create_obj(char *str, int type)
 
 	obj = new_obj();
 	obj->type = type;
-	tmp = floats_parse(obj, str, 2, 0);
+	tmp = doubles_parse(obj, str, 2, 0);
 	if (obj->type != SP)
-		tmp2 = floats_parse(obj, tmp, 0, 1);
+		tmp2 = doubles_parse(obj, tmp, 0, 1);
 	create_obj_normi(obj, &tmp, &tmp2);
 	if (obj->type != CY && obj->type != CO)
 		target = tmp2;

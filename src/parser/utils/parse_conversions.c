@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 09:47:50 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/20 11:37:01 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/07 12:30:15 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,19 @@ t_rgb	colors_parse(char *str, int i)
 	return (rgb);
 }
 
-char	*floats_parse(t_obj *obj, char *str, int i, int flag)
+char	*doubles_parse(t_obj *obj, char *str, int i, int flag)
 {
-	float	x;
-	float	y;
-	float	z;
+	double	x;
+	double	y;
+	double	z;
 	char	*tmp;
 
 	while (str[i] && ft_isspace(str[i]))
 		i++;
 	if (str[i] && (!ft_isdigit(str[i]) && str[i] != '-'))
-		exit(er("error: floats_parse: map parsing:\n", str));
+		exit(er("error: doubles_parse: map parsing:\n", str));
 	x = ft_atof(str, i);
-	i = skip_float(str, i, 0, 1);
+	i = skip_double(str, i, 0, 1);
 	y = ft_atof(str, i);
 	i = random_sum_parse(str, i);
 	z = ft_atof(str, i);
@@ -81,10 +81,10 @@ int	ft_atoi_parse(char *str, int i, int flag)
 	return (res);
 }
 
-float	ft_atof_normi(char *str, int i)
+double	ft_atof_normi(char *str, int i)
 {
-	float	fraction;
-	float	divisor;
+	double	fraction;
+	double	divisor;
 
 	fraction = 0.0;
 	divisor = 10.0;
@@ -101,9 +101,9 @@ float	ft_atof_normi(char *str, int i)
 	return (fraction);
 }
 
-float	ft_atof(char *str, int i) // i = start
+double	ft_atof(char *str, int i) // i = start
 {
-	float		res;
+	double		res;
 	int			sign;
 
 	res = 0.0;

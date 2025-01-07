@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 09:41:20 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/30 17:31:42 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/07 12:41:24 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	specular_light(t_rgb *color, t_data *data, t_ray *ray, int shin)
 {
-	float		intensity;
+	double		intensity;
 	t_v3		reflection;
 	t_slight	*sl;
 
@@ -24,9 +24,9 @@ void	specular_light(t_rgb *color, t_data *data, t_ray *ray, int shin)
 	{
 		reflection = vrefl(vneg(normalize(vsub(sl->pos, ray->point))), ray->normal);
 		intensity = pow(fmax(dot(reflection, ray->i_direction), 0.0f), shin);
-		color->r = fminf(color->r + sl->rgb.r * intensity, 255);
-		color->g = fminf(color->g + sl->rgb.g * intensity, 255);
-		color->b = fminf(color->b + sl->rgb.b * intensity, 255);
+		color->r = fmin(color->r + sl->rgb.r * intensity, 255);
+		color->g = fmin(color->g + sl->rgb.g * intensity, 255);
+		color->b = fmin(color->b + sl->rgb.b * intensity, 255);
 		sl = sl->next;
 	}
 }
