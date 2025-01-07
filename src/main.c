@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/07 15:35:30 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/07 16:18:04 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,24 +46,61 @@ void	update_render(void *param)
 	printf("%lld\n", time /= 100);
 }
 
-void calculate_bounds(t_obj	*obj)
+void	calculate_bounds(t_obj *obj)
 {
-	t_v3 half_size;
+	t_v3	half_size;
+	t_v3	u, v, w;
+	t_v3	corners[8];
+	int		i;
 
-	// Calcula el vector de la mitad del tamaño
+	// Calcula la mitad del tamaño
 	half_size.x = obj->cube.size.x * 0.5;
 	half_size.y = obj->cube.size.y * 0.5;
 	half_size.z = obj->cube.size.z * 0.5;
 
-	// Calcula los valores mínimos y máximos
-	obj->cube.xmin = obj->pos.x - half_size.x;
-	obj->cube.xmax = obj->pos.x + half_size.x;
+	// Calcula los ejes locales del cubo basados en su axis
+	w = normalize(obj->axis); // Eje principal
+	u = normalize(cross((t_v3){0, 1, 0}, w)); // Eje ortogonal
+	if (fabs(dot(u, w)) > EPSILON) // Garantiza ortogonalidad
+		u = normalize(cross((t_v3){1, 0, 0}, w));
+	v = cross(w, u); // Tercer eje ortogonal
 
-	obj->cube.ymin = obj->pos.y - half_size.y;
-	obj->cube.ymax = obj->pos.y + half_size.y;
+	// Calcula las 8 esquinas del cubo en el espacio global
+	corners[0] = vadd(obj->pos, vadd(vadd(vmul(half_size.x, u), vmul(half_size.y, v)), vmul(half_size.z, w)));
+	corners[1] = vadd(obj->pos, vadd(vadd(vmul(-half_size.x, u), vmul(half_size.y, v)), vmul(half_size.z, w)));
+	corners[2] = vadd(obj->pos, vadd(vadd(vmul(half_size.x, u), vmul(-half_size.y, v)), vmul(half_size.z, w)));
+	corners[3] = vadd(obj->pos, vadd(vadd(vmul(-half_size.x, u), vmul(-half_size.y, v)), vmul(half_size.z, w)));
+	corners[4] = vadd(obj->pos, vadd(vadd(vmul(half_size.x, u), vmul(half_size.y, v)), vmul(-half_size.z, w)));
+	corners[5] = vadd(obj->pos, vadd(vadd(vmul(-half_size.x, u), vmul(half_size.y, v)), vmul(-half_size.z, w)));
+	corners[6] = vadd(obj->pos, vadd(vadd(vmul(half_size.x, u), vmul(-half_size.y, v)), vmul(-half_size.z, w)));
+	corners[7] = vadd(obj->pos, vadd(vadd(vmul(-half_size.x, u), vmul(-half_size.y, v)), vmul(-half_size.z, w)));
 
-	obj->cube.zmin = obj->pos.z - half_size.z;
-	obj->cube.zmax = obj->pos.z + half_size.z;
+	// Inicializa los límites con la primera esquina
+	obj->cube.xmin = corners[0].x;
+	obj->cube.xmax = corners[0].x;
+	obj->cube.ymin = corners[0].y;
+	obj->cube.ymax = corners[0].y;
+	obj->cube.zmin = corners[0].z;
+	obj->cube.zmax = corners[0].z;
+
+	// Ajusta los límites basado en todas las esquinas
+	i = 1;
+	while (i < 8)
+	{
+		if (corners[i].x < obj->cube.xmin)
+			obj->cube.xmin = corners[i].x;
+		if (corners[i].x > obj->cube.xmax)
+			obj->cube.xmax = corners[i].x;
+		if (corners[i].y < obj->cube.ymin)
+			obj->cube.ymin = corners[i].y;
+		if (corners[i].y > obj->cube.ymax)
+			obj->cube.ymax = corners[i].y;
+		if (corners[i].z < obj->cube.zmin)
+			obj->cube.zmin = corners[i].z;
+		if (corners[i].z > obj->cube.zmax)
+			obj->cube.zmax = corners[i].z;
+		i++;
+	}
 }
 
 void	init_cube(t_data *data)
@@ -75,7 +112,7 @@ void	init_cube(t_data *data)
 		return ;
 	cube->type = CU;
 	cube->pos = (t_v3) {-75.0,5.0,-50.0};
-	cube->axis = (t_v3) {-0.5,0.3,0.7};
+	cube->axis = (t_v3) {-1,0.3,0.7};
 	cube->axis = normalize(cube->axis);
 	cube->cube.size.x = 50;
 	cube->cube.size.y = 60;

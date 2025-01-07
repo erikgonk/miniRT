@@ -6,29 +6,71 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:34:20 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/07 15:37:50 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/07 16:10:22 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
+t_v3	transform_to_global(t_v3 axis, t_v3 normal)
+{
+	t_v3	u, v, w;
+	t_v3	global_normal;
+
+	w = normalize(axis);
+	u = normalize(cross((t_v3){0, 1, 0}, w)); // Vector ortogonal
+	if (fabs(dot(u, w)) > EPSILON) // Asegurar ortogonalidad
+		u = normalize(cross((t_v3){1, 0, 0}, w));
+	v = cross(w, u); // Tercer eje ortogonal
+
+	global_normal = vadd(vmul(normal.x, u), vmul(normal.y, v));
+	global_normal = vadd(global_normal, vmul(normal.z, w));
+	return normalize(global_normal);
+}
+
+t_v3	transform_to_local(t_v3 pos, t_v3 axis, t_v3 point)
+{
+	t_v3	transformed;
+	t_v3	u, v, w;
+
+	w = normalize(axis);
+	u = normalize(cross((t_v3){0, 1, 0}, w)); // Vector ortogonal
+	if (fabs(dot(u, w)) > EPSILON) // Asegurar ortogonalidad
+		u = normalize(cross((t_v3){1, 0, 0}, w));
+	v = cross(w, u); // Tercer eje ortogonal
+
+	point = vsub(point, pos); // Trasladar al origen local
+	transformed.x = dot(point, u);
+	transformed.y = dot(point, v);
+	transformed.z = dot(point, w);
+	return (transformed);
+}
+
 t_v3 calculate_normal_cuboid(t_obj *obj, t_v3 point)
 {
-    double epsilon = 1e-5;
-    if (fabs(point.x - obj->cube.xmin) < epsilon)
-        return (t_v3){-1, 0, 0};
-    if (fabs(point.x - obj->cube.xmax) < epsilon)
-        return (t_v3){1, 0, 0};
-    if (fabs(point.y - obj->cube.ymin) < epsilon)
-        return (t_v3){0, -1, 0};
-    if (fabs(point.y - obj->cube.ymax) < epsilon)
-        return (t_v3){0, 1, 0};
-    if (fabs(point.z - obj->cube.zmin) < epsilon)
-        return (t_v3){0, 0, -1};
-    if (fabs(point.z - obj->cube.zmax) < epsilon)
-        return (t_v3){0, 0, 1};
-    return (t_v3){0, 0, 0}; // Normal por defecto
+	t_v3	local;
+	t_v3	normal;
+
+	local = transform_to_local(obj->pos, obj->axis, point);
+	if (fabs(local.x - obj->cube.xmin) < EPSILON)
+		normal = (t_v3){-1, 0, 0};
+	else if (fabs(local.x - obj->cube.xmax) < EPSILON)
+		normal = (t_v3){1, 0, 0};
+	else if (fabs(local.y - obj->cube.ymin) < EPSILON)
+		normal = (t_v3){0, -1, 0};
+	else if (fabs(local.y - obj->cube.ymax) < EPSILON)
+		normal = (t_v3){0, 1, 0};
+	else if (fabs(local.z - obj->cube.zmin) < EPSILON)
+		normal = (t_v3){0, 0, -1};
+	else if (fabs(local.z - obj->cube.zmax) < EPSILON)
+		normal = (t_v3){0, 0, 1};
+	else
+		normal = (t_v3){0, 0, 0};
+
+	return transform_to_global(obj->axis, normal);
 }
+
+
 
 // Función para encontrar la intersección con un obj->cubee axis-aligned
 bool	hit_cube(t_ray *ray, t_obj *obj, double *t)
@@ -117,7 +159,8 @@ bool	hit_cube(t_ray *ray, t_obj *obj, double *t)
 		t_res = tmax;
 	if (t_res < *t && t >= 0)
 	{
-		ray->normal = calculate_normal_cuboid(obj, ray->point)
+		ray->point = vadd(ray->origin, vmul(*t, ray->direction));
+		ray->normal = calculate_normal_cuboid(obj, ray->point);
 		*t = t_res;
 		return true;
 	}
