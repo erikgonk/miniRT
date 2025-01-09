@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:53:01 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/05 14:51:14 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/09 16:24:43 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ void	parse(t_data *data, int fd)
 		if (str[0] == '#')
 			continue ;
 		type = type_obj(str);
-		if (type > 6)
+		if (type > 7)
 			exit(er("error: parse: wrong map: obj type", str));
-		else if ((type <= 2 || type == CO) && ft_isspace(str[2]))
+		else if ((type <= 2 || type == CO || type == CU) && ft_isspace(str[2]))
 			objadd_back(&data->obj, create_obj(str, type));
 		create_alight(data, str, type);
 		create_cam(data, str, type);

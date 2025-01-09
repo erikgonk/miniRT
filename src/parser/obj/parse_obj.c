@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_obj.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:02:22 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/07 14:50:06 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/09 16:23:01 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,30 @@
 
 void	create_obj_normi(t_obj *obj, char **tmp, char **tmp2)
 {
+	obj->material.emision = -1;
 	if (obj->type == SP)
 	{
 		obj->size = ft_atof(*tmp, 0);
 		*tmp2 = ft_substr(*tmp, sum_parse(*tmp, 0, 0), ft_strlen(*tmp));
 	}
-	else if (obj->type == CY || obj->type == CO)
+	else if (obj->type == CY || obj->type == CO || obj->type == CU)
 	{
 		obj->size = ft_atof(*tmp2, 0);
+		obj->cube_size.x = obj->size;
 		obj->i = sum_parse(*tmp2, 0, 0);
 		obj->height = ft_atof(*tmp2, obj->i);
+		obj->cube_size.y = obj->height;
 		obj->i = sum_parse(*tmp2, obj->i, 0);
 		free(*tmp);
 		*tmp = ft_substr(*tmp2, obj->i, ft_strlen(*tmp2));
 	}
-	obj->material.emision = -1;
+	if (obj->type == CU)
+	{
+		obj->cube_size.z = ft_atof(*tmp, 0);
+		free(*tmp2);
+		obj->i = skip_double(*tmp, 0, 0, 0);
+		*tmp2 = ft_substr(*tmp, obj->i, ft_strlen(*tmp));
+	}
 }
 
 t_obj	*create_obj(char *str, int type)

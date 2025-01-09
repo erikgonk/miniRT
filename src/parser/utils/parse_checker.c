@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:18:36 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/07 14:53:32 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/09 16:19:56 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,31 +68,47 @@ void	check_params_acl(t_alight *aL, t_slight *sL, t_cam *cam)
 		exit(er("error: check_params_acl: cam fov <0", NULL));
 }
 
+void	check_obj_normi(t_obj *obj)
+{
+	if (obj->axis.x < -1 || obj->axis.x > 1)
+		exit(er("error: check_obj_normi: pl/cy/co axis.x <0 & <1", NULL));
+	else if (obj->axis.y < -1 || obj->axis.y > 1)
+		exit(er("error: check_obj_normi: pl/cy/co axis.y <0 & <1", NULL));
+	else if (obj->axis.z < -1 || obj->axis.z > 1)
+		exit(er("error: check_obj_normi: pl/cy/co axis.z <0 & <1", NULL));
+	else if ((obj->type == CY || obj->type == CO) && obj->height < 1)
+		exit(er("error: check_obj_normi: cy/co height <1", NULL));
+	else if (obj->type == CO && (obj->size > 90 || obj->size < 1))
+		exit(er("error: check_obj_normi: cone size <1", NULL));
+	if (obj->type == CU)
+	{
+		if (obj->cube_size.x < 1) 
+			exit(er("error: check_obj_normi: cube size x <1", NULL));
+		else if (obj->cube_size.x < 1) 
+			exit(er("error: check_obj_normi: cube size y <1", NULL));
+		else if (obj->cube_size.x < 1) 
+			exit(er("error: check_obj_normi: cube size z <1", NULL));
+	}
+}
+
 void	check_obj(t_obj *obj)
 {
 	while (obj)
 	{
 		if (obj->rgb.r < 0 || obj->rgb.r > 255)
-			exit(er("error: check_obj: rgb.r <0 / >255", NULL));
+			exit(er("error: check_obj: rgb.r <0 & >255", NULL));
 		else if (obj->rgb.g < 0 || obj->rgb.g > 255)
-			exit(er("error: check_obj: rgb.g <0 / >255", NULL));
+			exit(er("error: check_obj: rgb.g <0 & >255", NULL));
 		else if (obj->rgb.b < 0 || obj->rgb.b > 255)
-			exit(er("error: check_obj: rgb.b <0/>255", NULL));
+			exit(er("error: check_obj: rgb.b <0 & >255", NULL));
 		else if (obj->type != PL && obj->type != CO && obj->size <= 0)
-			exit(er("error: check_obj: sp/cy size <= 0", NULL));
+			exit(er("error: check_obj: sp/cy size <=0", NULL));
 		else if (obj->type != SP)
-		{
-			if (obj->axis.x < -1 || obj->axis.x > 1)
-				exit(er("error: check_obj: pl/cy/co axis.x <0 / <1", NULL));
-			else if (obj->axis.y < -1 || obj->axis.y > 1)
-				exit(er("error: check_obj: pl/cy/co axis.y <0 / <1", NULL));
-			else if (obj->axis.z < -1 || obj->axis.z > 1)
-				exit(er("error: check_obj: pl/cy/co axis.z <0 / <1", NULL));
-			else if ((obj->type == CY || obj->type == CO) && obj->height < 1)
-				exit(er("error: check_obj: cy/co height <1", NULL));
-			else if (obj->type == CO && (obj->size > 90 || obj->size < 1))
-				exit(er("error: check_obj: cone size <1", NULL));
-		}
+			check_obj_normi(obj);
+		if (obj->type == CO && (obj->size < 0 || obj->size > 54))
+			exit(er("error: check_obj: co size <0 & >54", NULL));
+		else if (obj->type == CO)
+			obj->size += 35;	
 		obj = obj->next;
 	}
 }
