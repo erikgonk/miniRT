@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/07 15:16:31 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/08 12:41:40 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,9 @@ void					init_obj(t_data *data);
 void					init_obj_normi(t_data *data, t_obj *obj);
 void					init_light(t_data *data);
 
+//		init_sides
+void					init_sides(t_data *data);
+
 //		init_rays
 void					init_single_ray(t_ray *ray, t_vp *vp, t_cam *camera,
 							double *uv);
@@ -117,7 +120,7 @@ bool					hit_cap(t_ray *ray, t_obj *cap, double *t);
 bool					hit_cone(t_ray *ray, t_obj *cap, double *t);
 
 //		cube
-bool					hit_cube(t_ray *ray, t_obj *cuboid, double *t);
+bool					create_cube(t_data *data, t_obj *cube);
 
 //		illumination
 t_rgb					apply_ambient_light(t_rgb obj_color, t_alight *a_light);

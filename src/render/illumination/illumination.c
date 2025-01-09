@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:09:03 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/07 15:14:53 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/08 12:35:45 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ bool	data_shadow(t_data *data, t_ray *shadow_ray, double max_dist, t_obj *self)
 		if (current_obj->type == SP && hit_sp(shadow_ray, current_obj, &t) && \
 				(t > EPSILON && t < max_dist))
 			return (true);
-		else if (current_obj->type == PL && hit_pl(shadow_ray, current_obj, &t) \
+		else if ((current_obj->type == PL || current_obj->type == SIDE) && hit_pl(shadow_ray, current_obj, &t) \
 				&& (t > EPSILON && t < max_dist))
 			return (true);
 		else if (current_obj->type == CY && hit_cy(shadow_ray, current_obj, &t) && (t > EPSILON && t < max_dist))
@@ -77,9 +77,6 @@ bool	data_shadow(t_data *data, t_ray *shadow_ray, double max_dist, t_obj *self)
 				&& (t > EPSILON && t < max_dist))
 			return (true);
 		else if (current_obj->type == CO && hit_cone(shadow_ray, current_obj, &t) \
-				&& (t > EPSILON && t < max_dist))
-			return (true);
-		else if (current_obj->type == CU && hit_cube(shadow_ray, current_obj, &t) \
 				&& (t > EPSILON && t < max_dist))
 			return (true);
 		current_obj = current_obj->next;

@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:34:20 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/05 11:40:22 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/08 12:39:14 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	init_all(t_data *data)
 {
+	init_sides(data);
 	init_obj(data);
 	init_light(data);
 	init_mlx(data);

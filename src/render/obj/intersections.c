@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:48:44 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/07 12:30:15 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/08 14:03:53 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,24 +45,41 @@ bool	hit_sp(t_ray *ray, t_obj *sphere, double *t)
 
 bool	hit_pl(t_ray *ray, t_obj *plane, double *t)
 {
-	double	denominator;
-	double	result;
-	double	numerator;
+	t_v3			hit_point;
+	t_v3			local_hit;
+	t_v3			half_size;
+	double			denominator;
+	double			numerator;
+	double			result;
+	double			x;
+	double			y;
 
-	numerator = dot(vsub(plane->pos, ray->origin), plane->axis);
 	denominator = dot(ray->direction, plane->axis);
 	if (fabs(denominator) < EPSILON)
 		return (false);
+	numerator = dot(vsub(plane->pos, ray->origin), plane->axis);
 	result = numerator / denominator;
-	if (result > EPSILON && result < *t)
+	if (result <= EPSILON || result >= *t)
+		return (false);
+	hit_point = vadd(ray->origin, vmul(result, ray->direction));
+	if (plane->type == SIDE)
 	{
-		*t = result;
-		ray->point = vadd(ray->origin, vmul(*t, ray->direction));
-		if (dot(ray->direction, plane->axis) > EPSILON)
-			ray->normal = plane->calcs.i_axis;
-		else
-			ray->normal = plane->axis;
-		return (true);
+		local_hit = vsub(hit_point, plane->pos);
+		x = dot(local_hit, plane->right);
+		y = dot(local_hit, plane->up);
+		half_size = vmul(0.5, plane->cube_size);
+		if (fabs(x) > half_size.x || fabs(y) > half_size.y)
+			return (false);
 	}
-	return (false);
+	*t = result;
+	ray->point = hit_point;
+	if (denominator > EPSILON)
+		ray->normal = vmul(-1.0, plane->axis);
+	else
+		ray->normal = plane->axis;
+	return (true);
 }
+
+
+
+

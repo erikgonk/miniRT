@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:31:28 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/07 14:54:33 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/08 12:37:56 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	init_obj(t_data *data)
 			obj->parent = parent;
 		if (obj->material.m_type != MR)
 			obj->a_rgb = apply_ambient_light(obj->rgb, data->a_light);
-		if (obj->type == PL)
+		if (obj->type == PL || obj->type == SIDE)
 			obj->calcs.i_axis = vmul(-1.0f, obj->axis);
 		else if (obj->type == CY)
 		{

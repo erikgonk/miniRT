@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/07 15:27:23 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/08 13:40:30 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,16 +108,6 @@ typedef struct s_calcs
 	double				etai_etat_reverse;
 }	t_calcs;
 
-typedef struct s_cube
-{
-	t_v3				size;
-	double				xmin;
-	double				xmax;
-	double				ymin;
-	double				ymax;
-	double				zmin;
-	double				zmax;
-}					t_cube;
 
 typedef struct s_obj
 {
@@ -129,11 +119,13 @@ typedef struct s_obj
 	t_rgb				rgb;
 	t_rgb				a_rgb;
 	double				size;
+	t_v3				cube_size;
 	double				height;
 	t_calcs				calcs;
 	t_material			material;
-	t_cube				cube;
 	unsigned int		parent;
+	t_v3				right;
+	t_v3				up;
 	struct s_obj		*next;
 }					t_obj;
 

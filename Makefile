@@ -6,7 +6,7 @@
 #    By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/19 12:51:14 by shurtado          #+#    #+#              #
-#    Updated: 2025/01/07 15:15:26 by shurtado         ###   ########.fr        #
+#    Updated: 2025/01/08 13:12:30 by shurtado         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,10 +25,10 @@ FILES			:= main.c \
 					parser/utils/parse_sum.c parser/utils/parse_utils.c parser/utils/parse_conversions.c parser/utils/parse_checker.c \
 					parser/extra_funcs/extra_funcs.c \
 					render/render/render.c \
-					render/obj/cylinder.c render/obj/caps.c render/obj/cone.c render/obj/cube.c render/obj/intersections.c render/obj/viewport.c \
+					render/obj/cylinder.c render/obj/caps.c render/obj/cone.c render/obj/intersections.c render/obj/viewport.c \
 					render/illumination/illumination.c render/illumination/specular.c\
 					render/calcs/calcs.c render/calcs/quadratic.c \
-					render/init/init_image.c render/init/init_rays.c render/init/init_general.c render/init/init_obj.c render/init/init_materials.c \
+					render/init/init_image.c render/init/init_rays.c render/init/init_general.c render/init/init_obj.c render/init/init_side.c render/init/init_materials.c \
 					render/color/color.c render/color/checker_board.c \
 					render/free/free.c \
 					console/console/run_console.c \
