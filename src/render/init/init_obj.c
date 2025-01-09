@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_obj.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:31:28 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/08 12:37:56 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/09 16:40:28 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,6 @@ void	make_cone_cap(t_obj *cone, t_data *data)
 	cap->material = cone->material;
 	cap->next = NULL;
 	objadd_back(&data->obj, cap);
-	print_objects(cone);
-	print_objects(cap);
-
 }
 
 void	make_caps(t_data *data, t_obj *obj)

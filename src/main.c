@@ -6,7 +6,7 @@
 /*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/09 16:18:55 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/09 16:39:05 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,26 +46,6 @@ void	update_render(void *param)
 	printf("%lld\n", time /= 100);
 }
 
-
-// void	init_cube(t_data *data)
-// {
-// 	t_obj	*cube;
-
-// 	cube = malloc(sizeof(t_obj));
-// 	if (!cube)
-// 		return ;
-// 	cube->type = CU;
-// 	cube->pos = (t_v3) {-100.0,5.0,-50.0};
-// 	cube->axis = (t_v3) {0.2,0.3,0.1};
-// 	cube->axis = normalize(cube->axis);
-// 	cube->cube_size = (t_v3) {20, 20, 20};
-// 	cube->height = 30;
-// 	cube->rgb = (t_rgb) {50,128,200};
-// 	cube->material.m_type = MR;
-// 	cube->next = NULL;
-// 	objadd_back(&data->obj, cube);
-// }
-
 int	main(int ac, char **av)
 {
 	t_data	*data;
@@ -76,7 +56,6 @@ int	main(int ac, char **av)
 	validate_args_and_open(ac, av, &fd);
 	parse(data, fd);
 	close(fd);
-	// init_cube(data); // delete
 	init_all(data);
 	data->img_last = NULL;
 	// render_to_mlx(data);
