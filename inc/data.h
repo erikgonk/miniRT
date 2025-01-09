@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/08 13:40:30 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/09 17:05:31 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,12 @@ typedef struct s_calcs
 //		para fresnel
 	double				etai_etat;
 	double				etai_etat_reverse;
+//		caps
+	t_v3				caps_normal;
+//		cone
+	double				half_angle;
+	double				cos_half;
+	double				k;
 }	t_calcs;
 
 

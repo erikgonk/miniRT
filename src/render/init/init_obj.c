@@ -6,7 +6,7 @@
 /*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:31:28 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/09 16:40:28 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/09 17:29:35 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,35 +62,6 @@ void	make_caps(t_data *data, t_obj *obj)
 	objadd_back(&data->obj, bt_cap);
 }
 
-void	init_obj(t_data *data)
-{
-	t_obj		*obj;
-	int			parent;
-
-	obj = data->obj;
-	parent = 0;
-	while (obj)
-	{
-		if (obj->type != CAP)
-			obj->parent = parent;
-		if (obj->material.m_type != MR)
-			obj->a_rgb = apply_ambient_light(obj->rgb, data->a_light);
-		if (obj->type == PL || obj->type == SIDE)
-			obj->calcs.i_axis = vmul(-1.0f, obj->axis);
-		else if (obj->type == CY)
-		{
-			init_obj_normi(data, obj);
-			make_caps(data, obj);
-		}
-		else if (obj->type == CO)
-			make_cone_cap(obj, data);
-		else
-			init_obj_normi(data, obj);
-		parent++;
-		obj = obj->next;
-	}
-}
-
 void	init_obj_normi(t_data *data, t_obj *obj)
 {
 	obj->calcs.radius = obj->size * 0.5f;
@@ -113,7 +84,7 @@ void	init_obj_normi(t_data *data, t_obj *obj)
 	obj->calcs.btm_cap.cap_normal = vmul(-1.0f, obj->axis);
 //			refract
 	obj->calcs.etai = 1;
-	obj->calcs.etat = 1.5; // este es el que se pasa por argumento as refractive_index
+	obj->calcs.etat = 1.5;
 	obj->calcs.eta = obj->calcs.etai / obj->calcs.etat;
 	obj->calcs.eta_reverse = obj->calcs.etat / obj->calcs.etai;
 	obj->calcs.eta2 = obj->calcs.eta * obj->calcs.eta;
@@ -124,6 +95,37 @@ void	init_obj_normi(t_data *data, t_obj *obj)
 //			cb
 	if (obj->material.board_scale != -1)
 		obj->material.rgb_checker = apply_ambient_light(obj->material.rgb_checker, data->a_light);
+//			caps
+	obj->calcs.caps_normal = vmul(-1.0f, obj->axis);
+//			cone
+	obj->calcs.half_angle = (obj->size * 0.5f) * (M_PI / 180.0f);
+	obj->calcs.cos_half = cos(obj->calcs.half_angle);
+	obj->calcs.k = obj->calcs.cos_half * obj->calcs.cos_half;
+}
+
+void	init_obj(t_data *data)
+{
+	t_obj		*obj;
+	int			parent;
+
+	obj = data->obj;
+	parent = 0;
+	while (obj)
+	{
+		if (obj->type != CAP)
+			obj->parent = parent;
+		if (obj->material.m_type != MR)
+			obj->a_rgb = apply_ambient_light(obj->rgb, data->a_light);
+		if (obj->type == PL || obj->type == SIDE)
+			obj->calcs.i_axis = vmul(-1.0f, obj->axis);
+		else if (obj->type == CY)
+			make_caps(data, obj);
+		else if (obj->type == CO)
+			make_cone_cap(obj, data);
+		init_obj_normi(data, obj);
+		parent++;
+		obj = obj->next;
+	}
 }
 
 void	init_light(t_data *data)

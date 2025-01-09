@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_side.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 12:39:47 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/08 14:04:32 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/09 17:20:28 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	init_sides(t_data *data)
 		side[i] = malloc(sizeof(t_obj));
 		ft_memcpy(side[i], obj, sizeof(t_obj));
 		side[i]->type = SIDE;
+        side[i]->calcs = obj->calcs;
 		side[i]->next = NULL;
 		objadd_back(&data->obj, side[i]);
 	}

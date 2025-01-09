@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   caps.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:09:01 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/07 13:02:39 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/09 16:49:00 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ bool	hit_cap(t_ray *ray, t_obj *cap, double *t)
 		*t = result;
 		ray->point = point;
 		if (dot(ray->direction, cap->axis) > 0)
-			ray->normal = vmul(-1.0f, cap->axis);
+			ray->normal = cap->calcs.caps_normal;
 		else
 			ray->normal = cap->axis;
 		return (true);
