@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_rays.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid Date        by              +#+  #+#    #+#             */
-/*   Updated: 2025/01/07 12:30:15 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/09 18:09:39 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ t_v3	random_in_unit_disk(t_cam *cam)
 
 void generate_dof_ray(t_ray *ray, t_cam *cam)
 {
+	printf("HO\n");
 	t_v3 rd;
 	t_v3 offset;
 	t_v3 focus_point;
@@ -65,7 +66,7 @@ void	init_single_ray(t_ray *ray, t_vp *vp, t_cam *cam, double *uv)
 	ray->origin = cam->pos;
 	ray->direction = normalize(vsub(pixel_position, cam->pos));
 	ray->i_direction = normalize(vneg(ray->direction));
-	if (cam->focus_dist)
+	if (cam->focus_dist != -1)
 		generate_dof_ray(ray, cam);
 }
 

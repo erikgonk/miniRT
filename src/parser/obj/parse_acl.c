@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_acl.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:27:07 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/07 12:30:15 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/09 18:09:19 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,31 +45,52 @@ void	create_alight(t_data *data, char *str, int type)
 	free(tmp);
 }
 
+void	cam_blur(t_data *data, char *str2, char *tmp)
+{
+	int		i;
+
+	i = 0;
+	while (tmp[i] && ft_isspace(tmp[i]))
+		i++;
+	if (tmp[i] && ft_isdigit(tmp[i]))
+	{
+		data->cam->focus_dist = ft_atof(tmp, 0);
+		if (data->cam->focus_dist < 0)
+			exit(er("error: cam_blur: focus distance negative", NULL));
+		free(str2);
+		str2 = ft_substr(tmp, skip_double(tmp, 0, 0, 0), ft_strlen(tmp));
+		data->cam->aperture = ft_atof(str2, 0);
+		if (data->cam->aperture < 0.01 || data->cam->aperture > 0.5)
+			exit(er("error: cam_blur: aperture 0.01-0.5", NULL));
+
+	}
+	else
+	{
+		data->cam->focus_dist = -1;
+		data->cam->aperture = 0;
+	}
+}
+
 void	create_cam(t_data *data, char *str, int type)
 {
 	char	*tmp;
 	char	*str2;
-	int		i;
 
 	tmp = NULL;
 	if (type != 4 || (str[1] && !ft_isspace(str[1])))
 		return ;
+	if (data->cam)
+		exit(er("error: create_cam: more than 1 camera", NULL));
 	data->cam = malloc(sizeof(t_cam));
 	data->cam->pos = doubles_acl_parse(str, 1);
 	tmp = ft_substr(str, skip_doubles(str, 1, 0, 0), ft_strlen(str));
 	data->cam->axis = normalize(doubles_acl_parse(tmp, 0));
 	str2 = ft_substr(tmp, skip_doubles(tmp, 0, 0, 0), ft_strlen(tmp));
 	data->cam->fov = ft_atoi_parse(str2, 0, 1);
-	i = 0;
-	while (str2[i] && ft_isspace(str2[i]))
-		i++;
-	while (str2[i] && ft_isdigit(str2[i]))
-		i++;
-	while (str2[i] && str2[i] != '\n')
-		if (!ft_isspace(str2[i++]))
-			exit(er("error: create_cam: cam fov wrong", str2));
-	data->cam->focus_dist = 0;
-	data->cam->aperture = 0.2;
+	free(tmp);
+	tmp = ft_substr(str2, skip_double(str2, 0, 0, 0), ft_strlen(str2));
+	cam_blur(data, str2, tmp);
+	printf("%f\n%f\n", data->cam->focus_dist, data->cam->aperture);
 	free(str2);
 	free(tmp);
 }

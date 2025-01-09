@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 15:20:14 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/07 12:30:15 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/09 18:13:24 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,18 @@ t_obj				*create_obj(char *str, int type);
 //      parse_acl
 t_v3				doubles_acl_parse(char *str, int i);
 void				create_alight(t_data *data, char *str, int type);
+void				cam_blur(t_data *data, char *str2, char *tmp);
 void				create_cam(t_data *data, char *str, int type);
 void				create_slight(t_slight **s_light, char *str, int type);
 
-//      checker_parse
+//      parse_checker
 void				check_end(char *str, int i);
 void				check_light(t_alight *aL, t_slight *sL);
 void				check_params_acl(t_alight *aL, t_slight *sL, t_cam *cam);
+void				check_obj_normi(t_obj *obj);
 void				check_obj(t_obj *obj);
+
+//		parse_main_checker
 void				check_params(t_data *data);
 
 //      parse_conversions
