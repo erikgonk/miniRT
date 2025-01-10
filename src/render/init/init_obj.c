@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_obj.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:31:28 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/09 17:29:35 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/10 12:29:32 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	init_obj(t_data *data)
 	parent = 0;
 	while (obj)
 	{
-		if (obj->type != CAP)
+		if (obj->type != CAP && obj->type != SIDE)
 			obj->parent = parent;
 		if (obj->material.m_type != MR)
 			obj->a_rgb = apply_ambient_light(obj->rgb, data->a_light);
@@ -122,6 +122,8 @@ void	init_obj(t_data *data)
 			make_caps(data, obj);
 		else if (obj->type == CO)
 			make_cone_cap(obj, data);
+		else if (obj->type == CU)
+			init_sides(data, obj);
 		init_obj_normi(data, obj);
 		parent++;
 		obj = obj->next;

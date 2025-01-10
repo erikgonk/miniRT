@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/09 16:39:05 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/10 12:27:46 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int	main(int ac, char **av)
 	parse(data, fd);
 	close(fd);
 	init_all(data);
+	print_objects(data->obj);
 	data->img_last = NULL;
 	// render_to_mlx(data);
 	mlx_loop_hook(data->mlx, update_render, data);

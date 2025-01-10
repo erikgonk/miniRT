@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/08 12:41:40 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/10 12:21:53 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void					init_obj_normi(t_data *data, t_obj *obj);
 void					init_light(t_data *data);
 
 //		init_sides
-void					init_sides(t_data *data);
+void					init_sides(t_data *data, t_obj *obj);
 
 //		init_rays
 void					init_single_ray(t_ray *ray, t_vp *vp, t_cam *camera,

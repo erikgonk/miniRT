@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 16:51:49 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/19 13:47:17 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/10 12:11:51 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	print_objects(t_obj *obj)
 			print_t_rgb("\tColor", obj->rgb);
 			printf("\tSize: %.2f\n", obj->size);
 			printf("\tHeight: %.2f\n", obj->height);
+			printf("\tParent: %d\n", obj->parent);
 			printf("\n");
 			obj = obj->next;
 		}

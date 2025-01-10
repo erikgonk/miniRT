@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/09 17:05:31 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/10 11:59:28 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,12 +126,16 @@ typedef struct s_obj
 	t_rgb				a_rgb;
 	double				size;
 	t_v3				cube_size;
+	t_v3				axis_x;
+	t_v3				axis_y;
+	t_v3				axis_z;
 	double				height;
 	t_calcs				calcs;
 	t_material			material;
 	unsigned int		parent;
 	t_v3				right;
 	t_v3				up;
+	int					face;
 	struct s_obj		*next;
 }					t_obj;
 

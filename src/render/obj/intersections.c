@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:48:44 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/08 14:03:53 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/10 12:04:35 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,13 @@ bool	hit_pl(t_ray *ray, t_obj *plane, double *t)
 		x = dot(local_hit, plane->right);
 		y = dot(local_hit, plane->up);
 		half_size = vmul(0.5, plane->cube_size);
-		if (fabs(x) > half_size.x || fabs(y) > half_size.y)
+		if (plane->face == 1 && (fabs(x) > half_size.y || fabs(y) > half_size.z))
 			return (false);
+		else if (plane->face == 2 && (fabs(x) > half_size.x || fabs(y) > half_size.z))
+			return (false);
+		else if (plane->face == 3 && (fabs(x) > half_size.x || fabs(y) > half_size.y))
+			return (false);
+
 	}
 	*t = result;
 	ray->point = hit_point;
