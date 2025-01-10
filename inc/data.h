@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/10 11:59:28 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/10 14:51:29 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,10 @@ typedef struct s_calcs
 	double				half_angle;
 	double				cos_half;
 	double				k;
+	double				numerator;
+	t_v3				half_size;
+	t_v3				oc;
+	double				dot_oc_axis;
 }	t_calcs;
 
 

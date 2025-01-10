@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:09:03 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/10 13:12:10 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/10 14:58:26 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	difuse_light(t_rgb *color, t_slight *slight, t_obj *obj, double inty)
 		color->r = fmin(color->r + (obj->rgb.r * dif_color.r) / 255, 255);
 		color->g = fmin(color->g + (obj->rgb.g * dif_color.g) / 255, 255);
 		color->b = fmin(color->b + (obj->rgb.b * dif_color.b) / 255, 255);
-		// printf("Spot aporta: %f\n", inty);
 	}
 }
 
@@ -68,15 +67,15 @@ bool	data_shadow(t_data *data, t_ray *shadow_ray, double max_dist, t_obj *self)
 		if (current_obj->type == SP && hit_sp(shadow_ray, current_obj, &t) && \
 				(t > EPSILON && t < max_dist))
 			return (true);
-		else if ((current_obj->type == PL || current_obj->type == SIDE) && hit_pl(shadow_ray, current_obj, &t) \
+		else if ((current_obj->type == PL || current_obj->type == SIDE) && hit_pl(data, shadow_ray, current_obj, &t) \
 				&& (t > EPSILON && t < max_dist))
 			return (true);
 		else if (current_obj->type == CY && hit_cy(shadow_ray, current_obj, &t) && (t > EPSILON && t < max_dist))
 			return (true);
-		else if (current_obj->type == CAP && hit_cap(shadow_ray, current_obj, &t) \
+		else if (current_obj->type == CAP && hit_cap(data, shadow_ray, current_obj, &t) \
 				&& (t > EPSILON && t < max_dist))
 			return (true);
-		else if (current_obj->type == CO && hit_cone(shadow_ray, current_obj, &t) \
+		else if (current_obj->type == CO && hit_cone(data, shadow_ray, current_obj, &t) \
 				&& (t > EPSILON && t < max_dist))
 			return (true);
 		current_obj = current_obj->next;

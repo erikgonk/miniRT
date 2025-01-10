@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:31:28 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/10 12:29:32 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/10 15:00:47 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,15 @@ void	init_obj_normi(t_data *data, t_obj *obj)
 	obj->calcs.half_angle = (obj->size * 0.5f) * (M_PI / 180.0f);
 	obj->calcs.cos_half = cos(obj->calcs.half_angle);
 	obj->calcs.k = obj->calcs.cos_half * obj->calcs.cos_half;
+//
+	if (obj->type == PL || obj->type == SIDE || obj->type == CAP)
+		obj->calcs.numerator = dot(vsub(obj->pos, data->cam->pos), obj->axis);
+	obj->calcs.half_size = vmul(0.5, obj->cube_size);
+	if (obj->type == CO)
+	{
+		obj->calcs.oc = vsub(data->cam->pos, obj->pos);
+		obj->calcs.dot_oc_axis = dot(obj->calcs.oc, obj->axis);
+	}
 }
 
 void	init_obj(t_data *data)

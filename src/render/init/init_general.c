@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:34:20 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/10 12:22:47 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/10 14:19:59 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,10 @@
 void	init_all(t_data *data)
 {
 	init_obj(data);
-	// init_sides(data);
-	// print_objects(data->obj);
 	init_light(data);
 	init_mlx(data);
 	init_materials_render(data);
+	data->img_last = NULL;
 }
 
 void	init_data(t_data **data)

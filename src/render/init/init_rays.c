@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_rays.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid Date        by              +#+  #+#    #+#             */
-/*   Updated: 2025/01/09 18:09:39 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/10 14:17:42 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,8 @@ t_v3	random_in_unit_disk(t_cam *cam)
     return (res);
 }
 
-void generate_dof_ray(t_ray *ray, t_cam *cam)
+void	generate_dof_ray(t_ray *ray, t_cam *cam)
 {
-	printf("HO\n");
 	t_v3 rd;
 	t_v3 offset;
 	t_v3 focus_point;

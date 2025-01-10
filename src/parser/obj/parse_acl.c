@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_acl.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:27:07 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/09 18:09:19 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/10 14:17:16 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ void	create_cam(t_data *data, char *str, int type)
 	free(tmp);
 	tmp = ft_substr(str2, skip_double(str2, 0, 0, 0), ft_strlen(str2));
 	cam_blur(data, str2, tmp);
-	printf("%f\n%f\n", data->cam->focus_dist, data->cam->aperture);
 	free(str2);
 	free(tmp);
 }

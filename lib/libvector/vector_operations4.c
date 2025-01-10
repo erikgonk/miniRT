@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 10:06:58 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/07 12:30:15 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/10 14:56:59 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,16 @@ t_v3	vrefl(t_v3 v, t_v3 n)
 	result.y = v.y - 2 * dot_product * n.y;
 	result.z = v.z - 2 * dot_product * n.z;
 	return (result);
+}
+
+bool	v3_compare(t_v3 a, t_v3 b)
+{
+	if (a.x != b.x || a.y != b.y || a.z != b.z)
+		return (false);
+	return (true);
+}
+
+double length(t_v3 v)
+{
+	return sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
 }

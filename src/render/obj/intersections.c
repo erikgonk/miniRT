@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:48:44 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/10 12:04:35 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/10 14:47:19 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,10 @@ bool	hit_sp(t_ray *ray, t_obj *sphere, double *t)
 	return (true);
 }
 
-bool	hit_pl(t_ray *ray, t_obj *plane, double *t)
+bool	hit_pl(t_data *data, t_ray *ray, t_obj *plane, double *t)
 {
 	t_v3			hit_point;
 	t_v3			local_hit;
-	t_v3			half_size;
 	double			denominator;
 	double			numerator;
 	double			result;
@@ -57,7 +56,10 @@ bool	hit_pl(t_ray *ray, t_obj *plane, double *t)
 	denominator = dot(ray->direction, plane->axis);
 	if (fabs(denominator) < EPSILON)
 		return (false);
-	numerator = dot(vsub(plane->pos, ray->origin), plane->axis);
+	if (v3_compare(data->cam->pos, ray->origin))
+		numerator = plane->calcs.numerator;
+	else
+		numerator = dot(vsub(plane->pos, ray->origin), plane->axis);
 	result = numerator / denominator;
 	if (result <= EPSILON || result >= *t)
 		return (false);
@@ -67,19 +69,18 @@ bool	hit_pl(t_ray *ray, t_obj *plane, double *t)
 		local_hit = vsub(hit_point, plane->pos);
 		x = dot(local_hit, plane->right);
 		y = dot(local_hit, plane->up);
-		half_size = vmul(0.5, plane->cube_size);
-		if (plane->face == 1 && (fabs(x) > half_size.y || fabs(y) > half_size.z))
+		if (plane->face == 1 && (fabs(x) > plane->calcs.half_size.y || fabs(y) > plane->calcs.half_size.z))
 			return (false);
-		else if (plane->face == 2 && (fabs(x) > half_size.x || fabs(y) > half_size.z))
+		else if (plane->face == 2 && (fabs(x) > plane->calcs.half_size.x || fabs(y) > plane->calcs.half_size.z))
 			return (false);
-		else if (plane->face == 3 && (fabs(x) > half_size.x || fabs(y) > half_size.y))
+		else if (plane->face == 3 && (fabs(x) > plane->calcs.half_size.x || fabs(y) > plane->calcs.half_size.y))
 			return (false);
 
 	}
 	*t = result;
 	ray->point = hit_point;
 	if (denominator > EPSILON)
-		ray->normal = vmul(-1.0, plane->axis);
+		ray->normal = plane->calcs.i_axis;
 	else
 		ray->normal = plane->axis;
 	return (true);

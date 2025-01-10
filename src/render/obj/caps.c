@@ -3,21 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   caps.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:09:01 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/09 16:49:00 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/10 15:09:07 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-double length(t_v3 v)
-{
-	return sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
-}
-
-bool	hit_cap(t_ray *ray, t_obj *cap, double *t)
+bool	hit_cap(t_data *data, t_ray *ray, t_obj *cap, double *t)
 {
 	double	denominator;
 	double	result;
@@ -25,7 +20,10 @@ bool	hit_cap(t_ray *ray, t_obj *cap, double *t)
 	t_v3	point;
 	t_v3	center_to_point;
 
-	numerator = dot(vsub(cap->pos, ray->origin), cap->axis);
+	if (v3_compare(data->cam->pos, ray->origin))
+		numerator = cap->calcs.numerator;
+	else
+		numerator = dot(vsub(cap->pos, ray->origin), cap->axis);
 	denominator = dot(ray->direction, cap->axis);
 	if (fabs(denominator) < EPSILON)
 		return (false);

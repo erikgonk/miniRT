@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/08 12:36:16 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/10 14:58:20 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void swap(double *a, double *b)
 	*b = temp;
 }
 
-t_obj	*find_closest_object(t_ray *ray, t_obj *objs, double *t_min)
+t_obj	*find_closest_object(t_data *data, t_ray *ray, t_obj *objs, double *t_min)
 {
 	t_obj	*closest_obj;
 	t_obj	*obj;
@@ -41,10 +41,10 @@ t_obj	*find_closest_object(t_ray *ray, t_obj *objs, double *t_min)
 	{
 		t = *t_min;
 		if ((obj->type == SP && hit_sp(ray, obj, &t)) \
-		|| ((obj->type == PL || obj->type == SIDE) && hit_pl(ray, obj, &t)) \
+		|| ((obj->type == PL || obj->type == SIDE) && hit_pl(data, ray, obj, &t)) \
 		|| (obj->type == CY && hit_cy(ray, obj, &t) \
-		|| obj->type == CAP && hit_cap(ray, obj, &t)) \
-		|| obj->type == CO && hit_cone(ray, obj, &t))
+		|| obj->type == CAP && hit_cap(data, ray, obj, &t)) \
+		|| obj->type == CO && hit_cone(data, ray, obj, &t))
 		{
 			if (t > 0 && t < *t_min)
 			{
@@ -91,7 +91,7 @@ t_v3 refract(t_obj *obj, t_v3 dir, t_v3 normal, double refractive_index)
 		eta = obj->calcs.eta_reverse2;
 	k = 1 - eta * (1 - cosi * cosi);
 	if (k < 0)
-		return ((t_v3){0, 0, 0});
+		return (vdefine(0, 0, 0));
 	return (vadd(vmul(eta, dir), vmul(eta * cosi - sqrt(k), normal)));
 }
 
@@ -304,7 +304,7 @@ t_rgb	path_trace(t_ray *ray, t_data *data, int depth)
 	t_rgb		base_color;
 
 	t = INFINITY;
-	closest_object = find_closest_object(ray, data->obj, &t);
+	closest_object = find_closest_object(data, ray, data->obj, &t);
 	if (!closest_object)
 		return (RGB_BLACK);
 	if (closest_object->type == PL && closest_object->material.board_scale != -1)
@@ -337,7 +337,7 @@ uint32_t	trace_ray(t_ray ray, t_data *data)
 	t_rgb	c_global;
 
 	t_min = INFINITY;
-	closest_obj = find_closest_object(&ray, data->obj, &t_min);
+	closest_obj = find_closest_object(data, &ray, data->obj, &t_min);
 	if (!closest_obj)
 		return (BLACK);
 	pthread_mutex_lock(data->m_trace);

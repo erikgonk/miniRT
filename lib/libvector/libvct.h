@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 18:33:09 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/07 12:30:15 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/10 14:57:17 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LIBVCT_H
 
 # include <math.h>
+# include <stdbool.h>
 
 typedef struct s_v3
 {
@@ -40,5 +41,7 @@ t_v3			z_axis_rotation(t_v3 vec, double angle);
 t_v3			scalar_div(t_v3 vec, double scalar);
 t_v3			vneg(t_v3 v);
 t_v3			vrefl(t_v3 v, t_v3 n);
+bool			v3_compare(t_v3 a, t_v3 b);
+double			length(t_v3 v);
 
 #endif

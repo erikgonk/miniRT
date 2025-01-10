@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/10 12:21:53 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/10 14:58:06 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,14 @@ typedef struct s_quadratic
 
 //		calcs
 double					vlength(t_v3 v);
-t_obj					*find_closest_object(t_ray *ray, t_obj *objs,
-							double *t_min);
+t_obj					*find_closest_object(t_data *data, t_ray *ray, t_obj *objs, double *t_min);
 uint32_t				trace_ray(t_ray ray, t_data *data);
 
 //		quadratic
 void					init_quadratic(t_quadratic *quad, double a, double b,
 							double c);
 bool					solve_quadratic(t_quadratic *quad);
-bool					solve_quadratic2(t_quadratic *quad); // para la parte de detras del cy
+bool					solve_quadratic2(t_quadratic *quad);
 
 //		color
 uint32_t				get_acolour(t_uchar alpha, t_uchar r, t_uchar g,
@@ -114,10 +113,10 @@ void					set_cy_axis(t_quadratic *quad, t_obj *cy, t_ray *ray);
 double					set_ray_t(t_ray *ray, t_obj *cy, double *t, t_quadratic quad);
 bool					hit_cy(t_ray *ray, t_obj *cy, double *t);
 //		caps
-bool					hit_cap(t_ray *ray, t_obj *cap, double *t);
+bool					hit_cap(t_data *data, t_ray *ray, t_obj *cap, double *t);
 
 //		cone
-bool					hit_cone(t_ray *ray, t_obj *cap, double *t);
+bool					hit_cone(t_data *data, t_ray *ray, t_obj *cone, double *t);
 
 //		cube
 bool					create_cube(t_data *data, t_obj *cube);
@@ -137,7 +136,7 @@ void					specular_light(t_rgb *color, t_data *data, t_ray *ray, int shinnyness);
 bool					calc_quad_sphere(t_obj *sphere, t_ray ray,
 							t_quadratic *quad);
 bool					hit_sp(t_ray *ray, t_obj *sphere, double *t);
-bool					hit_pl(t_ray *ray, t_obj *plane, double *t);
+bool					hit_pl(t_data *data, t_ray *ray, t_obj *plane, double *t);
 
 //		viewport
 t_v3					calculate_up(t_v3 forward, t_v3 right);
