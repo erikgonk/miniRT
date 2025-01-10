@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:34:20 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/05 10:49:11 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/10 16:26:21 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	init_materials_render(t_data *data)
 	obj = data->obj;
 	while (obj)
 	{
+		obj->material.texture = NULL;
 		if (obj->material.m_type == GL)
 		{
 			obj->material.reflectivity = 0.1f;

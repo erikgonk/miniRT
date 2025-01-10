@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/10 14:58:06 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/10 16:58:15 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,9 @@ bool					hit_pl(t_data *data, t_ray *ray, t_obj *plane, double *t);
 t_v3					calculate_up(t_v3 forward, t_v3 right);
 t_v3					calculate_right(t_v3 forward);
 t_vp					*init_viewport(t_cam *camera, int width, int height);
+
+//		bump map
+void					get_sphere_normal(t_obj *sphere, t_v3 hit_point, t_ray *ray);
 
 //		render
 uint32_t				**render(t_data *data, int x, int y);

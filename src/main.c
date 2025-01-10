@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/10 14:19:53 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/10 17:06:38 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,22 @@ void	update_render(void *param)
 	printf("%lld\n", time /= 100);
 }
 
+void	textura(t_data *data)
+{
+	t_obj	*obj;
+
+	obj = data->obj;
+	while(obj)
+	{
+		if (obj->type == SP)
+		{
+			obj->material.texture = mlx_load_png("/home/shurtado/minirt/assets/bump_maps/pillow2.png");
+			return ;
+		}
+		obj = obj->next;
+	}
+}
+
 int	main(int ac, char **av)
 {
 	t_data	*data;
@@ -57,6 +73,7 @@ int	main(int ac, char **av)
 	parse(data, fd);
 	close(fd);
 	init_all(data);
+	textura(data);
 	mlx_loop_hook(data->mlx, update_render, data);
 	mlx_resize_hook(data->mlx, &resise_w, data);
 	mlx_key_hook(data->mlx, &my_keyhook, data);
