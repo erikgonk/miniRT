@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/10 17:06:38 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/11 10:17:29 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,18 @@ void	update_render(void *param)
 
 void	textura(t_data *data)
 {
-	t_obj	*obj;
+	t_obj			*obj;
 
 	obj = data->obj;
 	while(obj)
 	{
 		if (obj->type == SP)
 		{
-			obj->material.texture = mlx_load_png("/home/shurtado/minirt/assets/bump_maps/pillow2.png");
-			return ;
+			obj->material.texture = mlx_load_png("/home/shurtado/minirt/assets/bump_maps/pillow.png");
+			if (!obj->material.texture)
+				exit(er("error: textura: not valid", NULL));
+			obj->material.bm_size = 24;
+			break ;
 		}
 		obj = obj->next;
 	}

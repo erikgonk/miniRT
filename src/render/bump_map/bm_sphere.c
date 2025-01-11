@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   normal.c                                           :+:      :+:    :+:   */
+/*   bm_sphere.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 16:27:29 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/10 17:11:07 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/11 10:07:12 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_v3 transform_to_world_space(t_v3 tangent, t_v3 bitangent, t_v3 normal, t_v3 ma
 	return (normalize(world_normal));
 }
 
-t_v3	get_normal_from_map(t_ray *ray, mlx_texture_t *normal_map)
+t_v3	get_normal_from_map(t_obj *sphere, t_ray *ray)
 {
 	int x, y;
 	int index;
@@ -56,12 +56,12 @@ t_v3	get_normal_from_map(t_ray *ray, mlx_texture_t *normal_map)
 	v = fmod((v * tiles), 1.0f);
 	if (v < 0) v += 1.0f;
 
-	x = (int)(u * normal_map->width) % normal_map->width;
-	y = (int)(v * normal_map->height) % normal_map->height;
-	index = (y * normal_map->width + x) * normal_map->bytes_per_pixel;
-	r = normal_map->pixels[index];
-	g = normal_map->pixels[index + 1];
-	b = normal_map->pixels[index + 2];
+	x = (int)(u * sphere->material.texture->width * sphere->material.bm_size) % sphere->material.texture->width;
+	y = (int)(v * sphere->material.texture->height * sphere->material.bm_size) % sphere->material.texture->height;
+	index = (y * sphere->material.texture->width + x) * sphere->material.texture->bytes_per_pixel;
+	r = sphere->material.texture->pixels[index];
+	g = sphere->material.texture->pixels[index + 1];
+	b = sphere->material.texture->pixels[index + 2];
 	normal.x = (r / 255.0f) * 2.0f - 1.0f;
 	normal.y = (g / 255.0f) * 2.0f - 1.0f;
 	normal.z = (b / 255.0f) * 2.0f - 1.0f;
@@ -76,7 +76,7 @@ void	get_sphere_normal(t_obj *sphere, t_v3 hit_point, t_ray *ray)
 
 	if (sphere->material.texture)
 	{
-		map_normal = get_normal_from_map(ray, sphere->material.texture);
+		map_normal = get_normal_from_map(sphere, ray);
 		calculate_sphere_tangent_bitangent(ray->normal, &tangent, &bitangent);
 		ray->normal = transform_to_world_space(tangent, bitangent, ray->normal, map_normal);
 	}

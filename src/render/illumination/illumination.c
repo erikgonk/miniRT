@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:09:03 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/10 14:58:26 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/11 10:23:54 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ bool	data_shadow(t_data *data, t_ray *shadow_ray, double max_dist, t_obj *self)
 			current_obj = current_obj->next;
 			continue ;
 		}
-		if (current_obj->type == SP && hit_sp(shadow_ray, current_obj, &t) && \
+		if (current_obj->type == SP && hit_sp(data, shadow_ray, current_obj, &t) && \
 				(t > EPSILON && t < max_dist))
 			return (true);
 		else if ((current_obj->type == PL || current_obj->type == SIDE) && hit_pl(data, shadow_ray, current_obj, &t) \

@@ -6,7 +6,7 @@
 #    By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/19 12:51:14 by shurtado          #+#    #+#              #
-#    Updated: 2025/01/10 16:59:36 by shurtado         ###   ########.fr        #
+#    Updated: 2025/01/11 10:03:32 by shurtado         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ FILES			:= main.c \
 					parser/utils/parse_sum.c parser/utils/parse_utils.c parser/utils/parse_conversions.c parser/utils/parse_main_checker.c parser/utils/parse_checker.c \
 					parser/extra_funcs/extra_funcs.c \
 					render/render/render.c \
-					render/bump_map/normal.c \
+					render/bump_map/bm_sphere.c \
 					render/obj/cylinder.c render/obj/caps.c render/obj/cone.c render/obj/intersections.c render/obj/viewport.c \
 					render/illumination/illumination.c render/illumination/specular.c\
 					render/calcs/calcs.c render/calcs/quadratic.c \

@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:48:44 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/10 16:57:22 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/11 10:25:12 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ bool	calc_quad_sphere(t_obj *sphere, t_ray ray, t_quadratic *quad)
 	return (true);
 }
 
-bool	hit_sp(t_ray *ray, t_obj *sphere, double *t)
+bool	hit_sp(t_data *data, t_ray *ray, t_obj *sphere, double *t)
 {
 	t_quadratic	quad;
 
