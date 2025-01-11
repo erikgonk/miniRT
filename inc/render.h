@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/11 11:52:24 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/11 12:07:13 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ typedef struct s_quadratic
 
 //		calcs
 double					vlength(t_v3 v);
-t_obj					*find_closest_object(t_data *data, t_ray *ray, t_obj *objs, double *t_min);
+t_obj					*find_closest_object(t_data *data, t_ray *ray,
+							t_obj *objs, double *t_min);
 uint32_t				trace_ray(t_ray ray, t_data *data);
 
 //		quadratic
@@ -101,7 +102,8 @@ void					init_sides(t_data *data, t_obj *obj);
 //		init_rays
 void					init_single_ray(t_ray *ray, t_vp *vp, t_cam *camera,
 							double *uv);
-t_ray					*init_ray_row(t_data *data, t_cam *camera, t_vp *vp, int y);
+t_ray					*init_ray_row(t_data *data, t_cam *camera, t_vp *vp,
+							int y);
 t_ray					**init_rays(t_data *data, t_cam *camera, t_vp *vp);
 
 //		init_materials
@@ -110,13 +112,16 @@ void					init_materials_render(t_data *data);
 
 //		cylinder
 void					set_cy_axis(t_quadratic *quad, t_obj *cy, t_ray *ray);
-double					set_ray_t(t_ray *ray, t_obj *cy, double *t, t_quadratic quad);
+double					set_ray_t(t_ray *ray, t_obj *cy, double *t,
+							t_quadratic quad);
 bool					hit_cy(t_ray *ray, t_obj *cy, double *t);
 //		caps
-bool					hit_cap(t_data *data, t_ray *ray, t_obj *cap, double *t);
+bool					hit_cap(t_data *data, t_ray *ray, t_obj *cap,
+							double *t);
 
 //		cone
-bool					hit_cone(t_data *data, t_ray *ray, t_obj *cone, double *t);
+bool					hit_cone(t_data *data, t_ray *ray, t_obj *cone,
+							double *t);
 
 //		cube
 bool					create_cube(t_data *data, t_obj *cube);
@@ -130,13 +135,15 @@ bool					data_shadow(t_data *data, t_ray *shadow_ray,
 t_rgb					phong(t_data *data, t_ray *ray, t_obj *obj);
 
 //		specular
-void					specular_light(t_rgb *color, t_data *data, t_ray *ray, int shinnyness);
+void					specular_light(t_rgb *color, t_data *data, t_ray *ray,
+							int shinnyness);
 
 //		intersections
 bool					calc_quad_sphere(t_obj *sphere, t_ray ray,
 							t_quadratic *quad);
 bool					hit_sp(t_ray *ray, t_obj *sphere, double *t);
-bool					hit_pl(t_data *data, t_ray *ray, t_obj *plane, double *t);
+bool					hit_pl(t_data *data, t_ray *ray, t_obj *plane,
+							double *t);
 
 //		viewport
 t_v3					calculate_up(t_v3 forward, t_v3 right);
@@ -144,10 +151,11 @@ t_v3					calculate_right(t_v3 forward);
 t_vp					*init_viewport(t_cam *camera, int width, int height);
 
 //		bump map sphere
-void					get_sphere_normal(t_obj *sphere,t_ray *ray);
+void					get_sphere_normal(t_obj *sphere, t_ray *ray);
 
 //		bump map plane
-void					get_plane_normal(t_obj *plane, t_v3 hit_point, t_ray *ray);
+void					get_plane_normal(t_obj *plane, t_v3 hit_point,
+							t_ray *ray);
 
 //		render
 uint32_t				**render(t_data *data);
@@ -161,10 +169,10 @@ void					free_rays(t_ray **rays, int rows);
 
 //		PATH_TRACER  (calcs)
 t_rgb					path_trace(t_ray *ray, t_data *data, int depth);
-t_v3 random_in_hemisphere(t_v3 normal);
-double	*generate_uv(int x, int y);
-uint32_t	**average_samples(t_data *data, uint32_t **sample1, uint32_t **sample2);
-void swap(double *a, double *b);
-
+t_v3					random_in_hemisphere(t_v3 normal);
+double					*generate_uv(int x, int y);
+uint32_t				**average_samples(t_data *data, uint32_t **sample1,
+							uint32_t **sample2);
+void					swap(double *a, double *b);
 
 #endif

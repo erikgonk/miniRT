@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/11 11:48:49 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/11 12:03:02 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	textura(t_data *data)
 	{
 		if (obj->type == SIDE)
 		{
-			obj->material.texture = mlx_load_png("/home/shurtado/minirt/assets/bump_maps/pillow.png");
+			obj->material.texture = mlx_load_png("/home/erigonza/a/miniRT/assets/bump_maps/pillow.png");
 			if (!obj->material.texture)
 				exit(er("error: textura: not valid", NULL));
 			obj->material.bm_size = 2;

@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/11 10:04:31 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/11 12:08:04 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,6 @@ typedef struct s_calcs
 	t_v3				oc;
 	double				dot_oc_axis;
 }	t_calcs;
-
 
 typedef struct s_obj
 {
