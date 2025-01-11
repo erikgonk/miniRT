@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:53:01 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/09 16:24:43 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/11 11:40:14 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	parse(t_data *data, int fd)
 	str = NULL;
 	data->obj = NULL;
 	data->s_light = NULL;
+	data->cam = NULL;
 	while (true)
 	{
 		if (str)

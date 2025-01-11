@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/11 10:23:48 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/11 11:05:04 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,11 +211,11 @@ t_v3 random_in_hemisphere(t_v3 normal)
 t_rgb diffuse_ray(t_ray *ray, t_obj *closest_object, t_data *data, int depth)
 {
 	t_ray new_ray;
-	t_v3 normal;
 	t_rgb trace_color;
 
+	if (closest_object->material.texture)
+		return (RGB_BLACK);
 	new_ray.origin = vadd(ray->point, vmul(EPSILON, ray->normal));
-	normal = ray->normal;
 	new_ray.direction = random_in_hemisphere(ray->normal);
 	trace_color = path_trace(&new_ray, data, depth - 1);
 	return (color_mul(trace_color, closest_object->material.reflectivity));
@@ -344,7 +344,7 @@ uint32_t	trace_ray(t_ray ray, t_data *data)
 	if (data->trace_flag)
 		c_global = phong(data, &ray, closest_obj);
 	else
-		c_global = path_trace(&ray, data, MAX_DEPTH);
+		c_global = path_trace(&ray, data, 2);
 	pthread_mutex_unlock(data->m_trace);
 	return (get_colour(c_global));
 }

@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/11 10:17:29 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/11 11:48:49 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ void	update_render(void *param)
 	data->god = true;
 	mlx_resize_image(data->img, data->x, data->y);
 	if (!data->img_last)
-		data->img_last = render(data, data->x, data->y);
+		data->img_last = render(data);
 	if (!data->img->enabled)
 		data->img->enabled = true;
-	new_img = render(data, data->x, data->y);
+	new_img = render(data);
 	avrg = average_samples(data, (uint32_t **)data->img_last, new_img);
 	fill_image(data, (uint32_t *)data->img->pixels, avrg);
 	free_image_all(data, avrg);
@@ -53,12 +53,12 @@ void	textura(t_data *data)
 	obj = data->obj;
 	while(obj)
 	{
-		if (obj->type == SP)
+		if (obj->type == SIDE)
 		{
 			obj->material.texture = mlx_load_png("/home/shurtado/minirt/assets/bump_maps/pillow.png");
 			if (!obj->material.texture)
 				exit(er("error: textura: not valid", NULL));
-			obj->material.bm_size = 24;
+			obj->material.bm_size = 2;
 			break ;
 		}
 		obj = obj->next;

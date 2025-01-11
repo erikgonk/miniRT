@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/11 10:23:45 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/11 11:49:35 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ void					specular_light(t_rgb *color, t_data *data, t_ray *ray, int shinnyness);
 //		intersections
 bool					calc_quad_sphere(t_obj *sphere, t_ray ray,
 							t_quadratic *quad);
-bool	hit_sp(t_data *data, t_ray *ray, t_obj *sphere, double *t);
+bool					hit_sp(t_data *data, t_ray *ray, t_obj *sphere, double *t);
 bool					hit_pl(t_data *data, t_ray *ray, t_obj *plane, double *t);
 
 //		viewport
@@ -143,11 +143,14 @@ t_v3					calculate_up(t_v3 forward, t_v3 right);
 t_v3					calculate_right(t_v3 forward);
 t_vp					*init_viewport(t_cam *camera, int width, int height);
 
-//		bump map
-void					get_sphere_normal(t_obj *sphere, t_v3 hit_point, t_ray *ray);
+//		bump map sphere
+void					get_sphere_normal(t_obj *sphere,t_ray *ray);
+
+//		bump map plane
+void					get_plane_normal(t_obj *plane, t_v3 hit_point, t_ray *ray);
 
 //		render
-uint32_t				**render(t_data *data, int x, int y);
+uint32_t				**render(t_data *data);
 
 //		free
 void					free_rays_all(t_data *data, t_ray **rays);

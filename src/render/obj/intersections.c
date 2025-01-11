@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:48:44 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/11 10:25:12 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/11 11:49:42 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ bool	hit_sp(t_data *data, t_ray *ray, t_obj *sphere, double *t)
 	ray->point = vadd(ray->origin, vmul(*t, ray->direction));
 	ray->normal = normalize(vsub(ray->point, sphere->pos));
 	if (sphere->material.texture)
-		get_sphere_normal(sphere, ray->point, ray);
+		get_sphere_normal(sphere, ray);
 	return (true);
 }
 
@@ -80,13 +80,12 @@ bool	hit_pl(t_data *data, t_ray *ray, t_obj *plane, double *t)
 	}
 	*t = result;
 	ray->point = hit_point;
-	if (!plane->material.texture)
-	{
-		if (denominator > EPSILON)
-			ray->normal = plane->calcs.i_axis;
-		else
-			ray->normal = plane->axis;
-	}
+	if (denominator > EPSILON)
+		ray->normal = plane->calcs.i_axis;
+	else
+		ray->normal = plane->axis;
+	if (plane->material.texture)
+		get_plane_normal(plane, ray->point, ray);
 	return (true);
 }
 

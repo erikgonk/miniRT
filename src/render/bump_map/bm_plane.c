@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bm_sphere.c                                        :+:      :+:    :+:   */
+/*   bm_plane.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 16:27:29 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/11 11:49:29 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/11 11:43:08 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void calculate_sphere_tangent_bitangent(t_v3 normal, t_v3 *tangent, t_v3 *bitangent)
+void calculate_plane_tangent_bitangent(t_v3 normal, t_v3 *tangent, t_v3 *bitangent)
 {
 	t_v3 up;
 
@@ -33,46 +33,44 @@ static t_v3 transform_to_world_space(t_v3 tangent, t_v3 bitangent, t_v3 normal, 
 	return (normalize(world_normal));
 }
 
-t_v3	get_normal_from_map(t_obj *sphere, t_ray *ray)
+t_v3 get_normal_from_map_plane(t_obj *plane, t_v3 hit_point)
 {
-	int x, y;
-	int index;
+	int x, y, index;
 	uint8_t r, g, b;
 	t_v3 normal;
-	float	u;
-	float	v;
+	float u, v;
 
-	u = 0.5 + atan2(ray->normal.z, ray->normal.x) / (2 * M_PI);
-	v = 0.5 - asin(ray->normal.y) / M_PI;
-	u = fmod(u, 1.0f);
+	u = fmod(hit_point.x, 1.0f);
 	if (u < 0)
 		u += 1.0f;
-	v = fmod(v, 1.0f);
+	v = fmod(hit_point.z, 1.0f);
 	if (v < 0)
 		v += 1.0f;
 
-	x = (int)(u * sphere->material.texture->width * sphere->material.bm_size) % sphere->material.texture->width;
-	y = (int)(v * sphere->material.texture->height * sphere->material.bm_size) % sphere->material.texture->height;
-	index = (y * sphere->material.texture->width + x) * sphere->material.texture->bytes_per_pixel;
-	r = sphere->material.texture->pixels[index];
-	g = sphere->material.texture->pixels[index + 1];
-	b = sphere->material.texture->pixels[index + 2];
+	x = (int)(u * plane->material.texture->width * plane->material.bm_size) % plane->material.texture->width;
+	y = (int)(v * plane->material.texture->height * plane->material.bm_size) % plane->material.texture->height;
+	index = (y * plane->material.texture->width + x) * plane->material.texture->bytes_per_pixel;
+
+	r = plane->material.texture->pixels[index];
+	g = plane->material.texture->pixels[index + 1];
+	b = plane->material.texture->pixels[index + 2];
+
 	normal.x = (r / 255.0f) * 2.0f - 1.0f;
 	normal.y = (g / 255.0f) * 2.0f - 1.0f;
 	normal.z = (b / 255.0f) * 2.0f - 1.0f;
 	return (normalize(normal));
 }
 
-void	get_sphere_normal(t_obj *sphere, t_ray *ray)
+void get_plane_normal(t_obj *plane, t_v3 hit_point, t_ray *ray)
 {
-	t_v3		map_normal;
-	t_v3		tangent;
-	t_v3		bitangent;
+	t_v3 map_normal;
+	t_v3 tangent;
+	t_v3 bitangent;
 
-	if (sphere->material.texture)
+	if (plane->material.texture)
 	{
-		map_normal = get_normal_from_map(sphere, ray);
-		calculate_sphere_tangent_bitangent(ray->normal, &tangent, &bitangent);
-		ray->normal = transform_to_world_space(tangent, bitangent, ray->normal, map_normal);
+		map_normal = get_normal_from_map_plane(plane, hit_point);
+		calculate_plane_tangent_bitangent(plane->axis, &tangent, &bitangent);
+		ray->normal = transform_to_world_space(tangent, bitangent, plane->axis, map_normal);
 	}
 }

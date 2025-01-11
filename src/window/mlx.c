@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 16:58:38 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/10 14:17:25 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/11 11:49:08 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	render_to_mlx(t_data *data)
 	t_ll			time;
 
 	time = current_timestamp();
-	img_rgb = render(data, 0, 0);
+	img_rgb = render(data);
 	if (!img_rgb)
 		exit(er("Failed to render data", NULL));
 	fill_image(data, (uint32_t *)data->img->pixels, img_rgb);

@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:37:51 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/10 14:20:16 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/11 11:47:51 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,15 +87,12 @@ uint32_t	**average_samples(t_data *data, uint32_t **sample1, uint32_t **sample2)
 	return (res);
 }
 
-uint32_t	**render(t_data *data, int x, int y)
+uint32_t	**render(t_data *data)
 {
 	t_ray		**rays;
 	t_vp		*vp;
 	uint32_t	**image;
-	static int	flag;
 
-	(void)x;
-	(void)y;
 	vp = init_viewport(data->cam, data->x, data->y);
 	rays = init_rays(data, data->cam, vp);
 	image = init_image_(data);

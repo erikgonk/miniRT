@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 14:00:21 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/07 12:30:15 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/11 11:51:22 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ double	set_ray_t(t_ray *ray, t_obj *cy, double *t, t_quadratic quad)
 		point = vadd(ray->origin, vmul(quad.t2, ray->direction));
 		t_min = quad.t2;
 	}
+	// else
+	// 	point = vdefine(0, 0, 0);
 	proj = dot(vsub(point, cy->pos), cy->axis);
 	if (proj > -cy->calcs.hh_e_sum && proj < cy->calcs.hh_e_res && t_min < *t)
 	{
