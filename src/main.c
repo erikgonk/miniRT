@@ -6,7 +6,7 @@
 /*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/11 12:03:02 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/11 12:35:08 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ void	last_exit(t_data *data)
 
 void	update_render(void *param)
 {
-	t_data				*data;
-	uint32_t			**new_img;
-	uint32_t			**avrg;
-	t_ll				time;
+	t_data		*data;
+	uint32_t	**new_img;
+	uint32_t	**avrg;
+	t_ll		time;
 
 	time = current_timestamp();
 	data = (t_data *)param;
@@ -41,21 +41,22 @@ void	update_render(void *param)
 	avrg = average_samples(data, (uint32_t **)data->img_last, new_img);
 	fill_image(data, (uint32_t *)data->img->pixels, avrg);
 	free_image_all(data, avrg);
-	mlx_image_to_window(data->mlx, data->img, 0 ,0);
+	mlx_image_to_window(data->mlx, data->img, 0, 0);
 	time = current_timestamp() - time;
 	printf("%lld\n", time /= 100);
 }
 
 void	textura(t_data *data)
 {
-	t_obj			*obj;
+	t_obj	*obj;
 
 	obj = data->obj;
-	while(obj)
+	while (obj)
 	{
 		if (obj->type == SIDE)
 		{
-			obj->material.texture = mlx_load_png("/home/erigonza/a/miniRT/assets/bump_maps/pillow.png");
+			obj->material.texture = \
+				mlx_load_png("/home/erigonza/a/miniRT/assets/bump_maps/pillow.png");
 			if (!obj->material.texture)
 				exit(er("error: textura: not valid", NULL));
 			obj->material.bm_size = 2;
@@ -70,7 +71,7 @@ int	main(int ac, char **av)
 	t_data	*data;
 	int		fd;
 
-	srand((unsigned int) mlx_get_time());
+	srand((unsigned int)mlx_get_time());
 	init_data(&data);
 	validate_args_and_open(ac, av, &fd);
 	parse(data, fd);
