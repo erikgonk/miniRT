@@ -6,7 +6,7 @@
 /*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/11 12:35:08 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/11 12:43:20 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,7 @@ void	textura(t_data *data)
 	{
 		if (obj->type == SIDE)
 		{
-			obj->material.texture = \
-				mlx_load_png("/home/erigonza/a/miniRT/assets/bump_maps/pillow.png");
+			obj->material.texture = mlx_load_png("/home/erigonza/a/miniRT/assets/bump_maps/pillow.png");
 			if (!obj->material.texture)
 				exit(er("error: textura: not valid", NULL));
 			obj->material.bm_size = 2;
