@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 09:47:50 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/07 12:30:15 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/11 12:31:49 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,12 @@ char	*doubles_parse(t_obj *obj, char *str, int i, int flag)
 
 int	ft_atoi_parse(char *str, int i, int flag)
 {
-	int	res;
-	int	sign;
+	int			res;
+	int			sign;
 
 	res = 0;
 	sign = 1;
-	while ((flag == 1 || flag == 2 || flag == 3) && str[i] && ft_isspace(str[i]))
+	while ((flag >= 1 && flag <= 3) && str[i] && ft_isspace(str[i]))
 		i++;
 	if (str[i] && str[i] == ',' && flag != 2)
 		i++;
@@ -74,11 +74,10 @@ int	ft_atoi_parse(char *str, int i, int flag)
 	{
 		res = (res * 10) + (str[i] - 48);
 		if (flag == 3 && (res > 255 || sign == -1))
-		    exit(er("error: ft_atoi_parse: color not 0-255\n", str));
+			exit(er("error: ft_atoi_parse: color not 0-255\n", str));
 		i++;
 	}
-	res *= sign;
-	return (res);
+	return (res * sign);
 }
 
 double	ft_atof_normi(char *str, int i)
@@ -101,7 +100,7 @@ double	ft_atof_normi(char *str, int i)
 	return (fraction);
 }
 
-double	ft_atof(char *str, int i) // i = start
+double	ft_atof(char *str, int i)
 {
 	double		res;
 	int			sign;

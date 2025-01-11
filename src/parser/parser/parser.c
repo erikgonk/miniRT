@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:53:01 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/11 11:40:14 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/11 12:23:55 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,6 @@ void	parse(t_data *data, int fd)
 	char	*str;
 
 	str = NULL;
-	data->obj = NULL;
-	data->s_light = NULL;
-	data->cam = NULL;
 	while (true)
 	{
 		if (str)

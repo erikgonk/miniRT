@@ -6,33 +6,15 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:27:07 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/10 14:17:16 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/11 12:22:46 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-t_v3	doubles_acl_parse(char *str, int i)
-{
-	double		x;
-	double		y;
-	double		z;
-
-	while (str[i] && ft_isspace(str[i]))
-		i++;
-	if (str[i] && !ft_isdigit(str[i]) && str[i] != '-')
-		exit(er("error: doubles_acl_parse: map parsing:\n", str));
-	x = ft_atof(str, i);
-	i = skip_double(str, i, 0, 1);
-	y = ft_atof(str, i);
-	i = random_sum_parse(str, i);
-	z = ft_atof(str, i);
-	return (vdefine(x, y, z));
-}
-
 void	create_alight(t_data *data, char *str, int type)
 {
-	char		*tmp;
+	char	*tmp;
 
 	tmp = NULL;
 	if (type != 3 || (str[1] && !ft_isspace(str[1])))
@@ -47,7 +29,7 @@ void	create_alight(t_data *data, char *str, int type)
 
 void	cam_blur(t_data *data, char *str2, char *tmp)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (tmp[i] && ft_isspace(tmp[i]))
@@ -62,7 +44,6 @@ void	cam_blur(t_data *data, char *str2, char *tmp)
 		data->cam->aperture = ft_atof(str2, 0);
 		if (data->cam->aperture < 0.01 || data->cam->aperture > 0.5)
 			exit(er("error: cam_blur: aperture 0.01-0.5", NULL));
-
 	}
 	else
 	{
@@ -94,10 +75,24 @@ void	create_cam(t_data *data, char *str, int type)
 	free(tmp);
 }
 
+static void	create_alight_normi(t_slight **s_light, t_slight *new_light)
+{
+	t_slight	*current;
+
+	if (*s_light == NULL)
+		*s_light = new_light;
+	else
+	{
+		current = *s_light;
+		while (current->next != NULL)
+			current = current->next;
+		current->next = new_light;
+	}
+}
+
 void	create_slight(t_slight **s_light, char *str, int type)
 {
 	t_slight	*new_light;
-	t_slight	*current;
 	char		*tmp[2];
 
 	if (type != 5 || (str[1] && !ft_isspace(str[1])))
@@ -112,14 +107,6 @@ void	create_slight(t_slight **s_light, char *str, int type)
 	new_light->rgb = colors_parse(tmp[1], 0);
 	check_end(tmp[1], 0);
 	new_light->next = NULL;
-	if (*s_light == NULL)
-		*s_light = new_light;
-	else
-	{
-		current = *s_light;
-		while (current->next != NULL)
-			current = current->next;
-		current->next = new_light;
-	}
-	return (free(tmp[1]), free(tmp[0]));
+	create_alight_normi(s_light, new_light);
+	return (free(tmp[0]), free(tmp[1]));
 }

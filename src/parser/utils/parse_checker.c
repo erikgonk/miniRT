@@ -6,7 +6,7 @@
 /*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:18:36 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/09 18:11:33 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/11 12:25:31 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,11 @@ void	check_obj_normi(t_obj *obj)
 		exit(er("error: check_obj_normi: cone size <1", NULL));
 	if (obj->type == CU)
 	{
-		if (obj->cube_size.x < 1) 
+		if (obj->cube_size.x < 1)
 			exit(er("error: check_obj_normi: cube size x <1", NULL));
-		else if (obj->cube_size.x < 1) 
+		else if (obj->cube_size.x < 1)
 			exit(er("error: check_obj_normi: cube size y <1", NULL));
-		else if (obj->cube_size.x < 1) 
+		else if (obj->cube_size.x < 1)
 			exit(er("error: check_obj_normi: cube size z <1", NULL));
 	}
 }
@@ -107,7 +107,7 @@ void	check_obj(t_obj *obj)
 		if (obj->type == CO && (obj->size < 0 || obj->size > 54))
 			exit(er("error: check_obj: co size 0-54", NULL));
 		else if (obj->type == CO)
-			obj->size += 35;	
+			obj->size += 35;
 		obj = obj->next;
 	}
 }

@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_obj.c                                        :+:      :+:    :+:   */
+/*   extra_funcs.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:02:22 by erigonza          #+#    #+#             */
-/*   Updated: 2024/12/19 16:05:03 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/11 12:14:11 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void    init_materials(t_obj *obj)
+void	init_materials(t_obj *obj)
 {
 	obj->material.m_type = -1;
-    obj->material.reflectivity = 0;
-    obj->material.transmittance = 0;
-    obj->material.roughness = 1;
-    obj->material.absorption = 1;
-    obj->material.specularity = 0.1;
-    obj->material.board_scale = -1;
+	obj->material.reflectivity = 0;
+	obj->material.transmittance = 0;
+	obj->material.roughness = 1;
+	obj->material.absorption = 1;
+	obj->material.specularity = 0.1;
+	obj->material.board_scale = -1;
 }
 
 void	skip_colors(char *str, char **res)
@@ -52,19 +52,17 @@ int	type_extra_func(char *str)
 	return (-1);
 }
 
-void	parse_cb_em(t_obj *obj, char *str)
+void	parse_cb_em(t_obj *obj, char *str, int i)
 {
-	int		i;
-
-	i = 2;
 	if (obj->material.m_type == CB)
 	{
 		if (obj->type != PL)
-			exit(er("error: parse_cb_em: just plane can be a checkerboard", str));
+			exit(er("error: parse_cb_em: checkerboard not in pl", str));
 		obj->material.board_scale = ft_atof(str, i);
 		obj->material.board_scale = 1 - obj->material.board_scale;
-		if (obj->material.board_scale > 0.991 || obj->material.board_scale < 0.001)
-			exit(er("error: parse_cb_em: board size has to be 0.991-0.001", NULL));
+		if (obj->material.board_scale > 0.991 || \
+				obj->material.board_scale < 0.001)
+			exit(er("error: parse_cb_em: board size 0.991-0.001", NULL));
 		i = skip_double(str, i, 0, 0);
 		obj->material.rgb_checker = colors_parse(str, i);
 		check_end(str, i);
@@ -86,14 +84,15 @@ void	extra_functionalities(t_obj *obj, char *tmp)
 {
 	char	*str;
 
-    init_materials(obj);
+	init_materials(obj);
 	skip_colors(tmp, &str);
 	if (str && (!str[0] || str[0] == '\n'))
 		return (free(str));
 	obj->material.m_type = type_extra_func(str);
-	if (obj->material.m_type == -1 || !str[1] || (obj->material.m_type < CB && str[2] && str[3]))
+	if (obj->material.m_type == -1 || !str[1] || \
+			(obj->material.m_type < CB && str[2] && str[3]))
 		exit(er("error: extra_functs: invalid char after color", str));
 	else if (obj->material.m_type >= CB)
-		parse_cb_em(obj, str);
+		parse_cb_em(obj, str, 2);
 	free(str);
 }

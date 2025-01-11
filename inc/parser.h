@@ -6,7 +6,7 @@
 /*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 15:20:14 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/11 12:05:04 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/11 12:20:15 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	objadd_back(t_obj **lst, t_obj *new);
 void	init_materials(t_obj *obj);
 void	skip_colors(char *str, char **res);
 int		type_extra_func(char *str);
-void	parse_cb_em(t_obj *obj, char *str);
+void	parse_cb_em(t_obj *obj, char *str, int i);
 void	extra_functionalities(t_obj *obj, char *tmp);
 
 #endif

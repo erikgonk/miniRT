@@ -6,7 +6,7 @@
 /*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:13:09 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/09 16:24:48 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/11 12:29:36 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	er(char *s, char *argv)
 
 int	type_obj(char *str)
 {
-	static char		*bts[] = {"sp", "pl", "cy", "A", "C", "L", "co", "cu", NULL};
+	static char		*bts[] = {"sp", "pl", "cy", "A", "C", "L", "co", "cu", \
+		NULL};
 	int				i;
 
 	i = 0;
