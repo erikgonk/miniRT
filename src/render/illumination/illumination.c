@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:09:03 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/11 11:52:33 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/11 13:39:02 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../inc/render.h"
 #include "../lib/libvector/libvct.h"
 
-t_rgb	apply_ambient_light(t_rgb obj_color, t_alight *a_light)
+t_rgb	apply_al(t_rgb obj_color, t_alight *a_light)
 {
 	t_rgb	result;
 	double	a_r;
@@ -45,71 +45,46 @@ void	difuse_light(t_rgb *color, t_slight *slight, t_obj *obj, double inty)
 	}
 }
 
-bool	data_shadow(t_data *data, t_ray *shadow_ray, double max_dist, t_obj *self)
+bool	hit_all(t_data *data, t_ray *shdw_ray, t_obj *cr_obj, double *t)
 {
-	t_obj	*current_obj;
-	double	t;
-
-	t = INFINITY;
-	current_obj = data->obj;
-	while (current_obj)
-	{
-		if (current_obj->type == CAP || (self && current_obj == self))
-		{
-			current_obj = current_obj->next;
-			continue;
-		}
-		if (self && current_obj->parent == self->parent)
-		{
-			current_obj = current_obj->next;
-			continue ;
-		}
-		if (current_obj->type == SP && hit_sp(shadow_ray, current_obj, &t) && \
-				(t > EPSILON && t < max_dist))
-			return (true);
-		else if ((current_obj->type == PL || current_obj->type == SIDE) && hit_pl(data, shadow_ray, current_obj, &t) \
-				&& (t > EPSILON && t < max_dist))
-			return (true);
-		else if (current_obj->type == CY && hit_cy(shadow_ray, current_obj, &t) && (t > EPSILON && t < max_dist))
-			return (true);
-		else if (current_obj->type == CAP && hit_cap(data, shadow_ray, current_obj, &t) \
-				&& (t > EPSILON && t < max_dist))
-			return (true);
-		else if (current_obj->type == CO && hit_cone(data, shadow_ray, current_obj, &t) \
-				&& (t > EPSILON && t < max_dist))
-			return (true);
-		current_obj = current_obj->next;
-	}
+	if (cr_obj->type == SP && hit_sp(shdw_ray, cr_obj, t) && \
+			(t[0] > EPSILON && *t < t[1]))
+		return (true);
+	else if ((cr_obj->type == PL || cr_obj->type == SIDE) && \
+			hit_pl(data, shdw_ray, cr_obj, t) \
+			&& (t[0] > EPSILON && t[0] < t[1]))
+		return (true);
+	else if (cr_obj->type == CY && hit_cy(shdw_ray, cr_obj, t) \
+			&& (t[0] > EPSILON && t[0] < t[1]))
+		return (true);
+	else if (cr_obj->type == CAP && hit_cap(data, shdw_ray, cr_obj, t) \
+			&& (t[0] > EPSILON && t[0] < t[1]))
+		return (true);
+	else if (cr_obj->type == CO && hit_cone(shdw_ray, cr_obj, t) \
+			&& (t[0] > EPSILON && t[0] < t[1]))
+		return (true);
 	return (false);
 }
 
-t_rgb	phong(t_data *data, t_ray *ray, t_obj *obj)
+bool	data_shadow(t_data *data, t_ray *shw_ray, double max_dist, t_obj *self)
 {
-	t_rgb		color;
-	t_ray		shadow_ray;
-	t_slight	*slight;
-	double		intensity;
+	t_obj	*cr_obj;
+	double	t[2];
 
-	if (obj->type == PL && obj->material.board_scale != -1)
-		color = checkerboard_color(obj, ray->point);
-	else
-		color = obj->a_rgb;
-	if (dot(ray->direction, ray->normal) > 0)
-		ray->normal = vmul(-1, ray->normal);
-	slight = data->s_light;
-	while (slight)
+	t[0] = INFINITY;
+	t[1] = max_dist;
+	cr_obj = data->obj;
+	while (cr_obj)
 	{
-		shadow_ray.origin = vadd(ray->point, vmul(1e-3, ray->normal));
-		shadow_ray.direction = normalize(vsub(slight->pos, ray->point));
-		if (data_shadow(data, &shadow_ray, vlength(vsub(slight->pos,
-						ray->point)), NULL))
+		if (cr_obj->type == CAP || (self && (cr_obj == self || \
+			cr_obj->parent == self->parent)))
 		{
-			slight = slight->next;
+			cr_obj = cr_obj->next;
 			continue ;
 		}
-		intensity = fmax(dot(shadow_ray.direction, ray->normal), 0.0f);
-		difuse_light(&color, slight, obj, intensity);
-		slight = slight->next;
+		if (hit_all(data, shw_ray, cr_obj, t))
+			return (true);
+		cr_obj = cr_obj->next;
 	}
-	return (color);
+	return (false);
 }

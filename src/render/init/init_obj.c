@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:31:28 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/10 15:00:47 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/11 12:48:41 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	make_cone_cap(t_obj *cone, t_data *data)
 	cap->parent = cone->parent;
 	cap->material = cone->material;
 	cap->rgb = cone->rgb;
-	cap->a_rgb = apply_ambient_light(cone->rgb, data->a_light);
+	cap->a_rgb = apply_al(cone->rgb, data->a_light);
 	cap->type = CAP;
 	cap->size = cone->height * tan((cone->size * 0.5f) * (M_PI / 180.0f));
 	cap->pos = vadd(cone->pos, vmul(cone->height, cone->axis));
@@ -37,13 +37,9 @@ void	make_caps(t_data *data, t_obj *obj)
 
 	tp_cap = malloc(sizeof(t_obj));
 	bt_cap = malloc(sizeof(t_obj));
-	tp_cap->parent = obj->parent;
-	bt_cap->parent = obj->parent;
-	tp_cap->material = obj->material;
-	bt_cap->material = obj->material;
-	tp_cap->rgb = obj->rgb;
-	bt_cap->rgb = obj->rgb;
-	tp_cap->a_rgb = apply_ambient_light(obj->rgb, data->a_light);
+	memcpy(tp_cap, obj, sizeof(t_obj));
+	memcpy(bt_cap, obj, sizeof(t_obj));
+	tp_cap->a_rgb = apply_al(obj->rgb, data->a_light);
 	bt_cap->a_rgb = tp_cap->a_rgb;
 	tp_cap->type = CAP;
 	bt_cap->type = CAP;
@@ -62,46 +58,49 @@ void	make_caps(t_data *data, t_obj *obj)
 	objadd_back(&data->obj, bt_cap);
 }
 
-void	init_obj_normi(t_data *data, t_obj *obj)
+void	set_calcs(t_data *data, t_obj *obj)
 {
-	obj->calcs.radius = obj->size * 0.5f;
-	obj->calcs.radius2 = obj->calcs.radius * obj->calcs.radius;
-	if (obj->type != SP)
-		obj->axis = normalize(obj->axis);
-	obj->calcs.oc_par = vmul(dot(vsub(data->cam->pos, obj->pos), obj->axis), \
-						obj->axis);
-	obj->calcs.oc_perp = vsub(vsub(data->cam->pos, obj->pos), obj->calcs.oc_par);
-	obj->calcs.c= dot(obj->calcs.oc_perp, obj->calcs.oc_perp) - obj->calcs.radius2;
+	obj->calcs.oc_par = vmul(dot(vsub(data->cam->pos, obj->pos), \
+						obj->axis), obj->axis);
+	obj->calcs.oc_perp = vsub(vsub(data->cam->pos, obj->pos), \
+						obj->calcs.oc_par);
+	obj->calcs.c = dot(obj->calcs.oc_perp, obj->calcs.oc_perp) \
+						- obj->calcs.radius2;
 	obj->calcs.half_height = obj->height * 0.5f;
 	obj->calcs.hh_e_sum = obj->calcs.half_height + EPSILON;
 	obj->calcs.hh_e_res = obj->calcs.half_height - EPSILON;
- 	obj->calcs.upper_cap.cap_center = vadd(obj->pos, vmul(obj->calcs.half_height, \
-												obj->axis));
-	obj->calcs.btm_cap.cap_center = vsub(obj->pos, vmul(obj->calcs.half_height, obj->axis));
+	obj->calcs.upper_cap.cap_center = vadd(obj->pos, \
+					vmul(obj->calcs.half_height, obj->axis));
+	obj->calcs.btm_cap.cap_center = vsub(obj->pos, \
+					vmul(obj->calcs.half_height, obj->axis));
 	obj->calcs.upper_cap.radius = obj->size * 0.5f;
 	obj->calcs.btm_cap.radius = obj->size * 0.5f;
 	obj->calcs.upper_cap.cap_normal = obj->axis;
 	obj->calcs.btm_cap.cap_normal = vmul(-1.0f, obj->axis);
-//			refract
 	obj->calcs.etai = 1;
 	obj->calcs.etat = 1.5;
 	obj->calcs.eta = obj->calcs.etai / obj->calcs.etat;
 	obj->calcs.eta_reverse = obj->calcs.etat / obj->calcs.etai;
 	obj->calcs.eta2 = obj->calcs.eta * obj->calcs.eta;
 	obj->calcs.eta_reverse2 = obj->calcs.eta_reverse * obj->calcs.eta_reverse;
-//			fresnel
 	obj->calcs.etai_etat = 1 / 1.5;
 	obj->calcs.etai_etat_reverse = 1.5 / 1;
-//			cb
+}
+
+void	init_obj_normi(t_data *data, t_obj *obj)
+{
+	obj->calcs.radius = obj->size * 0.5f;
+	obj->calcs.radius2 = obj->calcs.radius * obj->calcs.radius;
+	if (obj->type != SP)
+		obj->axis = normalize(obj->axis);
+	set_calcs(data, obj);
 	if (obj->material.board_scale != -1)
-		obj->material.rgb_checker = apply_ambient_light(obj->material.rgb_checker, data->a_light);
-//			caps
+		obj->material.rgb_checker = \
+			apply_al(obj->material.rgb_checker, data->a_light);
 	obj->calcs.caps_normal = vmul(-1.0f, obj->axis);
-//			cone
 	obj->calcs.half_angle = (obj->size * 0.5f) * (M_PI / 180.0f);
 	obj->calcs.cos_half = cos(obj->calcs.half_angle);
 	obj->calcs.k = obj->calcs.cos_half * obj->calcs.cos_half;
-//
 	if (obj->type == PL || obj->type == SIDE || obj->type == CAP)
 		obj->calcs.numerator = dot(vsub(obj->pos, data->cam->pos), obj->axis);
 	obj->calcs.half_size = vmul(0.5, obj->cube_size);
@@ -124,7 +123,7 @@ void	init_obj(t_data *data)
 		if (obj->type != CAP && obj->type != SIDE)
 			obj->parent = parent;
 		if (obj->material.m_type != MR)
-			obj->a_rgb = apply_ambient_light(obj->rgb, data->a_light);
+			obj->a_rgb = apply_al(obj->rgb, data->a_light);
 		if (obj->type == PL || obj->type == SIDE)
 			obj->calcs.i_axis = vmul(-1.0f, obj->axis);
 		else if (obj->type == CY)

@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 14:00:21 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/11 11:51:47 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/11 13:20:57 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,25 +32,31 @@ void	set_cy_axis(t_quadratic *quad, t_obj *cy, t_ray *ray)
 	quad->b = 2.0f * dot(oc_perp, d_perp);
 }
 
-double	set_ray_t(t_ray *ray, t_obj *cy, double *t, t_quadratic quad)
+double	compute_intersection(t_ray *ray, t_quadratic quad, t_v3 *point)
 {
-	double		proj;
-	t_v3		point;
-	double		t_min;
+	double	t_min;
 
 	t_min = INFINITY;
 	if (quad.t1 > EPSILON && quad.t1 < quad.t2)
 	{
-		point = vadd(ray->origin, vmul(quad.t1, ray->direction));
+		*point = vadd(ray->origin, vmul(quad.t1, ray->direction));
 		t_min = quad.t1;
 	}
 	else if (quad.t2 > EPSILON)
 	{
-		point = vadd(ray->origin, vmul(quad.t2, ray->direction));
+		*point = vadd(ray->origin, vmul(quad.t2, ray->direction));
 		t_min = quad.t2;
 	}
-	else
-		point = vdefine(0, 0, 0);
+	return (t_min);
+}
+
+double	set_ray_t(t_ray *ray, t_obj *cy, double *t, t_quadratic quad)
+{
+	double	t_min;
+	double	proj;
+	t_v3	point;
+
+	t_min = compute_intersection(ray, quad, &point);
 	proj = dot(vsub(point, cy->pos), cy->axis);
 	if (proj > -cy->calcs.hh_e_sum && proj < cy->calcs.hh_e_res && t_min < *t)
 	{
@@ -59,7 +65,7 @@ double	set_ray_t(t_ray *ray, t_obj *cy, double *t, t_quadratic quad)
 		ray->normal = normalize(vsub(point, \
 			vadd(cy->pos, vmul(proj, cy->axis))));
 		if (t_min == quad.t2 && dot(ray->direction, ray->normal) > 0)
-				ray->normal = vmul(-1, ray->normal);
+			ray->normal = vmul(-1, ray->normal);
 	}
 	return (t_min);
 }

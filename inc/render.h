@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/11 12:07:13 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/11 13:37:42 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,14 +120,14 @@ bool					hit_cap(t_data *data, t_ray *ray, t_obj *cap,
 							double *t);
 
 //		cone
-bool					hit_cone(t_data *data, t_ray *ray, t_obj *cone,
+bool					hit_cone(t_ray *ray, t_obj *cone,
 							double *t);
 
 //		cube
 bool					create_cube(t_data *data, t_obj *cube);
 
 //		illumination
-t_rgb					apply_ambient_light(t_rgb obj_color, t_alight *a_light);
+t_rgb					apply_al(t_rgb obj_color, t_alight *a_light);
 void					difuse_light(t_rgb *color, t_slight *slight, t_obj *obj,
 							double inty);
 bool					data_shadow(t_data *data, t_ray *shadow_ray,

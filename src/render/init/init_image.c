@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 12:37:59 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/05 11:15:03 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/11 12:36:59 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ uint32_t	**init_image_(t_data *data)
 	size_t		row_size;
 
 	image = malloc(data->y * sizeof(uint32_t *));
-	row_size = data->x* sizeof(uint32_t);
+	row_size = data->x * sizeof(uint32_t);
 	if (!image)
 		return (NULL);
 	y = -1;

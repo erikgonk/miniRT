@@ -6,71 +6,77 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 16:27:29 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/11 11:43:08 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/11 13:36:46 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void calculate_plane_tangent_bitangent(t_v3 normal, t_v3 *tangent, t_v3 *bitangent)
+void	calc_pl_tb(t_v3 normal, t_v3 *tangent, t_v3 *bitangent)
 {
-	t_v3 up;
+	t_v3	up;
 
-	up = (fabs(normal.y) < 0.99) ? vdefine(0, 1, 0) : vdefine(1, 0, 0);
+	if (fabs(normal.y) < 0.99)
+		up = vdefine(0, 1, 0);
+	else
+		up = vdefine(1, 0, 0);
 	*tangent = cross(up, normal);
 	*tangent = normalize(*tangent);
 	*bitangent = cross(normal, *tangent);
 	*bitangent = normalize(*bitangent);
 }
 
-static t_v3 transform_to_world_space(t_v3 tangent, t_v3 bitangent, t_v3 normal, t_v3 map_normal)
+static t_v3	transform_tws(t_v3 tang, t_v3 bitang, t_v3 normal, t_v3 mp_nrmal)
 {
-	t_v3 world_normal;
+	t_v3	w_normal;
 
-	world_normal.x = map_normal.x * tangent.x + map_normal.y * bitangent.x + map_normal.z * normal.x;
-	world_normal.y = map_normal.x * tangent.y + map_normal.y * bitangent.y + map_normal.z * normal.y;
-	world_normal.z = map_normal.x * tangent.z + map_normal.y * bitangent.z + map_normal.z * normal.z;
-	return (normalize(world_normal));
+	w_normal.x = mp_nrmal.x * tang.x + mp_nrmal.y * \
+				bitang.x + mp_nrmal.z * normal.x;
+	w_normal.y = mp_nrmal.x * tang.y + mp_nrmal.y * \
+				bitang.y + mp_nrmal.z * normal.y;
+	w_normal.z = mp_nrmal.x * tang.z + mp_nrmal.y * \
+				bitang.z + mp_nrmal.z * normal.z;
+	return (normalize(w_normal));
 }
 
-t_v3 get_normal_from_map_plane(t_obj *plane, t_v3 hit_point)
+t_v3	get_normal_from_map_plane(t_obj *plane, t_v3 hp, int x, int y)
 {
-	int x, y, index;
-	uint8_t r, g, b;
-	t_v3 normal;
-	float u, v;
+	int		i;
+	t_rgb	rgb;
+	t_v3	normal;
+	float	uv[2];
 
-	u = fmod(hit_point.x, 1.0f);
-	if (u < 0)
-		u += 1.0f;
-	v = fmod(hit_point.z, 1.0f);
-	if (v < 0)
-		v += 1.0f;
-
-	x = (int)(u * plane->material.texture->width * plane->material.bm_size) % plane->material.texture->width;
-	y = (int)(v * plane->material.texture->height * plane->material.bm_size) % plane->material.texture->height;
-	index = (y * plane->material.texture->width + x) * plane->material.texture->bytes_per_pixel;
-
-	r = plane->material.texture->pixels[index];
-	g = plane->material.texture->pixels[index + 1];
-	b = plane->material.texture->pixels[index + 2];
-
-	normal.x = (r / 255.0f) * 2.0f - 1.0f;
-	normal.y = (g / 255.0f) * 2.0f - 1.0f;
-	normal.z = (b / 255.0f) * 2.0f - 1.0f;
+	uv[0] = fmod(hp.x, 1.0f);
+	if (uv[0] < 0u)
+		uv[0] += 1.0f;
+	uv[1] = fmod(hp.z, 1.0f);
+	if (uv[1] < 0)
+		uv[1] += 1.0f;
+	x = (int)(uv[0] * plane->material.texture->width * \
+			plane->material.bm_size) % plane->material.texture->width;
+	y = (int)(uv[1] * plane->material.texture->height * \
+			plane->material.bm_size) % plane->material.texture->height;
+	i = (y * plane->material.texture->width + x) \
+			* plane->material.texture->bytes_per_pixel;
+	rgb.r = plane->material.texture->pixels[i];
+	rgb.g = plane->material.texture->pixels[i + 1];
+	rgb.b = plane->material.texture->pixels[i + 2];
+	normal.x = (rgb.r / 255.0f) * 2.0f - 1.0f;
+	normal.y = (rgb.g / 255.0f) * 2.0f - 1.0f;
+	normal.z = (rgb.b / 255.0f) * 2.0f - 1.0f;
 	return (normalize(normal));
 }
 
-void get_plane_normal(t_obj *plane, t_v3 hit_point, t_ray *ray)
+void	get_plane_normal(t_obj *plane, t_v3 hit_point, t_ray *ray)
 {
-	t_v3 map_normal;
-	t_v3 tangent;
-	t_v3 bitangent;
+	t_v3	map_normal;
+	t_v3	tang;
+	t_v3	bit;
 
 	if (plane->material.texture)
 	{
-		map_normal = get_normal_from_map_plane(plane, hit_point);
-		calculate_plane_tangent_bitangent(plane->axis, &tangent, &bitangent);
-		ray->normal = transform_to_world_space(tangent, bitangent, plane->axis, map_normal);
+		map_normal = get_normal_from_map_plane(plane, hit_point, 0, 0);
+		calc_pl_tb(plane->axis, &tang, &bit);
+		ray->normal = transform_tws(tang, bit, plane->axis, map_normal);
 	}
 }

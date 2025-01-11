@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/11 11:56:53 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/11 13:39:35 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_obj	*find_closest_object(t_data *data, t_ray *ray, t_obj *objs, double *t_min)
 		|| ((obj->type == PL || obj->type == SIDE) && hit_pl(data, ray, obj, &t)) \
 		|| (obj->type == CY && hit_cy(ray, obj, &t)) \
 		|| (obj->type == CAP && hit_cap(data, ray, obj, &t)) \
-		|| (obj->type == CO && hit_cone(data, ray, obj, &t)))
+		|| (obj->type == CO && hit_cone(ray, obj, &t)))
 		{
 			if (t > 0 && t < *t_min)
 			{
@@ -340,10 +340,7 @@ uint32_t	trace_ray(t_ray ray, t_data *data)
 	if (!closest_obj)
 		return (BLACK);
 	pthread_mutex_lock(data->m_trace);
-	if (data->trace_flag)
-		c_global = phong(data, &ray, closest_obj);
-	else
-		c_global = path_trace(&ray, data, 2);
+	c_global = path_trace(&ray, data, 2);
 	pthread_mutex_unlock(data->m_trace);
 	return (get_colour(c_global));
 }

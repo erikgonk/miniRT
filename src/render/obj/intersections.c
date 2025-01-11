@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:48:44 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/11 11:52:12 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/11 13:16:08 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,42 +45,49 @@ bool	hit_sp(t_ray *ray, t_obj *sphere, double *t)
 	return (true);
 }
 
+bool	side_mode(t_obj *plane, t_ray *ray, double value)
+{
+	t_v3	local_hit;
+	t_v3	hit_point;
+	double	x;
+	double	y;
+
+	hit_point = vadd(ray->origin, vmul(value, ray->direction));
+	local_hit = vsub(hit_point, plane->pos);
+	x = dot(local_hit, plane->right);
+	y = dot(local_hit, plane->up);
+	if (plane->face == 1 && (fabs(x) > plane->calcs.half_size.y || \
+		fabs(y) > plane->calcs.half_size.z))
+		return (false);
+	else if (plane->face == 2 && (fabs(x) > plane->calcs.half_size.x \
+				|| fabs(y) > plane->calcs.half_size.z))
+		return (false);
+	else if (plane->face == 3 && (fabs(x) > plane->calcs.half_size.x \
+				|| fabs(y) > plane->calcs.half_size.y))
+		return (false);
+	ray->point = hit_point;
+	return (true);
+}
+
 bool	hit_pl(t_data *data, t_ray *ray, t_obj *plane, double *t)
 {
-	t_v3			hit_point;
-	t_v3			local_hit;
-	double			denominator;
-	double			numerator;
-	double			result;
-	double			x;
-	double			y;
+	double			dnrxy[3];
 
-	denominator = dot(ray->direction, plane->axis);
-	if (fabs(denominator) < EPSILON)
+	dnrxy[0] = dot(ray->direction, plane->axis);
+	if (fabs(dnrxy[0]) < EPSILON)
 		return (false);
 	if (v3_compare(data->cam->pos, ray->origin))
-		numerator = plane->calcs.numerator;
+		dnrxy[1] = plane->calcs.numerator;
 	else
-		numerator = dot(vsub(plane->pos, ray->origin), plane->axis);
-	result = numerator / denominator;
-	if (result <= EPSILON || result >= *t)
+		dnrxy[1] = dot(vsub(plane->pos, ray->origin), plane->axis);
+	dnrxy[2] = dnrxy[1] / dnrxy[0];
+	if (dnrxy[2] <= EPSILON || dnrxy[2] >= *t)
 		return (false);
-	hit_point = vadd(ray->origin, vmul(result, ray->direction));
 	if (plane->type == SIDE)
-	{
-		local_hit = vsub(hit_point, plane->pos);
-		x = dot(local_hit, plane->right);
-		y = dot(local_hit, plane->up);
-		if (plane->face == 1 && (fabs(x) > plane->calcs.half_size.y || fabs(y) > plane->calcs.half_size.z))
+		if (!side_mode(plane, ray, dnrxy[2]))
 			return (false);
-		else if (plane->face == 2 && (fabs(x) > plane->calcs.half_size.x || fabs(y) > plane->calcs.half_size.z))
-			return (false);
-		else if (plane->face == 3 && (fabs(x) > plane->calcs.half_size.x || fabs(y) > plane->calcs.half_size.y))
-			return (false);
-	}
-	*t = result;
-	ray->point = hit_point;
-	if (denominator > EPSILON)
+	*t = dnrxy[2];
+	if (dnrxy[0] > EPSILON)
 		ray->normal = plane->calcs.i_axis;
 	else
 		ray->normal = plane->axis;
@@ -88,7 +95,3 @@ bool	hit_pl(t_data *data, t_ray *ray, t_obj *plane, double *t)
 		get_plane_normal(plane, ray->point, ray);
 	return (true);
 }
-
-
-
-

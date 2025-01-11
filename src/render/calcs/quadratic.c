@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:20:14 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/07 13:02:53 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/11 12:25:49 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ bool	solve_quadratic2(t_quadratic *quad)
 	sqrt_discriminant = sqrt(quad->discriminant);
 	quad->t1 = (-quad->b - sqrt_discriminant) / ax2;
 	quad->t2 = (-quad->b + sqrt_discriminant) / ax2;
-	if (quad->t1 > EPSILON || quad->t2 >EPSILON)
+	if (quad->t1 > EPSILON || quad->t2 > EPSILON)
 		return (true);
 	return (false);
 }

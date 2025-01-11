@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:37:51 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/11 11:47:51 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/11 13:04:48 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,15 @@
 void	*process_rows(void *arg)
 {
 	t_thread_data	*data;
-	int				id;
-	int				y;
-	int				x;
-
+	int				idyx[3];
 
 	data = (t_thread_data *)arg;
-	id = data->thread_id;
-	y = id;
-	while (y < data->data->y)
+	idyx[0] = data->thread_id;
+	idyx[1] = idyx[0];
+	while (idyx[1] < data->data->y)
 	{
-		x = 0;
-		while (x < data->data->x)
+		idyx[2] = -1;
+		while (++idyx[2] < data->data->x)
 		{
 			pthread_mutex_lock(data->data->m_god);
 			if (!data->data->god)
@@ -38,10 +35,10 @@ void	*process_rows(void *arg)
 				return (NULL);
 			}
 			pthread_mutex_unlock(data->data->m_god);
-			data->image[y][x] = trace_ray(data->rays[y][x], data->data);
-			x++;
+			data->image[idyx[1]][idyx[2]] = \
+					trace_ray(data->rays[idyx[1]][idyx[2]], data->data);
 		}
-		y += NUM_THREADS;
+		idyx[1] += NUM_THREADS;
 	}
 	pthread_exit(NULL);
 }
@@ -70,10 +67,10 @@ void	render_with_threads(t_data *data, t_ray **rays, uint32_t **image)
 	}
 }
 
-uint32_t	**average_samples(t_data *data, uint32_t **sample1, uint32_t **sample2)
+uint32_t	**average_samples(t_data *data, uint32_t **s1, uint32_t **s2)
 {
 	uint32_t	**res;
-	int 		x;
+	int			x;
 	int			y;
 
 	x = -1;
@@ -82,7 +79,7 @@ uint32_t	**average_samples(t_data *data, uint32_t **sample1, uint32_t **sample2)
 	{
 		y = -1;
 		while (++y < data->x)
-			res[x][y] = average(sample1[x][y], sample2[x][y]);
+			res[x][y] = average(s1[x][y], s2[x][y]);
 	}
 	return (res);
 }
@@ -102,4 +99,3 @@ uint32_t	**render(t_data *data)
 	free_render(data, vp, rays);
 	return (image);
 }
-

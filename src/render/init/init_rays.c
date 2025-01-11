@@ -5,11 +5,9 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid Date        by              +#+  #+#    #+#             */
-/*   Updated: 2025/01/10 14:17:42 by shurtado         ###   ########.fr       */
+/*   Created: 2025/01/11 13:34:39 by shurtado          #+#    #+#             */
+/*   Updated: 2025/01/11 13:34:47 by shurtado         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
-
 /* ************************************************************************** */
 
 #include "miniRT.h"
@@ -28,24 +26,24 @@ void	free_rays(t_ray **rays, int rows)
 t_v3	random_in_unit_disk(t_cam *cam)
 {
 	t_v3	res;
-    double theta;
-    double r;
+	double	theta;
+	double	r;
 
 	r = sqrt((double)rand() / (double)RAND_MAX);
 	theta = cam->pi2 * ((double)rand() / (double)RAND_MAX);
-	res.x =  r * cos(theta);
+	res.x = r * cos(theta);
 	res.y = r * sin(theta);
-    return (res);
+	return (res);
 }
 
 void	generate_dof_ray(t_ray *ray, t_cam *cam)
 {
-	t_v3 rd;
-	t_v3 offset;
-	t_v3 focus_point;
-	t_v3 random_point;
+	t_v3	rd;
+	t_v3	offset;
+	t_v3	focus_point;
+	t_v3	random_point;
 
-	cam->u = normalize(cross(cam->frame.up,cam->frame.forward));
+	cam->u = normalize(cross(cam->frame.up, cam->frame.forward));
 	cam->v = cross(cam->frame.forward, cam->u);
 	random_point = random_in_unit_disk(cam);
 	rd.x = random_point.x * cam->aperture * 0.5f;
@@ -85,10 +83,8 @@ t_ray	*init_ray_row(t_data *data, t_cam *cam, t_vp *vp, int y)
 	{
 		r_x = (double)rand() / (double)RAND_MAX;
 		r_y = (double)rand() / (double)RAND_MAX;
-		uv[0] = ((double)x + r_x) / (double)(data->x- 1);
-		uv[1] =  1.0f - ((double)y + r_y) / (double)(data->y - 1);
-		// uv[0] = ((double)x) / (double)(data->x- 1);
-		// uv[1] =  1.0f - ((double)y) / (double)(data->y - 1);
+		uv[0] = ((double)x + r_x) / (double)(data->x - 1);
+		uv[1] = 1.0f - ((double)y + r_y) / (double)(data->y - 1);
 		init_single_ray(&row[x], vp, cam, uv);
 		x++;
 	}
