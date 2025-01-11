@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 16:58:38 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/11 11:49:08 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/11 11:57:47 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ void	resise_w(int32_t width, int32_t height, void *param)
 {
 	t_data		*data;
 
+	(void)width;
+	(void)height;
 	data = param;
 	pthread_mutex_lock(data->m_god);
 	data->god = false;

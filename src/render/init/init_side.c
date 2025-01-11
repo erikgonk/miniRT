@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 12:39:47 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/10 13:09:58 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/11 11:57:11 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,48 +54,8 @@ t_frame	set_frame(t_v3 axis)
 void create_side(t_obj **side, t_obj *cube)
 {
 	t_v3	half_size;
-	t_frame	frame;
 
 	half_size = vmul(0.5, cube->cube_size);
-	// if (cube->cube_size.x == cube->cube_size.y && cube->cube_size.y == cube->cube_size.z)
-	// {
-	// 	frame.forward = normalize(cube->axis);
-	// 	frame.right = normalize(cross(vdefine(0,1,0), frame.forward));
-	// 	if (vlength(frame.right) < EPSILON)
-	// 		frame.right = normalize(cross(vdefine(1,0,0), frame.forward));
-	// 	frame.up = normalize(cross(frame.forward, frame.right
-	// 	side[0] = set_side(vadd(cube->pos, vmul(half_size.z, frame.forward)), frame);
-	// 	side[1] = set_side(vadd(cube->pos, vmul(half_size.z, frame.forward)), frame);
-	// 	side[2] = set_side(vadd(cube->pos, vmul(half_size.z, frame.forward)), frame);
-	// 	side[3] = set_side(vadd(cube->pos, vmul(half_size.z, frame.forward)), frame);
-	// 	side[4] = set_side(vadd(cube->pos, vmul(half_size.z, frame.forward)), frame);
-	// 	side[5] = set_side(vadd(cube->pos, vmul(half_size.z, frame.forward)), frame);
-
-	// 	side[1]->axis = vmul(-1.0, forward);
-	// 	side[1]->right = vmul(-1.0, right);
-	// 	side[1]->up = up;
-	// 	side[1]->pos = vadd(cube->pos, vmul(-half_size.z, forward));
-	// 	side[2]->axis = vmul(-1.0, right);
-	// 	side[2]->right = vmul(-1.0, forward);
-	// 	side[2]->up = up;
-	// 	side[2]->pos = vadd(cube->pos, vmul(-half_size.x, right));
-	// 	side[3]->axis = right;
-	// 	side[3]->right = forward;
-	// 	side[3]->up = up;
-	// 	side[3]->pos = vadd(cube->pos, vmul(half_size.x, right));
-	// 	side[4]->axis = vmul(-1.0, up);
-	// 	side[4]->right = right;
-	// 	side[4]->up = vmul(-1.0, forward);
-	// 	side[4]->pos = vadd(cube->pos, vmul(-half_size.y, up));
-	// 	side[5]->axis = up;
-	// 	side[5]->right = right;
-	// 	side[5]->up = forward;
-	// 	side[5]->pos = vadd(cube->pos, vmul(half_size.y, up));
-	// }
-	// else
-	// {
-		// set_side_sizes(side, cube);
-
     side[0]->axis = cube->axis_x;
     side[0]->pos = vadd(cube->pos, vmul(half_size.x, cube->axis_x));
     side[0]->right = cube->axis_y;
@@ -133,7 +93,6 @@ void create_side(t_obj **side, t_obj *cube)
     side[5]->right = cube->axis_x;
     side[5]->up = cube->axis_y;
 	side[5]->face = 3;
-	// }
 }
 void	init_sides(t_data *data, t_obj *obj)
 {

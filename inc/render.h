@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/11 11:49:35 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/11 11:52:24 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ void					specular_light(t_rgb *color, t_data *data, t_ray *ray, int shinnyness);
 //		intersections
 bool					calc_quad_sphere(t_obj *sphere, t_ray ray,
 							t_quadratic *quad);
-bool					hit_sp(t_data *data, t_ray *ray, t_obj *sphere, double *t);
+bool					hit_sp(t_ray *ray, t_obj *sphere, double *t);
 bool					hit_pl(t_data *data, t_ray *ray, t_obj *plane, double *t);
 
 //		viewport

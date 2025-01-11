@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/11 11:05:04 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/11 11:56:53 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ t_obj	*find_closest_object(t_data *data, t_ray *ray, t_obj *objs, double *t_min)
 	while (obj)
 	{
 		t = *t_min;
-		if ((obj->type == SP && hit_sp(data, ray, obj, &t)) \
+		if ((obj->type == SP && hit_sp(ray, obj, &t)) \
 		|| ((obj->type == PL || obj->type == SIDE) && hit_pl(data, ray, obj, &t)) \
-		|| (obj->type == CY && hit_cy(ray, obj, &t) \
-		|| obj->type == CAP && hit_cap(data, ray, obj, &t)) \
-		|| obj->type == CO && hit_cone(data, ray, obj, &t))
+		|| (obj->type == CY && hit_cy(ray, obj, &t)) \
+		|| (obj->type == CAP && hit_cap(data, ray, obj, &t)) \
+		|| (obj->type == CO && hit_cone(data, ray, obj, &t)))
 		{
 			if (t > 0 && t < *t_min)
 			{
@@ -79,7 +79,7 @@ t_rgb color_add(t_rgb c1, t_rgb c2)
 	return result;
 }
 
-t_v3 refract(t_obj *obj, t_v3 dir, t_v3 normal, double refractive_index)
+t_v3 refract(t_obj *obj, t_v3 dir, t_v3 normal)
 {
 	double cosi;
 	double eta;
@@ -100,7 +100,7 @@ t_v3 reflect(t_v3 dir, t_v3 normal)
 	return (vsub(dir, vmul(2 * dot(dir, normal), normal)));
 }
 
-double fresnel(t_obj *obj, t_v3 dir, t_v3 normal, double refractive_index)
+double fresnel(t_obj *obj, t_v3 dir, t_v3 normal)
 {
 	double cosi;
 	double etai_etat;
@@ -138,9 +138,9 @@ t_rgb glass_ray(t_ray *ray, t_obj *closest_object, t_data *data, int depth)
 	t_rgb refracted_color;
 	double kr;
 
-	kr = fresnel(closest_object, ray->direction, ray->normal, 1.5);
+	kr = fresnel(closest_object, ray->direction, ray->normal);
 	refracted_ray.origin = vadd(ray->point, vmul(-EPSILON, ray->normal));
-	refracted_ray.direction = refract(closest_object, ray->direction, ray->normal, 1.5);
+	refracted_ray.direction = refract(closest_object, ray->direction, ray->normal);
 	reflected_ray.origin = vadd(ray->point, vmul(EPSILON, ray->normal));
 	reflected_ray.direction = reflect(ray->direction, ray->normal);
 	reflected_color = path_trace(&reflected_ray, data, depth - 1);
@@ -175,7 +175,6 @@ t_rgb metallic_ray(t_ray *ray, t_obj *closest_object, t_data *data, int depth)
 {
 	t_ray		new_ray;
 	t_v3		perturbed_direction;
-	t_v3		adjusted_normal;
 
 	new_ray.origin = vadd(ray->point, vmul(EPSILON, ray->normal));
 	new_ray.direction = reflect(ray->direction, ray->normal);
