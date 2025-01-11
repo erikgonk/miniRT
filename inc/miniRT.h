@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/09 16:22:03 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/11 17:47:38 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@
 # define GL 1 // Glass
 # define MR 2 // Mirror
 # define CB 3 // Checker Board
-# define TR 4 // light transmitence
-# define EM 5 // light emision
+# define EM 4 // Light Emision
+# define BM 5 // Bump Map
 
 typedef long long	t_ll;
 

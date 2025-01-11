@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   init_rays_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/07 12:30:27 by vaunevik          #+#    #+#             */
-/*   Updated: 2025/01/11 17:49:37 by shurtado         ###   ########.fr       */
+/*   Created: 2025/01/11 13:34:39 by shurtado          #+#    #+#             */
+/*   Updated: 2025/01/11 17:43:46 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isspace(int c)
+#include "miniRT.h"
+
+void	free_rays(t_ray **rays, int rows)
 {
-	c = (unsigned char)c;
-	if (c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r'
-		|| c == ' ')
-		return (1);
-	return (0);
+	int	i;
+
+	i = -1;
+	while (++i < rows)
+		free(rays[i]);
+	free(rays);
 }

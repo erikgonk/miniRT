@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/11 13:37:42 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/11 17:48:31 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 
 # define PPLANEDISTANCE 1.0f
 # define BLACK 0xFF000000
-# define RGB_BLACK (t_rgb){1, 1, 1}
 
 typedef unsigned char	t_uchar;
 # define EPSILON 1e-3
@@ -31,6 +30,10 @@ typedef unsigned char	t_uchar;
 // Color Weight
 # define G_WEIGHT 0.7
 # define L_WEIGHT 0.3
+
+# define MAX_DEPTH 5
+
+# define FLT_MAX 3.40282347e+38F
 
 typedef struct s_viewport
 {
@@ -51,6 +54,19 @@ typedef struct s_ray
 	t_v3				point;
 }						t_ray;
 
+typedef struct s_direct
+{
+	t_slight			*slight;
+	t_ray				shadow_ray;
+	t_rgb				specular_color;
+	double				intensity;
+	t_v3				vsub_pos_point;
+	t_v3				reflect_dir;
+	t_v3				view_dir;
+	double				spec_intensity;
+	t_rgb				*color;
+}				t_direct;
+
 typedef struct s_quadratic
 {
 	double				a;
@@ -62,10 +78,40 @@ typedef struct s_quadratic
 }						t_quadratic;
 
 //		calcs
-double					vlength(t_v3 v);
-t_obj					*find_closest_object(t_data *data, t_ray *ray,
-							t_obj *objs, double *t_min);
+t_obj					*find_closest(t_data *data, t_ray *ray, t_obj *objs, \
+	double *t_min);
+t_rgb					diffuse_ray(t_ray *ray, t_obj *closest, t_data *data, \
+int depth);
+t_rgb					compute_direct_light(t_obj *obj, t_data *data, \
+							t_ray *ray, t_rgb color);
+t_rgb					path_trace(t_ray *ray, t_data *data, int depth);
 uint32_t				trace_ray(t_ray ray, t_data *data);
+
+//		calcs_utils
+t_v3					random_in_hemisphere(t_v3 normal);
+t_rgb					apply_self_emission(t_obj *obj, t_rgb base_color);
+void					compute_emissive_light(t_obj *emitter, t_ray *ray, \
+								t_rgb *color, t_data *data);
+void					iter_lights(t_data *data, t_obj *obj, t_ray *ray, \
+					t_direct d);
+bool					pt_checks(t_obj *closest, t_ray *ray, t_rgb *dirb);
+
+//		materials
+t_rgb					glass_ray(t_ray *ray, t_obj *closest, t_data *data, \
+									int depth);
+t_rgb					mirror_ray(t_ray *ray, t_obj *closest, t_data *data, \
+									int depth);
+t_v3					perturb_vector(t_v3 direction, double roughness, \
+									t_v3 normal);
+t_rgb					metallic_ray(t_ray *ray, t_obj *closest, t_data *data, \
+									int depth);
+
+//		materials_utils
+t_rgb					color_mul(t_rgb c, double factor);
+t_rgb					color_add(t_rgb c1, t_rgb c2);
+t_v3					refract(t_obj *obj, t_v3 dir, t_v3 normal);
+t_v3					reflect(t_v3 dir, t_v3 normal);
+double					fresnel(t_obj *obj, t_v3 dir, t_v3 normal);
 
 //		quadratic
 void					init_quadratic(t_quadratic *quad, double a, double b,
@@ -74,6 +120,7 @@ bool					solve_quadratic(t_quadratic *quad);
 bool					solve_quadratic2(t_quadratic *quad);
 
 //		color
+t_rgb					rgbdefine(t_uchar r, t_uchar g, t_uchar b);
 uint32_t				get_acolour(t_uchar alpha, t_uchar r, t_uchar g,
 							t_uchar b);
 uint32_t				get_colour(t_rgb color);
@@ -95,6 +142,10 @@ uint32_t				**init_image_(t_data *data);
 void					init_obj(t_data *data);
 void					init_obj_normi(t_data *data, t_obj *obj);
 void					init_light(t_data *data);
+void					set_calcs(t_data *data, t_obj *obj);
+
+//		init_obj_utils
+void					init_obj_normi(t_data *data, t_obj *obj);
 
 //		init_sides
 void					init_sides(t_data *data, t_obj *obj);
@@ -105,6 +156,9 @@ void					init_single_ray(t_ray *ray, t_vp *vp, t_cam *camera,
 t_ray					*init_ray_row(t_data *data, t_cam *camera, t_vp *vp,
 							int y);
 t_ray					**init_rays(t_data *data, t_cam *camera, t_vp *vp);
+
+//		init_rays_utils
+void					free_rays(t_ray **rays, int rows);
 
 //		init_materials
 void					init_materials_mt_mr(t_obj *obj);

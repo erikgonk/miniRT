@@ -41,7 +41,7 @@ void	skip_colors(char *str, char **res)
 
 int	type_extra_func(char *str)
 {
-	static char		*bts[] = {"mt", "gl", "mr", "cb", "tr", "em", "bm", NULL};
+	static char		*bts[] = {"mt", "gl", "mr", "cb", "em", "bm", NULL};
 	int				i;
 
 	i = 0;
@@ -82,6 +82,7 @@ void	parse_cb_em(t_obj *obj, char *str, int i)
 
 void	extra_functionalities(t_obj *obj, char *tmp)
 {
+	char	**args;
 	char	*str;
 
 	init_materials(obj);
@@ -95,5 +96,15 @@ void	extra_functionalities(t_obj *obj, char *tmp)
 	else if (obj->material.m_type >= CB)
 		parse_cb_em(obj, str, 2);
 	// skip_extra_funcs(obj, str);
+	if (obj->material.m_type == BM)
+	{
+		args = ft_split(str, ' ');
+		obj->material.bm_size = ft_atoi_parse(args[1], 0, 0);
+		tmp = ft_strtrim(args[2], " \n\t");
+		obj->material.texture = mlx_load_png(tmp);
+		ft_free_willy(args);
+		if (!obj->material.texture)
+			exit(er("error: textura: not valid", NULL));
+	}
 	free(str);
 }

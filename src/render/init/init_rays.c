@@ -6,22 +6,11 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 13:34:39 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/11 13:34:47 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/11 17:43:38 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-#include "render.h"
-
-void	free_rays(t_ray **rays, int rows)
-{
-	int	i;
-
-	i = -1;
-	while (++i < rows)
-		free(rays[i]);
-	free(rays);
-}
 
 t_v3	random_in_unit_disk(t_cam *cam)
 {

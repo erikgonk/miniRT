@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:13:09 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/11 12:29:36 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/11 16:35:45 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,18 @@ void	objadd_back(t_obj **lst, t_obj *new)
 		else
 			*lst = new;
 	}
+}
+
+char	**ft_free_willy(char **cmd)
+{
+	int		i;
+
+	i = -1;
+	if (!cmd)
+		return (NULL);
+	while (cmd[i])
+		free(cmd[++i]);
+	free(cmd);
+	cmd = NULL;
+	return (NULL);
 }

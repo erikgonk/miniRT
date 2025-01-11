@@ -6,21 +6,21 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 18:32:58 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/07 12:30:15 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/11 17:51:15 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libvct.h"
 
-double		distance(t_v3 p1, t_v3 p2)
+double	distance(t_v3 p1, t_v3 p2)
 {
-	double d;
+	double	d;
 
 	d = sqrt(pow(p2.x - p1.x, 2) + pow(p2.y - p1.y, 2) + pow(p2.z - p1.z, 2));
 	return (d);
 }
 
-t_v3		x_axis_rotation(t_v3 vec, double angle)
+t_v3	x_axis_rotation(t_v3 vec, double angle)
 {
 	t_v3	row1;
 	t_v3	row2;
@@ -38,7 +38,7 @@ t_v3		x_axis_rotation(t_v3 vec, double angle)
 	return (rotated);
 }
 
-t_v3		y_axis_rotation(t_v3 vec, double angle)
+t_v3	y_axis_rotation(t_v3 vec, double angle)
 {
 	t_v3	row1;
 	t_v3	row2;
@@ -56,7 +56,7 @@ t_v3		y_axis_rotation(t_v3 vec, double angle)
 	return (rotated);
 }
 
-t_v3		z_axis_rotation(t_v3 vec, double angle)
+t_v3	z_axis_rotation(t_v3 vec, double angle)
 {
 	t_v3	row1;
 	t_v3	row2;
@@ -74,19 +74,19 @@ t_v3		z_axis_rotation(t_v3 vec, double angle)
 	return (rotated);
 }
 
-t_v3 scalar_div(t_v3 vec, double scalar)
+t_v3	scalar_div(t_v3 vec, double scalar)
 {
-	t_v3 result;
+	t_v3	result;
 
 	if (scalar == 0)
 	{
 		result.x = 0;
 		result.y = 0;
 		result.z = 0;
-		return result;
+		return (result);
 	}
 	result.x = vec.x / scalar;
 	result.y = vec.y / scalar;
 	result.z = vec.z / scalar;
-	return result;
+	return (result);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_acl.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:27:07 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/11 12:52:40 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/11 16:36:38 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	cam_blur(t_data *data, char *str2, char *tmp)
 			exit(er("error: cam_blur: aperture 0.01-0.5", tmp));
 	}
 	else if (tmp[i] && !ft_isspace(tmp[i]) && tmp[i] != '\n')
-		exit(er("error: cam_blur: wrong data after fov", tmp));	
+		exit(er("error: cam_blur: wrong data after fov", tmp));
 	else
 	{
 		data->cam->focus_dist = -1;

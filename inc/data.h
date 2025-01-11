@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/11 12:08:04 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/11 17:08:10 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,18 @@
 # include <pthread.h>
 # include "libvct.h"
 # include "../lib/MLX42/include/MLX42/MLX42.h"
+
+typedef struct s_fresnel
+{
+	double				cosi;
+	double				etai_etat;
+	double				etai;
+	double				etat;
+	double				sint;
+	double				cost;
+	double				rs;
+	double				rp;
+}						t_fresnel;
 
 typedef struct s_frame
 {
@@ -80,7 +92,7 @@ typedef struct s_material
 	double				board_scale;
 	double				emision;
 	double				self_emision;
-	double				bm_size;
+	unsigned int		bm_size;
 	mlx_texture_t		*texture;
 }				t_material;
 
@@ -105,6 +117,7 @@ typedef struct s_calcs
 	double				eta_reverse;
 	double				eta2;
 	double				eta_reverse2;
+	double				kr;
 //		para fresnel
 	double				etai_etat;
 	double				etai_etat_reverse;

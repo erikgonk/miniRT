@@ -6,11 +6,21 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 12:19:01 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/05 10:43:51 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/11 16:43:58 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+t_rgb	rgbdefine(t_uchar r, t_uchar g, t_uchar b)
+{
+	t_rgb	rgb;
+
+	rgb.r = r;
+	rgb.g = g;
+	rgb.b = b;
+	return (rgb);
+}
 
 // From 0-255 BRGA colour Returns uint32 colour
 uint32_t	get_acolour(t_uchar alpha, t_uchar r, t_uchar g, t_uchar b)

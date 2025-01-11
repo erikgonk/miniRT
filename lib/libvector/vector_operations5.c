@@ -1,20 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   vector_operations5.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/07 12:30:27 by vaunevik          #+#    #+#             */
-/*   Updated: 2025/01/11 17:49:37 by shurtado         ###   ########.fr       */
+/*   Created: 2024/12/20 10:06:58 by shurtado          #+#    #+#             */
+/*   Updated: 2025/01/11 17:27:49 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isspace(int c)
+#include "libvct.h"
+
+double	vlength(t_v3 v)
 {
-	c = (unsigned char)c;
-	if (c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r'
-		|| c == ' ')
-		return (1);
-	return (0);
+	return (sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
+}
+
+void	swap(double *a, double *b)
+{
+	double	temp;
+
+	temp = *a;
+	*a = *b;
+	*b = temp;
 }

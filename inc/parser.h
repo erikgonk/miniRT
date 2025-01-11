@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 15:20:14 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/11 12:20:15 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/11 16:36:07 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int		er(char *s, char *av);
 int		type_obj(char *str);
 t_obj	*new_obj(void);
 void	objadd_back(t_obj **lst, t_obj *new);
+char	**ft_free_willy(char **cmd);
 
 //      extra_functionalities
 void	init_materials(t_obj *obj);

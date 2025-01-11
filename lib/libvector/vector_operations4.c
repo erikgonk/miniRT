@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 10:06:58 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/10 14:56:59 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/11 16:41:07 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ bool	v3_compare(t_v3 a, t_v3 b)
 	return (true);
 }
 
-double length(t_v3 v)
+double	length(t_v3 v)
 {
-	return sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
+	return (sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
 }

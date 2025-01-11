@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 18:33:09 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/10 14:57:17 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/11 17:28:19 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,7 @@ t_v3			vneg(t_v3 v);
 t_v3			vrefl(t_v3 v, t_v3 n);
 bool			v3_compare(t_v3 a, t_v3 b);
 double			length(t_v3 v);
+double			vlength(t_v3 v);
+void			swap(double *a, double *b);
 
 #endif
