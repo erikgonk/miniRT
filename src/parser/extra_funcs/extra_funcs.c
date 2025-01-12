@@ -47,7 +47,6 @@ void	parse_bm(t_obj *obj, char **args)
 		exit(er("error: parse_bm: arg not valid after bm", NULL));
 	if (args[3] && args[4])
 		exit(er("error: parse_bm: arg not valid after bm", NULL));
-	printf("%d\n", obj->material.bm_size);
 }
 
 void	parse_cb(t_obj *obj, char **args)
