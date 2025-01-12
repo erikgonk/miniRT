@@ -6,7 +6,7 @@
 /*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:18:36 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/11 12:25:31 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/12 11:04:54 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	check_light(t_alight *aL, t_slight *sL)
 
 void	check_params_acl(t_alight *aL, t_slight *sL, t_cam *cam)
 {
-	if ((!aL && !sL) || !cam)
+	if (!cam)
 		exit(er("error: check_params_acl: ACL left", NULL));
 	check_light(aL, sL);
 	if (cam->axis.x < -1 || cam->axis.x > 1)

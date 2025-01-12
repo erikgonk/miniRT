@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 15:20:14 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/11 16:36:07 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/12 10:20:36 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ char	**ft_free_willy(char **cmd);
 void	init_materials(t_obj *obj);
 void	skip_colors(char *str, char **res);
 int		type_extra_func(char *str);
+
+//      extra_functionalities_utils
 void	parse_cb_em(t_obj *obj, char *str, int i);
 void	extra_functionalities(t_obj *obj, char *tmp);
 
