@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:34:20 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/13 11:03:48 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/13 11:24:59 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	init_all(t_data *data)
 
 void	init_data(t_data **data)
 {
-	*data = malloc(sizeof(t_data));
+	*data = calloc(1, sizeof(t_data));
 	if (!(*data))
 		exit(er(NULL, "error: failed to allocate memory", NULL));
 	(*data)->obj = NULL;
@@ -31,7 +31,7 @@ void	init_data(t_data **data)
 	(*data)->a_light = NULL;
 	(*data)->cam = NULL;
 	(*data)->aa = -1;
-	(*data)->a_light = malloc(sizeof(t_alight));
+	(*data)->a_light = calloc(1, sizeof(t_alight));
 	(*data)->a_light->br = 0;
 	(*data)->a_light->rgb.r = 0;
 	(*data)->a_light->rgb.g = 0;
@@ -39,8 +39,8 @@ void	init_data(t_data **data)
 	(*data)->trace_flag = false;
 	(*data)->x = W_WH;
 	(*data)->y = W_HG;
-	(*data)->m_trace = malloc(sizeof(pthread_mutex_t));
-	(*data)->m_god = malloc(sizeof(pthread_mutex_t));
+	(*data)->m_trace = calloc(1, sizeof(pthread_mutex_t));
+	(*data)->m_god = calloc(1, sizeof(pthread_mutex_t));
 	(*data)->god = true;
 	pthread_mutex_init((*data)->m_trace, NULL);
 }

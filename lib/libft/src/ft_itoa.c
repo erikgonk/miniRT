@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42barcel>       +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 16:07:17 by erigonza          #+#    #+#             */
-/*   Updated: 2024/01/16 17:37:56 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/13 11:21:14 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*ft_itoa(int n)
 	i = 0;
 	exp = exponent(n);
 	copy = (long int)n;
-	str = malloc(sizeof(char) * (count(n) + 1));
+	str = calloc(sizeof(char), (count(n) + 1));
 	if (!str)
 		return (NULL);
 	if (n < 0)

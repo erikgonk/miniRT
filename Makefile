@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+         #
+#    By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/19 12:51:14 by shurtado          #+#    #+#              #
-#    Updated: 2025/01/12 10:19:33 by erigonza         ###   ########.fr        #
+#    Updated: 2025/01/13 11:12:25 by shurtado         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

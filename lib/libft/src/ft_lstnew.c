@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42barcel>       +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 15:30:14 by erigonza          #+#    #+#             */
-/*   Updated: 2024/01/20 18:54:10 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/13 11:21:55 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_list	*ft_lstnew(void *content)
 {
 	t_list	*hal;
 
-	hal = (t_list *)malloc(sizeof(*hal));
+	hal = (t_list *)calloc(sizeof(*hal), 1);
 	if (!hal)
 		return (NULL);
 	hal->content = content;

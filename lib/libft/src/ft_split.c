@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42barcel>       +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 16:05:38 by erigonza          #+#    #+#             */
-/*   Updated: 2024/04/14 15:03:16 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/13 11:21:28 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	**ft_split(char const *s, char c)
 	int		start;
 
 	start = 0;
-	split = malloc(sizeof (char *) * (count_words(s, c) + 1));
+	split = calloc(sizeof (char *), (count_words(s, c) + 1));
 	if (!split)
 		return (0);
 	i = 0;

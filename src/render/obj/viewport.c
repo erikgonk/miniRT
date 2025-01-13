@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:40:08 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/07 12:30:15 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/13 11:26:32 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_vp	*init_viewport(t_cam *camera, int width, int height)
 	double	aspect_ratio;
 
 	camera->axis = normalize(camera->axis);
-	viewport = malloc(sizeof(t_vp));
+	viewport = calloc(1, sizeof(t_vp));
 	if (!viewport)
 		return (NULL);
 	aspect_ratio = (double)width / (double)height;

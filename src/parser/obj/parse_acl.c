@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:27:07 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/13 10:58:43 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/13 11:24:26 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	create_alight(t_data *data, char *str, int type)
 	tmp = NULL;
 	if (type != 3 || (str[1] && !ft_isspace(str[1])))
 		return ;
-	data->a_light = malloc(sizeof(t_alight));
+	data->a_light = calloc(1, sizeof(t_alight));
 	data->a_light->br = ft_atof(data, str, 1);
 	tmp = ft_substr(str, skip_double(data, str, 1, 0), ft_strlen(str));
 	data->a_light->rgb = colors_parse(data, tmp, 0);
@@ -64,7 +64,7 @@ void	create_cam(t_data *data, char *str, int type)
 		return ;
 	if (data->cam)
 		exit(er(data, "error: create_cam: more than 1 camera", NULL));
-	data->cam = malloc(sizeof(t_cam));
+	data->cam = calloc(sizeof(t_cam), 1);
 	data->cam->pos = doubles_acl_parse(data, str, 1);
 	tmp = ft_substr(str, skip_doubles(data, str, 1, 0), ft_strlen(str));
 	data->cam->axis = normalize(doubles_acl_parse(data, tmp, 0));
@@ -99,7 +99,7 @@ void	create_slight(t_data *data, t_slight **s_light, char *str, int type)
 
 	if (type != 5 || (str[1] && !ft_isspace(str[1])))
 		return ;
-	new_light = malloc(sizeof(t_slight));
+	new_light = calloc(1, sizeof(t_slight));
 	if (!new_light)
 		exit(er(data,  "error: malloc failed for slight", NULL));
 	new_light->pos = doubles_acl_parse(data, str, 1);

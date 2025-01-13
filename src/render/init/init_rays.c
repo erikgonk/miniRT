@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 13:34:39 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/11 17:43:38 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/13 11:26:08 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_ray	*init_ray_row(t_data *data, t_cam *cam, t_vp *vp, int y)
 	double	r_x;
 	double	r_y;
 
-	row = malloc(data->x * sizeof(t_ray));
+	row = calloc(data->x, sizeof(t_ray));
 	if (!row)
 		return (NULL);
 	x = 0;
@@ -85,7 +85,7 @@ t_ray	**init_rays(t_data *data, t_cam *cam, t_vp *vp)
 	t_ray	**rays;
 	int		y;
 
-	rays = malloc(data->y * sizeof(t_ray *));
+	rays = calloc(data->y, sizeof(t_ray *));
 	if (!rays)
 		return (NULL);
 	y = 0;

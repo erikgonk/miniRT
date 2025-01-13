@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:31:28 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/11 17:42:30 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/13 11:25:54 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	make_cone_cap(t_obj *cone, t_data *data)
 {
 	t_obj	*cap;
 
-	cap = malloc(sizeof(t_obj));
+	cap = calloc(1, sizeof(t_obj));
 	cap->parent = cone->parent;
 	cap->material = cone->material;
 	cap->rgb = cone->rgb;
@@ -35,8 +35,8 @@ void	make_caps(t_data *data, t_obj *obj)
 	t_obj	*tp_cap;
 	t_obj	*bt_cap;
 
-	tp_cap = malloc(sizeof(t_obj));
-	bt_cap = malloc(sizeof(t_obj));
+	tp_cap = calloc(1, sizeof(t_obj));
+	bt_cap = calloc(1, sizeof(t_obj));
 	memcpy(tp_cap, obj, sizeof(t_obj));
 	memcpy(bt_cap, obj, sizeof(t_obj));
 	tp_cap->a_rgb = apply_al(obj->rgb, data->a_light);
