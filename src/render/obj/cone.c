@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:09:01 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/11 13:32:45 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/13 11:48:59 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,6 @@ void	cone_calc(t_ray *ray, t_obj *cone, t_v3 *oc, t_quadratic *quad)
 				cone->calcs.k * dot(ray->direction, *oc));
 	quad->c = dot_oc_axis * dot_oc_axis - cone->calcs.k * dot(*oc, *oc);
 	init_quadratic(quad, quad->a, quad->b, quad->c);
-}
-
-bool	cone_quad(t_quadratic *quad)
-{
-	if (!solve_quadratic(quad))
-		return (false);
-	if (quad->t1 < EPSILON)
-	{
-		if (quad->t2 < EPSILON)
-			return (false);
-		quad->t1 = quad->t2;
-	}
-	return (true);
 }
 
 bool	cone_hit(t_ray *ray, t_obj *cone, double t_min, double *t)
@@ -71,7 +58,7 @@ bool	hit_cone(t_ray *ray, t_obj *cone, double *t)
 	t_quadratic	quad;
 
 	cone_calc(ray, cone, &oc, &quad);
-	if (!cone_quad(&quad))
+	if (!solve_quadratic(&quad))
 		return (false);
 	return (cone_hit(ray, cone, quad.t1, t));
 }

@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:31:28 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/13 11:25:54 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/13 11:56:45 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,8 @@ void	make_caps(t_data *data, t_obj *obj)
 
 	tp_cap = calloc(1, sizeof(t_obj));
 	bt_cap = calloc(1, sizeof(t_obj));
-	memcpy(tp_cap, obj, sizeof(t_obj));
-	memcpy(bt_cap, obj, sizeof(t_obj));
-	tp_cap->a_rgb = apply_al(obj->rgb, data->a_light);
-	bt_cap->a_rgb = tp_cap->a_rgb;
+	*tp_cap = *obj;
+	*bt_cap = *obj;
 	tp_cap->type = CAP;
 	bt_cap->type = CAP;
 	tp_cap->size = obj->calcs.upper_cap.radius;
@@ -96,6 +94,7 @@ void	init_obj(t_data *data)
 	parent = 0;
 	while (obj)
 	{
+		init_obj_normi(data, obj);
 		if (obj->type != CAP && obj->type != SIDE)
 			obj->parent = parent;
 		if (obj->material.m_type != MR)
@@ -108,7 +107,6 @@ void	init_obj(t_data *data)
 			make_cone_cap(obj, data);
 		else if (obj->type == CU)
 			init_sides(data, obj);
-		init_obj_normi(data, obj);
 		parent++;
 		obj = obj->next;
 	}
