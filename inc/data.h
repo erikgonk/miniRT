@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/13 12:03:41 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/13 14:01:20 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,8 @@ typedef struct s_obj
 	int					face;
 	t_data				*data;
 	struct s_obj		*next;
+	// xpm_t				*texture;
+	mlx_texture_t		*texture;
 }					t_obj;
 
 typedef struct s_data

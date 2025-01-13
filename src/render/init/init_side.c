@@ -6,11 +6,29 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 12:39:47 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/13 11:58:16 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/13 15:23:35 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+void	set_sides_xy(t_obj **sides, t_obj *cube)
+{
+	if (!cube || !sides)
+		return ;
+	sides[0]->size = cube->cube_size.y;
+	sides[0]->height = cube->cube_size.z;
+	sides[1]->size = cube->cube_size.y;
+	sides[1]->height = cube->cube_size.z;
+	sides[2]->size = cube->cube_size.x;
+	sides[2]->height = cube->cube_size.z;
+	sides[3]->size = cube->cube_size.x;
+	sides[3]->height = cube->cube_size.z;
+	sides[4]->size = cube->cube_size.x;
+	sides[4]->height = cube->cube_size.y;
+	sides[5]->size = cube->cube_size.x;
+	sides[5]->height = cube->cube_size.y;
+}
 
 void	set_box_local_axes(t_obj *box, t_v3 raw_z)
 {
@@ -91,6 +109,7 @@ void	create_side(t_obj **side, t_obj *cube)
 	side[5]->right = cube->axis_x;
 	side[5]->up = cube->axis_y;
 	side[5]->face = 3;
+	set_sides_xy(side, cube);
 }
 
 void	init_sides(t_data *data, t_obj *obj)

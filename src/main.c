@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/13 12:16:17 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/13 15:24:00 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,20 @@ void	update_render(void *param)
 	time = current_timestamp() - time;
 }
 
+void	texture(t_data *data)
+{
+	t_obj	*obj;
+
+	obj = data->obj;
+	while (obj)
+	{
+		obj->texture = mlx_load_png("/home/shurtado/minirt/assets/bump_maps/bricks.png");
+		if (!obj->texture)
+			exit(er(data, "esto sale", NULL));
+		obj = obj->next;
+	}
+}
+
 int	main(int ac, char **av)
 {
 	t_data	*data;
@@ -57,6 +71,8 @@ int	main(int ac, char **av)
 	parse(data, fd);
 	close(fd);
 	init_all(data);
+	texture(data);
+	print_objects(data->obj);
 	mlx_loop_hook(data->mlx, update_render, data);
 	mlx_resize_hook(data->mlx, &resise_w, data);
 	mlx_key_hook(data->mlx, &my_keyhook, data);

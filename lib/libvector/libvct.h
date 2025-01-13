@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 18:33:09 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/11 17:28:19 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/13 12:56:38 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@ typedef struct s_v3
 	double			y;
 	double			z;
 }					t_v3;
+
+typedef struct s_v2
+{
+	double			u;
+	double			v;
+}					t_v2;
 
 t_v3			vdefine(double x, double y, double z);
 t_v3			vadd(t_v3 a, t_v3 b);

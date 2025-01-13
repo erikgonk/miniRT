@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/13 12:09:06 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/13 15:18:00 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,23 @@ t_rgb	path_trace(t_ray *ray, t_data *data, int depth)
 	return (dirb[2]);
 }
 
+uint32_t	texture_weight(t_rgb c1, t_rgb c2)
+{
+	c1.r *= 0.9;
+	c1.g *= 0.9;
+	c1.b *= 0.9;
+	c2.r *= 0.1;
+	c2.g *= 0.1;
+	c2.b *= 0.1;
+	return (get_colour(color_add(c1, c2)));
+}
+
 uint32_t	trace_ray(t_ray ray, t_data *data)
 {
 	double	t_min;
 	t_obj	*closest_obj;
 	t_rgb	c_global;
+	t_v2	uv;
 
 	t_min = INFINITY;
 	closest_obj = find_closest(data, &ray, data->obj, &t_min);
@@ -120,5 +132,14 @@ uint32_t	trace_ray(t_ray ray, t_data *data)
 	pthread_mutex_lock(data->m_trace);
 	c_global = path_trace(&ray, data, MAX_DEPTH);
 	pthread_mutex_unlock(data->m_trace);
-	return (get_colour(c_global));
+	if (closest_obj->texture)
+		uv = calculate_uv(ray.point, closest_obj);
+	if (uv.u < 0 || uv.v < 0)
+			return (get_colour(c_global));
+	if (closest_obj->texture && closest_obj->material.texture)
+		return (texture_weight(c_global, (texture_color(closest_obj, calculate_uv(ray.point, closest_obj)))));
+	else if (closest_obj->texture)
+		return (get_colour(texture_color(closest_obj, uv)));
+	else
+		return (get_colour(c_global));
 }
