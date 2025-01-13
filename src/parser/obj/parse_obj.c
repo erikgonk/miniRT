@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:02:22 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/11 16:34:14 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/13 10:25:15 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	create_obj_normi(t_obj *obj, char **tmp, char **tmp2)
 	}
 }
 
-t_obj	*create_obj(char *str, int type)
+t_obj	*create_obj(t_data *data, char *str, int type)
 {
 	char	*tmp;
 	char	*tmp2;
@@ -48,6 +48,7 @@ t_obj	*create_obj(char *str, int type)
 	t_obj	*obj;
 
 	obj = new_obj();
+	obj->data = data;
 	obj->type = type;
 	tmp = doubles_parse(obj, str, 2, 0);
 	if (obj->type != SP)

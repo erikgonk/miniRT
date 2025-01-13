@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/11 17:08:10 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/13 10:23:16 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,34 +49,6 @@ typedef struct s_rgb
 	unsigned char		g;
 	unsigned char		b;
 }					t_rgb;
-
-typedef struct s_cam
-{
-	t_v3				pos;
-	int					fov;
-	t_v3				axis; // orientation
-	double				focus_dist;
-	double				aperture;
-	double				pi2;
-	t_v3				u;
-	t_v3				v;
-	t_frame				frame;
-}					t_cam;
-
-typedef struct s_a_light
-{
-	double				br; // brightness
-	t_rgb				rgb;
-}					t_alight;
-
-typedef struct s_light
-{
-	double				br;
-	t_v3				pos;
-	t_rgb				rgb;
-	t_rgb				rgb_inty;
-	struct s_light		*next;
-}					t_slight;
 
 typedef struct s_material
 {
@@ -133,6 +105,36 @@ typedef struct s_calcs
 	double				dot_oc_axis;
 }	t_calcs;
 
+typedef struct s_cam
+{
+	t_v3				pos;
+	int					fov;
+	t_v3				axis; // orientation
+	double				focus_dist;
+	double				aperture;
+	double				pi2;
+	t_v3				u;
+	t_v3				v;
+	t_frame				frame;
+}					t_cam;
+
+typedef struct s_a_light
+{
+	double				br; // brightness
+	t_rgb				rgb;
+}					t_alight;
+
+typedef struct s_light
+{
+	double				br;
+	t_v3				pos;
+	t_rgb				rgb;
+	t_rgb				rgb_inty;
+	struct s_light		*next;
+}					t_slight;
+
+typedef struct s_data	t_data;
+
 typedef struct s_obj
 {
 	int					i;
@@ -154,6 +156,7 @@ typedef struct s_obj
 	t_v3				right;
 	t_v3				up;
 	int					face;
+	t_data				*data;
 	struct s_obj		*next;
 }					t_obj;
 

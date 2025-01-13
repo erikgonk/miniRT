@@ -6,13 +6,13 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:13:09 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/11 16:35:45 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/13 10:26:11 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-int	er(char *s, char *argv)
+int	er(t_data *data, char *s, char *argv)
 {
 	ft_printf(2, "%s", RED);
 	if (s)

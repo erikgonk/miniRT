@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:48:44 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/11 13:16:08 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/13 10:17:25 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,11 @@ bool	hit_sp(t_ray *ray, t_obj *sphere, double *t)
 	return (true);
 }
 
-bool	side_mode(t_obj *plane, t_ray *ray, double value)
+bool	side_mode(t_obj *plane, t_v3 local_hit)
 {
-	t_v3	local_hit;
-	t_v3	hit_point;
 	double	x;
 	double	y;
 
-	hit_point = vadd(ray->origin, vmul(value, ray->direction));
-	local_hit = vsub(hit_point, plane->pos);
 	x = dot(local_hit, plane->right);
 	y = dot(local_hit, plane->up);
 	if (plane->face == 1 && (fabs(x) > plane->calcs.half_size.y || \
@@ -65,32 +61,33 @@ bool	side_mode(t_obj *plane, t_ray *ray, double value)
 	else if (plane->face == 3 && (fabs(x) > plane->calcs.half_size.x \
 				|| fabs(y) > plane->calcs.half_size.y))
 		return (false);
-	ray->point = hit_point;
 	return (true);
 }
 
 bool	hit_pl(t_data *data, t_ray *ray, t_obj *plane, double *t)
 {
-	double			dnrxy[3];
+	double	dnrxy[3];
+	t_v3	hits_lp[2];
 
 	dnrxy[0] = dot(ray->direction, plane->axis);
 	if (fabs(dnrxy[0]) < EPSILON)
 		return (false);
-	if (v3_compare(data->cam->pos, ray->origin))
-		dnrxy[1] = plane->calcs.numerator;
-	else
+	dnrxy[1] = plane->calcs.numerator;
+	if (!v3_compare(data->cam->pos, ray->origin))
 		dnrxy[1] = dot(vsub(plane->pos, ray->origin), plane->axis);
 	dnrxy[2] = dnrxy[1] / dnrxy[0];
 	if (dnrxy[2] <= EPSILON || dnrxy[2] >= *t)
 		return (false);
+	hits_lp[1] = vadd(ray->origin, vmul(dnrxy[2], ray->direction));
+	hits_lp[0] = vsub(hits_lp[1], plane->pos);
 	if (plane->type == SIDE)
-		if (!side_mode(plane, ray, dnrxy[2]))
+		if (!side_mode(plane, hits_lp[0]))
 			return (false);
+	ray->point = hits_lp[1];
 	*t = dnrxy[2];
+	ray->normal = plane->axis;
 	if (dnrxy[0] > EPSILON)
 		ray->normal = plane->calcs.i_axis;
-	else
-		ray->normal = plane->axis;
 	if (plane->material.texture)
 		get_plane_normal(plane, ray->point, ray);
 	return (true);

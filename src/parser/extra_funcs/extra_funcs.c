@@ -12,13 +12,12 @@
 
 #include "miniRT.h"
 
-
 void	parse_em(t_obj *obj, char **args)
 {
 	if (!args[1])
 		exit(er("error: parse_em: lacks arg", NULL));
 	if (!ft_isdigit(args[1][0]))
-		exit(er("error: parse_em: arg not num", args[1]));		
+		exit(er("error: parse_em: arg not num", args[1]));
 	obj->material.emision = ft_atof(args[1], 0);
 	if (obj->material.emision > 1 || obj->material.emision < 0)
 		exit(er("error: parse_em: emision 0-1", args[1]));

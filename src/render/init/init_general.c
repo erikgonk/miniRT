@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:34:20 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/11 12:24:45 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/13 10:21:15 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	init_data(t_data **data)
 		exit(er("error: failed to allocate memory", NULL));
 	(*data)->obj = NULL;
 	(*data)->s_light = NULL;
+	(*data)->a_light = NULL;
 	(*data)->cam = NULL;
 	(*data)->aa = -1;
 	(*data)->a_light = malloc(sizeof(t_alight));
