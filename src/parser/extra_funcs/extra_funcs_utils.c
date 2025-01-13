@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:02:22 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/13 10:14:12 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/13 10:45:57 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ void	init_materials(t_obj *obj)
 	obj->material.board_scale = -1;
 }
 
-void	skip_colors(char *str, char **res)
+void	skip_colors(t_data *data, char *str, char **res)
 {
 	int		i;
 
 	i = 0;
 	while (str[i] && ft_isspace(str[i]))
 		i++;
-	i = skip_color(str, i, 0);
-	i = skip_color(str, i, 0);
+	i = skip_color(data, str, i, 0);
+	i = skip_color(data, str, i, 0);
 	while (str[i] && ft_isdigit(str[i]))
 		i++;
 	while (str[i] && ft_isspace(str[i]))

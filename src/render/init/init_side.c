@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 12:39:47 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/11 13:33:58 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/13 10:28:04 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	init_sides(t_data *data, t_obj *obj)
 	set_box_local_axes(obj, obj->axis);
 	side = malloc(sizeof(t_obj *) * 6);
 	if (!side)
-		exit(er("error: init_sides: malloc", NULL));
+		exit(er(obj->data,  "error: init_sides: malloc", NULL));
 	while (++i < 6)
 	{
 		side[i] = malloc(sizeof(t_obj));

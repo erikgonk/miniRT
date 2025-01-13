@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 12:37:59 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/11 12:36:59 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/13 11:03:05 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ void	init_mlx(t_data *data)
 {
 	data->mlx = mlx_init(data->x, data->y, "miniRT", true);
 	if (!data->mlx)
-		exit(er("Failed to initialize MLX42", NULL));
+		exit(er(data, "Failed to initialize MLX42", NULL));
 	data->img = mlx_new_image(data->mlx, data->x, data->y);
 	if (!data->img)
 	{
 		mlx_terminate(data->mlx);
-		exit(er("Failed to create image\n", NULL));
+		exit(er(data, "Failed to create image\n", NULL));
 	}
 }
 

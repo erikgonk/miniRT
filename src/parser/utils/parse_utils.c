@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:13:09 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/13 10:26:11 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/13 10:55:46 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	er(t_data *data, char *s, char *argv)
 {
 	ft_printf(2, "%s", RED);
+	(void)data;
 	if (s)
 		ft_printf(2, "%s", s);
 	ft_printf(2, "%s", BOLD);
@@ -38,13 +39,13 @@ int	type_obj(char *str)
 	return (50);
 }
 
-t_obj	*new_obj(void)
+t_obj	*new_obj(t_data *data)
 {
 	t_obj	*tmp;
 
 	tmp = malloc(sizeof(*tmp));
 	if (!tmp)
-		exit(er("error: new_obj: malloc", NULL));
+		exit(er(data, "error: new_obj: malloc", NULL));
 	tmp->next = NULL;
 	return (tmp);
 }

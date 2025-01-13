@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/13 10:02:53 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/13 10:30:18 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	main(int ac, char **av)
 
 	srand((unsigned int)mlx_get_time());
 	init_data(&data);
-	validate_args_and_open(ac, av, &fd);
+	validate_args_and_open(data, ac, av, &fd);
 	parse(data, fd);
 	close(fd);
 	init_all(data);

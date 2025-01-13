@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_main_checker.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:18:36 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/11 12:29:20 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/13 11:01:30 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,5 @@ void	check_params(t_data *data)
 	obj = data->obj;
 	if (obj)
 		check_obj(obj);
-	check_params_acl(data->a_light, data->s_light, data->cam);
+	check_params_acl(data, data->a_light, data->s_light, data->cam);
 }
