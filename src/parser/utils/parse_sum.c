@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 13:40:44 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/13 10:53:47 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/13 12:04:16 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	random_sum_parse(t_obj *obj, char *str, int i)
 		if (ft_isdigit(str[i]))
 			j = 0;
 		if (k >= 2 || j >= 2)
-			exit(er(obj->data,  "error: random_sum_parse", str));
+			exit(er(obj->data, "error: random_sum_parse", str));
 		if (ft_isspace(str[i]))
 			break ;
 		if (str[i] == '.')
@@ -32,7 +32,7 @@ int	random_sum_parse(t_obj *obj, char *str, int i)
 		else if (str[i] == ',')
 			k++;
 		else if (!ft_isdigit(str[i]) && str[i] != '-')
-			exit(er(obj->data,  "error: random_sum_parse", str));
+			exit(er(obj->data, "error: random_sum_parse", str));
 		i++;
 	}
 	if (str[i] && str[i] == ',')
@@ -73,9 +73,6 @@ int	skip_double(t_data *data, char *str, int i, int flag)
 // str | i (start) | j . (0) | k , (0)
 int	skip_doubles(t_data *data, char *str, int i, int k)
 {
-	int		j;
-
-	j = 0;
 	if (!str[i] || !ft_isspace(str[i]))
 		exit(er(data, "error: skip_doubles: wrong map: NULL", str));
 	while (str[i] && ft_isspace(str[i]))
@@ -85,10 +82,10 @@ int	skip_doubles(t_data *data, char *str, int i, int k)
 		if (k == 2 && ft_isspace(str[i]))
 			break ;
 		if (str[i] == '.')
-			j++;
+			data->j++;
 		else if (str[i] == ',')
 			k++;
-		if ((j > 3 || k > 2) || (ft_isspace(str[i]) && k != 2))
+		if ((data->j > 3 || k > 2) || (ft_isspace(str[i]) && k != 2))
 			exit(er(data, "error: skip_doubles: too many , or .", str));
 		else if (str[i + 1] && ((str[i] == '.' || str[i] == ',')
 				&& (!ft_isdigit(str[i + 1]) && str[i + 1] != '-')))

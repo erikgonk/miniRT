@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 09:47:50 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/13 11:00:21 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/13 11:58:16 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*doubles_parse(t_obj *obj, char *str, int i, int flag)
 	while (str[i] && ft_isspace(str[i]))
 		i++;
 	if (str[i] && (!ft_isdigit(str[i]) && str[i] != '-'))
-		exit(er(obj->data,  "error: doubles_parse: map parsing:\n", str));
+		exit(er(obj->data, "error: doubles_parse: map parsing:\n", str));
 	x = ft_atof(obj->data, str, i);
 	i = skip_double(obj->data, str, i, 1);
 	y = ft_atof(obj->data, str, i);

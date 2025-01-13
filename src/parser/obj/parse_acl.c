@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:27:07 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/13 11:24:26 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/13 11:58:16 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,15 @@ void	cam_blur(t_data *data, char *str2, char *tmp)
 	{
 		data->cam->focus_dist = ft_atof(data, tmp, 0);
 		if (data->cam->focus_dist < 0)
-			exit(er(data,  "error: cam_blur: focus distance negative", NULL));
+			exit(er(data, "error: cam_blur: focus distance negative", NULL));
 		free(str2);
 		str2 = ft_substr(tmp, skip_double(data, tmp, 0, 0), ft_strlen(tmp));
 		data->cam->aperture = ft_atof(data, str2, 0);
 		if (data->cam->aperture < 0.01 || data->cam->aperture > 0.5)
-			exit(er(data,  "error: cam_blur: aperture 0.01-0.5", tmp));
+			exit(er(data, "error: cam_blur: aperture 0.01-0.5", tmp));
 	}
 	else if (tmp[i] && !ft_isspace(tmp[i]) && tmp[i] != '\n')
-		exit(er(data,  "error: cam_blur: wrong data after fov", tmp));
+		exit(er(data, "error: cam_blur: wrong data after fov", tmp));
 	else
 	{
 		data->cam->focus_dist = -1;
@@ -101,7 +101,7 @@ void	create_slight(t_data *data, t_slight **s_light, char *str, int type)
 		return ;
 	new_light = calloc(1, sizeof(t_slight));
 	if (!new_light)
-		exit(er(data,  "error: malloc failed for slight", NULL));
+		exit(er(data, "error: malloc failed for slight", NULL));
 	new_light->pos = doubles_acl_parse(data, str, 1);
 	tmp[0] = ft_substr(str, skip_doubles(data, str, 1, 0), ft_strlen(str));
 	new_light->br = ft_atof(data, tmp[0], 0);

@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:53:01 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/13 10:32:52 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/13 11:58:16 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	parse(t_data *data, int fd)
 			continue ;
 		type = type_obj(str);
 		if (type > 7)
-			exit(er(data,  "error: parse: wrong map: obj type", str));
+			exit(er(data, "error: parse: wrong map: obj type", str));
 		else if ((type <= 2 || type == CO || type == CU) && ft_isspace(str[2]))
 			objadd_back(&data->obj, create_obj(data, str, type));
 		create_alight(data, str, type);

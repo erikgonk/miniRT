@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 15:20:14 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/13 11:01:18 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/13 12:04:56 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,10 @@ int		er(t_data *data, char *s, char *av);
 int		type_obj(char *str);
 t_obj	*new_obj(t_data *data);
 void	objadd_back(t_obj **lst, t_obj *new);
+
+//		parse_free willies
 char	**ft_free_willy(char **cmd);
+void	free_willy_lst(t_data *data);
 
 //      extra_functionalities
 void	init_materials(t_obj *obj);

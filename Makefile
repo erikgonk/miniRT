@@ -6,7 +6,7 @@
 #    By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/19 12:51:14 by shurtado          #+#    #+#              #
-#    Updated: 2025/01/13 11:12:25 by shurtado         ###   ########.fr        #
+#    Updated: 2025/01/13 12:01:33 by shurtado         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ VCT_D			:= ./lib/libvector/
 FILES			:= main.c \
 					parser/parser/parser.c \
 					parser/obj/parse_obj.c parser/obj/parse_acl.c parser/obj/parse_acl_extra.c \
-					parser/utils/parse_sum.c parser/utils/parse_utils.c parser/utils/parse_conversions.c parser/utils/parse_main_checker.c parser/utils/parse_checker.c \
+					parser/utils/parse_sum.c parser/utils/parse_utils.c parser/utils/parse_conversions.c parser/utils/parse_free_willlies.c\
+					parser/utils/parse_main_checker.c parser/utils/parse_checker.c \
 					parser/extra_funcs/extra_funcs.c parser/extra_funcs/extra_funcs_utils.c \
 					render/render/render.c \
 					render/bump_map/bm_sphere.c render/bump_map/bm_plane.c \
