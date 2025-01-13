@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 13:40:44 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/13 12:04:16 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/13 12:14:52 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,12 @@ int	skip_double(t_data *data, char *str, int i, int flag)
 // str | i (start) | j . (0) | k , (0)
 int	skip_doubles(t_data *data, char *str, int i, int k)
 {
-	if (!str[i] || !ft_isspace(str[i]))
-		exit(er(data, "error: skip_doubles: wrong map: NULL", str));
-	while (str[i] && ft_isspace(str[i]))
+	data->j = 0;
+	if (!str[i + 1] || !ft_isspace(str[i + 1]))
+		exit(er(data, "error: skip_doubles: wrong map: NULL", NULL));
+	while (str[i + 1] && ft_isspace(str[i + 1]))
 		i++;
-	while (str[i])
+	while (str[++i])
 	{
 		if (k == 2 && ft_isspace(str[i]))
 			break ;
@@ -93,7 +94,6 @@ int	skip_doubles(t_data *data, char *str, int i, int k)
 		else if (str[i + 1] && (str[i] == '-' || str[i] == '+')
 			&& !ft_isdigit(str[i + 1]))
 			exit(er(data, "error: skip_doubles: after - or +", str));
-		i++;
 	}
 	if (!str[i])
 		exit(er(data, "error: skip_doubles: wrong map: NULL end", str));

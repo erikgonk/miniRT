@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/13 11:42:02 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/13 12:16:17 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int	main(int ac, char **av)
 	parse(data, fd);
 	close(fd);
 	init_all(data);
-	print_objects(data->obj);
 	mlx_loop_hook(data->mlx, update_render, data);
 	mlx_resize_hook(data->mlx, &resise_w, data);
 	mlx_key_hook(data->mlx, &my_keyhook, data);

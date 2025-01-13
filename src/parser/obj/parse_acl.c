@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:27:07 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/13 11:58:16 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/13 12:15:29 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@ void	create_cam(t_data *data, char *str, int type)
 		exit(er(data, "error: create_cam: more than 1 camera", NULL));
 	data->cam = calloc(sizeof(t_cam), 1);
 	data->cam->pos = doubles_acl_parse(data, str, 1);
-	tmp = ft_substr(str, skip_doubles(data, str, 1, 0), ft_strlen(str));
+	tmp = ft_substr(str, skip_doubles(data, str, 0, 0), ft_strlen(str));
 	data->cam->axis = normalize(doubles_acl_parse(data, tmp, 0));
-	str2 = ft_substr(tmp, skip_doubles(data, tmp, 0, 0), ft_strlen(tmp));
+	str2 = ft_substr(tmp, skip_doubles(data, tmp, -1, 0), ft_strlen(tmp));
 	data->cam->fov = ft_atoi_parse(data, str2, 0, 1);
 	free(tmp);
 	tmp = ft_substr(str2, skip_double(data, str2, 0, 0), ft_strlen(str2));
@@ -103,7 +103,7 @@ void	create_slight(t_data *data, t_slight **s_light, char *str, int type)
 	if (!new_light)
 		exit(er(data, "error: malloc failed for slight", NULL));
 	new_light->pos = doubles_acl_parse(data, str, 1);
-	tmp[0] = ft_substr(str, skip_doubles(data, str, 1, 0), ft_strlen(str));
+	tmp[0] = ft_substr(str, skip_doubles(data, str, 0, 0), ft_strlen(str));
 	new_light->br = ft_atof(data, tmp[0], 0);
 	tmp[1] = ft_substr(tmp[0], skip_double(data, tmp[0], 0, 0), \
 											ft_strlen(tmp[0]));
