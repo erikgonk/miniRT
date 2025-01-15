@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 16:51:49 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/15 06:07:30 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/15 11:27:52 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	print_spot_lights(t_data *data)
 			sprintf(pos, "Position: x:%.2f y:%.2f z:%.2f", s_light->pos.x, s_light->pos.y, s_light->pos.z);
 			sprintf(br, "Brightness: %.2f", s_light->br);
 			sprintf(color, "Color: r:%d g:%d b:%d", s_light->rgb.r, s_light->rgb.g, s_light->rgb.b);
-			sprintf(id, "Spot number in list: %d", num);
+			sprintf(id, "Spot number in list: %d press arrows to change spot light", num);
 
 			img[0] = mlx_put_string(data->mlx, "Spot Light: Press enter to select spot light", CON_X, CON_Y + var);
 			img[1] = mlx_put_string(data->mlx, pos, CON_X, CON_Y + 25 + var);
@@ -122,9 +122,9 @@ void	print_objects(t_data *data)
 				sprintf(type, "Object type: sphere");
 			else if (obj->type == PL)
 				sprintf(type, "Object type: plane");
-			sprintf(id, "Object number in list: %d", num);
+			sprintf(id, "Object number in list: %d, press arrows to change obj", num);
 
-			img[0] = mlx_put_string(data->mlx, "Objects: Press enter to select object to move", CON_X, CON_Y + var);
+			img[0] = mlx_put_string(data->mlx, "Objects: Press enter to select object.", CON_X, CON_Y + var);
 			img[1] = mlx_put_string(data->mlx, pos, CON_X, CON_Y + 25 + var);
 			img[2] = mlx_put_string(data->mlx, axis, CON_X, CON_Y + 50 + var);
 			img[3] = mlx_put_string(data->mlx, color, CON_X, CON_Y + 75) + var;

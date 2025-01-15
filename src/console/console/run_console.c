@@ -6,29 +6,13 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 17:00:06 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/15 06:03:02 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/15 11:34:35 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
 static mlx_t *g_mlx = NULL;
-
-void	print_spot_menu(t_data *data)
-{
-	printf("\033[2J\033[H");
-	print_spot_lights(data->s_light);
-	printf("\n");
-	printf("\033[30m\033[47mSpot Lights\033[0m");
-}
-
-void	print_obj_menu(t_data *data)
-{
-	printf("\033[2J\033[H");
-	print_objects(data->obj);
-	printf("\n");
-	printf("\033[30m\033[47mObjects\033[0m");
-}
 
 void	del_image(void *content)
 {

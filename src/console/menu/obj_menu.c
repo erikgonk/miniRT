@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   obj_menu.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 11:21:41 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/07 12:41:36 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/15 11:35:09 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	manage_obj(keys_t key, t_data *data)
 		adjust_obj_position(key, obj, &posq);
 	else
 		adjust_obj_axis(key, obj, &axisq);
-	print_obj_menu(data);
+//	print_obj_menu(data);
 	printf("\nincrementos pos= %f\n", posq);
 	printf("incrementos axis= %f\n", axisq);
 }

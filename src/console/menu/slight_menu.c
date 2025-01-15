@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   slight_menu.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 11:19:56 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/07 12:41:36 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/15 11:34:58 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,5 @@ void	manage_spot(keys_t key, t_data *data)
 		adjust_spot_brightness(key, data);
 	else
 		adjust_spot_position(key, data);
-	print_spot_menu(data);
+	//print spot menu
 }
