@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 16:58:38 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/15 04:28:03 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/15 06:14:37 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,23 @@ void	swap_mgod(t_data *data)
 	pthread_mutex_unlock(data->m_god);
 }
 
+static void	set_last(t_data *data)
+{
+	if (data->last_render == ONE)
+		data->render_sel = render_one;
+	else if (data->last_render == FAST)
+		data->render_sel = render_fast;
+	else if (data->last_render == UPDATE)
+		data->render_sel = update_render;
+}
+
+static void	swap_flag(t_data *data)
+{
+	pthread_mutex_lock(data->m_trace);
+	data->trace_flag = !data->trace_flag;
+	pthread_mutex_unlock(data->m_trace);
+}
+
 void	press_keyhook(t_data *data, mlx_key_data_t keydata)
 {
 	static bool	mode;
@@ -46,24 +63,19 @@ void	press_keyhook(t_data *data, mlx_key_data_t keydata)
 	data->last_key = keydata.key;
 	if (keydata.key == MLX_KEY_SPACE)
 	{
-		pthread_mutex_lock(data->m_trace);
-		data->trace_flag = !data->trace_flag;
-		pthread_mutex_unlock(data->m_trace);
+		mode = !mode;
+		swap_flag(data);
 		if (data->img_last)
 			free_image_all(data, data->img_last);
 		data->img_last = NULL;
-		if (mode)
+		if (!mode)
 		{
 			if (data->god)
 				swap_mgod(data);
 			data->render_sel = render_one;
-			mode = !mode;
 		}
 		else
-		{
 			data->render_sel = update_render;
-			mode = !mode;
-		}
 	}
 	else if (keydata.key == MLX_KEY_C)
 	{
@@ -73,14 +85,7 @@ void	press_keyhook(t_data *data, mlx_key_data_t keydata)
 		data->render_sel = render_fast;
 	}
 	else
-	{
-		if (data->last_render == ONE)
-			data->render_sel = render_one;
-		else if (data->last_render == FAST)
-			data->render_sel = render_fast;
-		else if (data->last_render == UPDATE)
-			data->render_sel = update_render;
-	}
+		set_last(data);
 }
 
 void	my_keyhook(mlx_key_data_t keydata, void *param)

@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/15 05:17:33 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/15 06:16:08 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ void	render_fast(void *param)
 	fill_image(data, (uint32_t *)data->img->pixels, new_img);
 	mlx_image_to_window(data->mlx, data->img, 0, 0);
 	free_image_all(data, new_img);
-	data->render_sel = NULL;
-	data->last_render = FAST;
 	run_console(data);
 }
 
