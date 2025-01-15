@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 01:56:28 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/15 03:01:47 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/15 14:11:39 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	*cprocess_rows(void *arg)
 {
 	t_thread_data	*data;
 	int				idyx[3];
+	uint32_t 		color;
 
 	data = (t_thread_data *)arg;
 	idyx[0] = data->thread_id;
@@ -44,11 +45,16 @@ void	*cprocess_rows(void *arg)
 		while (++idyx[2] < data->data->x)
 		{
 			if (idyx[1] % 2 == 0 && idyx[2] % 2 == 0)
-				data->image[idyx[1]][idyx[2]] = \
-					trace_fast(data->rays[idyx[1]][idyx[2]], data->data);
-			if (idyx[1] != 0 && idyx[2] != 0)
-				data->image[idyx[1] - 1][idyx[2] -1] = \
-				data->image[idyx[1]][idyx[2]];
+			{
+				color = trace_fast(data->rays[idyx[1]][idyx[2]], data->data);
+				data->image[idyx[1]][idyx[2]] = color;
+				if (idyx[1] + 1 < data->data->y)
+					data->image[idyx[1] + 1][idyx[2]] = color;
+				if (idyx[2] + 1 < data->data->x)
+					data->image[idyx[1]][idyx[2] + 1] = color;
+				if (idyx[1] + 1 < data->data->y && idyx[2] + 1 < data->data->x)
+					data->image[idyx[1] + 1][idyx[2] + 1] = color;
+			}
 		}
 		idyx[1] += NUM_THREADS;
 	}

@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/15 04:52:35 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/15 14:37:08 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,12 @@ typedef struct s_obj
 	mlx_texture_t		*texture;
 }					t_obj;
 
+typedef struct s_console
+{
+	mlx_image_t	*background;
+	t_list		*btn_list;
+}				t_console;
+
 typedef struct s_data
 {
 	t_alight			*a_light;
@@ -182,10 +188,6 @@ typedef struct s_data
 	bool				god;
 	void				(*render_sel)(void *param);
 	int					last_render;
-	int					console;
-	keys_t				last_key;
-	t_list				*strlist;
-
+	t_console			console;
 }					t_data;
-
 #endif

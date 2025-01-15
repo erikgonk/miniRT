@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 16:58:38 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/15 06:14:37 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/15 15:28:10 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void	press_keyhook(t_data *data, mlx_key_data_t keydata)
 {
 	static bool	mode;
 
-	data->last_key = keydata.key;
 	if (keydata.key == MLX_KEY_SPACE)
 	{
 		mode = !mode;

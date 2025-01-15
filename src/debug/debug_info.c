@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug_info.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 20:48:16 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/11 12:36:06 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/15 13:12:19 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,12 @@ void	print_t_v3(const char *label, t_v3 vec)
 	printf("%s -> x: %.2f, y: %.2f, z: %.2f\n", label, vec.x, vec.y, vec.z);
 }
 
-uint32_t	**render_without_threads(t_data *data, t_ray **rays, \
-		uint32_t **image)
+long long	current_timestamp(void)
 {
-	int	y;
-	int	x;
+	struct timeval	te;
+	long long		milliseconds;
 
-	y = 0;
-	while (y < data->y)
-	{
-		x = 0;
-		while (x < data->x)
-		{
-			image[y][x] = trace_ray(rays[y][x], data);
-			x++;
-		}
-		y++;
-	}
-	return (image);
+	gettimeofday(&te, NULL);
+	milliseconds = te.tv_sec * 1000LL + te.tv_usec / 1000;
+	return (milliseconds);
 }

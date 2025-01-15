@@ -6,7 +6,7 @@
 #    By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/19 12:51:14 by shurtado          #+#    #+#              #
-#    Updated: 2025/01/15 02:32:44 by shurtado         ###   ########.fr        #
+#    Updated: 2025/01/15 17:51:55 by shurtado         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,15 +29,14 @@ FILES			:= main.c \
 					render/texture/uv_map.c \
 					render/bump_map/bm_sphere.c render/bump_map/bm_plane.c \
 					render/obj/cylinder.c render/obj/caps.c render/obj/cone.c render/obj/intersections.c render/obj/viewport.c \
-					render/illumination/illumination.c render/illumination/specular.c\
+					render/illumination/illumination.c render/illumination/specular.c \
 					render/calcs/calcs.c render/calcs/calcs_utils.c render/calcs/materials.c render/calcs/materials_utils.c render/calcs/quadratic.c \
 					render/init/init_image.c render/init/init_rays.c render/init/init_rays_utils.c render/init/init_general.c \
 					render/init/init_obj.c render/init/init_obj_utils.c render/init/init_side.c render/init/init_materials.c \
 					render/color/color.c render/color/checker_board.c \
 					render/free/free.c \
-					console/console/run_console.c console/render/render.c console/render/init_rays.c\
-					console/menu/submenu.c console/menu/slight_menu.c console/menu/camera_menu.c console/menu/obj_menu.c \
-					debug/debug_info.c debug/print_items.c debug/time.c \
+					console/console/run_console.c console/render/render.c console/render/init_rays.c \
+					debug/debug_info.c \
 					window/mlx.c
 SRCS			:= $(addprefix $(SRC_D), $(FILES))
 
@@ -45,7 +44,7 @@ OBJS			:= $(patsubst $(SRC_D)%.c,$(OBJ_D)%.o,$(SRCS))
 
 CC				:= cc
 IFLAGS			:= -I$(INC_D) -I$(VCT_D) -I$(LIBFT_D)inc
-CFLAGS			:= -g #-Wall -Wextra -Werror
+CFLAGS			:= -g -fsanitize=address #-Wall -Wextra -Werror
 
 LIB				:= lib/
 

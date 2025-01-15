@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 13:34:39 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/15 02:31:35 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/15 15:22:11 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ void	init_single_rayc(t_ray *ray, t_vp *vp, t_cam *cam, double *uv)
 	ray->origin = cam->pos;
 	ray->direction = normalize(vsub(pixel_position, cam->pos));
 	ray->i_direction = normalize(vneg(ray->direction));
-	if (cam->focus_dist != -1)
-		generate_dof_ray(ray, cam);
 }
 
 t_ray	*init_ray_rowc(t_data *data, t_cam *cam, t_vp *vp, int y)
