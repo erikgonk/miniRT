@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/13 13:53:13 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/15 03:03:52 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,7 +216,7 @@ void					get_plane_normal(t_obj *plane, t_v3 hit_point,
 							t_ray *ray);
 
 //		render
-uint32_t				**render(t_data *data);
+uint32_t				**render(t_data *data, int mode);
 
 //		free
 void					free_rays_all(t_data *data, t_ray **rays);

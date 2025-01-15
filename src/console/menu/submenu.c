@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   submenu.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 17:57:09 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/07 12:41:36 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/15 04:26:16 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ void	manage_alight(keys_t key, t_data *data)
 		quantity = fmax(quantity - 0.01f, 0.01);
 	else if (key == MLX_KEY_KP_ADD || key == MLX_KEY_EQUAL)
 		quantity += 0.01f;
-	print_alight_menu(data);
-	printf("\nincrementos = %f\n", quantity);
 }
 
 void	manage_submenu(keys_t key, int option, t_data *data)

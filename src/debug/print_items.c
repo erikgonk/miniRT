@@ -3,82 +3,147 @@
 /*                                                        :::      ::::::::   */
 /*   print_items.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 16:51:49 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/10 12:11:51 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/15 06:07:30 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void	print_ambient_light(t_alight *a_light)
+void	print_ambient_light(t_data *data)
 {
-	if (a_light)
-	{
-		printf("Ambient Light:\n");
-		printf("\tBrightness: %.2f\n", a_light->br);
-		print_t_rgb("\tColor", a_light->rgb);
-	}
-	else
-		printf("Ambient Light: NULL\n");
+	char	br[80];
+	mlx_image_t *img[2];
+
+	sprintf(br, "Brightness: %.2f : Press + or - to change.", data->a_light->br);
+	img[0] = mlx_put_string(data->mlx, "Ambient Light: Press arrows to move menu.", CON_X, CON_Y);
+	img[1] = mlx_put_string(data->mlx, br, CON_X, CON_Y + 25);
+	ft_lstadd_back(&data->strlist, ft_lstnew(img[0]));
+	ft_lstadd_back(&data->strlist, ft_lstnew(img[1]));
+
 }
 
-void	print_camera(t_cam *cam)
+void	print_camera(t_data *data)
 {
-	if (cam)
+		char		pos[80];
+		char		fov[80];
+		char		axis[80];
+		mlx_image_t *img[4];
+
+	if (data)
 	{
-		printf("Camera:\n");
-		print_t_v3("\tPosition", cam->pos);
-		printf("\tFOV: %d\n", cam->fov);
-		print_t_v3("\tAxis (Orientation)", cam->axis);
-	}
-	else
-	{
-		printf("Camera: NULL\n");
+		sprintf(pos, "Position: x:%.2f y:%.2f z:%.2f", data->cam->pos.x, data->cam->pos.y, data->cam->pos.z);
+		sprintf(axis, "Axis: x:%.2f y:%.2f z:%.2f", data->cam->axis.x, data->cam->axis.y, data->cam->axis.z);
+		sprintf(fov, "Fov: %d", data->cam->fov);
+		img[0] = mlx_put_string(data->mlx, "Camera: Press arrows to move menu, press enter to move cam.", CON_X, CON_Y);
+		img[1] = mlx_put_string(data->mlx, pos, CON_X, CON_Y + 25);
+		img[2] = mlx_put_string(data->mlx, axis, CON_X, CON_Y + 50);
+		img[3] = mlx_put_string(data->mlx, fov, CON_X, CON_Y + 75);
+		ft_lstadd_back(&data->strlist, ft_lstnew(img[0]));
+		ft_lstadd_back(&data->strlist, ft_lstnew(img[1]));
+		ft_lstadd_back(&data->strlist, ft_lstnew(img[2]));
+		ft_lstadd_back(&data->strlist, ft_lstnew(img[3]));
 	}
 }
 
-void	print_spot_lights(t_slight *s_light)
+void	print_spot_lights(t_data *data)
 {
-	if (s_light)
+	char		pos[80];
+	char		br[80];
+	char		color[80];
+	char		id[80];
+	t_slight	*s_light;
+	mlx_image_t	*img[5];
+	int			var;
+	int			num;
+
+	num = 0;
+	var = 0;
+	if (data && data->s_light)
 	{
-		printf("Spot Lights:\n");
+		s_light = data->s_light;
 		while (s_light)
 		{
-			print_t_v3("\tPosition", s_light->pos);
-			printf("\tBrightness: %.2f\n", s_light->br);
-			print_t_rgb("\tColor", s_light->rgb);
+			sprintf(pos, "Position: x:%.2f y:%.2f z:%.2f", s_light->pos.x, s_light->pos.y, s_light->pos.z);
+			sprintf(br, "Brightness: %.2f", s_light->br);
+			sprintf(color, "Color: r:%d g:%d b:%d", s_light->rgb.r, s_light->rgb.g, s_light->rgb.b);
+			sprintf(id, "Spot number in list: %d", num);
+
+			img[0] = mlx_put_string(data->mlx, "Spot Light: Press enter to select spot light", CON_X, CON_Y + var);
+			img[1] = mlx_put_string(data->mlx, pos, CON_X, CON_Y + 25 + var);
+			img[2] = mlx_put_string(data->mlx, br, CON_X, CON_Y + 50 + var);
+			img[3] = mlx_put_string(data->mlx, color, CON_X, CON_Y + 75) + var;
+			img[4] = mlx_put_string(data->mlx, id, CON_X, CON_Y + 100) + var;
+
+			ft_lstadd_back(&data->strlist, ft_lstnew(img[0]));
+			ft_lstadd_back(&data->strlist, ft_lstnew(img[1]));
+			ft_lstadd_back(&data->strlist, ft_lstnew(img[2]));
+			ft_lstadd_back(&data->strlist, ft_lstnew(img[3]));
+			ft_lstadd_back(&data->strlist, ft_lstnew(img[4]));
+
+			var += 100;
 			s_light = s_light->next;
+			break ; //rotar aqui entre las luces y quitar break;
 		}
-	}
-	else
-	{
-		printf("Spot Lights: NULL\n");
 	}
 }
 
-void	print_objects(t_obj *obj)
+void	print_objects(t_data *data)
 {
-	if (obj)
+	char		pos[80];
+	char		axis[80];
+	char		color[80];
+	char		id[80];
+	char		type[80];
+	t_obj		*obj;
+	mlx_image_t	*img[5];
+	int			var;
+	int			num;
+
+	num = 0;
+	var = 0;
+	if (data && data->obj)
 	{
-		printf("Objects:\n");
+		obj = data->obj;
 		while (obj)
 		{
-			printf("\tType: %d\n", obj->type);
-			printf("\tIndex: %d\n", obj->i);
-			print_t_v3("\tPosition", obj->pos);
-			print_t_v3("\tAxis (Orientation)", obj->axis);
-			print_t_rgb("\tColor", obj->rgb);
-			printf("\tSize: %.2f\n", obj->size);
-			printf("\tHeight: %.2f\n", obj->height);
-			printf("\tParent: %d\n", obj->parent);
-			printf("\n");
+			sprintf(pos, "Position: x:%.2f y:%.2f z:%.2f", obj->pos.x, obj->pos.y, obj->pos.z);
+			sprintf(axis, "Axis: x:%.2f y:%.2f z:%.2f", data->cam->axis.x, data->cam->axis.y, data->cam->axis.z);
+			sprintf(color, "Color: r:%d g:%d b:%d", obj->rgb.r, obj->rgb.g, obj->rgb.b);
+			if (obj->type == CY)
+				sprintf(type, "Object type: Cylinder");
+			else if (obj->type == CO)
+				sprintf(type, "Object type: Cone");
+			else if (obj->type == CU)
+				sprintf(type, "Object type: Cube");
+			else if (obj->type == SP)
+				sprintf(type, "Object type: sphere");
+			else if (obj->type == PL)
+				sprintf(type, "Object type: plane");
+			sprintf(id, "Object number in list: %d", num);
+
+			img[0] = mlx_put_string(data->mlx, "Objects: Press enter to select object to move", CON_X, CON_Y + var);
+			img[1] = mlx_put_string(data->mlx, pos, CON_X, CON_Y + 25 + var);
+			img[2] = mlx_put_string(data->mlx, axis, CON_X, CON_Y + 50 + var);
+			img[3] = mlx_put_string(data->mlx, color, CON_X, CON_Y + 75) + var;
+			img[4] = mlx_put_string(data->mlx, id, CON_X, CON_Y + 100) + var;
+			img[5] = mlx_put_string(data->mlx, type, CON_X, CON_Y + 125) + var;
+
+			ft_lstadd_back(&data->strlist, ft_lstnew(img[0]));
+			ft_lstadd_back(&data->strlist, ft_lstnew(img[1]));
+			ft_lstadd_back(&data->strlist, ft_lstnew(img[2]));
+			ft_lstadd_back(&data->strlist, ft_lstnew(img[3]));
+			ft_lstadd_back(&data->strlist, ft_lstnew(img[4]));
+			ft_lstadd_back(&data->strlist, ft_lstnew(img[5]));
+
+
+			var += 100;
 			obj = obj->next;
+			break ; //rotar aqui entre las luces y quitar break;
 		}
 	}
-	else
-		printf("Objects: NULL\n");
 }
 
 // Función principal que llama a las subfunciones
@@ -89,8 +154,8 @@ void	print_t_data(t_data *data)
 		printf("t_data is NULL\n");
 		return ;
 	}
-	print_ambient_light(data->a_light);
-	print_camera(data->cam);
+	print_ambient_light(data);
+	print_camera(data);
 	print_spot_lights(data->s_light);
 	print_objects(data->obj);
 }

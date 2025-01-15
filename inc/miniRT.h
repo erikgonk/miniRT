@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/11 17:47:38 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/15 03:43:05 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,19 @@
 # define EM 4 // Light Emision
 # define BM 5 // Bump Map
 
+//		Renders
+# define FAST 0
+# define ONE 1
+# define UPDATE 2
+
 typedef long long	t_ll;
 
 //		Main
 void		last_exit(t_data *data);
-
+void		render_one(void *param);
+uint32_t	**console_render(t_data *data);
+void		render_fast(void *param);
+t_ray		**init_raysc(t_data *data, t_cam *cam, t_vp *vp);
+void		update_render(void *param);
+void		call_render(void *param);
 #endif

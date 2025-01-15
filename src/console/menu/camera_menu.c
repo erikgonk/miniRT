@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera_menu.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 11:18:43 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/07 12:41:36 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/15 05:45:38 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ void	manage_cam(keys_t key, t_data *data)
 		adjust_camera_pos(key, data, &posq);
 	else
 		adjust_camera_axis(key, data, &axisq);
-	print_cam_menu(data);
 	printf("\nincrementos pos= %f\n", posq);
 	printf("incrementos axis= %f\n", axisq);
 }

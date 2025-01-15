@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/13 14:01:20 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/15 04:52:35 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,11 @@ typedef struct s_data
 	int					j;
 	pthread_mutex_t		*m_god;
 	bool				god;
+	void				(*render_sel)(void *param);
+	int					last_render;
+	int					console;
+	keys_t				last_key;
+	t_list				*strlist;
 
 }					t_data;
 

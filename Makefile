@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+         #
+#    By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/19 12:51:14 by shurtado          #+#    #+#              #
-#    Updated: 2025/01/13 13:53:57 by shurtado         ###   ########.fr        #
+#    Updated: 2025/01/15 02:32:44 by shurtado         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ FILES			:= main.c \
 					render/init/init_obj.c render/init/init_obj_utils.c render/init/init_side.c render/init/init_materials.c \
 					render/color/color.c render/color/checker_board.c \
 					render/free/free.c \
-					console/console/run_console.c \
+					console/console/run_console.c console/render/render.c console/render/init_rays.c\
 					console/menu/submenu.c console/menu/slight_menu.c console/menu/camera_menu.c console/menu/obj_menu.c \
 					debug/debug_info.c debug/print_items.c debug/time.c \
 					window/mlx.c
@@ -45,7 +45,7 @@ OBJS			:= $(patsubst $(SRC_D)%.c,$(OBJ_D)%.o,$(SRCS))
 
 CC				:= cc
 IFLAGS			:= -I$(INC_D) -I$(VCT_D) -I$(LIBFT_D)inc
-CFLAGS			:= -g -Wall -Wextra -Werror
+CFLAGS			:= -g #-Wall -Wextra -Werror
 
 LIB				:= lib/
 

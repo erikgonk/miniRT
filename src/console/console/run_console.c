@@ -6,27 +6,13 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 17:00:06 by shurtado          #+#    #+#             */
-/*   Updated: 2024/12/17 11:43:52 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/15 06:03:02 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void	print_alight_menu(t_data *data)
-{
-	printf("\033[2J\033[H");
-	print_ambient_light(data->a_light);
-	printf("\n");
-	printf("\033[30m\033[47mAmbient Light\033[0m");
-}
-
-void	print_cam_menu(t_data *data)
-{
-	printf("\033[2J\033[H");
-	print_camera(data->cam);
-	printf("\n");
-	printf("\033[30m\033[47mCamera\033[0m");
-}
+static mlx_t *g_mlx = NULL;
 
 void	print_spot_menu(t_data *data)
 {
@@ -44,29 +30,48 @@ void	print_obj_menu(t_data *data)
 	printf("\033[30m\033[47mObjects\033[0m");
 }
 
-void	run_console(t_data *data, keys_t key)
+void	del_image(void *content)
+{
+	mlx_image_t	*image;
+
+	if (content && g_mlx)
+	{
+		image = (mlx_image_t *)content;
+		mlx_delete_image(g_mlx, image);
+	}
+}
+
+void	run_console(t_data *data)
 {
 	static unsigned int	option;
 	int					mode;
+	mlx_image_t			*console;
 
-	if (key == MLX_KEY_0)
+	if (!g_mlx)
+		g_mlx = data->mlx;
+	if (data->strlist)
+		ft_lstclear(&data->strlist, del_image);
+	data->strlist = NULL;
+	console = mlx_put_string(data->mlx, "Console: ", 50, 30);
+	ft_lstadd_back(&data->strlist, ft_lstnew(console));
+	if (data->last_key == MLX_KEY_C)
 	{
-		print_alight_menu(data);
+		print_ambient_light(data);
 		return ;
 	}
-	else if (key == MLX_KEY_Q && option)
+	else if (data->last_key == MLX_KEY_LEFT && option)
 		option--;
-	else if (key == MLX_KEY_W && option < 3)
+	else if (data->last_key == MLX_KEY_RIGHT && option < 3)
 		option++;
-	mode = key == MLX_KEY_W || key == MLX_KEY_Q;
-	if (option == 0 && mode)
-		print_alight_menu(data);
+	mode = data->last_key == MLX_KEY_LEFT || data->last_key == MLX_KEY_RIGHT;
+	if (mode && option == 0)
+		print_ambient_light(data);
 	else if (mode && option == 1)
-		print_cam_menu(data);
+		print_camera(data);
 	else if (mode && option == 2)
-		print_spot_menu(data);
+		print_spot_lights(data);
 	else if (mode && option == 3)
-		print_obj_menu(data);
+		print_objects(data);
 	else if (!mode)
-		manage_submenu(key, option, data);
+		manage_submenu(data->last_key, option, data);
 }

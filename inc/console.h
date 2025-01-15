@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   console.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 18:12:24 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/07 12:30:15 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/15 05:26:02 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,21 @@
 # define OBJAXISMIN -1.00f
 # define OBJAXISMAX 1.00f
 
+# define ALIGHT_M 0
+# define CAM_M 1
+# define OBJ_M 2
+# define SPOT_M 3
+
+# define CON_X 145
+# define CON_Y 32
+# define LINE 25
+
 // run_console
 void	print_alight_menu(t_data *data);
 void	print_cam_menu(t_data *data);
 void	print_spot_menu(t_data *data);
 void	print_obj_menu(t_data *data);
-void	run_console(t_data *data, keys_t key);
+void	run_console(t_data *data);
 
 // camera_menu
 void	adjust_camera_pos(keys_t key, t_data *data, double *posq);

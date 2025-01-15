@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_general.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:34:20 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/13 11:24:59 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/15 04:55:14 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	init_all(t_data *data)
 	init_mlx(data);
 	init_materials_render(data);
 	data->img_last = NULL;
+	data->strlist = NULL;
 }
 
 void	init_data(t_data **data)
@@ -42,5 +43,7 @@ void	init_data(t_data **data)
 	(*data)->m_trace = calloc(1, sizeof(pthread_mutex_t));
 	(*data)->m_god = calloc(1, sizeof(pthread_mutex_t));
 	(*data)->god = true;
+	(*data)->render_sel = NULL;
+	(*data)->last_render = ONE;
 	pthread_mutex_init((*data)->m_trace, NULL);
 }

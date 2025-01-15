@@ -3,30 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   mlx.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 16:58:38 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/13 11:04:07 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/15 04:28:03 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
-void	render_to_mlx(t_data *data)
-{
-	uint32_t	**img_rgb;
-	t_ll		time;
-
-	time = current_timestamp();
-	img_rgb = render(data);
-	if (!img_rgb)
-		exit(er(data, "Failed to render data", NULL));
-	fill_image(data, (uint32_t *)data->img->pixels, img_rgb);
-	if (!data->img->enabled)
-		data->img->enabled = true;
-	mlx_image_to_window(data->mlx, data->img, 0, 0);
-	free_image_all(data, img_rgb);
-}
 
 void	fill_image(t_data *data, uint32_t *pixels, uint32_t **img_rgb)
 {
@@ -48,10 +32,19 @@ void	fill_image(t_data *data, uint32_t *pixels, uint32_t **img_rgb)
 	}
 }
 
-void	press_keyhook(t_data *data, mlx_key_data_t keydata, bool mode)
+void	swap_mgod(t_data *data)
 {
-	run_console(data, keydata.key);
-	if (keydata.key == MLX_KEY_K)
+	pthread_mutex_lock(data->m_god);
+	data->god = !data->god;
+	pthread_mutex_unlock(data->m_god);
+}
+
+void	press_keyhook(t_data *data, mlx_key_data_t keydata)
+{
+	static bool	mode;
+
+	data->last_key = keydata.key;
+	if (keydata.key == MLX_KEY_SPACE)
 	{
 		pthread_mutex_lock(data->m_trace);
 		data->trace_flag = !data->trace_flag;
@@ -59,22 +52,39 @@ void	press_keyhook(t_data *data, mlx_key_data_t keydata, bool mode)
 		if (data->img_last)
 			free_image_all(data, data->img_last);
 		data->img_last = NULL;
+		if (mode)
+		{
+			if (data->god)
+				swap_mgod(data);
+			data->render_sel = render_one;
+			mode = !mode;
+		}
+		else
+		{
+			data->render_sel = update_render;
+			mode = !mode;
+		}
 	}
-	if (mode || keydata.key == MLX_KEY_R)
-		render_to_mlx(data);
-	if (keydata.key == MLX_KEY_R)
-		mode = !mode;
-	if (keydata.key == MLX_KEY_L)
+	else if (keydata.key == MLX_KEY_C)
 	{
-		pthread_mutex_lock(data->m_god);
-		data->god = !data->god;
-		pthread_mutex_unlock(data->m_god);
+		mode = true;
+		if (data->god)
+			swap_mgod(data);
+		data->render_sel = render_fast;
+	}
+	else
+	{
+		if (data->last_render == ONE)
+			data->render_sel = render_one;
+		else if (data->last_render == FAST)
+			data->render_sel = render_fast;
+		else if (data->last_render == UPDATE)
+			data->render_sel = update_render;
 	}
 }
 
 void	my_keyhook(mlx_key_data_t keydata, void *param)
 {
-	static bool	mode;
 	t_data		*data;
 
 	data = param;
@@ -83,7 +93,7 @@ void	my_keyhook(mlx_key_data_t keydata, void *param)
 		last_exit(data);
 	}
 	else if (keydata.action == MLX_PRESS)
-		press_keyhook(data, keydata, mode);
+		press_keyhook(data, keydata);
 }
 
 void	resise_w(int32_t width, int32_t height, void *param)
@@ -97,4 +107,10 @@ void	resise_w(int32_t width, int32_t height, void *param)
 	data->god = false;
 	data->img_last = NULL;
 	pthread_mutex_unlock(data->m_god);
+	if (data->last_render == ONE)
+		data->render_sel = render_one;
+	else if (data->last_render == FAST)
+		data->render_sel = render_fast;
+	else if (data->last_render == UPDATE)
+		data->render_sel = update_render;
 }

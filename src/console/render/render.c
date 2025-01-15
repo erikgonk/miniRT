@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/29 11:37:51 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/15 03:03:35 by shurtado         ###   ########.fr       */
+/*   Created: 2025/01/15 01:56:28 by shurtado          #+#    #+#             */
+/*   Updated: 2025/01/15 03:01:47 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,23 @@
 #include "render.h"
 #include "threads.h"
 
-void	*process_rows(void *arg)
+uint32_t	trace_fast(t_ray ray, t_data *data)
+{
+	double	t_min;
+	t_obj	*closest_obj;
+	t_rgb	alight;
+
+	alight.r = 50;
+	alight.g = 50;
+	alight.b = 50;
+	t_min = INFINITY;
+	closest_obj = find_closest(data, &ray, data->obj, &t_min);
+	if (!closest_obj)
+		return (BLACK);
+	return (get_colour(color_add(alight, closest_obj->a_rgb)));
+}
+
+void	*cprocess_rows(void *arg)
 {
 	t_thread_data	*data;
 	int				idyx[3];
@@ -27,23 +43,19 @@ void	*process_rows(void *arg)
 		idyx[2] = -1;
 		while (++idyx[2] < data->data->x)
 		{
-			pthread_mutex_lock(data->data->m_god);
-			if (!data->data->god)
-			{
-				pthread_mutex_unlock(data->data->m_god);
-				pthread_exit(NULL);
-				return (NULL);
-			}
-			pthread_mutex_unlock(data->data->m_god);
-			data->image[idyx[1]][idyx[2]] = \
-					trace_ray(data->rays[idyx[1]][idyx[2]], data->data);
+			if (idyx[1] % 2 == 0 && idyx[2] % 2 == 0)
+				data->image[idyx[1]][idyx[2]] = \
+					trace_fast(data->rays[idyx[1]][idyx[2]], data->data);
+			if (idyx[1] != 0 && idyx[2] != 0)
+				data->image[idyx[1] - 1][idyx[2] -1] = \
+				data->image[idyx[1]][idyx[2]];
 		}
 		idyx[1] += NUM_THREADS;
 	}
 	pthread_exit(NULL);
 }
 
-void	render_with_threads(t_data *data, t_ray **rays, uint32_t **image)
+void	c_render(t_data *data, t_ray **rays, uint32_t **image)
 {
 	pthread_t		threads[NUM_THREADS];
 	t_thread_data	thread_data[NUM_THREADS];
@@ -56,7 +68,7 @@ void	render_with_threads(t_data *data, t_ray **rays, uint32_t **image)
 		thread_data[i].rays = rays;
 		thread_data[i].data = data;
 		thread_data[i].image = image;
-		pthread_create(&threads[i], NULL, process_rows, &thread_data[i]);
+		pthread_create(&threads[i], NULL, cprocess_rows, &thread_data[i]);
 		i++;
 	}
 	i = 0;
@@ -67,38 +79,18 @@ void	render_with_threads(t_data *data, t_ray **rays, uint32_t **image)
 	}
 }
 
-uint32_t	**average_samples(t_data *data, uint32_t **s1, uint32_t **s2)
-{
-	uint32_t	**res;
-	int			x;
-	int			y;
-
-	x = -1;
-	res = init_image_(data);
-	while (++x < data->y)
-	{
-		y = -1;
-		while (++y < data->x)
-			res[x][y] = average(s1[x][y], s2[x][y]);
-	}
-	return (res);
-}
-
-uint32_t	**render(t_data *data, int mode)
+uint32_t	**console_render(t_data *data)
 {
 	t_ray		**rays;
 	t_vp		*vp;
 	uint32_t	**image;
 
 	vp = init_viewport(data->cam, data->x, data->y);
-	if (!mode)
-		rays = init_rays(data, data->cam, vp);
-	else
-		rays = init_raysc(data, data->cam, vp);
+	rays = init_raysc(data, data->cam, vp);
 	image = init_image_(data);
 	if (!image)
 		return (NULL);
-	render_with_threads(data, rays, image);
+	c_render(data, rays, image);
 	free_render(data, vp, rays);
 	return (image);
 }
