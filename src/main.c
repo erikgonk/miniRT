@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/16 10:52:05 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/16 15:38:43 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,22 @@ void	call_render(void *param)
 		data->render_sel(param);
 }
 
+void	mouse_click(mouse_key_t button, action_t action, modifier_key_t mods, void* param)
+{
+	t_data	*data;
+	int		x;
+	int		y;
+
+	data = param;
+	if (action == 1)
+	{
+		if (data->last_render != FAST)
+			data->render_sel = render_fast;
+		mlx_get_mouse_pos(data->mlx, &x, &y);
+		console_click(data, x, y);
+	}
+}
+
 int	main(int ac, char **av)
 {
 	t_data	*data;
@@ -106,9 +122,10 @@ int	main(int ac, char **av)
 	parse(data, fd);
 	close(fd);
 	init_all(data);
-	// data->render_sel = render_fast;
+	data->render_sel = render_fast;
 	mlx_resize_hook(data->mlx, &resise_w, data);
 	mlx_loop_hook(data->mlx, call_render, data);
+	mlx_mouse_hook(data->mlx, mouse_click, data);
 	mlx_key_hook(data->mlx, &my_keyhook, data);
 	mlx_loop(data->mlx);
 }

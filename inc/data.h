@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/16 10:45:42 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/16 16:20:35 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef struct s_material
 	double				self_emision;
 	unsigned int		bm_size;
 	mlx_texture_t		*bm_texture;
-	unsigned int		tx_size;	
+	unsigned int		tx_size;
 	mlx_texture_t		*texture;
 }				t_material;
 
@@ -165,8 +165,10 @@ typedef struct s_obj
 
 typedef struct s_console
 {
-	mlx_image_t	*background;
-	t_list		*btn_list;
+	mlx_image_t			*background;
+	t_list				*btn_list;
+	mlx_image_t 		*icons[4];
+	t_list				*click_lst;
 }				t_console;
 
 typedef struct s_data

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   run_console.c                                      :+:      :+:    :+:   */
+/*   console_run.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 17:00:06 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/16 13:20:03 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/16 17:30:03 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,8 +143,6 @@ typedef struct s_cam_btn
 	char		fov[200];
 	mlx_image_t	*labels[11];
 	mlx_texture_t *iconst[4];
-	mlx_image_t *icons[4];
-
 }	t_cam_btn;
 
 void	set_cam_btn(t_data *data)
@@ -184,33 +182,34 @@ void	set_cam_btn(t_data *data)
 	cambtn->iconst[1] = mlx_load_png("./assets/consol/arrow_b_right.png");
 	cambtn->iconst[2] = mlx_load_png("./assets/consol/arrow_s_left_blue.png");
 	cambtn->iconst[3] = mlx_load_png("./assets/consol/arrow_s_right_blue.png");
+
 	i = -1;
 	while (++i < 4)
-		cambtn->icons[i] = mlx_texture_to_image(data->mlx, cambtn->iconst[i]);
-	mlx_resize_image(cambtn->icons[0], cambtn->icons[0]->width / 1.5, cambtn->icons[0]->height / 1.5);
-	mlx_resize_image(cambtn->icons[1], cambtn->icons[1]->width / 1.5, cambtn->icons[1]->height / 1.5);
-	mlx_image_to_window(data->mlx, cambtn->icons[0], data->x - BG_WITH + 30, 0);
-	mlx_image_to_window(data->mlx, cambtn->icons[1], data->x - cambtn->icons[1]->width - 30, 0);
+		data->console.icons[i] = mlx_texture_to_image(data->mlx, cambtn->iconst[i]);
+	mlx_resize_image(data->console.icons[0], data->console.icons[0]->width / 1.5, data->console.icons[0]->height / 1.5);
+	mlx_resize_image(data->console.icons[1], data->console.icons[1]->width / 1.5, data->console.icons[1]->height / 1.5);
+	mlx_image_to_window(data->mlx, data->console.icons[0], data->x - BG_WITH + 30, 0);
+	mlx_image_to_window(data->mlx, data->console.icons[1], data->x - data->console.icons[1]->width - 30, 0);
 
-	mlx_resize_image(cambtn->icons[2], cambtn->icons[2]->width / 3, cambtn->icons[2]->height / 3);
-	mlx_resize_image(cambtn->icons[3], cambtn->icons[3]->width / 3, cambtn->icons[3]->height / 3);
+	mlx_resize_image(data->console.icons[2], data->console.icons[2]->width / 3, data->console.icons[2]->height / 3);
+	mlx_resize_image(data->console.icons[3], data->console.icons[3]->width / 3, data->console.icons[3]->height / 3);
 // pos
-	mlx_image_to_window(data->mlx, cambtn->icons[2], data->x - BG_WITH + 100, top + 73);
-	mlx_image_to_window(data->mlx, cambtn->icons[3], data->x - cambtn->icons[1]->width - 25, top + 73);
-	mlx_image_to_window(data->mlx, cambtn->icons[2], data->x - BG_WITH + 100, top + 103);
-	mlx_image_to_window(data->mlx, cambtn->icons[3], data->x - cambtn->icons[1]->width - 25, top + 103);
-	mlx_image_to_window(data->mlx, cambtn->icons[2], data->x - BG_WITH + 100, top + 133);
-	mlx_image_to_window(data->mlx, cambtn->icons[3], data->x - cambtn->icons[1]->width - 25, top + 133);
+	mlx_image_to_window(data->mlx, data->console.icons[2], data->x - BG_WITH + 100, top + 73);
+	mlx_image_to_window(data->mlx, data->console.icons[3], data->x - data->console.icons[1]->width - 25, top + 73);
+	mlx_image_to_window(data->mlx, data->console.icons[2], data->x - BG_WITH + 100, top + 103);
+	mlx_image_to_window(data->mlx, data->console.icons[3], data->x - data->console.icons[1]->width - 25, top + 103);
+	mlx_image_to_window(data->mlx, data->console.icons[2], data->x - BG_WITH + 100, top + 133);
+	mlx_image_to_window(data->mlx, data->console.icons[3], data->x - data->console.icons[1]->width - 25, top + 133);
 // axis
-	mlx_image_to_window(data->mlx, cambtn->icons[2], data->x - BG_WITH + 100, top + 193);
-	mlx_image_to_window(data->mlx, cambtn->icons[3], data->x - cambtn->icons[1]->width - 25, top + 193);
-	mlx_image_to_window(data->mlx, cambtn->icons[2], data->x - BG_WITH + 100, top + 223);
-	mlx_image_to_window(data->mlx, cambtn->icons[3], data->x - cambtn->icons[1]->width - 25, top + 223);
-	mlx_image_to_window(data->mlx, cambtn->icons[2], data->x - BG_WITH + 100, top + 253);
-	mlx_image_to_window(data->mlx, cambtn->icons[3], data->x - cambtn->icons[1]->width - 25, top + 253);
+	mlx_image_to_window(data->mlx, data->console.icons[2], data->x - BG_WITH + 100, top + 193);
+	mlx_image_to_window(data->mlx, data->console.icons[3], data->x - data->console.icons[1]->width - 25, top + 193);
+	mlx_image_to_window(data->mlx, data->console.icons[2], data->x - BG_WITH + 100, top + 223);
+	mlx_image_to_window(data->mlx, data->console.icons[3], data->x - data->console.icons[1]->width - 25, top + 223);
+	mlx_image_to_window(data->mlx, data->console.icons[2], data->x - BG_WITH + 100, top + 253);
+	mlx_image_to_window(data->mlx, data->console.icons[3], data->x - data->console.icons[1]->width - 25, top + 253);
 // FOV
-	mlx_image_to_window(data->mlx, cambtn->icons[2], data->x - BG_WITH + 100, top + 313);
-	mlx_image_to_window(data->mlx, cambtn->icons[3], data->x - cambtn->icons[1]->width - 25, top + 313);
+	mlx_image_to_window(data->mlx, data->console.icons[2], data->x - BG_WITH + 100, top + 313);
+	mlx_image_to_window(data->mlx, data->console.icons[3], data->x - data->console.icons[1]->width - 25, top + 313);
 
 	i = -1;
 	while (++i < 11)
@@ -220,8 +219,7 @@ void	set_cam_btn(t_data *data)
 	}
 	i = -1;
 	while (++i < 4)
-		ft_lstadd_back(&data->console.btn_list, ft_lstnew(cambtn->icons[i]));
-	i = -1;
+		ft_lstadd_back(&data->console.btn_list, ft_lstnew(data->console.icons[i]));
 }
 void	set_alight_btn(t_data *data)
 {
@@ -257,4 +255,5 @@ void	run_console(t_data *data)
 	}
 	set_background(data);
 	set_main_buttons(data);
+	init_console(data);
 }

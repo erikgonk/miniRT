@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   console.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 18:12:24 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/15 15:58:24 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/16 17:36:51 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,61 @@
 
 # define BG_WITH 300
 
+typedef enum btn_name
+{
+	none = 0,
+	left,
+	right,
+	pos_xmin,
+	pos_xmax,
+	pos_ymin,
+	pos_ymax,
+	pos_zmin,
+	pos_zmax,
+	axis_xmin,
+	axis_xmax,
+	axis_ymin,
+	axis_ymax,
+	axis_zmin,
+	axis_zmax,
+	rgb_rmin,
+	rgb_rmax,
+	rgb_gmin,
+	rgb_gmax,
+	rgb_bmin,
+	rgb_bmax,
+	fov_min,
+	fov_max,
+	size,
+	height
+}	t_btn_name;
+
+typedef struct s_btn
+{
+	t_btn_name	name;
+	int			x;
+	int 		y;
+	int 		w;
+	int 		h;
+}				t_btn;
+
 void		run_console(t_data *data);
 void		del_image(void *content);
 mlx_image_t	*create_button(mlx_t *mlx, const char *label, int x, int y);
 mlx_image_t	*create_menu_background(t_data *data);
+void		console_click(t_data *data, int x, int y);
+
+//		init_general
+void		init_console(t_data *data);
+
+//		init_pos_axis
+void		make_arrows(t_data *data);
+void		pos_buttons_min(t_data *data);
+void		pos_buttons_max(t_data *data);
+void		axis_buttons_min(t_data *data);
+void		axis_buttons_max(t_data *data);
+
+//		init_extra
+void		init_fov(t_data *data);
 
 #endif

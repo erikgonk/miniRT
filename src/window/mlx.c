@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 16:58:38 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/16 09:55:46 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/16 16:00:28 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	press_keyhook(t_data *data, mlx_key_data_t keydata)
 		if (data->img_last)
 			free_image_all(data, data->img_last);
 		data->img_last = NULL;
-		if (!mode)
+		if (mode)
 		{
 			if (data->god)
 				swap_mgod(data);

@@ -63,7 +63,7 @@ void	parse_bm(t_obj *obj, char **args, int i)
 		obj->material.m_type = type_extra_func(args[i + 2]);
 	if (obj->material.m_type == -1 && args[i + 2][0] != '\n')
 		exit(er(obj->data, "error: parse_bm: arg not valid after bm", NULL));
-	if (args[i + 2] && args[i + 2])
+	if (args[i + 2] && args[i + 3])
 		exit(er(obj->data, "error: parse_bm: arg not valid after bm", NULL));
 }
 

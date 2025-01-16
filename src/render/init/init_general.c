@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_general.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:34:20 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/15 16:24:42 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/16 16:21:58 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	init_all(t_data *data)
 	init_materials_render(data);
 	data->img_last = NULL;
 	data->console.btn_list = NULL;
+	data->console.click_lst = NULL;
 }
 
 void	init_data(t_data **data)

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+         #
+#    By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/19 12:51:14 by shurtado          #+#    #+#              #
-#    Updated: 2025/01/15 17:51:55 by shurtado         ###   ########.fr        #
+#    Updated: 2025/01/16 17:26:50 by shurtado         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,9 @@ FILES			:= main.c \
 					render/init/init_obj.c render/init/init_obj_utils.c render/init/init_side.c render/init/init_materials.c \
 					render/color/color.c render/color/checker_board.c \
 					render/free/free.c \
-					console/console/run_console.c console/render/render.c console/render/init_rays.c \
+					console/console/console_init_extra.c console/console/console_init_pos_axis.c console/console/console_init_general.c \
+					console/console/console_run.c console/console/console_click.c \
+					console/render/render.c console/render/init_rays.c \
 					debug/debug_info.c \
 					window/mlx.c
 SRCS			:= $(addprefix $(SRC_D), $(FILES))
