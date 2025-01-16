@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_console.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 17:00:06 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/15 17:55:21 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/16 13:20:03 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,40 @@ mlx_image_t	*create_button(mlx_t *mlx, const char *label, int x, int y)
 	return (button);
 }
 
+mlx_image_t	*create_menu_background2(t_data *data)
+{
+	mlx_image_t	*background;
+	int			x;
+	int			y;
+	uint32_t	*pixels;
+
+	background = NULL;
+	if (!data || !data->mlx)
+	{
+		fprintf(stderr, "Invalid data or mlx instance\n");
+		return (NULL);
+	}
+	background = mlx_new_image(data->mlx, BG_WITH, 65);
+	if (!background)
+	{
+		fprintf(stderr, "Failed to create menu background\n");
+		return (NULL);
+	}
+	pixels = (uint32_t *)background->pixels;
+	y = 0;
+	while (y < data->mlx->height)
+	{
+		x = 0;
+		while (x < BG_WITH)
+		{
+			pixels[y * BG_WITH + x] = 0xFF000000;
+			x++;
+		}
+		y++;
+	}
+	return (background);
+}
+
 mlx_image_t	*create_menu_background(t_data *data)
 {
 	mlx_image_t	*background;
@@ -56,6 +90,7 @@ mlx_image_t	*create_menu_background(t_data *data)
 		return (NULL);
 	}
 	background = mlx_new_image(data->mlx, BG_WITH, data->mlx->height);
+
 	if (!background)
 	{
 		fprintf(stderr, "Failed to create menu background\n");
@@ -68,7 +103,10 @@ mlx_image_t	*create_menu_background(t_data *data)
 		x = 0;
 		while (x < BG_WITH)
 		{
-			pixels[y * BG_WITH + x] = 0x80000000;
+			if (y >= 65)
+				pixels[y * BG_WITH + x] = 0x80000000;
+			else
+				pixels[y * BG_WITH + x] = 0xFF000000;
 			x++;
 		}
 		y++;
@@ -96,10 +134,14 @@ void	set_background(t_data * data)
 
 typedef struct s_cam_btn
 {
-	char		pos[200];
-	char		axis[200];
+	char		posx[200];
+	char		posy[200];
+	char		posz[200];
+	char		axisx[200];
+	char		axisy[200];
+	char		axisz[200];
 	char		fov[200];
-	mlx_image_t	*labels[4];
+	mlx_image_t	*labels[11];
 	mlx_texture_t *iconst[4];
 	mlx_image_t *icons[4];
 
@@ -111,34 +153,75 @@ void	set_cam_btn(t_data *data)
 	int 		top;
 	int			left;
 	int			i;
+	int			yspace;
+
+	yspace = 0;
+	top = 25;
+	left = 100;
+	cambtn = calloc(1, sizeof(t_cam_btn));
+// pos
+	snprintf(cambtn->posx,sizeof(cambtn->posx), "x          %.2f", data->cam->pos.x);
+	snprintf(cambtn->posy,sizeof(cambtn->posy), "y          %.2f", data->cam->pos.y);
+	snprintf(cambtn->posz,sizeof(cambtn->posz), "z          %.2f", data->cam->pos.z);
+// axis
+	snprintf(cambtn->axisx,sizeof(cambtn->axisx), "x           %.2f", data->cam->axis.x);
+	snprintf(cambtn->axisy,sizeof(cambtn->axisy), "y           %.2f", data->cam->axis.y);
+	snprintf(cambtn->axisz,sizeof(cambtn->axisz), "z           %.2f", data->cam->axis.z);
+// fov
+	snprintf(cambtn->fov,sizeof(cambtn->fov), "              %d", data->cam->fov);
+	cambtn->labels[0] = mlx_put_string(data->mlx, "Camera", data->x - BG_WITH + left + 20, top - 2);
+	cambtn->labels[1] = mlx_put_string(data->mlx, "Pos", data->x - BG_WITH + left + 55, top +  50);
+	cambtn->labels[2] = mlx_put_string(data->mlx, cambtn->posx, data->x - BG_WITH + 35, top +  80);
+	cambtn->labels[3] = mlx_put_string(data->mlx, cambtn->posy, data->x - BG_WITH + 35, top +  110);
+	cambtn->labels[4] = mlx_put_string(data->mlx, cambtn->posz, data->x - BG_WITH + 35, top +  140);
+	cambtn->labels[5] = mlx_put_string(data->mlx, "Axis", data->x - BG_WITH + left + 55, top + 170);
+	cambtn->labels[6] = mlx_put_string(data->mlx, cambtn->axisx, data->x - BG_WITH + 35, top + 200);
+	cambtn->labels[7] = mlx_put_string(data->mlx, cambtn->axisy, data->x - BG_WITH + 35, top + 230);
+	cambtn->labels[8] = mlx_put_string(data->mlx, cambtn->axisz, data->x - BG_WITH + 35, top + 260);
+	cambtn->labels[9] = mlx_put_string(data->mlx, "FOV", data->x - BG_WITH + left + 58, top +  290);
+	cambtn->labels[10] = mlx_put_string(data->mlx, cambtn->fov, data->x - BG_WITH + 25, top +  320);
+	cambtn->iconst[0] = mlx_load_png("./assets/consol/arrow_b_left.png");
+	cambtn->iconst[1] = mlx_load_png("./assets/consol/arrow_b_right.png");
+	cambtn->iconst[2] = mlx_load_png("./assets/consol/arrow_s_left_blue.png");
+	cambtn->iconst[3] = mlx_load_png("./assets/consol/arrow_s_right_blue.png");
+	i = -1;
+	while (++i < 4)
+		cambtn->icons[i] = mlx_texture_to_image(data->mlx, cambtn->iconst[i]);
+	mlx_resize_image(cambtn->icons[0], cambtn->icons[0]->width / 1.5, cambtn->icons[0]->height / 1.5);
+	mlx_resize_image(cambtn->icons[1], cambtn->icons[1]->width / 1.5, cambtn->icons[1]->height / 1.5);
+	mlx_image_to_window(data->mlx, cambtn->icons[0], data->x - BG_WITH + 30, 0);
+	mlx_image_to_window(data->mlx, cambtn->icons[1], data->x - cambtn->icons[1]->width - 30, 0);
+
+	mlx_resize_image(cambtn->icons[2], cambtn->icons[2]->width / 3, cambtn->icons[2]->height / 3);
+	mlx_resize_image(cambtn->icons[3], cambtn->icons[3]->width / 3, cambtn->icons[3]->height / 3);
+// pos
+	mlx_image_to_window(data->mlx, cambtn->icons[2], data->x - BG_WITH + 100, top + 73);
+	mlx_image_to_window(data->mlx, cambtn->icons[3], data->x - cambtn->icons[1]->width - 25, top + 73);
+	mlx_image_to_window(data->mlx, cambtn->icons[2], data->x - BG_WITH + 100, top + 103);
+	mlx_image_to_window(data->mlx, cambtn->icons[3], data->x - cambtn->icons[1]->width - 25, top + 103);
+	mlx_image_to_window(data->mlx, cambtn->icons[2], data->x - BG_WITH + 100, top + 133);
+	mlx_image_to_window(data->mlx, cambtn->icons[3], data->x - cambtn->icons[1]->width - 25, top + 133);
+// axis
+	mlx_image_to_window(data->mlx, cambtn->icons[2], data->x - BG_WITH + 100, top + 193);
+	mlx_image_to_window(data->mlx, cambtn->icons[3], data->x - cambtn->icons[1]->width - 25, top + 193);
+	mlx_image_to_window(data->mlx, cambtn->icons[2], data->x - BG_WITH + 100, top + 223);
+	mlx_image_to_window(data->mlx, cambtn->icons[3], data->x - cambtn->icons[1]->width - 25, top + 223);
+	mlx_image_to_window(data->mlx, cambtn->icons[2], data->x - BG_WITH + 100, top + 253);
+	mlx_image_to_window(data->mlx, cambtn->icons[3], data->x - cambtn->icons[1]->width - 25, top + 253);
+// FOV
+	mlx_image_to_window(data->mlx, cambtn->icons[2], data->x - BG_WITH + 100, top + 313);
+	mlx_image_to_window(data->mlx, cambtn->icons[3], data->x - cambtn->icons[1]->width - 25, top + 313);
 
 	i = -1;
-	top = 25;
-	left = 20;
-	cambtn = calloc(1, sizeof(t_cam_btn));
-	snprintf(cambtn->pos,sizeof(cambtn->pos), "x:%.2f y:%.2f z:%.2f", data->cam->pos.x, data->cam->pos.y, data->cam->pos.z);
-	snprintf(cambtn->axis,sizeof(cambtn->axis), "x:%.2f y:%.2f z:%.2f", data->cam->axis.x, data->cam->axis.y, data->cam->axis.z);
-	snprintf(cambtn->fov,sizeof(cambtn->fov), "Fov: %d", data->cam->fov);
-	cambtn->labels[0] = mlx_put_string(data->mlx, "Camera", data->x - BG_WITH + left + 100, top);
-	cambtn->labels[1] = mlx_put_string(data->mlx, cambtn->pos, data->x - BG_WITH + left, top + 50);
-	cambtn->labels[2] = mlx_put_string(data->mlx, cambtn->axis, data->x - BG_WITH + left, top + 100);
-	cambtn->labels[3] = mlx_put_string(data->mlx, cambtn->fov, data->x - BG_WITH + left, top + 150);
-	cambtn->iconst[0] = mlx_load_png("/home/shurtado/42/cursus/minirt-main/assets/icons/arrow_left.png");
-	cambtn->iconst[1] = mlx_load_png("/home/shurtado/42/cursus/minirt-main/assets/icons/arrow_right.png");
-	cambtn->icons[0] = mlx_texture_to_image(data->mlx, cambtn->iconst[0]);
-	cambtn->icons[1] = mlx_texture_to_image(data->mlx, cambtn->iconst[1]);
-	mlx_resize_image(cambtn->icons[0], cambtn->icons[0]->width / 12, cambtn->icons[0]->height / 12);
-	mlx_resize_image(cambtn->icons[1], cambtn->icons[1]->width / 12, cambtn->icons[1]->height / 12);
-	mlx_image_to_window(data->mlx, cambtn->icons[0], data->x - BG_WITH + 50, 20);
-	mlx_image_to_window(data->mlx, cambtn->icons[1], data->x - 50, 20);
-	while (++i < 4)
+	while (++i < 11)
 	{
 		mlx_set_instance_depth(&cambtn->labels[i]->instances[0], 3);
 		ft_lstadd_back(&data->console.btn_list, ft_lstnew(cambtn->labels[i]));
 	}
-	//mlx_set_instance_depth(&cambtn->icons[0]->instances[0], 4);
-	ft_lstadd_back(&data->console.btn_list, ft_lstnew(cambtn->icons[0]));
-	ft_lstadd_back(&data->console.btn_list, ft_lstnew(cambtn->icons[1]));
+	i = -1;
+	while (++i < 4)
+		ft_lstadd_back(&data->console.btn_list, ft_lstnew(cambtn->icons[i]));
+	i = -1;
 }
 void	set_alight_btn(t_data *data)
 {
