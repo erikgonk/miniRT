@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/15 14:37:08 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/16 10:45:42 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ typedef struct s_material
 	double				emision;
 	double				self_emision;
 	unsigned int		bm_size;
+	mlx_texture_t		*bm_texture;
+	unsigned int		tx_size;	
 	mlx_texture_t		*texture;
 }				t_material;
 
@@ -158,7 +160,6 @@ typedef struct s_obj
 	int					face;
 	t_data				*data;
 	struct s_obj		*next;
-	// xpm_t				*texture;
 	mlx_texture_t		*texture;
 }					t_obj;
 

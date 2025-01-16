@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_obj.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:02:22 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/13 10:59:22 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/16 10:43:39 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ t_obj	*create_obj(t_data *data, char *str, int type)
 		target = tmp;
 	obj->rgb = colors_parse(data, target, 0);
 	obj->material.texture = NULL;
+	obj->material.bm_texture = NULL;
 	extra_functionalities(obj, target);
 	if (tmp2)
 		free(tmp2);

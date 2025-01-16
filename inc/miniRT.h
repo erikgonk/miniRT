@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/15 03:43:05 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/16 10:31:51 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@
 # define CB 3 // Checker Board
 # define EM 4 // Light Emision
 # define BM 5 // Bump Map
+# define TX 6 // Textures
 
 //		Renders
 # define FAST 0

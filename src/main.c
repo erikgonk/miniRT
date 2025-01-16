@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/15 16:06:35 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/16 10:52:05 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ void	call_render(void *param)
 	data = (t_data *)param;
 	if (data->render_sel)
 		data->render_sel(param);
-
 }
 
 int	main(int ac, char **av)
@@ -107,7 +106,7 @@ int	main(int ac, char **av)
 	parse(data, fd);
 	close(fd);
 	init_all(data);
-	data->render_sel = render_fast;
+	// data->render_sel = render_fast;
 	mlx_resize_hook(data->mlx, &resise_w, data);
 	mlx_loop_hook(data->mlx, call_render, data);
 	mlx_key_hook(data->mlx, &my_keyhook, data);

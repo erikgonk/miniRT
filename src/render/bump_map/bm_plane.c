@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bm_plane.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 16:27:29 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/11 13:36:46 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/16 10:44:28 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,15 @@ t_v3	get_normal_from_map_plane(t_obj *plane, t_v3 hp, int x, int y)
 	uv[1] = fmod(hp.z, 1.0f);
 	if (uv[1] < 0)
 		uv[1] += 1.0f;
-	x = (int)(uv[0] * plane->material.texture->width * \
-			plane->material.bm_size) % plane->material.texture->width;
-	y = (int)(uv[1] * plane->material.texture->height * \
-			plane->material.bm_size) % plane->material.texture->height;
-	i = (y * plane->material.texture->width + x) \
-			* plane->material.texture->bytes_per_pixel;
-	rgb.r = plane->material.texture->pixels[i];
-	rgb.g = plane->material.texture->pixels[i + 1];
-	rgb.b = plane->material.texture->pixels[i + 2];
+	x = (int)(uv[0] * plane->material.bm_texture->width * \
+			plane->material.bm_size) % plane->material.bm_texture->width;
+	y = (int)(uv[1] * plane->material.bm_texture->height * \
+			plane->material.bm_size) % plane->material.bm_texture->height;
+	i = (y * plane->material.bm_texture->width + x) \
+			* plane->material.bm_texture->bytes_per_pixel;
+	rgb.r = plane->material.bm_texture->pixels[i];
+	rgb.g = plane->material.bm_texture->pixels[i + 1];
+	rgb.b = plane->material.bm_texture->pixels[i + 2];
 	normal.x = (rgb.r / 255.0f) * 2.0f - 1.0f;
 	normal.y = (rgb.g / 255.0f) * 2.0f - 1.0f;
 	normal.z = (rgb.b / 255.0f) * 2.0f - 1.0f;
@@ -73,7 +73,7 @@ void	get_plane_normal(t_obj *plane, t_v3 hit_point, t_ray *ray)
 	t_v3	tang;
 	t_v3	bit;
 
-	if (plane->material.texture)
+	if (plane->material.bm_texture)
 	{
 		map_normal = get_normal_from_map_plane(plane, hit_point, 0, 0);
 		calc_pl_tb(plane->axis, &tang, &bit);

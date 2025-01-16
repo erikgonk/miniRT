@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bm_sphere.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 16:27:29 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/11 13:36:15 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/16 10:47:07 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,15 @@ t_v3	get_normal_from_map(t_obj *sphere, t_ray *ray, int x, int y)
 	uv[1] = 0.5 - asin(ray->normal.y) / M_PI;
 	uv[0] = fmod(uv[0], 1.0f);
 	uv[1] = fmod(uv[1], 1.0f);
-	x = (int)(uv[0] * sphere->material.texture->width * \
-				sphere->material.bm_size) % sphere->material.texture->width;
-	y = (int)(uv[1] * sphere->material.texture->height * \
-				sphere->material.bm_size) % sphere->material.texture->height;
-	index = (y * sphere->material.texture->width + x) * \
-				sphere->material.texture->bytes_per_pixel;
-	rgb.r = sphere->material.texture->pixels[index];
-	rgb.g = sphere->material.texture->pixels[index + 1];
-	rgb.b = sphere->material.texture->pixels[index + 2];
+	x = (int)(uv[0] * sphere->material.bm_texture->width * \
+				sphere->material.bm_size) % sphere->material.bm_texture->width;
+	y = (int)(uv[1] * sphere->material.bm_texture->height * \
+				sphere->material.bm_size) % sphere->material.bm_texture->height;
+	index = (y * sphere->material.bm_texture->width + x) * \
+				sphere->material.bm_texture->bytes_per_pixel;
+	rgb.r = sphere->material.bm_texture->pixels[index];
+	rgb.g = sphere->material.bm_texture->pixels[index + 1];
+	rgb.b = sphere->material.bm_texture->pixels[index + 2];
 	normal.x = (rgb.r / 255.0f) * 2.0f - 1.0f;
 	normal.y = (rgb.g / 255.0f) * 2.0f - 1.0f;
 	normal.z = (rgb.b / 255.0f) * 2.0f - 1.0f;
@@ -71,7 +71,7 @@ void	get_sphere_normal(t_obj *sphere, t_ray *ray)
 	t_v3		tangent;
 	t_v3		bitangent;
 
-	if (sphere->material.texture)
+	if (sphere->material.bm_texture)
 	{
 		map = get_normal_from_map(sphere, ray, 0, 0);
 		calc_sp_tb(ray->normal, &tangent, &bitangent);

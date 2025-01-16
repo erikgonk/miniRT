@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersections.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:48:44 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/13 10:17:25 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/16 10:47:27 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ bool	hit_sp(t_ray *ray, t_obj *sphere, double *t)
 		return (false);
 	ray->point = vadd(ray->origin, vmul(*t, ray->direction));
 	ray->normal = normalize(vsub(ray->point, sphere->pos));
-	if (sphere->material.texture)
+	if (sphere->material.bm_texture)
 		get_sphere_normal(sphere, ray);
 	return (true);
 }
@@ -88,7 +88,7 @@ bool	hit_pl(t_data *data, t_ray *ray, t_obj *plane, double *t)
 	ray->normal = plane->axis;
 	if (dnrxy[0] > EPSILON)
 		ray->normal = plane->calcs.i_axis;
-	if (plane->material.texture)
+	if (plane->material.bm_texture)
 		get_plane_normal(plane, ray->point, ray);
 	return (true);
 }
