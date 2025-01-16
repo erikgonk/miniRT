@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   uv_map.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:55:14 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/13 15:32:14 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/16 10:48:56 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,10 +125,10 @@ t_rgb	texture_color(t_obj *obj, t_v2 uv)
 	int	y;
 	int	index;
 
-	x = (int)(uv.u * obj->texture->width) % obj->texture->width;
-	y = (int)(uv.v * obj->texture->height) % obj->texture->height;
-	index = (y * obj->texture->width + x) * 4;
-	return (rgbdefine(obj->texture->pixels[index + 2], \
-			obj->texture->pixels[index + 1], \
-			obj->texture->pixels[index]));
+	x = (int)(uv.u * obj->material.texture->width) % obj->material.texture->width;
+	y = (int)(uv.v * obj->material.texture->height) % obj->material.texture->height;
+	index = (y * obj->material.texture->width + x) * 4;
+	return (rgbdefine(obj->material.texture->pixels[index + 2], \
+			obj->material.texture->pixels[index + 1], \
+			obj->material.texture->pixels[index]));
 }

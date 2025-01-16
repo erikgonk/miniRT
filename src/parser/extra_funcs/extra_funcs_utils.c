@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extra_funcs_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:02:22 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/13 10:45:57 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/16 10:31:09 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ void	skip_colors(t_data *data, char *str, char **res)
 
 int	type_extra_func(char *str)
 {
-	static char		*bts[] = {"mt", "gl", "mr", "cb", "em", "bm", NULL};
+	static char		*bts[] = {"mt", "gl", "mr", "cb", "em", "bm", "tx", \
+																NULL};
 	int				i;
 
 	i = 0;

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fee_willlies.c                                     :+:      :+:    :+:   */
+/*   parse_free_willlies.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:13:09 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/13 12:00:43 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/16 10:59:03 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ char	**ft_free_willy(char **cmd)
 {
 	int		i;
 
-	i = -1;
+	i = 0;
 	if (!cmd)
 		return (NULL);
 	while (cmd[i])
-		free(cmd[++i]);
+		free(cmd[i++]);
 	free(cmd);
 	cmd = NULL;
 	return (NULL);

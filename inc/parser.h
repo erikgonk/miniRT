@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 15:20:14 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/13 12:04:56 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/16 10:38:19 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,10 @@ void	skip_colors(t_data *data, char *str, char **res);
 int		type_extra_func(char *str);
 
 //      extra_functionalities_utils
-void	parse_cb_em(t_obj *obj, char *str, int i);
+void	parse_em(t_obj *obj, char **args);
+void	parse_cb(t_obj *obj, char **args);
+void	parse_bm(t_obj *obj, char **args, int i);
+void	parse_tx(t_obj *obj, char **args, int i);
 void	extra_functionalities(t_obj *obj, char *tmp);
 
 #endif

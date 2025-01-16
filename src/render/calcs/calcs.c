@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   calcs.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/13 15:18:00 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/16 10:48:45 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_rgb	diffuse_ray(t_ray *ray, t_obj *closest, t_data *data, int depth)
 	t_ray	new_ray;
 	t_rgb	trace_color;
 
-	if (closest->material.texture)
+	if (closest->material.bm_texture)
 		return (rgbdefine(0, 0, 0));
 	new_ray.origin = vadd(ray->point, vmul(EPSILON, ray->normal));
 	new_ray.direction = random_in_hemisphere(ray->normal);
@@ -132,13 +132,14 @@ uint32_t	trace_ray(t_ray ray, t_data *data)
 	pthread_mutex_lock(data->m_trace);
 	c_global = path_trace(&ray, data, MAX_DEPTH);
 	pthread_mutex_unlock(data->m_trace);
-	if (closest_obj->texture)
+	if (closest_obj->material.texture)
 		uv = calculate_uv(ray.point, closest_obj);
 	if (uv.u < 0 || uv.v < 0)
 			return (get_colour(c_global));
-	if (closest_obj->texture && closest_obj->material.texture)
-		return (texture_weight(c_global, (texture_color(closest_obj, calculate_uv(ray.point, closest_obj)))));
-	else if (closest_obj->texture)
+	if (closest_obj->material.texture && closest_obj->material.bm_texture)
+		return (texture_weight(c_global, (texture_color(closest_obj, \
+								calculate_uv(ray.point, closest_obj)))));
+	else if (closest_obj->material.texture)
 		return (get_colour(texture_color(closest_obj, uv)));
 	else
 		return (get_colour(c_global));

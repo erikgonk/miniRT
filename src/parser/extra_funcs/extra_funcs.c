@@ -26,28 +26,6 @@ void	parse_em(t_obj *obj, char **args)
 	obj->material.self_emision = obj->material.emision * 2.5;
 }
 
-void	parse_bm(t_obj *obj, char **args)
-{
-	char	*tmp;
-
-	if (!args[1] || !args[2])
-		exit(er(obj->data, "error: parse_bm: lacks arg", NULL));
-	obj->material.bm_size = ft_atoi_parse(obj->data, args[1], 0, 0);
-	if (obj->material.m_type != -1 && (!args[1] || !args[2]))
-		exit(er(obj->data, "error: parse_bm: arg not valid", NULL));
-	tmp = ft_strtrim(args[2], " \n\t");
-	obj->material.texture = mlx_load_png(tmp);
-	free(tmp);
-	if (!obj->material.texture)
-		exit(er(obj->data, "error: parse_bm: texture not valid", NULL));
-	if (args[3])
-		obj->material.m_type = type_extra_func(args[3]);
-	if (obj->material.m_type == -1 && args[3][0] != '\n')
-		exit(er(obj->data, "error: parse_bm: arg not valid after bm", NULL));
-	if (args[3] && args[4])
-		exit(er(obj->data, "error: parse_bm: arg not valid after bm", NULL));
-}
-
 void	parse_cb(t_obj *obj, char **args)
 {
 	if (!args[1] || !args[2])
@@ -65,6 +43,50 @@ void	parse_cb(t_obj *obj, char **args)
 		exit(er(obj->data, "error: parse_cb: arg not valid after cb", NULL));
 	if (args[3] && args[4])
 		exit(er(obj->data, "error: parse_cb: arg not valid after cb", NULL));
+}
+
+void	parse_bm(t_obj *obj, char **args, int i)
+{
+	char	*tmp;
+
+	if (!args[i] || !args[i + 1])
+		exit(er(obj->data, "error: parse_bm: lacks arg", NULL));
+	obj->material.bm_size = ft_atoi_parse(obj->data, args[i], 0, 0);
+	if (obj->material.m_type != -1 && (!args[i] || !args[i + 1]))
+		exit(er(obj->data, "error: parse_bm: arg not valid", NULL));
+	tmp = ft_strtrim(args[i + 1], " \n\t");
+	obj->material.bm_texture = mlx_load_png(tmp);
+	free(tmp);
+	if (!obj->material.bm_texture)
+		exit(er(obj->data, "error: parse_bm: texture not valid", NULL));
+	if (args[i + 2])
+		obj->material.m_type = type_extra_func(args[i + 2]);
+	if (obj->material.m_type == -1 && args[i + 2][0] != '\n')
+		exit(er(obj->data, "error: parse_bm: arg not valid after bm", NULL));
+	if (args[i + 2] && args[i + 2])
+		exit(er(obj->data, "error: parse_bm: arg not valid after bm", NULL));
+}
+
+void	parse_tx(t_obj *obj, char **args, int i)
+{
+	char	*tmp;
+
+	if (!args[i] || !args[i + 1])
+		exit(er(obj->data, "error: parse_tx: lacks arg", NULL));
+	obj->material.bm_size = ft_atoi_parse(obj->data, args[i], 0, 0);
+	if (obj->material.m_type != -1 && (!args[i] || !args[i + 1]))
+		exit(er(obj->data, "error: parse_tx: arg not valid", NULL));
+	tmp = ft_strtrim(args[i + 1], " \n\t");
+	obj->material.texture = mlx_load_png(tmp);
+	free(tmp);
+	if (!obj->material.texture)
+		exit(er(obj->data, "error: parse_tx: texture not valid", NULL));
+	if (args[i + 2])
+		obj->material.m_type = type_extra_func(args[i + 2]);
+	if (obj->material.m_type == -1 && args[3][0] != '\n')
+		exit(er(obj->data, "error: parse_tx: arg not valid after bm", NULL));
+	if (args[i + 2] && args[i + 3])
+		exit(er(obj->data, "error: parse_tx: arg not valid after bm", NULL));
 }
 
 void	extra_functionalities(t_obj *obj, char *tmp)
@@ -86,7 +108,9 @@ void	extra_functionalities(t_obj *obj, char *tmp)
 	else if (obj->material.m_type == CB)
 		parse_cb(obj, args);
 	else if (obj->material.m_type == BM)
-		parse_bm(obj, args);
+		parse_bm(obj, args, 1);
+	else if (obj->material.m_type == TX)
+		parse_tx(obj, args, 1);
 	ft_free_willy(args);
 	free(str);
 }
