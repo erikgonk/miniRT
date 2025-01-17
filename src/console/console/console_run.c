@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 17:00:06 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/16 17:30:03 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/17 08:57:31 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,17 @@ typedef struct s_cam_btn
 	mlx_texture_t *iconst[4];
 }	t_cam_btn;
 
+void	set_labels(t_data *data, t_cam_btn *cambtn)
+{
+	snprintf(cambtn->posx,sizeof(cambtn->posx), "x          %.2f", data->cam->pos.x);
+	snprintf(cambtn->posy,sizeof(cambtn->posy), "y          %.2f", data->cam->pos.y);
+	snprintf(cambtn->posz,sizeof(cambtn->posz), "z          %.2f", data->cam->pos.z);
+	snprintf(cambtn->axisx,sizeof(cambtn->axisx), "x           %.2f", data->cam->axis.x);
+	snprintf(cambtn->axisy,sizeof(cambtn->axisy), "y           %.2f", data->cam->axis.y);
+	snprintf(cambtn->axisz,sizeof(cambtn->axisz), "z           %.2f", data->cam->axis.z);
+	snprintf(cambtn->fov,sizeof(cambtn->fov), "              %d", data->cam->fov);
+}
+
 void	set_cam_btn(t_data *data)
 {
 	t_cam_btn	*cambtn;
@@ -157,16 +168,7 @@ void	set_cam_btn(t_data *data)
 	top = 25;
 	left = 100;
 	cambtn = calloc(1, sizeof(t_cam_btn));
-// pos
-	snprintf(cambtn->posx,sizeof(cambtn->posx), "x          %.2f", data->cam->pos.x);
-	snprintf(cambtn->posy,sizeof(cambtn->posy), "y          %.2f", data->cam->pos.y);
-	snprintf(cambtn->posz,sizeof(cambtn->posz), "z          %.2f", data->cam->pos.z);
-// axis
-	snprintf(cambtn->axisx,sizeof(cambtn->axisx), "x           %.2f", data->cam->axis.x);
-	snprintf(cambtn->axisy,sizeof(cambtn->axisy), "y           %.2f", data->cam->axis.y);
-	snprintf(cambtn->axisz,sizeof(cambtn->axisz), "z           %.2f", data->cam->axis.z);
-// fov
-	snprintf(cambtn->fov,sizeof(cambtn->fov), "              %d", data->cam->fov);
+	set_labels(data, cambtn);
 	cambtn->labels[0] = mlx_put_string(data->mlx, "Camera", data->x - BG_WITH + left + 20, top - 2);
 	cambtn->labels[1] = mlx_put_string(data->mlx, "Pos", data->x - BG_WITH + left + 55, top +  50);
 	cambtn->labels[2] = mlx_put_string(data->mlx, cambtn->posx, data->x - BG_WITH + 35, top +  80);
@@ -256,4 +258,6 @@ void	run_console(t_data *data)
 	set_background(data);
 	set_main_buttons(data);
 	init_console(data);
+	data->last_render = FAST;
+	// data->render_sel = render_fast;
 }

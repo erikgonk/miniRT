@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/16 16:20:35 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/17 11:40:06 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,14 @@
 # include <pthread.h>
 # include "libvct.h"
 # include "../lib/MLX42/include/MLX42/MLX42.h"
+
+typedef enum item_type
+{
+	CAM = 0,
+	ALIGHT,
+	SLIGHT,
+	OBJ
+}		t_item_type;
 
 typedef struct s_fresnel
 {
@@ -160,6 +168,7 @@ typedef struct s_obj
 	int					face;
 	t_data				*data;
 	struct s_obj		*next;
+	struct s_obj		*prev;
 	mlx_texture_t		*texture;
 }					t_obj;
 
@@ -169,6 +178,8 @@ typedef struct s_console
 	t_list				*btn_list;
 	mlx_image_t 		*icons[4];
 	t_list				*click_lst;
+	void				*last_item;
+	t_item_type			last_type;
 }				t_console;
 
 typedef struct s_data

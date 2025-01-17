@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:40:17 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/15 13:12:05 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/17 09:20:48 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,6 @@
 void		print_t_rgb(const char *label, t_rgb rgb);
 void		print_t_v3(const char *label, t_v3 vec);
 long long	current_timestamp(void);
+void	print_objects(t_obj *obj);
 
 #endif

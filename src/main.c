@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/16 15:38:43 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/17 09:09:34 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void	render_fast(void *param)
 	uint32_t	**new_img;
 
 	data = (t_data *)param;
+	data->render_sel = NULL;
+	data->last_render = FAST;
 	data->x = data->mlx->width;
 	data->y = data->mlx->height;
 	data->god = true;
@@ -55,8 +57,6 @@ void	render_fast(void *param)
 	mlx_set_instance_depth(&data->img->instances[0], 1);
 	free_image_all(data, new_img);
 	run_console(data);
-	data->render_sel = NULL;
-	data->last_render = FAST;
 }
 
 void	update_render(void *param)
@@ -89,6 +89,7 @@ void	update_render(void *param)
 void	call_render(void *param)
 {
 	t_data		*data;
+	static int	i;
 
 	data = (t_data *)param;
 	if (data->render_sel)
@@ -121,6 +122,7 @@ int	main(int ac, char **av)
 	validate_args_and_open(data, ac, av, &fd);
 	parse(data, fd);
 	close(fd);
+	init_mlx(data);
 	init_all(data);
 	data->render_sel = render_fast;
 	mlx_resize_hook(data->mlx, &resise_w, data);

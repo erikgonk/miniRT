@@ -6,11 +6,25 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:31:28 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/11 17:41:47 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/17 11:17:47 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+void	init_set_prev(t_data *data)
+{
+	t_obj		*obj;
+
+	obj = data->obj;
+	data->obj->prev = NULL;
+	while (obj)
+	{
+		if (obj->next)
+			obj->next->prev = obj;
+		obj = obj->next;
+	}
+}
 
 void	init_obj_normi(t_data *data, t_obj *obj)
 {

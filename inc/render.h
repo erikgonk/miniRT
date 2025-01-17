@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/15 03:03:52 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/17 11:18:41 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,12 +140,14 @@ uint32_t				**init_image_(t_data *data);
 
 //		init_obj
 void					init_obj(t_data *data);
-void					init_obj_normi(t_data *data, t_obj *obj);
 void					init_light(t_data *data);
 void					set_calcs(t_data *data, t_obj *obj);
+void					make_cone_cap(t_obj *cone, t_data *data);
+void					make_caps(t_data *data, t_obj *obj);
 
 //		init_obj_utils
 void					init_obj_normi(t_data *data, t_obj *obj);
+void					init_set_prev(t_data *data);
 
 //		init_sides
 void					init_sides(t_data *data, t_obj *obj);
