@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+         #
+#    By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/19 12:51:14 by shurtado          #+#    #+#              #
-#    Updated: 2025/01/17 11:00:05 by shurtado         ###   ########.fr        #
+#    Updated: 2025/01/17 19:48:55 by shurtado         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ FILES			:= main.c \
 					render/color/color.c render/color/checker_board.c \
 					render/free/free.c \
 					console/console/console_init_extra.c console/console/console_init_pos_axis.c console/console/console_init_general.c \
-					console/console/console_run.c console/console/console_click.c \
+					console/console/console_run.c console/console/console_click.c console/console/console_util.c\
 					console/render/render.c console/render/init_rays.c \
 					debug/debug_info.c \
 					window/mlx.c

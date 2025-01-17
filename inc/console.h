@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   console.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 18:12:24 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/17 11:40:01 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/17 19:50:07 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,20 @@ typedef struct s_btn
 	int 		h;
 }				t_btn;
 
+typedef struct s_img_btn
+{
+	char		posx[200];
+	char		posy[200];
+	char		posz[200];
+	char		axisx[200];
+	char		axisy[200];
+	char		axisz[200];
+	char		fov[200];
+	mlx_image_t	*labels[11];
+	mlx_texture_t *iconst[4];
+}	t_img_btn;
+
+mlx_image_t *put_str(mlx_t *mlx, const char *str, int width, int height);
 void		run_console(t_data *data);
 void		del_image(void *content);
 mlx_image_t	*create_button(mlx_t *mlx, const char *label, int x, int y);
@@ -97,5 +111,12 @@ void		axis_buttons_max(t_data *data);
 
 //		init_extra
 void		init_fov(t_data *data);
+
+//		util
+void		del_image(void *content);
+mlx_image_t	*create_button(mlx_t *mlx, const char *label, int x, int y);
+mlx_image_t	*create_menu_background(t_data *data);
+void		set_background(t_data *data);
+mlx_image_t	*put_str(mlx_t *mlx, const char *str, int x, int y);
 
 #endif

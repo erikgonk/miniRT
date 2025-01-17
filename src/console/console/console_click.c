@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   console_click.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/17 11:42:49 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/17 19:57:09 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
 
 t_btn_name	get_clicked_btn(t_data *data, int x, int y)
 {
@@ -19,18 +18,16 @@ t_btn_name	get_clicked_btn(t_data *data, int x, int y)
 	t_btn	*btn;
 
 	click = data->console.click_lst;
-
 	while (click)
 	{
 		btn = click->content;
-		if (x > btn->x && x <  btn->x + btn->w)
-			if (y > btn->y && y <  btn->y + btn->h)
+		if (x > btn->x && x < btn->x + btn->w)
+			if (y > btn->y && y < btn->y + btn->h)
 				return (btn->name);
 		click = click->next;
 	}
 	return (none);
 }
-
 
 int	ft_objremove(t_obj **lst, t_obj *node)
 {
@@ -67,7 +64,7 @@ void	free_after_click(t_data *data)
 	t_obj		*next;
 
 	obj = data->obj;
-	while(obj)
+	while (obj)
 	{
 		next = obj->next;
 		if (obj && obj->type == SIDE || obj->type == CAP)
@@ -112,19 +109,19 @@ void	console_click_pos(t_data *data, t_btn_name clicked)
 
 void	print_cam_console(t_data *data, t_btn_name clicked)
 {
-		if (clicked == left)
-			return ;
-		else if (clicked == right)
-			return ;
-		console_click_pos(data, clicked);
-		console_click_axis(data, clicked);
-		if (clicked == fov_min)
-				data->cam->fov = fmax(data->cam->fov - CAMPLUS, 0);
-		else if (clicked == fov_max)
-			data->cam->fov += CAMPLUS;
-		free_after_click(data);
-		init_all(data);
-		data->render_sel = render_fast;
+	if (clicked == left)
+		return ;
+	else if (clicked == right)
+		return ;
+	console_click_pos(data, clicked);
+	console_click_axis(data, clicked);
+	if (clicked == fov_min)
+		data->cam->fov = fmax(data->cam->fov - CAMPLUS, 0);
+	else if (clicked == fov_max)
+		data->cam->fov += CAMPLUS;
+	free_after_click(data);
+	init_all(data);
+	data->render_sel = render_fast;
 }
 
 void	print_alight_console(t_data *data, t_btn_name clicked)

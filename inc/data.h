@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/17 11:40:06 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/17 19:51:58 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <pthread.h>
 # include "libvct.h"
 # include "../lib/MLX42/include/MLX42/MLX42.h"
+
+extern mlx_t *g_mlx;
 
 typedef enum item_type
 {
