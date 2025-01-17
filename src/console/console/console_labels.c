@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 20:02:25 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/17 20:10:27 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/17 22:15:47 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	set_alight_labels(t_data *data, t_img_btn *img_btn, int top)
 	labels = img_btn->labels;
 	mleft = data->x - BG_WITH;
 	write_alight_labels(data, img_btn);
-	img_btn->labels[0] = put_str(mlx, "Ambient Light", mleft + 120, top - 2);
-	img_btn->labels[1] = put_str(mlx, "BR", mleft + 155, top + 50);
+	img_btn->labels[0] = put_str(mlx, "Ambient Light", mleft + 85, top - 2);
+	img_btn->labels[1] = put_str(mlx, "BRIGHTNESS", mleft + 125, top + 50);
 	img_btn->labels[2] = put_str(mlx, img_btn->posx, mleft + 35, top + 80);
 }

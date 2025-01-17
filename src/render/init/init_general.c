@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_general.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:34:20 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/17 11:17:29 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/17 22:06:00 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,7 @@ void	init_data(t_data **data)
 	(*data)->last_render = ONE;
 	(*data)->console.btn_list = NULL;
 	(*data)->console.click_lst = NULL;
+	(*data)->console.last_item = NULL;
+	(*data)->console.last_type = CAM;
 	pthread_mutex_init((*data)->m_trace, NULL);
 }

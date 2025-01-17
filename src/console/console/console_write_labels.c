@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 20:05:19 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/17 20:09:45 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/17 22:15:16 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ void	write_cam_labels(t_data *data, t_img_btn *img_btn)
 void	write_alight_labels(t_data *data, t_img_btn *img_btn)
 {
 	int		size;
-	t_v3	pos;
+	float	br;
 	t_v3	axis;
 
-	pos = data->cam->pos;
+	br = data->a_light->br;
 	axis = data->cam->axis;
 	size = sizeof(img_btn->posx);
-	snprintf(img_btn->posx, size, "br         %.2f", pos.x);
+	snprintf(img_btn->posx, size, "br         %.2f", br);
 }
