@@ -6,52 +6,11 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 17:00:06 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/17 19:58:22 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/17 20:11:06 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
-void	write_cam_labels(t_data *data, t_img_btn *img_btn)
-{
-	int		size;
-	t_v3	pos;
-	t_v3	axis;
-
-	pos = data->cam->pos;
-	axis = data->cam->axis;
-	size = sizeof(img_btn->posx);
-	snprintf(img_btn->posx, size, "x          %.2f", pos.x);
-	snprintf(img_btn->posy, size, "y          %.2f", pos.y);
-	snprintf(img_btn->posz, size, "z          %.2f", pos.z);
-	snprintf(img_btn->axisx, size, "x           %.2f", axis.x);
-	snprintf(img_btn->axisy, size, "y           %.2f", axis.y);
-	snprintf(img_btn->axisz, size, "z           %.2f", axis.z);
-	snprintf(img_btn->fov, size, "              %d", data->cam->fov);
-}
-
-void	set_cam_labels(t_data *data,t_img_btn *img_btn, int top)
-{
-	int			mleft;
-	mlx_image_t	**labels;
-	mlx_t		*mlx;
-
-	mlx = data->mlx;
-	labels = img_btn->labels;
-	mleft = data->x - BG_WITH;
-	write_cam_labels(data, img_btn);
-	img_btn->labels[0] = put_str(mlx, "Camera", mleft + 120, top - 2);
-	img_btn->labels[1] = put_str(mlx, "Pos", mleft + 155, top + 50);
-	img_btn->labels[2] = put_str(mlx, img_btn->posx, mleft + 35, top + 80);
-	img_btn->labels[3] = put_str(mlx, img_btn->posy, mleft + 35, top + 110);
-	img_btn->labels[4] = put_str(mlx, img_btn->posz, mleft + 35, top + 140);
-	img_btn->labels[5] = put_str(mlx, "Axis", mleft + 155, top + 170);
-	img_btn->labels[6] = put_str(mlx, img_btn->axisx, mleft + 35, top + 200);
-	img_btn->labels[7] = put_str(mlx, img_btn->axisy, mleft + 35, top + 230);
-	img_btn->labels[8] = put_str(mlx, img_btn->axisz, mleft + 35, top + 260);
-	img_btn->labels[9] = put_str(mlx, "FOV", mleft + 158, top + 290);
-	img_btn->labels[10] = put_str(mlx, img_btn->fov, mleft + 25, top + 320);
-}
 
 void	set_labels(t_data *data, t_img_btn *img_btn, int top)
 {
@@ -92,7 +51,7 @@ int	count_arrows(t_data *data)
 	if (data->console.last_type == CAM)
 		return (9);
 	else if (data->console.last_type == ALIGHT)
-		return (1);
+		return (2);
 	else if (data->console.last_type == SLIGHT)
 		return (12);
 	else if (data->console.last_type == OBJ)
@@ -132,7 +91,7 @@ int	count_labels(t_data *data)
 	if (data->console.last_type == CAM)
 		return (11);
 	else if (data->console.last_type == ALIGHT)
-		return (0);
+		return (3);
 	else if (data->console.last_type == SLIGHT)
 		return (0);
 	else if (data->console.last_type == OBJ)

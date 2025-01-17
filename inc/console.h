@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 18:12:24 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/17 19:50:07 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/17 20:07:57 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ typedef struct s_img_btn
 	char		axisy[200];
 	char		axisz[200];
 	char		fov[200];
-	mlx_image_t	*labels[11];
+	mlx_image_t	*labels[50];
 	mlx_texture_t *iconst[4];
 }	t_img_btn;
 
@@ -118,5 +118,13 @@ mlx_image_t	*create_button(mlx_t *mlx, const char *label, int x, int y);
 mlx_image_t	*create_menu_background(t_data *data);
 void		set_background(t_data *data);
 mlx_image_t	*put_str(mlx_t *mlx, const char *str, int x, int y);
+
+//		labels
+void		set_cam_labels(t_data *data, t_img_btn *img_btn, int top);
+void		set_alight_labels(t_data *data, t_img_btn *img_btn, int top);
+
+//		write_labels
+void		write_cam_labels(t_data *data, t_img_btn *img_btn);
+void		write_alight_labels(t_data *data, t_img_btn *img_btn);
 
 #endif
