@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   console_click_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:49:18 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/18 11:46:49 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/18 18:08:41 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	free_after_click(t_data *data)
 	while (obj)
 	{
 		next = obj->next;
-		if (obj && obj->type == SIDE || obj->type == CAP)
+		if (obj && (obj->type == SIDE || obj->type == CAP))
 		{
 			ft_objremove(&data->obj, obj);
 		}

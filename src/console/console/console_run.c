@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   console_run.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 17:00:06 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/18 15:01:51 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/18 18:07:55 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	set_all_buttons(t_data *data)
 	top = 25;
 	img_btn = calloc(1, sizeof(t_img_btn));
 	set_resize_buton_images(data, img_btn);
-	put_imgarrows(data, top);
+	put_imgarrows(data);
 	set_labels(data, img_btn, top);
 	fill_image_list(data, img_btn);
 }

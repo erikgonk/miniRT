@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_main_checker.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:18:36 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/18 11:43:00 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/18 18:06:48 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,5 @@ void	check_params(t_data *data)
 		check_obj(obj);
 	else
 		exit(er(data, "error: check_params: obj not exist", NULL));
-	check_params_acl(data, data->a_light, data->s_light, data->cam);
+	check_params_acl(data, data->cam);
 }

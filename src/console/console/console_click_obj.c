@@ -6,7 +6,7 @@
 /*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 13:23:37 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/18 18:03:37 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/18 18:07:37 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ bool	obj_click_move(t_data *data, t_obj *obj, t_btn_name clicked)
 
 void	click_sphere(t_data *data, t_obj *obj, t_btn_name clicked)
 {
+	(void)data;
 	if (clicked == row4r)
 		obj->size += OBJPLUS;
 	else if (clicked == row4l)
@@ -47,6 +48,7 @@ void	click_sphere(t_data *data, t_obj *obj, t_btn_name clicked)
 
 void	click_cy_co(t_data *data, t_obj *obj, t_btn_name clicked)
 {
+	(void)data;
 	if (clicked == row7r)
 		obj->size += OBJPLUS;
 	else if (clicked == row7l)
@@ -59,6 +61,7 @@ void	click_cy_co(t_data *data, t_obj *obj, t_btn_name clicked)
 
 void	click_cube(t_data *data, t_obj *obj, t_btn_name clicked)
 {
+	(void)data;
 	if (clicked == row7r)
 		obj->cube_size.x += OBJPLUS;
 	else if (clicked == row7l)

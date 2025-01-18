@@ -6,13 +6,13 @@
 /*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 11:07:30 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/18 17:57:01 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/18 18:09:07 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-bool	slight_click_move_normi(t_data *data, t_slight *slight)
+bool	slight_click_move_normi(t_data *data)
 {
 	if (data->console.last_item == data->s_light)
 	{
@@ -29,7 +29,7 @@ bool	slight_click_move_normi(t_data *data, t_slight *slight)
 
 bool	slight_click_move(t_data *data, t_slight *slight, t_btn_name clicked)
 {
-	if (clicked == left && slight_click_move_normi(data, slight))
+	if (clicked == left && slight_click_move_normi(data))
 		return (true);
 	else if (clicked == right)
 	{

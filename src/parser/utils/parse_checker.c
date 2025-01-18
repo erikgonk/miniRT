@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:18:36 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/18 11:42:16 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/18 18:06:37 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	check_end(t_data *data, char *str, int i)
 			exit(er(data, "error: check_end: char after last num", str));
 }
 
-void	check_params_acl(t_data *data, t_alight *aL, t_slight *sL, t_cam *cam)
+void	check_params_acl(t_data *data, t_cam *cam)
 {
 	if (!data->a_light->exist && !data->s_light)
 		exit(er(data, "error: check_params_acl: light needed", NULL));

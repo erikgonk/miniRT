@@ -6,7 +6,7 @@
 #    By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/19 12:51:14 by shurtado          #+#    #+#              #
-#    Updated: 2025/01/18 17:43:38 by erigonza         ###   ########.fr        #
+#    Updated: 2025/01/18 18:05:40 by erigonza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,7 @@ OBJS			:= $(patsubst $(SRC_D)%.c,$(OBJ_D)%.o,$(SRCS))
 
 CC				:= cc
 IFLAGS			:= -I$(INC_D) -I$(VCT_D) -I$(LIBFT_D)inc
-CFLAGS			:= -g -Ofast #-fsanitize=address #-Wall -Wextra -Werror
+CFLAGS			:= -g -Ofast -Wall -Wextra -Werror #-fsanitize=address 
 
 LIB				:= lib/
 

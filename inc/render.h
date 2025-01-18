@@ -6,7 +6,7 @@
 /*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/18 17:36:49 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/18 18:18:09 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef struct s_direct
 	t_v3				view_dir;
 	double				spec_intensity;
 	t_rgb				*color;
-}				t_direct;
+}						t_direct;
 
 typedef struct s_quadratic
 {
@@ -78,11 +78,11 @@ typedef struct s_quadratic
 }						t_quadratic;
 
 //		calcs
-t_obj					*find_closest(t_data *data, t_ray *ray, t_obj *objs, \
-	double *t_min);
-t_rgb					diffuse_ray(t_ray *ray, t_obj *closest, t_data *data, \
-int depth);
-t_rgb					compute_direct_light(t_obj *obj, t_data *data, \
+t_obj					*find_closest(t_data *data, t_ray *ray, t_obj *objs,
+							double *t_min);
+t_rgb					diffuse_ray(t_ray *ray, t_obj *closest, t_data *data,
+							int depth);
+t_rgb					compute_direct_light(t_obj *obj, t_data *data,
 							t_ray *ray, t_rgb color);
 t_rgb					path_trace(t_ray *ray, t_data *data, int depth);
 uint32_t				trace_ray(t_ray ray, t_data *data);
@@ -90,24 +90,24 @@ uint32_t				trace_ray(t_ray ray, t_data *data);
 //		calcs_utils
 t_v3					random_in_hemisphere(t_v3 normal);
 t_rgb					apply_self_emission(t_obj *obj, t_rgb base_color);
-void					compute_emissive_light(t_obj *emitter, t_ray *ray, \
-								t_rgb *color, t_data *data);
-void					iter_lights(t_data *data, t_obj *obj, t_ray *ray, \
-										t_direct d);
+void					compute_emissive_light(t_obj *emitter, t_ray *ray,
+							t_rgb *color, t_data *data);
+void					iter_lights(t_data *data, t_obj *obj, t_ray *ray,
+							t_direct d);
 bool					pt_checks(t_obj *closest, t_ray *ray, t_rgb *dirb);
 
 //		calcs_utils2
 uint32_t				texture_weight(t_rgb c1, t_rgb c2);
 
 //		materials
-t_rgb					glass_ray(t_ray *ray, t_obj *closest, t_data *data, \
-									int depth);
-t_rgb					mirror_ray(t_ray *ray, t_obj *closest, t_data *data, \
-									int depth);
-t_v3					perturb_vector(t_v3 direction, double roughness, \
-									t_v3 normal);
-t_rgb					metallic_ray(t_ray *ray, t_obj *closest, t_data *data, \
-									int depth);
+t_rgb					glass_ray(t_ray *ray, t_obj *closest, t_data *data,
+							int depth);
+t_rgb					mirror_ray(t_ray *ray, t_obj *closest, t_data *data,
+							int depth);
+t_v3					perturb_vector(t_v3 direction, double roughness,
+							t_v3 normal);
+t_rgb					metallic_ray(t_ray *ray, t_obj *closest, t_data *data,
+							int depth);
 
 //		materials_utils
 t_rgb					color_mul(t_rgb c, double factor);
@@ -156,13 +156,12 @@ void					init_set_prev(t_data *data);
 void					init_sides(t_data *data, t_obj *obj);
 void					set_sides_xy(t_obj **sides, t_obj *cube);
 void					set_box_local_axes(t_obj *box, t_v3 raw_z);
-void					set_some_sides(t_obj **side, t_obj *cube, t_v3 half_size);
+void					set_some_sides(t_obj **side, t_obj *cube,
+							t_v3 half_size);
 void					create_side(t_obj **side, t_obj *cube);
-
 
 //		init_sides_utils
 t_frame					set_frame(t_v3 axis);
-
 
 //		init_rays
 t_ray					**init_raysc(t_data *data, t_cam *cam, t_vp *vp);
@@ -189,8 +188,7 @@ bool					hit_cap(t_data *data, t_ray *ray, t_obj *cap,
 							double *t);
 
 //		cone
-bool					hit_cone(t_ray *ray, t_obj *cone,
-							double *t);
+bool					hit_cone(t_ray *ray, t_obj *cone, double *t);
 
 //		cube
 bool					create_cube(t_data *data, t_obj *cube);
@@ -248,7 +246,6 @@ uint32_t				**console_render(t_data *data);
 void					c_render(t_data *data, t_ray **rays, uint32_t **image);
 void					*cprocess_rows(void *arg);
 uint32_t				trace_fast(t_ray ray, t_data *data);
-
 
 //		free
 void					free_rays_all(t_data *data, t_ray **rays);

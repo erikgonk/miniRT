@@ -6,7 +6,7 @@
 /*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:55:24 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/18 17:15:06 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/18 18:20:06 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ typedef long long	t_ll;
 //		Main
 void		last_exit(t_data *data);
 void		call_render(void *param);
-void	mouse_click(mouse_key_t button, action_t action, \
-						modifier_key_t mods, void* param);
+void		mouse_click(mouse_key_t button, action_t action, \
+						modifier_key_t mods, void *param);
 
 #endif

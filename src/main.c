@@ -6,7 +6,7 @@
 /*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/18 17:16:58 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/18 18:13:55 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	last_exit(t_data *data)
 void	call_render(void *param)
 {
 	t_data		*data;
-	static int	i;
 
 	data = (t_data *)param;
 	if (data->render_sel)
@@ -33,10 +32,12 @@ void	call_render(void *param)
 void	mouse_click(mouse_key_t button, action_t action, \
 						modifier_key_t mods, void *param)
 {
-	t_data	*data;
-	int		x;
-	int		y;
+	t_data		*data;
+	int			x;
+	int			y;
 
+	(void)button;
+	(void)mods;
 	data = param;
 	if (action == 1)
 	{

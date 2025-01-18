@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   console_icons.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:43:07 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/18 14:46:08 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/18 18:07:47 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	count_labels(t_data *data)
 	return (0);
 }
 
-void	put_imgarrows(t_data *data, int top)
+void	put_imgarrows(t_data *data)
 {
 	mlx_image_t	**icons;
 	int			margin;

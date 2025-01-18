@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/18 11:30:53 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/18 18:19:42 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "libvct.h"
 # include "../lib/MLX42/include/MLX42/MLX42.h"
 
-extern mlx_t *g_mlx;
+extern mlx_t			*g_mlx;
 
 typedef enum item_type
 {
@@ -179,7 +179,7 @@ typedef struct s_console
 {
 	mlx_image_t			*background;
 	t_list				*btn_list;
-	mlx_image_t 		*icons[4];
+	mlx_image_t			*icons[4];
 	t_list				*click_lst;
 	void				*last_item;
 	t_item_type			last_type;

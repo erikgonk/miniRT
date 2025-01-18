@@ -6,7 +6,7 @@
 /*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 01:56:28 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/18 18:04:06 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/18 18:08:31 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	cprocess_rows_normi(t_thread_data *data, int idyx[3], uint32_t *color)
 	int		i;
 	int		j;
 
-	color = trace_fast(data->rays[idyx[1]][idyx[2]], data->data);
+	*color = trace_fast(data->rays[idyx[1]][idyx[2]], data->data);
 	i = 0;
 	while (i < 10)
 	{
@@ -45,7 +45,7 @@ void	cprocess_rows_normi(t_thread_data *data, int idyx[3], uint32_t *color)
 			if ((idyx[1] + i) < data->data->y
 				&& (idyx[2] + j) < data->data->x)
 			{
-				data->image[idyx[1] + i][idyx[2] + j] = color;
+				data->image[idyx[1] + i][idyx[2] + j] = *color;
 			}
 			j++;
 		}
