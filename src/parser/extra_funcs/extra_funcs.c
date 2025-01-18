@@ -61,9 +61,11 @@ void	parse_bm(t_obj *obj, char **args, int i)
 		exit(er(obj->data, "error: parse_bm: texture not valid", NULL));
 	if (args[i + 2])
 		obj->material.m_type = type_extra_func(args[i + 2]);
-	if (obj->material.m_type == -1 && args[i + 2][0] != '\n')
+	if (obj->material.m_type == TX)
+		parse_bm_and_tx(obj, args, tmp, i);
+	else if (args[i + 2] && args[i + 3])
 		exit(er(obj->data, "error: parse_bm: arg not valid after bm", NULL));
-	if (args[i + 2] && args[i + 3])
+	if (obj->material.m_type == -1 && args[3][0] != '\n')
 		exit(er(obj->data, "error: parse_bm: arg not valid after bm", NULL));
 }
 
@@ -83,10 +85,12 @@ void	parse_tx(t_obj *obj, char **args, int i)
 		exit(er(obj->data, "error: parse_tx: texture not valid", NULL));
 	if (args[i + 2])
 		obj->material.m_type = type_extra_func(args[i + 2]);
+	if (obj->material.m_type == BM)
+		parse_tx_and_bm(obj, args, tmp, i);
+	else if (args[i + 2] && args[i + 3])
+		exit(er(obj->data, "error: parse_tx: arg not valid after tx", NULL));
 	if (obj->material.m_type == -1 && args[3][0] != '\n')
-		exit(er(obj->data, "error: parse_tx: arg not valid after bm", NULL));
-	if (args[i + 2] && args[i + 3])
-		exit(er(obj->data, "error: parse_tx: arg not valid after bm", NULL));
+		exit(er(obj->data, "error: parse_tx: arg not valid after tx", NULL));
 }
 
 void	extra_functionalities(t_obj *obj, char *tmp)
