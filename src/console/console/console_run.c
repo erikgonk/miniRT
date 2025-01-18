@@ -3,14 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   console_run.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 17:00:06 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/17 21:46:16 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/18 15:01:51 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+void	set_obj_labels(t_data *data, t_img_btn *img_btn, int top)
+{
+	t_obj		*obj;
+
+	obj = data->console.last_item;
+	write_obj_labels(data, img_btn);
+	if (obj->type == PL)
+		plane_set_labels(data, img_btn, top);
+	else if (obj->type == SP)
+		sphere_set_labels(data, img_btn, top);
+	else if (obj->type == CY)
+		cylinder_set_labels(data, img_btn, top);
+	else if (obj->type == CO)
+		cone_set_labels(data, img_btn, top);
+	else if (obj->type == CU)
+		cube_set_labels(data, img_btn, top);
+}
 
 void	set_labels(t_data *data, t_img_btn *img_btn, int top)
 {
@@ -18,10 +36,10 @@ void	set_labels(t_data *data, t_img_btn *img_btn, int top)
 		set_cam_labels(data, img_btn, top);
 	else if (data->console.last_type == ALIGHT)
 		set_alight_labels(data, img_btn, top);
-//	else if (data->console.last_type == SLIGHT)
-//		set_slight_labels(data, img_btn, top);
-//	else if (data->console.last_type == OBJ)
-//		set_obj_labels(data, img_btn, top);
+	else if (data->console.last_type == SLIGHT)
+		set_slight_labels(data, img_btn, top);
+	else if (data->console.last_type == OBJ)
+		set_obj_labels(data, img_btn, top);
 }
 
 void	set_all_buttons(t_data *data)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   console_click_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:49:18 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/17 21:52:29 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/18 11:46:49 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,18 @@ t_btn_name	get_clicked_btn(t_data *data, int x, int y)
 		click = click->next;
 	}
 	return (none);
+}
+
+t_slight	*get_prev(t_data *data, t_slight *slight)
+{
+	t_slight	*prev;
+
+	prev = data->s_light;
+	while (prev)
+	{
+		if (prev->next == slight)
+			return (prev);
+		prev = prev->next;
+	}
+	return (NULL);
 }

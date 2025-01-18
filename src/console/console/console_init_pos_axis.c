@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/16 17:21:32 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/18 10:57:29 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ void	make_arrows(t_data *data)
 	ft_lstadd_front(&data->console.click_lst, ft_lstnew(btn));
 }
 
-void	pos_buttons_min(t_data *data)
+void	rows_1to3_left(t_data *data)
 {
 	t_btn	tmp;
 	t_btn	*btn;
 
 	btn = calloc(1, sizeof(t_btn));
-	tmp.name = pos_xmin;
+	tmp.name = row1l;
 	tmp.x = data->console.icons[2]->instances[0].x;
 	tmp.y = data->console.icons[2]->instances[0].y;
 	tmp.h = data->console.icons[2]->height;
@@ -46,26 +46,26 @@ void	pos_buttons_min(t_data *data)
 	*btn = tmp;
 	ft_lstadd_front(&data->console.click_lst, ft_lstnew(btn));
 	btn = calloc(1, sizeof(t_btn));
-	tmp.name = pos_ymin;
+	tmp.name = row2l;
 	tmp.x = data->console.icons[2]->instances[1].x;
 	tmp.y = data->console.icons[2]->instances[1].y;
 	*btn = tmp;
 	ft_lstadd_front(&data->console.click_lst, ft_lstnew(btn));
 	btn = calloc(1, sizeof(t_btn));
-	tmp.name = pos_zmin;
+	tmp.name = row3l;
 	tmp.x = data->console.icons[2]->instances[2].x;
 	tmp.y = data->console.icons[2]->instances[2].y;
 	*btn = tmp;
 	ft_lstadd_front(&data->console.click_lst, ft_lstnew(btn));
 }
 
-void	pos_buttons_max(t_data *data)
+void	rows_1to3_right(t_data *data)
 {
 	t_btn	tmp;
 	t_btn	*btn;
 
 	btn = calloc(1, sizeof(t_btn));
-	tmp.name = pos_xmax;
+	tmp.name = row1r;
 	tmp.x = data->console.icons[3]->instances[0].x;
 	tmp.y = data->console.icons[3]->instances[0].y;
 	tmp.h = data->console.icons[3]->height;
@@ -73,26 +73,26 @@ void	pos_buttons_max(t_data *data)
 	*btn = tmp;
 	ft_lstadd_front(&data->console.click_lst, ft_lstnew(btn));
 	btn = calloc(1, sizeof(t_btn));
-	tmp.name = pos_ymax;
+	tmp.name = row2r;
 	tmp.x = data->console.icons[3]->instances[1].x;
 	tmp.y = data->console.icons[3]->instances[1].y;
 	*btn = tmp;
 	ft_lstadd_front(&data->console.click_lst, ft_lstnew(btn));
 	btn = calloc(1, sizeof(t_btn));
-	tmp.name = pos_zmax;
+	tmp.name = row3r;
 	tmp.x = data->console.icons[3]->instances[2].x;
 	tmp.y = data->console.icons[3]->instances[2].y;
 	*btn = tmp;
 	ft_lstadd_front(&data->console.click_lst, ft_lstnew(btn));
 }
 
-void	axis_buttons_min(t_data *data)
+void	rows_4to6_left(t_data *data)
 {
 	t_btn	tmp;
 	t_btn	*btn;
 
 	btn = calloc(1, sizeof(t_btn));
-	tmp.name = axis_xmin;
+	tmp.name = row4l;
 	tmp.x = data->console.icons[2]->instances[3].x;
 	tmp.y = data->console.icons[2]->instances[3].y;
 	tmp.h = data->console.icons[2]->height;
@@ -100,26 +100,26 @@ void	axis_buttons_min(t_data *data)
 	*btn = tmp;
 	ft_lstadd_front(&data->console.click_lst, ft_lstnew(btn));
 	btn = calloc(1, sizeof(t_btn));
-	tmp.name = axis_ymin;
+	tmp.name = row5l;
 	tmp.x = data->console.icons[2]->instances[4].x;
 	tmp.y = data->console.icons[2]->instances[4].y;
 	*btn = tmp;
 	ft_lstadd_front(&data->console.click_lst, ft_lstnew(btn));
 	btn = calloc(1, sizeof(t_btn));
-	tmp.name = axis_zmin;
+	tmp.name = row6l;
 	tmp.x = data->console.icons[2]->instances[5].x;
 	tmp.y = data->console.icons[2]->instances[5].y;
 	*btn = tmp;
 	ft_lstadd_front(&data->console.click_lst, ft_lstnew(btn));
 }
 
-void	axis_buttons_max(t_data *data)
+void	rows_4to6_right(t_data *data)
 {
 	t_btn	tmp;
 	t_btn	*btn;
 
 	btn = calloc(1, sizeof(t_btn));
-	tmp.name = axis_xmax;
+	tmp.name = row4r;
 	tmp.x = data->console.icons[3]->instances[3].x;
 	tmp.y = data->console.icons[3]->instances[3].y;
 	tmp.h = data->console.icons[3]->height;
@@ -127,13 +127,13 @@ void	axis_buttons_max(t_data *data)
 	*btn = tmp;
 	ft_lstadd_front(&data->console.click_lst, ft_lstnew(btn));
 	btn = calloc(1, sizeof(t_btn));
-	tmp.name = axis_ymax;
+	tmp.name = row5r;
 	tmp.x = data->console.icons[3]->instances[4].x;
 	tmp.y = data->console.icons[3]->instances[4].y;
 	*btn = tmp;
 	ft_lstadd_front(&data->console.click_lst, ft_lstnew(btn));
 	btn = calloc(1, sizeof(t_btn));
-	tmp.name = axis_zmax;
+	tmp.name = row6r;
 	tmp.x = data->console.icons[3]->instances[5].x;
 	tmp.y = data->console.icons[3]->instances[5].y;
 	*btn = tmp;

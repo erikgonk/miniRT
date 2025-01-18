@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:27:07 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/13 12:15:29 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/18 11:30:45 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	create_alight(t_data *data, char *str, int type)
 	if (type != 3 || (str[1] && !ft_isspace(str[1])))
 		return ;
 	data->a_light = calloc(1, sizeof(t_alight));
+	data->a_light->exist = 1;
 	data->a_light->br = ft_atof(data, str, 1);
 	tmp = ft_substr(str, skip_double(data, str, 1, 0), ft_strlen(str));
 	data->a_light->rgb = colors_parse(data, tmp, 0);

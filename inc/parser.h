@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 15:20:14 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/16 10:38:19 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/18 11:39:27 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	create_slight(t_data *data, t_slight **s_light, char *str, int type);
 
 //      parse_checker
 void	check_end(t_data *data, char *str, int i);
-void	check_light(t_data *data, t_alight *aL, t_slight *sL);
 void	check_params_acl(t_data *data, t_alight *aL, t_slight *sL, t_cam *cam);
 void	check_obj_normi(t_obj *obj);
 void	check_obj(t_obj *obj);

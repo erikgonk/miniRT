@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   console_icons.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:43:07 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/17 22:09:41 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/18 14:46:08 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,52 @@
 
 int	count_arrows(t_data *data)
 {
+	t_obj	*obj;
+
 	if (data->console.last_type == CAM)
 		return (9);
 	else if (data->console.last_type == ALIGHT)
 		return (1);
 	else if (data->console.last_type == SLIGHT)
-		return (12);
+		return (5);
 	else if (data->console.last_type == OBJ)
-		return (12);
+	{
+		obj = data->console.last_item;
+		if (obj->type == PL)
+			return (8);
+		else if (obj->type == SP)
+			return (5);
+		else if (obj->type == CY || obj->type == CO)
+			return (10);
+		else if (obj->type == CU)
+			return (11);
+	}
+	return (0);
 }
 
 int	count_labels(t_data *data)
 {
+	t_obj	*obj;
+
+	obj = data->console.last_item;
 	if (data->console.last_type == CAM)
 		return (11);
 	else if (data->console.last_type == ALIGHT)
 		return (3);
 	else if (data->console.last_type == SLIGHT)
-		return (0);
+		return (7);
 	else if (data->console.last_type == OBJ)
-		return (0);
+	{
+		if (obj->type == PL)
+			return (9);
+		else if (obj->type == SP)
+			return (7);
+		else if (obj->type == CY || obj->type == CO)
+			return (12);
+		else if (obj->type == CU)
+			return (13);
+	}
+	return (0);
 }
 
 void	put_imgarrows(t_data *data, int top)
@@ -94,11 +120,14 @@ void	fill_image_list(t_data *data, t_img_btn *img_btn)
 	i = -1;
 	while (++i < count)
 	{
-		mlx_set_instance_depth(&img_btn->labels[i]->instances[0], 3);
+		mlx_set_instance_depth(&img_btn->labels[i]->instances[0], 4);
 		ft_lstadd_back(&data->console.btn_list, ft_lstnew(img_btn->labels[i]));
 	}
 	i = -1;
 	while (++i < 4)
+	{
 		ft_lstadd_back(&data->console.btn_list, \
 				ft_lstnew(data->console.icons[i]));
+		mlx_set_instance_depth(&data->console.icons[i]->instances[0], 3);
+	}
 }
