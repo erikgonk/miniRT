@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+         #
+#    By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/19 12:51:14 by shurtado          #+#    #+#              #
-#    Updated: 2025/01/18 13:55:01 by shurtado         ###   ########.fr        #
+#    Updated: 2025/01/18 17:43:38 by erigonza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,24 +25,24 @@ FILES			:= main.c \
 					parser/utils/parse_sum.c parser/utils/parse_utils.c parser/utils/parse_conversions.c parser/utils/parse_free_willlies.c\
 					parser/utils/parse_main_checker.c parser/utils/parse_checker.c \
 					parser/extra_funcs/extra_funcs.c parser/extra_funcs/extra_funcs_utils.c \
-					render/render/render.c \
-					render/texture/uv_map.c \
+					render/render/render.c render/render/three_renders.c\
+					render/texture/uv_map.c render/texture/uv_obj.c\
 					render/bump_map/bm_sphere.c render/bump_map/bm_plane.c \
 					render/obj/cylinder.c render/obj/caps.c render/obj/cone.c render/obj/intersections.c render/obj/viewport.c \
 					render/illumination/illumination.c render/illumination/specular.c \
-					render/calcs/calcs.c render/calcs/calcs_utils.c render/calcs/materials.c render/calcs/materials_utils.c render/calcs/quadratic.c \
+					render/calcs/calcs.c render/calcs/calcs_utils.c render/calcs/calcs_utils2.c render/calcs/materials.c render/calcs/materials_utils.c render/calcs/quadratic.c \
 					render/init/init_image.c render/init/init_rays.c render/init/init_rays_utils.c render/init/init_general.c \
-					render/init/init_obj.c render/init/init_obj_utils.c render/init/init_side.c render/init/init_materials.c \
+					render/init/init_obj.c render/init/init_obj_utils.c render/init/init_side.c render/init/init_side_utils.c render/init/init_materials.c \
 					render/color/color.c render/color/checker_board.c \
 					render/free/free.c \
 					console/console/console_init_extra.c console/console/console_init_pos_axis.c console/console/console_init_general.c \
-					console/console/console_run.c console/console/console_click.c console/console/console_click_obj.c console/console/console_icons.c \
+					console/console/console_run.c console/console/console_click.c console/console/console_click_obj.c console/console/console_click_obj_utils.c console/console/console_icons.c \
 					console/console/console_labels.c console/console/console_labels_obj.c console/console/console_labels_set_obj.c console/console/console_labels_set.c \
 					console/console/console_helpers.c \
 					console/render/render.c console/render/init_rays.c console/console/console_click_utils.c console/console/console_click_cam.c \
 					console/console/console_click_alight.c console/console/console_click_slight.c\
 					debug/debug_info.c \
-					window/mlx.c
+					window/mlx.c window/mlx_utils.c
 SRCS			:= $(addprefix $(SRC_D), $(FILES))
 
 OBJS			:= $(patsubst $(SRC_D)%.c,$(OBJ_D)%.o,$(SRCS))

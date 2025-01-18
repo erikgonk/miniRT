@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_side.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 12:39:47 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/13 15:23:35 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/18 17:21:42 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,18 +55,6 @@ void	set_box_local_axes(t_obj *box, t_v3 raw_z)
 	box->axis_x = aux;
 	box->axis_y = cross(box->axis_z, box->axis_x);
 	box->axis_y = normalize(box->axis_y);
-}
-
-t_frame	set_frame(t_v3 axis)
-{
-	t_frame	frame;
-
-	frame.forward = normalize(axis);
-	frame.right = normalize(cross(vdefine(1, 0, 0), frame.forward));
-	if (vlength(frame.right) < EPSILON)
-		frame.right = normalize(cross(vdefine(1, 0, 0), frame.forward));
-	frame.up = normalize(cross(frame.forward, frame.right));
-	return (frame);
 }
 
 void	set_some_sides(t_obj **side, t_obj *cube, t_v3 half_size)

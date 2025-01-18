@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 16:58:38 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/16 16:00:28 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/18 17:35:47 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,28 +32,18 @@ void	fill_image(t_data *data, uint32_t *pixels, uint32_t **img_rgb)
 	}
 }
 
-void	swap_mgod(t_data *data)
+bool	press_keyhook_normi(t_data *data, mlx_key_data_t keydata, bool mode)
 {
-	pthread_mutex_lock(data->m_god);
-	data->god = !data->god;
-	pthread_mutex_unlock(data->m_god);
-}
-
-static void	set_last(t_data *data)
-{
-	if (data->last_render == ONE)
-		data->render_sel = render_one;
-	else if (data->last_render == FAST)
+	if (keydata.key == MLX_KEY_C)
+	{
+		mode = true;
+		if (data->god)
+			swap_mgod(data);
 		data->render_sel = render_fast;
-	else if (data->last_render == UPDATE)
-		data->render_sel = update_render;
-}
-
-static void	swap_flag(t_data *data)
-{
-	pthread_mutex_lock(data->m_trace);
-	data->trace_flag = !data->trace_flag;
-	pthread_mutex_unlock(data->m_trace);
+	}
+	else
+		set_last(data);
+	return (mode);
 }
 
 void	press_keyhook(t_data *data, mlx_key_data_t keydata)
@@ -63,7 +53,7 @@ void	press_keyhook(t_data *data, mlx_key_data_t keydata)
 	if (keydata.key == MLX_KEY_SPACE)
 	{
 		mode = !mode;
-		swap_flag(data);
+		swap_flag_mlx(data);
 		if (data->img_last)
 			free_image_all(data, data->img_last);
 		data->img_last = NULL;
@@ -77,14 +67,7 @@ void	press_keyhook(t_data *data, mlx_key_data_t keydata)
 			data->render_sel = update_render;
 	}
 	else if (keydata.key == MLX_KEY_C)
-	{
-		mode = true;
-		if (data->god)
-			swap_mgod(data);
-		data->render_sel = render_fast;
-	}
-	else
-		set_last(data);
+		mode = press_keyhook_normi(data, keydata, mode);
 }
 
 void	my_keyhook(mlx_key_data_t keydata, void *param)

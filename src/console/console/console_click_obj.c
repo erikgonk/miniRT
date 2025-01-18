@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   console_click_obj.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 13:23:37 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/18 14:59:43 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/18 18:03:37 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,12 @@ bool	obj_click_move(t_data *data, t_obj *obj, t_btn_name clicked)
 		slight = slight->next;
 	if (clicked == left)
 	{
-		if (obj->prev)
-			data->console.last_item = obj->prev;
-		else
-		{
-			if (slight)
-			{
-				data->console.last_type = SLIGHT;
-				data->console.last_item = slight;
-			}
-			else
-				data->console.last_type = ALIGHT;
-		}
-		return (true);
+		if (obj_click_move_normi(data, obj, slight))
+			return (true);
 	}
 	else if (clicked == right)
 	{
-		if (obj->next && obj->next->type == SIDE || obj->next->type == CAP)
+		if (obj->next && (obj->next->type == SIDE || obj->next->type == CAP))
 			return (false);
 		else if (obj->next)
 		{

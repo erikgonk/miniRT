@@ -6,7 +6,7 @@
 /*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/16 10:48:45 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/18 17:18:26 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,17 +107,6 @@ t_rgb	path_trace(t_ray *ray, t_data *data, int depth)
 	return (dirb[2]);
 }
 
-uint32_t	texture_weight(t_rgb c1, t_rgb c2)
-{
-	c1.r *= 0.9;
-	c1.g *= 0.9;
-	c1.b *= 0.9;
-	c2.r *= 0.1;
-	c2.g *= 0.1;
-	c2.b *= 0.1;
-	return (get_colour(color_add(c1, c2)));
-}
-
 uint32_t	trace_ray(t_ray ray, t_data *data)
 {
 	double	t_min;
@@ -135,7 +124,7 @@ uint32_t	trace_ray(t_ray ray, t_data *data)
 	if (closest_obj->material.texture)
 		uv = calculate_uv(ray.point, closest_obj);
 	if (uv.u < 0 || uv.v < 0)
-			return (get_colour(c_global));
+		return (get_colour(c_global));
 	if (closest_obj->material.texture && closest_obj->material.bm_texture)
 		return (texture_weight(c_global, (texture_color(closest_obj, \
 								calculate_uv(ray.point, closest_obj)))));

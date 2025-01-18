@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/17 11:18:41 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/18 17:36:49 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,11 @@ t_rgb					apply_self_emission(t_obj *obj, t_rgb base_color);
 void					compute_emissive_light(t_obj *emitter, t_ray *ray, \
 								t_rgb *color, t_data *data);
 void					iter_lights(t_data *data, t_obj *obj, t_ray *ray, \
-					t_direct d);
+										t_direct d);
 bool					pt_checks(t_obj *closest, t_ray *ray, t_rgb *dirb);
+
+//		calcs_utils2
+uint32_t				texture_weight(t_rgb c1, t_rgb c2);
 
 //		materials
 t_rgb					glass_ray(t_ray *ray, t_obj *closest, t_data *data, \
@@ -151,8 +154,18 @@ void					init_set_prev(t_data *data);
 
 //		init_sides
 void					init_sides(t_data *data, t_obj *obj);
+void					set_sides_xy(t_obj **sides, t_obj *cube);
+void					set_box_local_axes(t_obj *box, t_v3 raw_z);
+void					set_some_sides(t_obj **side, t_obj *cube, t_v3 half_size);
+void					create_side(t_obj **side, t_obj *cube);
+
+
+//		init_sides_utils
+t_frame					set_frame(t_v3 axis);
+
 
 //		init_rays
+t_ray					**init_raysc(t_data *data, t_cam *cam, t_vp *vp);
 void					init_single_ray(t_ray *ray, t_vp *vp, t_cam *camera,
 							double *uv);
 t_ray					*init_ray_row(t_data *data, t_cam *camera, t_vp *vp,
@@ -204,11 +217,18 @@ bool					hit_pl(t_data *data, t_ray *ray, t_obj *plane,
 //		viewport
 t_v3					calculate_up(t_v3 forward, t_v3 right);
 t_v3					calculate_right(t_v3 forward);
-
 t_vp					*init_viewport(t_cam *camera, int width, int height);
-//		texture
+
+//		uv_map (texture)
 t_rgb					texture_color(t_obj *obj, t_v2 uv);
 t_v2					calculate_uv(t_v3 point, t_obj *obj);
+
+//		uv_obj (texture)
+t_v2					sphere_uv(t_v3 point, t_obj *sphere);
+t_v2					side_uv(t_v3 point, t_obj *plane);
+t_v2					plane_uv(t_v3 point, t_obj *plane);
+t_v2					cylinder_uv(t_v3 point, t_obj *cyl);
+t_v2					cone_uv(t_v3 point, t_obj *cone);
 
 //		bump map sphere
 void					get_sphere_normal(t_obj *sphere, t_ray *ray);
@@ -217,8 +237,18 @@ void					get_sphere_normal(t_obj *sphere, t_ray *ray);
 void					get_plane_normal(t_obj *plane, t_v3 hit_point,
 							t_ray *ray);
 
+//		three_renders
+void					render_one(void *param);
+void					render_fast(void *param);
+void					update_render(void *param);
+
 //		render
 uint32_t				**render(t_data *data, int mode);
+uint32_t				**console_render(t_data *data);
+void					c_render(t_data *data, t_ray **rays, uint32_t **image);
+void					*cprocess_rows(void *arg);
+uint32_t				trace_fast(t_ray ray, t_data *data);
+
 
 //		free
 void					free_rays_all(t_data *data, t_ray **rays);

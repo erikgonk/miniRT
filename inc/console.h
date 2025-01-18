@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   console.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 18:12:24 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/18 14:08:14 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/18 17:56:51 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,9 @@ void		rows_4to6_right(t_data *data);
 
 //		init_extra
 void		rows_7(t_data *data);
+void		rows_8(t_data *data);
+void		rows_9(t_data *data);
+
 
 //		helpers
 void		del_image(void *content);
@@ -152,10 +155,11 @@ void		cylinder_set_labels(t_data *data, t_img_btn *img_btn, int top);
 void		cube_set_labels(t_data *data, t_img_btn *img_btn, int top);
 void		cone_set_labels(t_data *data, t_img_btn *img_btn, int top);
 
-//		write_labels
+//		write_labels_set
 void		write_cam_labels(t_data *data, t_img_btn *img_btn);
 void		write_alight_labels(t_data *data, t_img_btn *img_btn);
 void		write_slight_labels(t_data *data, t_img_btn *img_btn);
+void		write_obj_labels(t_data *data, t_img_btn *img_btn);
 
 //		icons
 void		put_imgarrows(t_data *data, int top);
@@ -175,6 +179,9 @@ void		click_cy_co(t_data *data, t_obj *obj, t_btn_name clicked);
 void		click_sphere(t_data *data, t_obj *obj, t_btn_name clicked);
 bool		obj_click_move(t_data *data, t_obj *obj, t_btn_name clicked);
 
+//		click_obj_utils
+bool		obj_click_move_normi(t_data *data, t_obj *obj, t_slight *slight);
+
 //		click_cam
 void		console_click_axis(t_data *data, t_btn_name clicked);
 void		console_click_pos(t_data *data, t_btn_name clicked);
@@ -187,7 +194,8 @@ void		click_alight_console(t_data *data, t_btn_name clicked);
 //		click_slight
 bool		slight_click_move(t_data *data, t_slight *slight, \
 											t_btn_name clicked);
-void		click_slight_console(t_data *data, t_btn_name clicked);
+void	click_slight_console(t_data *data, t_slight *slight, \
+										t_btn_name clicked);
 
 //		click_utils
 int			ft_objremove(t_obj **lst, t_obj *node);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   console_init_extra.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/18 13:51:41 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/18 17:06:44 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

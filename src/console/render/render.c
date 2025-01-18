@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 01:56:28 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/17 09:17:46 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/18 18:04:06 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,33 @@ uint32_t	trace_fast(t_ray ray, t_data *data)
 	return (get_colour(color_add(alight, closest_obj->a_rgb)));
 }
 
+void	cprocess_rows_normi(t_thread_data *data, int idyx[3], uint32_t *color)
+{
+	int		i;
+	int		j;
+
+	color = trace_fast(data->rays[idyx[1]][idyx[2]], data->data);
+	i = 0;
+	while (i < 10)
+	{
+		j = 0;
+		while (j < 10)
+		{
+			if ((idyx[1] + i) < data->data->y
+				&& (idyx[2] + j) < data->data->x)
+			{
+				data->image[idyx[1] + i][idyx[2] + j] = color;
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
 void	*cprocess_rows(void *arg)
 {
 	t_thread_data	*data;
 	int				idyx[3];
-	int				i;
-	int				j;
 	uint32_t		color;
 
 	data = (t_thread_data *)arg;
@@ -47,24 +68,7 @@ void	*cprocess_rows(void *arg)
 		while (idyx[2] < data->data->x)
 		{
 			if ((idyx[1] % 10) == 0 && (idyx[2] % 10) == 0)
-			{
-				color = trace_fast(data->rays[idyx[1]][idyx[2]], data->data);
-				i = 0;
-				while (i < 10)
-				{
-					j = 0;
-					while (j < 10)
-					{
-						if ((idyx[1] + i) < data->data->y
-							&& (idyx[2] + j) < data->data->x)
-						{
-							data->image[idyx[1] + i][idyx[2] + j] = color;
-						}
-						j++;
-					}
-					i++;
-				}
-			}
+				cprocess_rows_normi(data, idyx, &color);
 			idyx[2]++;
 		}
 		idyx[1] += NUM_THREADS;

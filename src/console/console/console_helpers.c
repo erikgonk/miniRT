@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   console_util.c                                     :+:      :+:    :+:   */
+/*   console_helpers.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 19:41:14 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/17 19:52:22 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/18 17:58:33 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-mlx_t *g_mlx = NULL;
+mlx_t		*g_mlx = NULL;
 
 void	del_image(void *content)
 {
