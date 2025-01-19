@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 18:12:24 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/19 12:00:08 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/19 13:25:16 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ typedef struct s_img_btn
 	char			row8[200];
 	char			row9[200];
 	mlx_image_t		*labels[50];
-	mlx_texture_t	*iconst[4];
+	mlx_texture_t	*iconst[14];
 }					t_img_btn;
 
 //		console_run
@@ -166,7 +166,7 @@ void				write_slight_labels(t_data *data, t_img_btn *img_btn);
 void				write_obj_labels(t_data *data, t_img_btn *img_btn);
 
 //		icons
-void				put_imgarrows(t_data *data);
+void				put_img_arrows(t_data *data);
 void				set_resize_buton_images(t_data *data, t_img_btn *img_btn);
 void				fill_image_list(t_data *data, t_img_btn *img_btn);
 int					count_labels(t_data *data);

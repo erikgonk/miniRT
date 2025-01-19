@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/19 11:59:01 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/19 13:20:03 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ typedef struct s_console
 {
 	mlx_image_t			*background;
 	t_list				*btn_list;
-	mlx_image_t			*icons[4];
+	mlx_image_t			*icons[14];
 	t_list				*click_lst;
 	void				*last_item;
 	t_item_type			last_type;
