@@ -6,61 +6,11 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:43:07 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/19 13:36:52 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/19 15:56:27 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
-int	count_arrows(t_data *data)
-{
-	t_obj	*obj;
-
-	if (data->console.last_type == CAM)
-		return (11);
-	else if (data->console.last_type == ALIGHT)
-		return (1);
-	else if (data->console.last_type == SLIGHT)
-		return (5);
-	else if (data->console.last_type == OBJ)
-	{
-		obj = data->console.last_item;
-		if (obj->type == PL)
-			return (8);
-		else if (obj->type == SP)
-			return (5);
-		else if (obj->type == CY || obj->type == CO)
-			return (10);
-		else if (obj->type == CU)
-			return (11);
-	}
-	return (0);
-}
-
-int	count_labels(t_data *data)
-{
-	t_obj	*obj;
-
-	obj = data->console.last_item;
-	if (data->console.last_type == CAM)
-		return (13);
-	else if (data->console.last_type == ALIGHT)
-		return (3);
-	else if (data->console.last_type == SLIGHT)
-		return (7);
-	else if (data->console.last_type == OBJ)
-	{
-		if (obj->type == PL)
-			return (9);
-		else if (obj->type == SP)
-			return (7);
-		else if (obj->type == CY || obj->type == CO)
-			return (12);
-		else if (obj->type == CU)
-			return (13);
-	}
-	return (0);
-}
 
 void	put_img_arrows(t_data *data)
 {
@@ -90,6 +40,26 @@ void	put_img_arrows(t_data *data)
 	}
 }
 
+void	set_resize_buton_images_normi(t_data *data, mlx_image_t **icons)
+{
+	mlx_resize_image(icons[0], icons[0]->width / 1.5, icons[0]->height / 1.5);
+	mlx_resize_image(icons[1], icons[1]->width / 1.5, icons[1]->height / 1.5);
+	mlx_image_to_window(data->mlx, icons[0], data->x - BG_WITH + 30, 0);
+	mlx_image_to_window(data->mlx, icons[1], data->x - icons[1]->width - 30, 0);
+	mlx_resize_image(icons[2], icons[2]->width / 3, icons[2]->height / 3);
+	mlx_resize_image(icons[3], icons[3]->width / 3, icons[3]->height / 3);
+	mlx_resize_image(icons[4], icons[4]->width / 3, icons[4]->height / 3);
+	mlx_resize_image(icons[5], icons[5]->width / 3, icons[5]->height / 3);
+	mlx_resize_image(icons[6], icons[6]->width / 3, icons[6]->height / 3);
+	mlx_resize_image(icons[7], icons[7]->width / 3, icons[7]->height / 3);
+	mlx_resize_image(icons[8], icons[8]->width / 3, icons[8]->height / 3);
+	mlx_resize_image(icons[9], icons[9]->width / 3, icons[9]->height / 3);
+	mlx_resize_image(icons[10], icons[10]->width / 3, icons[10]->height / 3);
+	mlx_resize_image(icons[11], icons[11]->width / 3, icons[11]->height / 3);
+	mlx_resize_image(icons[12], icons[12]->width / 3, icons[12]->height / 3);
+	mlx_resize_image(icons[13], icons[13]->width / 3, icons[13]->height / 3);
+}
+
 void	set_resize_buton_images(t_data *data, t_img_btn *img_btn)
 {
 	mlx_image_t	**icons;
@@ -113,22 +83,7 @@ void	set_resize_buton_images(t_data *data, t_img_btn *img_btn)
 	i = -1;
 	while (++i < 14)
 		icons[i] = mlx_texture_to_image(data->mlx, img_btn->iconst[i]);
-	mlx_resize_image(icons[0], icons[0]->width / 1.5, icons[0]->height / 1.5);
-	mlx_resize_image(icons[1], icons[1]->width / 1.5, icons[1]->height / 1.5);
-	mlx_image_to_window(data->mlx, icons[0], data->x - BG_WITH + 30, 0);
-	mlx_image_to_window(data->mlx, icons[1], data->x - icons[1]->width - 30, 0);
-	mlx_resize_image(icons[2], icons[2]->width / 3, icons[2]->height / 3);
-	mlx_resize_image(icons[3], icons[3]->width / 3, icons[3]->height / 3);
-	mlx_resize_image(icons[4], icons[4]->width / 3, icons[4]->height / 3);
-	mlx_resize_image(icons[5], icons[5]->width / 3, icons[5]->height / 3);
-	mlx_resize_image(icons[6], icons[6]->width / 3, icons[6]->height / 3);
-	mlx_resize_image(icons[7], icons[7]->width / 3, icons[7]->height / 3);
-	mlx_resize_image(icons[8], icons[8]->width / 3, icons[8]->height / 3);
-	mlx_resize_image(icons[9], icons[9]->width / 3, icons[9]->height / 3);
-	mlx_resize_image(icons[10], icons[10]->width / 3, icons[10]->height / 3);
-	mlx_resize_image(icons[11], icons[11]->width / 3, icons[11]->height / 3);
-	mlx_resize_image(icons[12], icons[12]->width / 3, icons[12]->height / 3);
-	mlx_resize_image(icons[13], icons[13]->width / 3, icons[13]->height / 3);
+	set_resize_buton_images_normi(data, icons);
 }
 
 void	fill_image_list(t_data *data, t_img_btn *img_btn)
@@ -146,7 +101,8 @@ void	fill_image_list(t_data *data, t_img_btn *img_btn)
 	i = -1;
 	while (++i < 4)
 	{
-		ft_lstadd_back(&data->console.btn_list, ft_lstnew(data->console.icons[i]));
+		ft_lstadd_back(&data->console.btn_list, \
+					ft_lstnew(data->console.icons[i]));
 		if (i < 4)
 			mlx_set_instance_depth(&data->console.icons[i]->instances[0], 3);
 	}

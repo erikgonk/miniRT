@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 17:00:06 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/19 14:09:59 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/19 15:27:00 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,37 +54,6 @@ void	set_labels(t_data *data, t_img_btn *img_btn, int top)
 		set_slight_labels(data, img_btn, top);
 	else if (data->console.last_type == OBJ)
 		set_obj_labels(data, img_btn, top);
-}
-
-void	put_img_buttons(t_data *data)
-{
-	t_obj		*obj;
-	mlx_image_t	**icons;
-	int			i;
-	int			k;
-
-	obj = data->console.last_item;
-	icons = data->console.icons;
-	i = 3;
-	if (data->console.last_type != OBJ)
-		return ;
-	while (obj->type == SP && ++i < 9)
-	{
-		k = i;
-		if (obj->material.m_type == MR && i == 5)
-			k += 5;
-		else if (obj->material.m_type == MT && i == 6)
-			k += 5;
-		else if (obj->material.m_type == GL && i == 7)
-			k += 5;
-		else if (obj->material.m_type == EM && i == 8)
-			k += 5;
-		else if ((obj->material.m_type < 0 || obj->material.m_type > 4  || obj->material.m_type == 3) && i == 4)
-			k = 9;
-		mlx_image_to_window(data->mlx, icons[k], data->x - (BG_WITH - 20) + (58 * (i - 4)), 98 + 180);
-		ft_lstadd_back(&data->console.btn_list, ft_lstnew(data->console.icons[k]));
-		mlx_set_instance_depth(&data->console.icons[k]->instances[0], 3);
-	}
 }
 
 void	set_all_buttons(t_data *data)

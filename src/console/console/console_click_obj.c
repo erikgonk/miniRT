@@ -3,39 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   console_click_obj.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 13:23:37 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/18 18:07:37 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/19 15:53:57 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
-bool	obj_click_move(t_data *data, t_obj *obj, t_btn_name clicked)
-{
-	t_slight	*slight;
-
-	slight = data->s_light;
-	while (slight->next)
-		slight = slight->next;
-	if (clicked == left)
-	{
-		if (obj_click_move_normi(data, obj, slight))
-			return (true);
-	}
-	else if (clicked == right)
-	{
-		if (obj->next && (obj->next->type == SIDE || obj->next->type == CAP))
-			return (false);
-		else if (obj->next)
-		{
-			data->console.last_item = obj->next;
-			return (true);
-		}
-	}
-	return (false);
-}
 
 void	click_sphere(t_data *data, t_obj *obj, t_btn_name clicked)
 {
@@ -76,14 +51,36 @@ void	click_cube(t_data *data, t_obj *obj, t_btn_name clicked)
 		obj->cube_size.z -= OBJPLUS;
 }
 
+void	click_material(t_obj *obj, t_btn_name clicked)
+{
+	if (clicked == btn_df)
+		obj->material.m_type = -1;
+	else if (clicked == btn_mr)
+		obj->material.m_type = MR;
+	else if (clicked == btn_mt)
+		obj->material.m_type = MT;
+	else if (clicked == btn_gl)
+		obj->material.m_type = GL;
+	else if (clicked == btn_em)
+	{
+		obj->material.m_type = EM;
+		obj->material.emision = 0.85;
+		obj->material.self_emision = obj->material.emision * 2.5;
+	}
+	if (clicked == btn_gl || clicked == btn_mr || clicked == btn_em)
+	{
+		obj->material.texture = NULL;
+		obj->material.bm_texture = NULL;
+	}
+	if (obj->rgb.r == 0)
+		obj->rgb = rgbdefine(100, 100, 100);
+}
+
 void	click_type(t_data *data, t_obj *obj, t_btn_name clicked, int type)
 {
 	if (type == SP)
-	{
 		click_sphere(data, obj, clicked);
-		return ;
-	}
-	if (clicked == axis_xmin)
+	else if (clicked == axis_xmin)
 		obj->axis.x -= OBJAXISP;
 	else if (clicked == axis_xmax)
 		obj->axis.x += OBJAXISP;
@@ -99,4 +96,5 @@ void	click_type(t_data *data, t_obj *obj, t_btn_name clicked, int type)
 		click_cy_co(data, obj, clicked);
 	else if (type == CU)
 		click_cube(data, obj, clicked);
+	click_material(obj, clicked);
 }

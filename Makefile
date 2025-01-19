@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+         #
+#    By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/19 12:51:14 by shurtado          #+#    #+#              #
-#    Updated: 2025/01/18 18:05:40 by erigonza         ###   ########.fr        #
+#    Updated: 2025/01/19 15:54:33 by shurtado         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,9 +36,10 @@ FILES			:= main.c \
 					render/color/color.c render/color/checker_board.c \
 					render/free/free.c \
 					console/console/console_init_extra.c console/console/console_init_pos_axis.c console/console/console_init_general.c \
-					console/console/console_run.c console/console/console_click.c console/console/console_click_obj.c console/console/console_click_obj_utils.c console/console/console_icons.c \
+					console/console/console_run.c console/console/console_click.c console/console/console_click_obj.c console/console/console_click_obj_utils.c \
+					console/console/console_icons.c console/console/console_icon_count.c\
 					console/console/console_labels.c console/console/console_labels_obj.c console/console/console_labels_set_obj.c console/console/console_labels_set.c \
-					console/console/console_helpers.c \
+					console/console/console_helpers.c console/console/console_helpers2.c \
 					console/render/render.c console/render/init_rays.c console/console/console_click_utils.c console/console/console_click_cam.c \
 					console/console/console_click_alight.c console/console/console_click_slight.c\
 					debug/debug_info.c \
@@ -49,7 +50,7 @@ OBJS			:= $(patsubst $(SRC_D)%.c,$(OBJ_D)%.o,$(SRCS))
 
 CC				:= cc
 IFLAGS			:= -I$(INC_D) -I$(VCT_D) -I$(LIBFT_D)inc
-CFLAGS			:= -g -Ofast -Wall -Wextra -Werror #-fsanitize=address 
+CFLAGS			:= -g -Ofast -Wall -Wextra -Werror #-fsanitize=address
 
 LIB				:= lib/
 

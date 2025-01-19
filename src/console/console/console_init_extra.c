@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   console_init_extra.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/18 17:06:44 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/19 15:32:42 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,28 @@ void	rows_9(t_data *data)
 	btn->h = data->console.icons[3]->height;
 	btn->w = data->console.icons[3]->width;
 	ft_lstadd_front(&data->console.click_lst, ft_lstnew(btn));
+}
+
+void	row_material(t_data *data, int click)
+{
+	int		i;
+	int		k;
+	t_obj	*obj;
+	t_btn	*btn;
+
+	i = 3;
+	obj = data->console.last_item;
+	if (data->console.last_type != OBJ)
+		return ;
+	while (++i < 9)
+	{
+		k = console_get_k(obj, i);
+		btn = calloc(1, sizeof(t_btn));
+		btn->name = click++;
+		btn->x = data->console.icons[k]->instances[0].x;
+		btn->y = data->console.icons[k]->instances[0].y;
+		btn->h = data->console.icons[k]->height;
+		btn->w = data->console.icons[k]->width;
+		ft_lstadd_front(&data->console.click_lst, ft_lstnew(btn));
+	}
 }

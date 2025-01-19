@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/18 14:56:50 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/19 15:32:36 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,5 @@ void	init_console(t_data *data)
 	rows_7(data);
 	rows_8(data);
 	rows_9(data);
+	row_material(data, btn_df);
 }

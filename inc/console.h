@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 18:12:24 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/19 13:25:16 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/19 15:56:13 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,38 +42,38 @@
 typedef enum btn_name
 {
 	none = 0,
-	left = 1,
-	right = 2,
-	row1l = 3,
-	row1r = 4,
-	row2l = 5,
-	row2r = 6,
+	left,
+	right,
+	row1l,
+	row1r,
+	row2l,
+	row2r,
 	row3l = 8,
-	row3r = 9,
-	row4l = 10,
-	row4r = 11,
-	row5l = 12,
-	row5r = 13,
-	row6l = 14,
-	row6r = 15,
-	row7l = 16,
-	row7r = 17,
-	row8l = 18,
-	row8r = 19,
-	row9l = 20,
-	row9r = 21,
+	row3r,
+	row4l,
+	row4r,
+	row5l,
+	row5r,
+	row6l,
+	row6r,
+	row7l,
+	row7r,
+	row8l,
+	row8r,
+	row9l,
+	row9r,
 	pos_xmin = 3,
 	pos_xmax = 4,
 	pos_ymin = 5,
 	pos_ymax = 6,
 	pos_zmin = 8,
 	pos_zmax = 9,
-	axis_xmin = 10,
-	axis_xmax = 11,
-	axis_ymin = 12,
-	axis_ymax = 13,
-	axis_zmin = 14,
-	axis_zmax = 15,
+	axis_xmin,
+	axis_xmax,
+	axis_ymin,
+	axis_ymax,
+	axis_zmin,
+	axis_zmax,
 	fov_min = row7l,
 	fov_max = row7r,
 	size_max = 0,
@@ -81,7 +81,12 @@ typedef enum btn_name
 	height_max = 0,
 	height_min = 0,
 	br_min = 3,
-	br_max = 4
+	br_max,
+	btn_df = 22,
+	btn_mr,
+	btn_mt,
+	btn_gl,
+	btn_em
 }					t_btn_name;
 
 typedef struct s_btn
@@ -129,6 +134,7 @@ void				rows_4to6_right(t_data *data);
 void				rows_7(t_data *data);
 void				rows_8(t_data *data);
 void				rows_9(t_data *data);
+void				row_material(t_data *data, int click);
 
 //		helpers
 mlx_image_t			*create_button(mlx_t *mlx, const char *label, int x, int y);
@@ -167,8 +173,12 @@ void				write_obj_labels(t_data *data, t_img_btn *img_btn);
 
 //		icons
 void				put_img_arrows(t_data *data);
+void				set_resize_buton_images_normi(t_data *data, \
+						mlx_image_t **icons);
 void				set_resize_buton_images(t_data *data, t_img_btn *img_btn);
 void				fill_image_list(t_data *data, t_img_btn *img_btn);
+
+//		icons_count
 int					count_labels(t_data *data);
 int					count_arrows(t_data *data);
 
@@ -182,10 +192,10 @@ void				click_type(t_data *data, t_obj *obj, t_btn_name clicked,
 void				click_cube(t_data *data, t_obj *obj, t_btn_name clicked);
 void				click_cy_co(t_data *data, t_obj *obj, t_btn_name clicked);
 void				click_sphere(t_data *data, t_obj *obj, t_btn_name clicked);
-bool				obj_click_move(t_data *data, t_obj *obj,
-						t_btn_name clicked);
 
 //		click_obj_utils
+bool				obj_click_move(t_data *data, t_obj *obj,
+						t_btn_name clicked);
 bool				obj_click_move_normi(t_data *data, t_obj *obj,
 						t_slight *slight);
 
@@ -209,5 +219,9 @@ int					ft_objremove(t_obj **lst, t_obj *node);
 void				free_after_click(t_data *data);
 t_btn_name			get_clicked_btn(t_data *data, int x, int y);
 t_slight			*get_prev(t_data *data, t_slight *slight);
+
+//		helpers2
+int					console_get_k(t_obj *obj, int i);
+void				put_img_buttons(t_data *data);
 
 #endif
