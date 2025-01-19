@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extra_funcs_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:02:22 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/18 17:51:37 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/19 16:57:03 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

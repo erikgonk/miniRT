@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:18:36 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/18 18:06:37 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/19 16:37:40 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@ void	check_end(t_data *data, char *str, int i)
 
 void	check_params_acl(t_data *data, t_cam *cam)
 {
-	if (!data->a_light->exist && !data->s_light)
+	if (!data->a_light && !data->s_light)
 		exit(er(data, "error: check_params_acl: light needed", NULL));
+	if (!data->a_light)
+		data->a_light = calloc(1, sizeof(t_alight));
 	if (!cam)
 		exit(er(data, "error: check_params_acl: ACL left", NULL));
 	if (cam->axis.x < -1 || cam->axis.x > 1)

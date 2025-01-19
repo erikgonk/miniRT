@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 12:17:22 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/18 14:49:56 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/19 18:28:52 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	plane_labels(t_data *data, t_img_btn *img_btn)
 	t_v3	axis;
 	t_obj	*obj;
 
-	obj = data->console.last_item;
+	obj = data->console->last_item;
 	pos = obj->pos;
 	axis = obj->axis;
 	size = sizeof(img_btn->row1);
@@ -37,7 +37,7 @@ void	sphere_labels(t_data *data, t_img_btn *img_btn)
 	t_v3	pos;
 	t_obj	*obj;
 
-	obj = data->console.last_item;
+	obj = data->console->last_item;
 	pos = obj->pos;
 	size = sizeof(img_btn->row1);
 	snprintf(img_btn->row1, size, "x           %.0f", pos.x);
@@ -53,7 +53,7 @@ void	cylinder_labels(t_data *data, t_img_btn *img_btn)
 	t_v3	axis;
 	t_obj	*obj;
 
-	obj = data->console.last_item;
+	obj = data->console->last_item;
 	pos = obj->pos;
 	axis = obj->axis;
 	size = sizeof(img_btn->row1);
@@ -74,7 +74,7 @@ void	cube_labels(t_data *data, t_img_btn *img_btn)
 	t_v3	axis;
 	t_obj	*obj;
 
-	obj = data->console.last_item;
+	obj = data->console->last_item;
 	pos = obj->pos;
 	axis = obj->axis;
 	size = sizeof(img_btn->row1);
@@ -96,7 +96,7 @@ void	cone_labels(t_data *data, t_img_btn *img_btn)
 	t_v3	axis;
 	t_obj	*obj;
 
-	obj = data->console.last_item;
+	obj = data->console->last_item;
 	pos = obj->pos;
 	axis = obj->axis;
 	size = sizeof(img_btn->row1);

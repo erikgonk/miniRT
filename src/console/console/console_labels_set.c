@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 20:05:19 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/19 11:33:02 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/19 18:28:52 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	write_slight_labels(t_data *data, t_img_btn *img_btn)
 	float		br;
 	t_slight	*slight;
 
-	slight = data->console.last_item;
+	slight = data->console->last_item;
 	br = slight->br;
 	pos = slight->pos;
 	size = sizeof(img_btn->row1);
@@ -63,7 +63,7 @@ void	write_obj_labels(t_data *data, t_img_btn *img_btn)
 {
 	t_obj	*obj;
 
-	obj = data->console.last_item;
+	obj = data->console->last_item;
 	if (obj->type == PL)
 		plane_labels(data, img_btn);
 	else if (obj->type == SP)

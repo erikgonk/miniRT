@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   console_click_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:49:18 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/18 18:08:41 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/19 18:28:30 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_btn_name	get_clicked_btn(t_data *data, int x, int y)
 	t_list	*click;
 	t_btn	*btn;
 
-	click = data->console.click_lst;
+	click = data->console->click_lst;
 	while (click)
 	{
 		btn = click->content;

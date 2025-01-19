@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 15:27:23 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/19 15:27:42 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/19 18:29:04 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,18 @@ void	put_img_buttons(t_data *data)
 	int			i;
 	int			k;
 
-	obj = data->console.last_item;
-	icons = data->console.icons;
+	obj = data->console->last_item;
+	icons = data->console->icons;
 	i = 3;
-	if (data->console.last_type != OBJ)
+	if (data->console->last_type != OBJ)
 		return ;
 	while (++i < 9)
 	{
 		k = console_get_k(obj, i);
 		mlx_image_to_window(data->mlx, icons[k], data->x - \
 								(280) + (58 * (i - 4)), 465);
-		ft_lstadd_back(&data->console.btn_list, \
-						ft_lstnew(data->console.icons[k]));
-		mlx_set_instance_depth(&data->console.icons[k]->instances[0], 3);
+		ft_lstadd_back(&data->console->btn_list, \
+						ft_lstnew(data->console->icons[k]));
+		mlx_set_instance_depth(&data->console->icons[k]->instances[0], 3);
 	}
 }

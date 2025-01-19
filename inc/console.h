@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 18:12:24 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/19 15:56:13 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/19 17:02:02 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,7 @@ void				write_obj_labels(t_data *data, t_img_btn *img_btn);
 //		icons
 void				put_img_arrows(t_data *data);
 void				set_resize_buton_images_normi(t_data *data, \
-						mlx_image_t **icons);
+						mlx_image_t **icons, t_img_btn *img_btn);
 void				set_resize_buton_images(t_data *data, t_img_btn *img_btn);
 void				fill_image_list(t_data *data, t_img_btn *img_btn);
 

@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 09:59:06 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/19 11:42:46 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/19 18:29:04 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,11 @@ void	click_cam_console(t_data *data, t_btn_name clicked)
 	else if (clicked == right)
 	{
 		if (data->a_light->exist == 1)
-			data->console.last_type = ALIGHT;
+			data->console->last_type = ALIGHT;
 		else if (data->s_light)
 		{
-			data->console.last_type = SLIGHT;
-			data->console.last_item = data->s_light;
+			data->console->last_type = SLIGHT;
+			data->console->last_item = data->s_light;
 		}
 		run_console(data);
 		return ;

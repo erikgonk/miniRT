@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   console_click_slight.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 11:07:30 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/18 18:09:07 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/19 18:29:04 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 bool	slight_click_move_normi(t_data *data)
 {
-	if (data->console.last_item == data->s_light)
+	if (data->console->last_item == data->s_light)
 	{
-		data->console.last_item = NULL;
+		data->console->last_item = NULL;
 		if (data->a_light->exist)
-			data->console.last_type = ALIGHT;
+			data->console->last_type = ALIGHT;
 		else
-			data->console.last_type = CAM;
+			data->console->last_type = CAM;
 	}
 	else
-		data->console.last_item = get_prev(data, data->console.last_item);
+		data->console->last_item = get_prev(data, data->console->last_item);
 	return (true);
 }
 
@@ -35,14 +35,14 @@ bool	slight_click_move(t_data *data, t_slight *slight, t_btn_name clicked)
 	{
 		if (slight->next)
 		{
-			data->console.last_item = slight->next;
-			data->console.last_type = SLIGHT;
+			data->console->last_item = slight->next;
+			data->console->last_type = SLIGHT;
 			return (true);
 		}
 		else if (data->obj)
 		{
-			data->console.last_item = data->obj;
-			data->console.last_type = OBJ;
+			data->console->last_item = data->obj;
+			data->console->last_type = OBJ;
 			return (true);
 		}
 	}

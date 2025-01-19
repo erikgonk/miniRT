@@ -82,7 +82,7 @@ void	parse_tx(t_obj *obj, char **args, int i)
 	obj->material.texture = mlx_load_png(tmp);
 	free(tmp);
 	if (!obj->material.texture)
-		exit(er(obj->data, "error: parse_tx: texture not valid", NULL));
+		exit(er(obj->data, "error: parse_tx: bm not valid", NULL));
 	if (args[i + 2])
 		obj->material.m_type = type_extra_func(args[i + 2]);
 	if (obj->material.m_type == BM)
@@ -100,9 +100,10 @@ void	extra_functionalities(t_obj *obj, char *tmp)
 
 	init_materials(obj);
 	skip_colors(obj->data, tmp, &str);
-	args = ft_split(str, ' ');
 	if (str && (!str[0] || str[0] == '\n'))
 		return (free(str));
+	obj->data->args = ft_split(str, ' ');
+	args = obj->data->args;
 	obj->material.m_type = type_extra_func(args[0]);
 	if (obj->material.m_type == -1 || !str[1] || \
 			(obj->material.m_type < CB && str[2] && str[3]))

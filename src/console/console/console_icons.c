@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:43:07 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/19 15:56:27 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/19 18:28:14 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	put_img_arrows(t_data *data)
 	int			count;
 
 	margin = BG_WITH - 100;
-	icons = data->console.icons;
+	icons = data->console->icons;
 	i = -1;
 	count = count_arrows(data);
 	while (++i < count)
@@ -40,8 +40,14 @@ void	put_img_arrows(t_data *data)
 	}
 }
 
-void	set_resize_buton_images_normi(t_data *data, mlx_image_t **icons)
+void	set_resize_buton_images_normi(t_data *data, mlx_image_t **icons, \
+										t_img_btn *img_btn)
 {
+	int	i;
+
+	i = -1;
+	while (++i < 14)
+		icons[i] = mlx_texture_to_image(data->mlx, img_btn->iconst[i]);
 	mlx_resize_image(icons[0], icons[0]->width / 1.5, icons[0]->height / 1.5);
 	mlx_resize_image(icons[1], icons[1]->width / 1.5, icons[1]->height / 1.5);
 	mlx_image_to_window(data->mlx, icons[0], data->x - BG_WITH + 30, 0);
@@ -65,7 +71,8 @@ void	set_resize_buton_images(t_data *data, t_img_btn *img_btn)
 	mlx_image_t	**icons;
 	int			i;
 
-	icons = data->console.icons;
+	i = -1;
+	icons = data->console->icons;
 	img_btn->iconst[0] = mlx_load_png("./assets/consol/arrow_b_left.png");
 	img_btn->iconst[1] = mlx_load_png("./assets/consol/arrow_b_right.png");
 	img_btn->iconst[2] = mlx_load_png("./assets/consol/arrow_s_left_blue.png");
@@ -80,10 +87,10 @@ void	set_resize_buton_images(t_data *data, t_img_btn *img_btn)
 	img_btn->iconst[11] = mlx_load_png("./assets/consol/MT_SELECTED.png");
 	img_btn->iconst[12] = mlx_load_png("./assets/consol/GL_SELECTED.png");
 	img_btn->iconst[13] = mlx_load_png("./assets/consol/EM_SELECTED.png");
-	i = -1;
 	while (++i < 14)
-		icons[i] = mlx_texture_to_image(data->mlx, img_btn->iconst[i]);
-	set_resize_buton_images_normi(data, icons);
+		if (!img_btn->iconst[i])
+			exit(er(data, "error: set_resize_buton_images: !textura", NULL));
+	set_resize_buton_images_normi(data, icons, img_btn);
 }
 
 void	fill_image_list(t_data *data, t_img_btn *img_btn)
@@ -95,15 +102,15 @@ void	fill_image_list(t_data *data, t_img_btn *img_btn)
 	i = -1;
 	while (++i < count)
 	{
-		ft_lstadd_back(&data->console.btn_list, ft_lstnew(img_btn->labels[i]));
+		ft_lstadd_back(&data->console->btn_list, ft_lstnew(img_btn->labels[i]));
 		mlx_set_instance_depth(&img_btn->labels[i]->instances[0], 4);
 	}
 	i = -1;
 	while (++i < 4)
 	{
-		ft_lstadd_back(&data->console.btn_list, \
-					ft_lstnew(data->console.icons[i]));
+		ft_lstadd_back(&data->console->btn_list, \
+					ft_lstnew(data->console->icons[i]));
 		if (i < 4)
-			mlx_set_instance_depth(&data->console.icons[i]->instances[0], 3);
+			mlx_set_instance_depth(&data->console->icons[i]->instances[0], 3);
 	}
 }

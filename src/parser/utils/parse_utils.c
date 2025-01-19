@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:13:09 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/13 12:00:34 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/19 18:32:02 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ int	er(t_data *data, char *s, char *argv)
 	if (argv)
 		ft_printf(2, "\n%s", argv);
 	ft_printf(2, "%s", RESET);
+	free(data->m_trace);
+	free(data->m_god);
+	free(data->console);
 	free_willy_lst(data);
 	return (1);
 }

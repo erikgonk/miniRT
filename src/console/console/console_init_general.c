@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/19 15:32:36 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/19 18:28:52 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	click_obj_console(t_data *data, t_btn_name clicked)
 {
 	t_obj	*obj;
 
-	obj = data->console.last_item;
+	obj = data->console->last_item;
 	if (obj_click_move(data, obj, clicked))
 	{
 		run_console(data);

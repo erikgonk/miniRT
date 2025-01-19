@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:48:14 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/19 13:20:03 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/19 18:26:05 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,7 @@ typedef struct s_data
 	bool				god;
 	void				(*render_sel)(void *param);
 	int					last_render;
-	t_console			console;
+	t_console			*console;
+	char				**args;
 }					t_data;
 #endif

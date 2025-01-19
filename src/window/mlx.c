@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 16:58:38 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/18 17:35:47 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/19 17:28:02 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,13 @@ void	press_keyhook(t_data *data, mlx_key_data_t keydata)
 
 	if (keydata.key == MLX_KEY_SPACE)
 	{
-		mode = !mode;
+		if (data->last_render != FAST)
+			mode = !mode;
 		swap_flag_mlx(data);
 		if (data->img_last)
 			free_image_all(data, data->img_last);
 		data->img_last = NULL;
-		if (mode)
+		if (!mode)
 		{
 			if (data->god)
 				swap_mgod(data);
@@ -76,9 +77,7 @@ void	my_keyhook(mlx_key_data_t keydata, void *param)
 
 	data = param;
 	if (keydata.key == MLX_KEY_ESCAPE)
-	{
 		last_exit(data);
-	}
 	else if (keydata.action == MLX_PRESS)
 		press_keyhook(data, keydata);
 }

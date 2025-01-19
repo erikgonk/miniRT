@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/19 15:32:42 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/19 18:29:04 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,18 @@ void	rows_7(t_data *data)
 
 	btn = calloc(1, sizeof(t_btn));
 	btn->name = row7l;
-	btn->x = data->console.icons[2]->instances[6].x;
-	btn->y = data->console.icons[2]->instances[6].y;
-	btn->h = data->console.icons[2]->height;
-	btn->w = data->console.icons[2]->width;
-	ft_lstadd_front(&data->console.click_lst, ft_lstnew(btn));
+	btn->x = data->console->icons[2]->instances[6].x;
+	btn->y = data->console->icons[2]->instances[6].y;
+	btn->h = data->console->icons[2]->height;
+	btn->w = data->console->icons[2]->width;
+	ft_lstadd_front(&data->console->click_lst, ft_lstnew(btn));
 	btn = calloc(1, sizeof(t_btn));
 	btn->name = row7r;
-	btn->x = data->console.icons[3]->instances[6].x;
-	btn->y = data->console.icons[3]->instances[6].y;
-	btn->h = data->console.icons[3]->height;
-	btn->w = data->console.icons[3]->width;
-	ft_lstadd_front(&data->console.click_lst, ft_lstnew(btn));
+	btn->x = data->console->icons[3]->instances[6].x;
+	btn->y = data->console->icons[3]->instances[6].y;
+	btn->h = data->console->icons[3]->height;
+	btn->w = data->console->icons[3]->width;
+	ft_lstadd_front(&data->console->click_lst, ft_lstnew(btn));
 }
 
 void	rows_8(t_data *data)
@@ -38,18 +38,18 @@ void	rows_8(t_data *data)
 
 	btn = calloc(1, sizeof(t_btn));
 	btn->name = row8l;
-	btn->x = data->console.icons[2]->instances[7].x;
-	btn->y = data->console.icons[2]->instances[7].y;
-	btn->h = data->console.icons[2]->height;
-	btn->w = data->console.icons[2]->width;
-	ft_lstadd_front(&data->console.click_lst, ft_lstnew(btn));
+	btn->x = data->console->icons[2]->instances[7].x;
+	btn->y = data->console->icons[2]->instances[7].y;
+	btn->h = data->console->icons[2]->height;
+	btn->w = data->console->icons[2]->width;
+	ft_lstadd_front(&data->console->click_lst, ft_lstnew(btn));
 	btn = calloc(1, sizeof(t_btn));
 	btn->name = row8r;
-	btn->x = data->console.icons[3]->instances[7].x;
-	btn->y = data->console.icons[3]->instances[7].y;
-	btn->h = data->console.icons[3]->height;
-	btn->w = data->console.icons[3]->width;
-	ft_lstadd_front(&data->console.click_lst, ft_lstnew(btn));
+	btn->x = data->console->icons[3]->instances[7].x;
+	btn->y = data->console->icons[3]->instances[7].y;
+	btn->h = data->console->icons[3]->height;
+	btn->w = data->console->icons[3]->width;
+	ft_lstadd_front(&data->console->click_lst, ft_lstnew(btn));
 }
 
 void	rows_9(t_data *data)
@@ -58,18 +58,18 @@ void	rows_9(t_data *data)
 
 	btn = calloc(1, sizeof(t_btn));
 	btn->name = row9l;
-	btn->x = data->console.icons[2]->instances[8].x;
-	btn->y = data->console.icons[2]->instances[8].y;
-	btn->h = data->console.icons[2]->height;
-	btn->w = data->console.icons[2]->width;
-	ft_lstadd_front(&data->console.click_lst, ft_lstnew(btn));
+	btn->x = data->console->icons[2]->instances[8].x;
+	btn->y = data->console->icons[2]->instances[8].y;
+	btn->h = data->console->icons[2]->height;
+	btn->w = data->console->icons[2]->width;
+	ft_lstadd_front(&data->console->click_lst, ft_lstnew(btn));
 	btn = calloc(1, sizeof(t_btn));
 	btn->name = row9r;
-	btn->x = data->console.icons[3]->instances[8].x;
-	btn->y = data->console.icons[3]->instances[8].y;
-	btn->h = data->console.icons[3]->height;
-	btn->w = data->console.icons[3]->width;
-	ft_lstadd_front(&data->console.click_lst, ft_lstnew(btn));
+	btn->x = data->console->icons[3]->instances[8].x;
+	btn->y = data->console->icons[3]->instances[8].y;
+	btn->h = data->console->icons[3]->height;
+	btn->w = data->console->icons[3]->width;
+	ft_lstadd_front(&data->console->click_lst, ft_lstnew(btn));
 }
 
 void	row_material(t_data *data, int click)
@@ -80,18 +80,18 @@ void	row_material(t_data *data, int click)
 	t_btn	*btn;
 
 	i = 3;
-	obj = data->console.last_item;
-	if (data->console.last_type != OBJ)
+	obj = data->console->last_item;
+	if (data->console->last_type != OBJ)
 		return ;
 	while (++i < 9)
 	{
 		k = console_get_k(obj, i);
 		btn = calloc(1, sizeof(t_btn));
 		btn->name = click++;
-		btn->x = data->console.icons[k]->instances[0].x;
-		btn->y = data->console.icons[k]->instances[0].y;
-		btn->h = data->console.icons[k]->height;
-		btn->w = data->console.icons[k]->width;
-		ft_lstadd_front(&data->console.click_lst, ft_lstnew(btn));
+		btn->x = data->console->icons[k]->instances[0].x;
+		btn->y = data->console->icons[k]->instances[0].y;
+		btn->h = data->console->icons[k]->height;
+		btn->w = data->console->icons[k]->width;
+		ft_lstadd_front(&data->console->click_lst, ft_lstnew(btn));
 	}
 }

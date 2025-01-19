@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:34:20 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/18 11:30:00 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/19 18:26:47 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	init_data(t_data **data)
 	if (!(*data))
 		exit(er(NULL, "error: failed to allocate memory", NULL));
 	(*data)->aa = -1;
-	(*data)->a_light = calloc(1, sizeof(t_alight));
 	(*data)->trace_flag = false;
 	(*data)->x = W_WH;
 	(*data)->y = W_HG;
@@ -36,9 +35,10 @@ void	init_data(t_data **data)
 	(*data)->god = true;
 	(*data)->render_sel = NULL;
 	(*data)->last_render = ONE;
-	(*data)->console.btn_list = NULL;
-	(*data)->console.click_lst = NULL;
-	(*data)->console.last_item = NULL;
-	(*data)->console.last_type = CAM;
+	(*data)->console = calloc(1, sizeof(t_console));
+	(*data)->console->btn_list = NULL;
+	(*data)->console->click_lst = NULL;
+	(*data)->console->last_item = NULL;
+	(*data)->console->last_type = CAM;
 	pthread_mutex_init((*data)->m_trace, NULL);
 }

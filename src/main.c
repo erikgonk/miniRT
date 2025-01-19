@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/18 18:13:55 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/19 18:34:00 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,20 @@
 
 void	last_exit(t_data *data)
 {
-	mlx_delete_image(data->mlx, data->img);
+	ft_lstclear(&data->console->btn_list, del_image);
+	ft_lstclear(&data->console->click_lst, free);
+	free(data->m_trace);
+	free(data->m_god);
+	if (data->img)
+		mlx_delete_image(data->mlx, data->img);
+	if (data->img_last)
+		free_image_all(data, data->img_last);
 	mlx_terminate(data->mlx);
+	if (data->mlx)
+		free(data->mlx);
+	free(data->console);
 	free_data(data);
+	free_willy_lst(data);
 	exit(1);
 }
 
