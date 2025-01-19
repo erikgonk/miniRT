@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 09:47:50 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/13 11:58:16 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/19 12:33:44 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ t_rgb	colors_parse(t_data *data, char *str, int i)
 
 	while (str[i] && ft_isspace(str[i]))
 		i++;
-	rgb.r = ft_atoi_parse(data, str, i, 3);
+	rgb.r = fmax(1, ft_atoi_parse(data, str, i, 3));
 	i = skip_color(data, str, i, 0);
-	rgb.g = ft_atoi_parse(data, str, i, 3);
+	rgb.g = fmax(1, ft_atoi_parse(data, str, i, 3));
 	i = skip_color(data, str, i, 0);
-	rgb.b = ft_atoi_parse(data, str, i, 3);
+	rgb.b = fmax(1, ft_atoi_parse(data, str, i, 3));
 	return (rgb);
 }
 
