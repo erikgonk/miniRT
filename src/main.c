@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/19 18:34:00 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/19 19:27:24 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ void	last_exit(t_data *data)
 	if (data->img_last)
 		free_image_all(data, data->img_last);
 	mlx_terminate(data->mlx);
-	if (data->mlx)
-		free(data->mlx);
 	free(data->console);
 	free_data(data);
 	free_willy_lst(data);

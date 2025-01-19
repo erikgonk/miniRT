@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:13:09 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/19 17:49:43 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/19 19:32:07 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,35 @@ char	**ft_free_willy(char **cmd)
 	if (!cmd)
 		return (NULL);
 	while (cmd[i])
-		free(cmd[i++]);
+	{
+		free(cmd[i]);
+		cmd[i] = NULL;
+		i++;
+	}
 	free(cmd);
 	cmd = NULL;
 	return (NULL);
 }
 
-void	free_willy_lst(t_data *data)
+void	free_willy_obj(t_data *data)
 {
 	t_obj		*obj;
+
+	obj = data->obj;
+	while (data->obj)
+	{
+		data->obj = data->obj->next;
+		free(obj);
+		obj = data->obj;
+	}
+}
+
+void	free_willy_lst(t_data *data)
+{
 	t_slight	*s_light;
 
 	if (data->args)
 		ft_free_willy(data->args);
-	obj = data->obj;
 	s_light = data->s_light;
 	if (!data)
 		return ;
@@ -44,12 +59,7 @@ void	free_willy_lst(t_data *data)
 	}
 	if (data->cam)
 		free(data->cam);
-	while (data->obj)
-	{
-		data->obj = data->obj->next;
-		free(obj);
-		obj = data->obj;
-	}
+	free_willy_obj(data);
 	while (data->s_light)
 	{
 		data->s_light = data->s_light->next;

@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/19 18:28:52 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/19 19:24:23 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,48 @@ void	click_obj_console(t_data *data, t_btn_name clicked)
 	data->render_sel = render_fast;
 }
 
+void	init_console_normi(t_data *data)
+{
+	t_obj	*obj;
+
+	if (data->console->last_type == OBJ)
+	{
+		obj = data->console->last_item;
+		if (obj->type != SP)
+		{
+			rows_5(data);
+			rows_6(data);
+			if (obj->type != PL)
+			{
+				rows_7(data);
+				rows_8(data);
+				if (obj->type == CU)
+					rows_9(data);
+			}
+		}
+	}
+	if (data->console->last_type == OBJ)
+		row_material(data, btn_df);
+}
+
 void	init_console(t_data *data)
 {
 	make_arrows(data);
-	rows_1to3_left(data);
-	rows_1to3_right(data);
-	rows_4to6_left(data);
-	rows_4to6_right(data);
-	rows_7(data);
-	rows_8(data);
-	rows_9(data);
-	row_material(data, btn_df);
+	rows_1(data);
+	if (data->console->last_type == ALIGHT)
+		return ;
+	rows_2(data);
+	rows_3(data);
+	rows_4(data);
+	if (data->console->last_type == SLIGHT)
+		return ;
+	if (data->console->last_type == CAM)
+	{
+		rows_5(data);
+		rows_6(data);
+		rows_7(data);
+		rows_8(data);
+		rows_9(data);
+	}
+	init_console_normi(data);
 }

@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 18:12:24 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/19 17:02:02 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/19 19:25:30 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,14 +121,20 @@ void				set_obj_labels(t_data *data, t_img_btn *img_btn, int top);
 void				del_image(void *content);
 
 //		init_general
+void				click_obj_console(t_data *data, t_btn_name clicked);
+void				init_console_normi(t_data *data);
 void				init_console(t_data *data);
 
 //		init_pos_axis
 void				make_arrows(t_data *data);
-void				rows_1to3_left(t_data *data);
-void				rows_1to3_right(t_data *data);
-void				rows_4to6_left(t_data *data);
-void				rows_4to6_right(t_data *data);
+void				rows_1(t_data *data);
+void				rows_2(t_data *data);
+void				rows_3(t_data *data);
+void				rows_4(t_data *data);
+
+//		consol_init_rows
+void				rows_5(t_data *data);
+void				rows_6(t_data *data);
 
 //		init_extra
 void				rows_7(t_data *data);
@@ -184,7 +190,6 @@ int					count_arrows(t_data *data);
 
 //		click
 void				console_click(t_data *data, int x, int y);
-void				click_obj_console(t_data *data, t_btn_name clicked);
 
 //		click_obj
 void				click_type(t_data *data, t_obj *obj, t_btn_name clicked,
