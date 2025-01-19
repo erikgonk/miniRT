@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   console_run.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 17:00:06 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/18 18:07:55 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/19 11:59:27 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+mlx_t		*g_mlx = NULL;
+
+void	del_image(void *content)
+{
+	mlx_image_t	*image;
+
+	if (content && g_mlx)
+	{
+		image = (mlx_image_t *)content;
+		mlx_delete_image(g_mlx, image);
+		image = NULL;
+	}
+}
 
 void	set_obj_labels(t_data *data, t_img_btn *img_btn, int top)
 {

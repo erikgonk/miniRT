@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 18:12:24 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/19 11:38:26 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/19 12:00:08 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ void				run_console(t_data *data);
 void				set_all_buttons(t_data *data);
 void				set_labels(t_data *data, t_img_btn *img_btn, int top);
 void				set_obj_labels(t_data *data, t_img_btn *img_btn, int top);
+void				del_image(void *content);
 
 //		init_general
 void				init_console(t_data *data);
@@ -130,7 +131,6 @@ void				rows_8(t_data *data);
 void				rows_9(t_data *data);
 
 //		helpers
-void				del_image(void *content);
 mlx_image_t			*create_button(mlx_t *mlx, const char *label, int x, int y);
 mlx_image_t			*create_menu_background(t_data *data);
 void				set_background(t_data *data);

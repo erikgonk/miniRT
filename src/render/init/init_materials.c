@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:34:20 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/11 17:40:05 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/19 12:04:37 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	init_gl(t_obj *obj)
 	obj->material.absorption = 0.1f;
 	obj->material.specularity = 0.9f;
 	obj->material.shininess = 150;
+	// obj->material.emision = -1;
 }
 
 void	init_mt(t_obj *obj)
@@ -30,6 +31,7 @@ void	init_mt(t_obj *obj)
 	obj->material.absorption = 1.0f;
 	obj->material.specularity = 0.9f;
 	obj->material.shininess = 170;
+	// obj->material.emision = -1;
 }
 
 void	init_mr(t_obj *obj)
@@ -42,6 +44,7 @@ void	init_mr(t_obj *obj)
 	obj->material.absorption = 0.0f;
 	obj->material.specularity = 1.0f;
 	obj->material.shininess = 500;
+	// obj->material.emision = -1;
 }
 
 void	init_materials_render(t_data *data)

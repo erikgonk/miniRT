@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/19 11:41:58 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/19 11:57:06 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,14 +101,7 @@ t_rgb	path_trace(t_ray *ray, t_data *data, int depth)
 	dirb[1] = rgbdefine(0, 0, 0);
 	if (closest->material.m_type == EM)
 		dirb[3] = apply_self_emission(closest, dirb[3]);
-	if (closest->material.m_type == -1)
-		dirb[1] = diffuse_ray(ray, closest, data, depth);
-	else if (closest->material.m_type == MT)
-		dirb[1] = metallic_ray(ray, closest, data, depth);
-	else if (closest->material.m_type == MR)
-		dirb[1] = mirror_ray(ray, closest, data, depth);
-	else if (closest->material.m_type == GL)
-		dirb[1] = glass_ray(ray, closest, data, depth);
+	dirb[1] = path_trace_type(ray, closest, data, depth);
 	dirb[2] = color_add(color_add(dirb[3], dirb[0]), dirb[1]);
 	return (dirb[2]);
 }

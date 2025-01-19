@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/18 18:18:09 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/19 11:56:39 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ bool					pt_checks(t_obj *closest, t_ray *ray, t_rgb *dirb);
 
 //		calcs_utils2
 uint32_t				texture_weight(t_rgb c1, t_rgb c2);
+t_rgb					path_trace_type(t_ray *ray, t_obj *closest, \
+							t_data *data, int depth);
 
 //		materials
 t_rgb					glass_ray(t_ray *ray, t_obj *closest, t_data *data,
