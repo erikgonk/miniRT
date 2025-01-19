@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:27:07 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/18 11:30:45 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/19 11:42:35 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	cam_blur(t_data *data, char *str2, char *tmp)
 		free(str2);
 		str2 = ft_substr(tmp, skip_double(data, tmp, 0, 0), ft_strlen(tmp));
 		data->cam->aperture = ft_atof(data, str2, 0);
-		if (data->cam->aperture < 0.01 || data->cam->aperture > 0.5)
-			exit(er(data, "error: cam_blur: aperture 0.01-0.5", tmp));
+		if (data->cam->aperture < 0)
+			exit(er(data, "error: cam_blur: aperture >0", tmp));
 	}
 	else if (tmp[i] && !ft_isspace(tmp[i]) && tmp[i] != '\n')
 		exit(er(data, "error: cam_blur: wrong data after fov", tmp));
@@ -67,6 +67,7 @@ void	create_cam(t_data *data, char *str, int type)
 		exit(er(data, "error: create_cam: more than 1 camera", NULL));
 	data->cam = calloc(sizeof(t_cam), 1);
 	data->cam->pos = doubles_acl_parse(data, str, 1);
+	data->cam->pos.z += 200;
 	tmp = ft_substr(str, skip_doubles(data, str, 0, 0), ft_strlen(str));
 	data->cam->axis = normalize(doubles_acl_parse(data, tmp, 0));
 	str2 = ft_substr(tmp, skip_doubles(data, tmp, -1, 0), ft_strlen(tmp));

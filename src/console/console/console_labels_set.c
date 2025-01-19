@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   console_write_labels.c                             :+:      :+:    :+:   */
+/*   console_labels_set.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 20:05:19 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/18 12:17:36 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/19 11:33:02 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,13 @@ void	write_cam_labels(t_data *data, t_img_btn *img_btn)
 	size = sizeof(img_btn->row1);
 	snprintf(img_btn->row1, size, "x          %.2f", pos.x);
 	snprintf(img_btn->row2, size, "y          %.2f", pos.y);
-	snprintf(img_btn->row3, size, "z          %.2f", pos.z);
+	snprintf(img_btn->row3, size, "z          %.2f", pos.z - 200);
 	snprintf(img_btn->row4, size, "x           %.2f", axis.x);
 	snprintf(img_btn->row5, size, "y           %.2f", axis.y);
 	snprintf(img_btn->row6, size, "z           %.2f", axis.z);
-	snprintf(img_btn->row7, size, "              %d", data->cam->fov);
+	snprintf(img_btn->row7, size, "FOV           %d", data->cam->fov);
+	snprintf(img_btn->row8, size, "BLUR         %.2f", data->cam->aperture);
+	snprintf(img_btn->row9, size, "BL_DIST       %.0f", data->cam->focus_dist);
 }
 
 void	write_alight_labels(t_data *data, t_img_btn *img_btn)

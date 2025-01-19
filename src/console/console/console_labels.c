@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 20:02:25 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/18 13:08:08 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/19 11:34:05 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,10 @@ void	set_cam_labels(t_data *data, t_img_btn *img_btn, int top)
 	img_btn->labels[6] = put_str(mlx, img_btn->row4, mleft + 35, top + 200);
 	img_btn->labels[7] = put_str(mlx, img_btn->row5, mleft + 35, top + 230);
 	img_btn->labels[8] = put_str(mlx, img_btn->row6, mleft + 35, top + 260);
-	img_btn->labels[9] = put_str(mlx, "FOV", mleft + 158, top + 290);
+	img_btn->labels[9] = put_str(mlx, "Others", mleft + 145, top + 290);
 	img_btn->labels[10] = put_str(mlx, img_btn->row7, mleft + 25, top + 320);
+	img_btn->labels[11] = put_str(mlx, img_btn->row8, mleft + 25, top + 350);
+	img_btn->labels[12] = put_str(mlx, img_btn->row9, mleft + 25, top + 380);
 }
 
 void	set_alight_labels(t_data *data, t_img_btn *img_btn, int top)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   calcs.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:37:48 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/18 17:18:26 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/19 11:41:58 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,15 +84,21 @@ t_rgb	path_trace(t_ray *ray, t_data *data, int depth)
 	t_obj		*closest;
 	t_rgb		dirb[4];
 	double		t;
+	t_v2		uv;
 
 	t = INFINITY;
 	closest = find_closest(data, ray, data->obj, &t);
+	if (closest && closest->material.texture && closest->type == SP)
+	{
+		uv = calculate_uv(ray->point, closest);
+		return (texture_color(closest, uv));
+	}
 	if (pt_checks(closest, ray, dirb))
 		return (rgbdefine(0, 0, 0));
 	if (depth <= 0)
 		return (rgbdefine(0, 0, 0));
 	dirb[0] = compute_direct_light(closest, data, ray, dirb[3]);
-	dirb[1] = (rgbdefine(0, 0, 0));
+	dirb[1] = rgbdefine(0, 0, 0);
 	if (closest->material.m_type == EM)
 		dirb[3] = apply_self_emission(closest, dirb[3]);
 	if (closest->material.m_type == -1)

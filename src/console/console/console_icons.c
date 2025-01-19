@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   console_icons.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:43:07 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/18 18:07:47 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/19 11:31:34 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	count_arrows(t_data *data)
 	t_obj	*obj;
 
 	if (data->console.last_type == CAM)
-		return (9);
+		return (11);
 	else if (data->console.last_type == ALIGHT)
 		return (1);
 	else if (data->console.last_type == SLIGHT)
@@ -43,7 +43,7 @@ int	count_labels(t_data *data)
 
 	obj = data->console.last_item;
 	if (data->console.last_type == CAM)
-		return (11);
+		return (13);
 	else if (data->console.last_type == ALIGHT)
 		return (3);
 	else if (data->console.last_type == SLIGHT)

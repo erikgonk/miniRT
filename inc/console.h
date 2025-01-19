@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   console.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 18:12:24 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/18 18:17:56 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/19 11:38:26 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # define CAMAXISP 0.05f
 # define CAMAXISMIN -1.00f
 # define CAMAXISMAX 1.00f
+# define CAMAPERTURE 0.5f
 
 # define LIGHTPLUS 0.02f
 # define LIGHTMIN 0.0f
@@ -27,7 +28,7 @@
 # define SPOTPLUS 5
 
 # define OBJPLUS 5
-# define OBJAXISP 0.01f
+# define OBJAXISP 0.1f
 # define OBJAXISMIN -1.00f
 # define OBJAXISMAX 1.00f
 
