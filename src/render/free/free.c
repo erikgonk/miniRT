@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 19:02:12 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/05 11:14:10 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/21 12:48:39 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,32 +33,6 @@ void	free_image_all(t_data *data, uint32_t **image)
 		y++;
 	}
 	free(image);
-}
-
-void	free_data(t_data *data)
-{
-	t_obj		*obj;
-	t_slight	*slight;
-
-	obj = data->obj;
-	slight = data->s_light;
-	free(data->cam);
-	free(data->a_light);
-	while (data->s_light)
-	{
-		data->s_light = data->s_light->next;
-		free(slight);
-		slight = data->s_light;
-	}
-	free(data->s_light);
-	while (data->obj)
-	{
-		data->obj = data->obj->next;
-		free(obj);
-		obj = data->obj;
-	}
-	if (data)
-		free(data);
 }
 
 void	free_rays_all(t_data *data, t_ray **rays)

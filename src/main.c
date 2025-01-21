@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/19 19:27:24 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/21 12:48:25 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	last_exit(t_data *data)
 		free_image_all(data, data->img_last);
 	mlx_terminate(data->mlx);
 	free(data->console);
-	free_data(data);
 	free_willy_lst(data);
 	exit(1);
 }

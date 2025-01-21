@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/19 11:56:39 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/21 12:48:32 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,7 +253,6 @@ uint32_t				trace_fast(t_ray ray, t_data *data);
 void					free_rays_all(t_data *data, t_ray **rays);
 void					free_render(t_data *data, t_vp *vp, t_ray **rays);
 void					free_image_all(t_data *data, uint32_t **image);
-void					free_data(t_data *data);
 void					free_rays(t_ray **rays, int rows);
 
 //		PATH_TRACER  (calcs)

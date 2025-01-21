@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:13:09 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/19 18:32:02 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/21 13:00:39 by erigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	er(t_data *data, char *s, char *argv)
 	free(data->m_trace);
 	free(data->m_god);
 	free(data->console);
+	if (data->args)
+		ft_free_willy(data->args);
 	free_willy_lst(data);
 	return (1);
 }
