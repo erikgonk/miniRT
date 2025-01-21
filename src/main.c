@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:51:59 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/21 12:48:25 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/21 21:11:24 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	last_exit(t_data *data)
 	mlx_terminate(data->mlx);
 	free(data->console);
 	free_willy_lst(data);
-	exit(1);
+	exit(0);
 }
 
 void	call_render(void *param)
