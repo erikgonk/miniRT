@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   console_labels_obj.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 12:32:05 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/18 14:42:14 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/21 19:52:33 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,9 @@
 void	plane_set_labels(t_data *data, t_img_btn *img_btn, int top)
 {
 	int			mleft;
-	mlx_image_t	**labels;
 	mlx_t		*mlx;
 
 	mlx = data->mlx;
-	labels = img_btn->labels;
 	mleft = data->x - BG_WITH;
 	plane_labels(data, img_btn);
 	img_btn->labels[0] = put_str(mlx, "Plane", mleft + 120, top - 2);
@@ -36,11 +34,9 @@ void	plane_set_labels(t_data *data, t_img_btn *img_btn, int top)
 void	sphere_set_labels(t_data *data, t_img_btn *img_btn, int top)
 {
 	int			mleft;
-	mlx_image_t	**labels;
 	mlx_t		*mlx;
 
 	mlx = data->mlx;
-	labels = img_btn->labels;
 	mleft = data->x - BG_WITH;
 	sphere_labels(data, img_btn);
 	img_btn->labels[0] = put_str(mlx, "Sphere", mleft + 120, top - 2);
@@ -55,11 +51,9 @@ void	sphere_set_labels(t_data *data, t_img_btn *img_btn, int top)
 void	cylinder_set_labels(t_data *data, t_img_btn *img_btn, int top)
 {
 	int			mleft;
-	mlx_image_t	**labels;
 	mlx_t		*mlx;
 
 	mlx = data->mlx;
-	labels = img_btn->labels;
 	mleft = data->x - BG_WITH;
 	cylinder_labels(data, img_btn);
 	img_btn->labels[0] = put_str(mlx, "Cylinder", mleft + 120, top - 2);
@@ -79,11 +73,9 @@ void	cylinder_set_labels(t_data *data, t_img_btn *img_btn, int top)
 void	cube_set_labels(t_data *data, t_img_btn *img_btn, int top)
 {
 	int			mleft;
-	mlx_image_t	**labels;
 	mlx_t		*mlx;
 
 	mlx = data->mlx;
-	labels = img_btn->labels;
 	mleft = data->x - BG_WITH;
 	cube_labels(data, img_btn);
 	img_btn->labels[0] = put_str(mlx, "Cube", mleft + 120, top - 2);
@@ -104,11 +96,9 @@ void	cube_set_labels(t_data *data, t_img_btn *img_btn, int top)
 void	cone_set_labels(t_data *data, t_img_btn *img_btn, int top)
 {
 	int			mleft;
-	mlx_image_t	**labels;
 	mlx_t		*mlx;
 
 	mlx = data->mlx;
-	labels = img_btn->labels;
 	mleft = data->x - BG_WITH;
 	cone_labels(data, img_btn);
 	img_btn->labels[0] = put_str(mlx, "Cone", mleft + 120, top - 2);

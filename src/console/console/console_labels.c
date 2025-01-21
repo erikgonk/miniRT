@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   console_labels.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 20:02:25 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/19 11:34:05 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/21 19:51:52 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,9 @@
 void	set_cam_labels(t_data *data, t_img_btn *img_btn, int top)
 {
 	int			mleft;
-	mlx_image_t	**labels;
 	mlx_t		*mlx;
 
 	mlx = data->mlx;
-	labels = img_btn->labels;
 	mleft = data->x - BG_WITH;
 	write_cam_labels(data, img_btn);
 	img_btn->labels[0] = put_str(mlx, "Camera", mleft + 120, top - 2);
@@ -40,11 +38,9 @@ void	set_cam_labels(t_data *data, t_img_btn *img_btn, int top)
 void	set_alight_labels(t_data *data, t_img_btn *img_btn, int top)
 {
 	int			mleft;
-	mlx_image_t	**labels;
 	mlx_t		*mlx;
 
 	mlx = data->mlx;
-	labels = img_btn->labels;
 	mleft = data->x - BG_WITH;
 	write_alight_labels(data, img_btn);
 	img_btn->labels[0] = put_str(mlx, "Ambient Light", mleft + 85, top - 2);
@@ -55,11 +51,9 @@ void	set_alight_labels(t_data *data, t_img_btn *img_btn, int top)
 void	set_slight_labels(t_data *data, t_img_btn *img_btn, int top)
 {
 	int			mleft;
-	mlx_image_t	**labels;
 	mlx_t		*mlx;
 
 	mlx = data->mlx;
-	labels = img_btn->labels;
 	mleft = data->x - BG_WITH;
 	write_slight_labels(data, img_btn);
 	img_btn->labels[0] = put_str(mlx, "Spot Lights", mleft + 92, top - 2);
