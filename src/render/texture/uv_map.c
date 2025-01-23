@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   uv_map.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:55:14 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/18 17:24:46 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/23 09:52:26 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,18 @@ t_v2	calculate_uv(t_v3 point, t_obj *obj)
 
 t_rgb	texture_color(t_obj *obj, t_v2 uv)
 {
-	int	x;
-	int	y;
-	int	index;
+	int		x;
+	int		y;
+	int		index;
+	t_rgb	rgbc;
 
 	x = (int)(uv.u * obj->material.texture->width) % \
 							obj->material.texture->width;
 	y = (int)(uv.v * obj->material.texture->height) % \
 							obj->material.texture->height;
 	index = (y * obj->material.texture->width + x) * 4;
-	return (rgbdefine(obj->material.texture->pixels[index + 2], \
-			obj->material.texture->pixels[index + 1], \
-			obj->material.texture->pixels[index]));
+	rgbc.r = obj->material.texture->pixels[index];
+	rgbc.g = obj->material.texture->pixels[index + 1];
+	rgbc.b = obj->material.texture->pixels[index + 2];
+	return (rgbdefine(rgbc.r, rgbc.g, rgbc.b));
 }
