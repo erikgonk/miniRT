@@ -6,7 +6,7 @@
 #    By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/19 12:51:14 by shurtado          #+#    #+#              #
-#    Updated: 2025/01/21 12:55:34 by erigonza         ###   ########.fr        #
+#    Updated: 2025/01/23 11:35:44 by shurtado         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,7 @@ OBJS			:= $(patsubst $(SRC_D)%.c,$(OBJ_D)%.o,$(SRCS))
 
 CC				:= cc
 IFLAGS			:= -I$(INC_D) -I$(VCT_D) -I$(LIBFT_D)inc
-CFLAGS			:= -g -Ofast -Wall -Wextra -Werror -fsanitize=address
+CFLAGS			:= -g -Ofast -Wall -Wextra -Werror -pthread #-fsanitize=address
 
 LIB				:= lib/
 
@@ -60,9 +60,9 @@ LIBVCT          := ./lib/libvector/libvct.a
 
 MLX				:= libmlx42.a
 DIR_MLX			:= ./lib/MLX42
-MLXFLAGS		:= -ldl -lglfw -pthread -lm
+MLXFLAGS		:= -ldl -lglfw -lm
 
-RM				:= rm -fr
+RM				:= rm -rf
 
 all:		libmlx libs $(NAME)
 

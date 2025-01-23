@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/21 12:48:32 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/23 10:41:48 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,10 @@ t_ray					**init_rays(t_data *data, t_cam *camera, t_vp *vp);
 void					free_rays(t_ray **rays, int rows);
 
 //		init_materials
-void					init_materials_mt_mr(t_obj *obj);
+void					init_gl(t_obj *obj);
+void					init_mt(t_obj *obj);
+void					init_mr(t_obj *obj);
+void					init_df(t_obj *obj);
 void					init_materials_render(t_data *data);
 
 //		cylinder

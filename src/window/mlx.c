@@ -3,38 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   mlx.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shurtado <shurtado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 16:58:38 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/21 21:11:07 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/23 11:24:17 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void	fill_image(t_data *data, uint32_t *pixels, uint32_t **img_rgb)
+bool	press_keyhook_normi(t_data *data, keys_t key, bool mode)
 {
-	int	x;
-	int	y;
-	int	index;
-
-	y = 0;
-	while (y < data->y)
-	{
-		x = 0;
-		while (x < data->x)
-		{
-			index = y * data->x + x;
-			pixels[index] = img_rgb[y][x];
-			x++;
-		}
-		y++;
-	}
-}
-
-bool	press_keyhook_normi(t_data *data, mlx_key_data_t keydata, bool mode)
-{
-	if (keydata.key == MLX_KEY_C)
+	if (key == MLX_KEY_C)
 	{
 		mode = true;
 		if (data->god)
@@ -44,6 +24,23 @@ bool	press_keyhook_normi(t_data *data, mlx_key_data_t keydata, bool mode)
 	else
 		set_last(data);
 	return (mode);
+}
+
+void	key_cam_move(t_data *data, mlx_key_data_t keydata)
+{
+	if (keydata.key == MLX_KEY_UP && keydata.modifier == MLX_CONTROL)
+		data->cam->fov += CAMPLUS;
+	else if (keydata.key == MLX_KEY_DOWN && keydata.modifier == MLX_CONTROL)
+		data->cam->fov -= CAMPLUS;
+	else if (keydata.key == MLX_KEY_UP)
+		data->cam->pos.y += CAMPLUS;
+	else if (keydata.key == MLX_KEY_DOWN)
+		data->cam->pos.y -= CAMPLUS;
+	else if (keydata.key == MLX_KEY_RIGHT)
+		data->cam->pos.x += CAMPLUS;
+	else if (keydata.key == MLX_KEY_LEFT)
+		data->cam->pos.x -= CAMPLUS;
+	set_last(data);
 }
 
 void	press_keyhook(t_data *data, mlx_key_data_t keydata)
@@ -68,7 +65,7 @@ void	press_keyhook(t_data *data, mlx_key_data_t keydata)
 			data->render_sel = update_render;
 	}
 	else if (keydata.key == MLX_KEY_C)
-		mode = press_keyhook_normi(data, keydata, mode);
+		mode = press_keyhook_normi(data, keydata.key, mode);
 }
 
 void	my_keyhook(mlx_key_data_t keydata, void *param)
@@ -83,6 +80,8 @@ void	my_keyhook(mlx_key_data_t keydata, void *param)
 	}
 	else if (keydata.action == MLX_PRESS)
 		press_keyhook(data, keydata);
+	else if (data->last_render == FAST)
+		key_cam_move(data, keydata);
 }
 
 void	resise_w(int32_t width, int32_t height, void *param)

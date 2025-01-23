@@ -3,14 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 16:58:38 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/18 17:37:57 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/23 11:11:35 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+void	fill_image(t_data *data, uint32_t *pixels, uint32_t **img_rgb)
+{
+	int	x;
+	int	y;
+	int	index;
+
+	y = 0;
+	while (y < data->y)
+	{
+		x = 0;
+		while (x < data->x)
+		{
+			index = y * data->x + x;
+			pixels[index] = img_rgb[y][x];
+			x++;
+		}
+		y++;
+	}
+}
 
 void	swap_mgod(t_data *data)
 {

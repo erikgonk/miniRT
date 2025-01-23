@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:34:20 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/19 15:49:07 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/23 10:40:41 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	init_mt(t_obj *obj)
 
 void	init_mr(t_obj *obj)
 {
-	obj->rgb = rgbdefine(0, 0, 0);
 	obj->a_rgb = rgbdefine(0, 0, 0);
 	obj->material.reflectivity = 1.0f;
 	obj->material.transmittance = 0.0f;
@@ -44,6 +43,16 @@ void	init_mr(t_obj *obj)
 	obj->material.shininess = 500;
 }
 
+void	init_df(t_obj *obj)
+{
+	obj->material.reflectivity = 0;
+	obj->material.transmittance = 0.0f;
+	obj->material.roughness = 0.0f;
+	obj->material.absorption = 0.0f;
+	obj->material.specularity = 0;
+	obj->material.shininess = 0;
+}
+
 void	init_materials_render(t_data *data)
 {
 	t_obj	*obj;
@@ -51,6 +60,7 @@ void	init_materials_render(t_data *data)
 	obj = data->obj;
 	while (obj)
 	{
+		init_df(obj);
 		if (obj->material.m_type == GL)
 			init_gl(obj);
 		else if (obj->material.m_type == MT)
