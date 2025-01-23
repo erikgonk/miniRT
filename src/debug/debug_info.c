@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 20:48:16 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/17 09:20:32 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/23 12:29:13 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,13 @@
 
 void	print_t_rgb(const char *label, t_rgb rgb)
 {
-	printf("%s -> r: %u, g: %u, b: %u\n", label, rgb.r, rgb.g, rgb.b);
+	ft_printf(1, "%s -> r: %u, g: %u, b: %u\n", label, rgb.r, rgb.g, rgb.b);
 }
 
 void	print_t_v3(const char *label, t_v3 vec)
 {
-	printf("%s -> x: %.2f, y: %.2f, z: %.2f\n", label, vec.x, vec.y, vec.z);
+	ft_printf(1, "%s -> x: %.2f, y: %.2f, z: %.2f\n", label, vec.x, \
+														vec.y, vec.z);
 }
 
 long long	current_timestamp(void)
@@ -37,20 +38,20 @@ void	print_objects(t_obj *obj)
 {
 	if (obj)
 	{
-		printf("Objects:\n");
+		ft_printf(1, "Objects:\n");
 		while (obj)
 		{
-			printf("\tType: %d\n", obj->type);
-			printf("\tIndex: %d\n", obj->i);
+			ft_printf(1, "\tType: %d\n", obj->type);
+			ft_printf(1, "\tIndex: %d\n", obj->i);
 			print_t_v3("\tPosition", obj->pos);
 			print_t_v3("\tAxis (Orientation)", obj->axis);
 			print_t_rgb("\tColor", obj->rgb);
-			printf("\tSize: %.2f\n", obj->size);
-			printf("\tHeight: %.2f\n", obj->height);
-			printf("\n");
+			ft_printf(1, "\tSize: %.2f\n", obj->size);
+			ft_printf(1, "\tHeight: %.2f\n", obj->height);
+			ft_printf(1, "\n");
 			obj = obj->next;
 		}
 	}
 	else
-		printf("Objects: NULL\n");
+		ft_printf(1, "Objects: NULL\n");
 }

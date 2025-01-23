@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erigonza <erigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:13:09 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/21 13:00:39 by erigonza         ###   ########.fr       */
+/*   Updated: 2025/01/23 12:22:29 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ int	er(t_data *data, char *s, char *argv)
 {
 	ft_printf(2, "%s", RED);
 	if (s)
-		ft_printf(2, "%s", s);
+		ft_printf(2, "%s\n", s);
 	ft_printf(2, "%s", BOLD);
 	if (argv)
-		ft_printf(2, "\n%s", argv);
+		ft_printf(2, "%s\n", argv);
 	ft_printf(2, "%s", RESET);
 	free(data->m_trace);
 	free(data->m_god);

@@ -28,7 +28,9 @@ void	parse_em(t_obj *obj, char **args)
 
 void	parse_cb(t_obj *obj, char **args)
 {
-	if (!args[1] || !args[2])
+	if (obj->type != PL)
+		exit(er(obj->data, "error: parse_cb: cb just in PL", NULL));
+	else if (!args[1] || !args[2])
 		exit(er(obj->data, "error: parse_cb: lacks arg", NULL));
 	if (obj->type != PL)
 		exit(er(obj->data, "error: parse_cb: just in pl", args[1]));
@@ -49,7 +51,9 @@ void	parse_bm(t_obj *obj, char **args, int i)
 {
 	char	*tmp;
 
-	if (!args[i] || !args[i + 1])
+	if (obj->type != SP)
+		exit(er(obj->data, "error: parse_bm: bm just in SP", NULL));
+	else if (!args[i] || !args[i + 1])
 		exit(er(obj->data, "error: parse_bm: lacks arg", NULL));
 	obj->material.bm_size = ft_atoi_parse(obj->data, args[i], 0, 0);
 	if (obj->material.m_type != -1 && (!args[i] || !args[i + 1]))
@@ -73,7 +77,9 @@ void	parse_tx(t_obj *obj, char **args, int i)
 {
 	char	*tmp;
 
-	if (!args[i] || !args[i + 1])
+	if (obj->type != SP)
+		exit(er(obj->data, "error: parse_tx: tx just in SP", NULL));
+	else if (!args[i] || !args[i + 1])
 		exit(er(obj->data, "error: parse_tx: lacks arg", NULL));
 	obj->material.bm_size = ft_atoi_parse(obj->data, args[i], 0, 0);
 	if (obj->material.m_type != -1 && (!args[i] || !args[i + 1]))
@@ -105,6 +111,8 @@ void	extra_functionalities(t_obj *obj, char *tmp)
 	obj->data->args = ft_split(str, ' ');
 	args = obj->data->args;
 	obj->material.m_type = type_extra_func(args[0]);
+	if (obj->material.m_type == GL && obj->type == GL)
+		exit(er(obj->data, "error: extra_functs: GL just in SP", NULL));
 	if (obj->material.m_type == -1 || !str[1] || \
 			(obj->material.m_type < CB && str[2] && str[3]))
 		exit(er(obj->data, "error: extra_functs: char after color", str));

@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 19:41:14 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/19 18:27:49 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/23 12:27:03 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ mlx_image_t	*create_button(mlx_t *mlx, const char *label, int x, int y)
 	button = mlx_put_string(mlx, label, x, y);
 	if (!button)
 	{
-		fprintf(stderr, "Failed to create button with label: %s\n", label);
+		ft_printf(2, "Failed to create button with label: %s\n", label);
 		return (NULL);
 	}
 	return (button);
@@ -71,7 +71,7 @@ void	set_background(t_data *data)
 		data->console->background = create_menu_background(data);
 	if (!data->console->background)
 	{
-		fprintf(stderr, "Failed to create menu background\n");
+		ft_printf(2, "Failed to create menu background\n");
 		return ;
 	}
 	mlx_image_to_window(data->mlx, data->console->background, width, 0);
