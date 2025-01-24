@@ -6,7 +6,7 @@
 #    By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/19 12:51:14 by shurtado          #+#    #+#              #
-#    Updated: 2025/01/23 12:29:38 by shurtado         ###   ########.fr        #
+#    Updated: 2025/01/24 11:08:33 by shurtado         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -96,9 +96,6 @@ f fclean:		clean
 
 r re:			fclean all
 
-v valgrind: $(NAME)
-	@valgrind --leak-check=full --track-origins=yes ./$(NAME)
-
 -include $(OBJS:.o=.d)
 
-.PHONY:		all clean fclean re f c r libs libmlx v valgrind
+.PHONY:		all clean fclean re f c r libs libmlx
