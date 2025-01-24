@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:13:09 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/23 11:24:26 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/24 09:42:36 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ void	free_willy_obj(t_data *data)
 	{
 		data->obj = data->obj->next;
 		if (obj->material.bm_texture)
-			free(obj->material.bm_texture);
+			mlx_delete_texture(obj->material.bm_texture);
 		if (obj->material.texture)
-			free(obj->material.texture);
+			mlx_delete_texture(obj->material.texture);
 		free(obj);
 		obj = data->obj;
 	}
