@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 09:59:06 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/19 18:29:04 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/24 11:04:47 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	console_click_cam_others(t_data *data, t_btn_name clicked)
 	if (clicked == fov_min)
 		data->cam->fov = fmax(data->cam->fov - CAMPLUS, 0);
 	else if (clicked == fov_max)
-		data->cam->fov += CAMPLUS;
+		data->cam->fov = fmin(180, data->cam->fov + CAMPLUS);
 	else if (clicked == row8l)
 		data->cam->aperture = fmaxf(data->cam->aperture - CAMAPERTURE, 0);
 	else if (clicked == row8r)

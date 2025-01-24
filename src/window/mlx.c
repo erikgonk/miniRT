@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 16:58:38 by erigonza          #+#    #+#             */
-/*   Updated: 2025/01/23 11:51:54 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/24 11:05:27 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ bool	press_keyhook_normi(t_data *data, keys_t key, bool mode)
 
 void	key_cam_move(t_data *data, mlx_key_data_t keydata)
 {
-	if (keydata.key == MLX_KEY_UP && keydata.modifier == MLX_CONTROL)
-		data->cam->fov += CAMPLUS;
-	else if (keydata.key == MLX_KEY_DOWN && keydata.modifier == MLX_CONTROL)
-		data->cam->fov -= CAMPLUS;
+	if (keydata.key == MLX_KEY_DOWN && keydata.modifier == MLX_CONTROL)
+		data->cam->fov = fmax(data->cam->fov - CAMPLUS, 0);
+	else if (keydata.key == MLX_KEY_UP && keydata.modifier == MLX_CONTROL)
+		data->cam->fov = fmin(180, data->cam->fov + CAMPLUS);
 	else if (keydata.key == MLX_KEY_UP)
 		data->cam->pos.y += CAMPLUS;
 	else if (keydata.key == MLX_KEY_DOWN)
