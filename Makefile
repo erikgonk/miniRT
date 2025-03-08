@@ -6,7 +6,7 @@
 #    By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/19 12:51:14 by shurtado          #+#    #+#              #
-#    Updated: 2025/01/24 11:08:33 by shurtado         ###   ########.fr        #
+#    Updated: 2025/03/08 20:26:57 by erigonza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,20 +74,21 @@ libs:
 			@make -s -C $(LIB)libvector
 
 $(OBJ_D)%.o:	$(SRC_D)%.c Makefile
-			printf "\033[0;33m\r🔨 $< ✅ \033[0m"
+			clear
+			@printf "\033[0;33m\r🔨 $< ✅ \033[0m \n"
 			@mkdir -p $(dir $@)
 			$(CC) $(IFLAGS) $(CFLAGS) -MMD -o $@ -c $<
 
 $(NAME):	$(OBJS)
-			$(CC) $(CFLAGS) $(OBJS) $(LIBFT_D)$(LIBFT) $(MLX_D)$(MLX) $(LIBVCT) $(MLXFLAGS) -o $(NAME)
-			# @clear
+			@$(CC) $(CFLAGS) $(OBJS) $(LIBFT_D)$(LIBFT) $(MLX_D)$(MLX) $(LIBVCT) $(MLXFLAGS) -o $(NAME)
+			@clear
 
 c clean:
 			@make clean -s -C $(LIB)libft
 			@make clean -s -C $(LIB)libvector
 			@$(RM) $(DIR_MLX)/build
 			${RM} ./src/tmp
-			# @clear
+			@clear
 
 f fclean:		clean
 			@make fclean -s -C $(LIB)libft
