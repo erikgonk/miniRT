@@ -44,7 +44,7 @@ MiniRT is a minimalist raytracer built as part of the 42 curriculum, designed to
    Change the scene if you please and Press SPACE to render it
 
 ### 🛠️ Shortcuts
-ENTER – to render
-ARROWS – move camera
-CONTROL + ARROW UP or DOWN – zoom in and out (with FOV)
-CLICK (anythere in the screen) – Editing Mode 
+**ENTER** – to render
+**ARROWS** – move camera
+**CONTROL + ARROW UP or DOWN** – zoom in and out (with FOV)
+**CLICK** (anythere in the screen) – Editing Mode 
