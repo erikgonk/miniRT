@@ -10,8 +10,6 @@ MiniRT is a minimalist raytracer built as part of the 42 curriculum, designed to
 
 ✅ **Shadows** – Cast shadows for more realistic depth perception
 
-✅ **Reflection** – Basic reflective surfaces for improved realism
-
 ✅ **Camera & Viewport** – Adjustable camera positioning and field of view
 
 ✅ **Multi-threading** – Parallel processing for faster rendering
@@ -34,3 +32,4 @@ MiniRT is a minimalist raytracer built as part of the 42 curriculum, designed to
 
 ![image](https://github.com/user-attachments/assets/01fdebfd-2ac0-4b51-896f-62ac30207002)
 ![image](https://github.com/user-attachments/assets/3687a228-0729-4f0b-bcaf-bfcdf1d3aae0)
+![image](https://github.com/user-attachments/assets/171d57e3-b5d8-4dc1-892b-1b3a1e70c017)
