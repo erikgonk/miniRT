@@ -31,3 +31,5 @@ MiniRT is a minimalist raytracer built as part of the 42 curriculum, designed to
 🧮 **Math Concepts:** Vectors, matrices, raytracing algorithms
 
 🚀 **Optimization:** Multi-threading for performance boosts
+
+![image](https://github.com/user-attachments/assets/01fdebfd-2ac0-4b51-896f-62ac30207002)
