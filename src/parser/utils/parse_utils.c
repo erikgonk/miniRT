@@ -10,34 +10,35 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "rt.h"
 
-int	er(t_data *data, char *s, char *argv)
+_Noreturn void	er(t_data *data, const char *s, const char *argv)
 {
-	ft_printf(2, "%s", RED);
+	fprintf(stderr, "%s", RED);
 	if (s)
-		ft_printf(2, "%s\n", s);
-	ft_printf(2, "%s", BOLD);
+		fprintf(stderr, "%s\n", s);
+	fprintf(stderr, "%s", BOLD);
 	if (argv)
-		ft_printf(2, "%s\n", argv);
-	ft_printf(2, "%s", RESET);
-	free(data->m_trace);
-	free(data->m_god);
-	free(data->console);
-	if (data->args)
-		ft_free_willy(data->args);
-	free_willy_lst(data);
-	return (1);
+		fprintf(stderr, "%s\n", argv);
+	fprintf(stderr, "%s", RESET);
+	if (data)
+	{
+		free(data->console);
+		if (data->args)
+			free_strs(data->args);
+		free_willy_lst(data);
+	}
+	exit(1);
 }
 
 int	type_obj(char *str)
 {
-	static char		*bts[] = {"sp", "pl", "cy", "A", "C", "L", "co", "cu", \
+	static const char	*bts[] = {"sp", "pl", "cy", "A", "C", "L", "co", "cu", \
 		NULL};
 	int				i;
 
 	i = 0;
-	while (bts[i] && !ft_strcmp(bts[i], str))
+	while (bts[i] && !str_cmp(bts[i], str))
 		i++;
 	if (bts[i])
 		return (i);
@@ -48,9 +49,9 @@ t_obj	*new_obj(t_data *data)
 {
 	t_obj	*tmp;
 
-	tmp = calloc(sizeof(*tmp), 1);
+	tmp = calloc(1, sizeof(*tmp));
 	if (!tmp)
-		exit(er(data, "error: new_obj: malloc", NULL));
+		er(data, "error: new_obj: malloc", NULL);
 	tmp->next = NULL;
 	return (tmp);
 }

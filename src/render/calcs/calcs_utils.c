@@ -10,26 +10,59 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/miniRT.h"
+#include "rt.h"
+
+_Thread_local static uint32_t	tls_rng_state;
+_Thread_local static bool		tls_rng_seeded;
+
+void	tls_rng_seed(uint32_t seed)
+{
+	tls_rng_state = seed ? seed : 1;
+	tls_rng_seeded = true;
+}
+
+static uint32_t	tls_xorshift32(void)
+{
+	uint32_t	x;
+
+	x = tls_rng_state;
+	x ^= x << 13;
+	x ^= x >> 17;
+	x ^= x << 5;
+	tls_rng_state = x;
+	return (x);
+}
+
+double	tls_random_double(void)
+{
+	return ((double)tls_xorshift32()) / 4294967296.0;
+}
 
 t_v3	random_in_hemisphere(t_v3 normal)
 {
-	t_v3		random_vector;
+	t_v3		local;
+	t_v3		tangent;
+	t_v3		bitangent;
 	double		u1;
 	double		u2;
 	double		theta;
 	double		phi;
 
-	u1 = (double)rand() / FLT_MAX;
-	u2 = (double)rand() / FLT_MAX;
-	theta = acos(sqrt(1 - u1));
-	phi = 2 * M_PI * u2;
-	random_vector.x = sin(theta) * cos(phi);
-	random_vector.y = sin(theta) * sin(phi);
-	random_vector.z = cos(theta);
-	if (dot(random_vector, normal) < 0)
-		random_vector = vmul(-1.0f, random_vector);
-	return (normalize(random_vector));
+	u1 = tls_random_double();
+	u2 = tls_random_double();
+	theta = acos(sqrt(u1));
+	phi = 2.0 * M_PI * u2;
+	local.x = sin(theta) * cos(phi);
+	local.y = sin(theta) * sin(phi);
+	local.z = cos(theta);
+	if (fabs(normal.x) > 0.9)
+		tangent = normalize(cross((t_v3){0.0, 1.0, 0.0}, normal));
+	else
+		tangent = normalize(cross((t_v3){1.0, 0.0, 0.0}, normal));
+	bitangent = cross(normal, tangent);
+	local = vadd(vadd(vmul(local.x, tangent), vmul(local.y, bitangent)),
+			vmul(local.z, normal));
+	return (normalize(local));
 }
 
 t_rgb	apply_self_emission(t_obj *obj, t_rgb base_color)
@@ -89,14 +122,13 @@ void	iter_lights(t_data *data, t_obj *obj, t_ray *ray, t_direct d)
 	}
 }
 
-bool	pt_checks(t_obj *closest, t_ray *ray, t_rgb *dirb)
+bool	pt_checks(t_obj *closest, t_ray *ray, t_rgb *base_color)
 {
 	if (!closest)
 		return (true);
-	if (closest->type == PL && \
-		closest->material.board_scale != -1)
-		dirb[3] = checkerboard_color(closest, ray->point);
+	if (closest->type == PL && closest->material.board_scale != -1)
+		*base_color = checkerboard_color(closest, ray->point);
 	else
-		dirb[3] = closest->a_rgb;
+		*base_color = closest->a_rgb;
 	return (false);
 }

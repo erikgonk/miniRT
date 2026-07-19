@@ -14,10 +14,12 @@
 # define DATA_H
 
 # include <pthread.h>
+# include <stdatomic.h>
 # include "libvct.h"
+# include "util.h"
 # include "../lib/MLX42/include/MLX42/MLX42.h"
 
-typedef enum item_type
+typedef enum item_type : uint8_t
 {
 	CAM = 0,
 	ALIGHT,
@@ -71,7 +73,7 @@ typedef struct s_material
 	t_rgb				rgb_checker;
 	double				board_scale;
 	double				emision;
-	double				self_emision;
+	double				self_emision; // emision * 2.5: artistic boost so self-glow is brighter than cast light
 	unsigned int		bm_size;
 	mlx_texture_t		*bm_texture;
 	unsigned int		tx_size;
@@ -193,17 +195,23 @@ typedef struct s_data
 	int					bl; // blur
 	mlx_t				*mlx;
 	mlx_image_t			*img;
-	bool				trace_flag;
-	pthread_mutex_t		*m_trace;
-	uint32_t			**img_last;
+	uint32_t			*img_last;
+	int					sample_count;
 	int					x;
 	int					y;
 	int					j;
-	pthread_mutex_t		*m_god;
-	bool				god;
+	float				*accum_r;
+	float				*accum_g;
+	float				*accum_b;
+	_Atomic bool		god;
 	void				(*render_sel)(void *param);
 	int					last_render;
+	int					sample_mode;
 	t_console			*console;
 	char				**args;
+	struct s_bvh_node	*bvh_nodes;
+	struct s_obj		**bvh_objs;
+	int					bvh_count;
 }					t_data;
+
 #endif

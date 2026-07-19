@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "rt.h"
 
 void	put_img_arrows(t_data *data)
 {
@@ -89,7 +89,7 @@ void	set_resize_buton_images(t_data *data, t_img_btn *img_btn)
 	img_btn->iconst[13] = mlx_load_png("./assets/consol/EM_SELECTED.png");
 	while (++i < 14)
 		if (!img_btn->iconst[i])
-			exit(er(data, "error: set_resize_buton_images: !textura", NULL));
+			er(data, "error: set_resize_buton_images: !textura", NULL);
 	set_resize_buton_images_normi(data, icons, img_btn);
 }
 
@@ -102,15 +102,14 @@ void	fill_image_list(t_data *data, t_img_btn *img_btn)
 	i = -1;
 	while (++i < count)
 	{
-		ft_lstadd_back(&data->console->btn_list, ft_lstnew(img_btn->labels[i]));
+		lst_add_back(&data->console->btn_list, lst_new(img_btn->labels[i]));
 		mlx_set_instance_depth(&img_btn->labels[i]->instances[0], 4);
 	}
 	i = -1;
 	while (++i < 4)
 	{
-		ft_lstadd_back(&data->console->btn_list, \
-					ft_lstnew(data->console->icons[i]));
-		if (i < 4)
-			mlx_set_instance_depth(&data->console->icons[i]->instances[0], 3);
+		lst_add_back(&data->console->btn_list, \
+					lst_new(data->console->icons[i]));
+		mlx_set_instance_depth(&data->console->icons[i]->instances[0], 3);
 	}
 }

@@ -10,40 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/miniRT.h"
-#include "../inc/render.h"
+#include "rt.h"
+#include "render.h"
 
-void	free_render(t_data *data, t_vp *vp, t_ray **rays)
+void	free_image_all(t_data *data, uint32_t *image)
 {
-	free(vp);
-	free_rays_all(data, rays);
-}
-
-void	free_image_all(t_data *data, uint32_t **image)
-{
-	int	y;
-
-	if (!image)
-		return ;
-	y = 0;
-	while (y < data->y)
-	{
-		if (image[y])
-			free(image[y]);
-		y++;
-	}
+	(void)data;
 	free(image);
-}
-
-void	free_rays_all(t_data *data, t_ray **rays)
-{
-	int	i;
-
-	i = data->y - 1;
-	while (i >= 0)
-	{
-		free(rays[i]);
-		i--;
-	}
-	free(rays);
 }

@@ -10,43 +10,60 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
-#include "render.h"
+#include "rt.h"
 #include "threads.h"
+
+static void	trace_fast_light(t_rgb *result, t_obj *obj, t_ray *ray,
+		t_data *data)
+{
+	t_slight	*slight;
+	t_v3		light_dir;
+	double		intensity;
+
+	slight = data->s_light;
+	while (slight)
+	{
+		light_dir = normalize(vsub(slight->pos, ray->point));
+		intensity = fmax(0.0, dot(light_dir, ray->normal));
+		if (intensity > 0.0)
+			difuse_light(result, slight, obj, intensity);
+		slight = slight->next;
+	}
+}
 
 uint32_t	trace_fast(t_ray ray, t_data *data)
 {
 	double	t_min;
 	t_obj	*closest_obj;
-	t_rgb	alight;
+	t_rgb	result;
 
-	alight.r = 50;
-	alight.g = 50;
-	alight.b = 50;
+	result.r = 50;
+	result.g = 50;
+	result.b = 50;
 	t_min = INFINITY;
-	closest_obj = find_closest(data, &ray, data->obj, &t_min);
+	closest_obj = find_closest(data, &ray, &t_min);
 	if (!closest_obj)
 		return (BLACK);
-	return (get_colour(color_add(alight, closest_obj->a_rgb)));
+	result = color_add(result, closest_obj->a_rgb);
+	if (closest_obj->material.m_type == EM)
+		result = apply_self_emission(closest_obj, result);
+	trace_fast_light(&result, closest_obj, &ray, data);
+	return (get_colour(result));
 }
 
-void	cprocess_rows_normi(t_thread_data *data, int idyx[3], uint32_t *color)
+static void	fill_block(t_thread_data *td, int y, int x, uint32_t color)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
-	*color = trace_fast(data->rays[idyx[1]][idyx[2]], data->data);
 	i = 0;
-	while (i < 10)
+	while (i < 4)
 	{
 		j = 0;
-		while (j < 10)
+		while (j < 4)
 		{
-			if ((idyx[1] + i) < data->data->y
-				&& (idyx[2] + j) < data->data->x)
-			{
-				data->image[idyx[1] + i][idyx[2] + j] = *color;
-			}
+			if ((y + i) < td->data->y && (x + j) < td->data->x)
+				td->image[(y + i) * td->data->x + (x + j)] = color;
 			j++;
 		}
 		i++;
@@ -55,28 +72,33 @@ void	cprocess_rows_normi(t_thread_data *data, int idyx[3], uint32_t *color)
 
 void	*cprocess_rows(void *arg)
 {
-	t_thread_data	*data;
-	int				idyx[3];
+	t_thread_data	*td;
+	int				y;
+	int				x;
+	t_ray			ray;
 	uint32_t		color;
 
-	data = (t_thread_data *)arg;
-	idyx[0] = data->thread_id;
-	idyx[1] = idyx[0];
-	while (idyx[1] < data->data->y)
+	td = (t_thread_data *)arg;
+	y = td->thread_id;
+	while (y < td->data->y)
 	{
-		idyx[2] = 0;
-		while (idyx[2] < data->data->x)
+		x = 0;
+		while (x < td->data->x)
 		{
-			if ((idyx[1] % 10) == 0 && (idyx[2] % 10) == 0)
-				cprocess_rows_normi(data, idyx, &color);
-			idyx[2]++;
+			if ((y % 4) == 0 && (x % 4) == 0)
+			{
+				ray = generate_ray(td->data, td->vp, td->cam, x, y, 1);
+				color = trace_fast(ray, td->data);
+				fill_block(td, y, x, color);
+			}
+			x++;
 		}
-		idyx[1] += NUM_THREADS;
+		y += NUM_THREADS;
 	}
 	pthread_exit(NULL);
 }
 
-void	c_render(t_data *data, t_ray **rays, uint32_t **image)
+void	c_render(t_data *data, t_vp *vp, uint32_t *image)
 {
 	pthread_t		threads[NUM_THREADS];
 	t_thread_data	thread_data[NUM_THREADS];
@@ -86,7 +108,9 @@ void	c_render(t_data *data, t_ray **rays, uint32_t **image)
 	while (i < NUM_THREADS)
 	{
 		thread_data[i].thread_id = i;
-		thread_data[i].rays = rays;
+		thread_data[i].vp = vp;
+		thread_data[i].cam = data->cam;
+		thread_data[i].mode = 1;
 		thread_data[i].data = data;
 		thread_data[i].image = image;
 		pthread_create(&threads[i], NULL, cprocess_rows, &thread_data[i]);
@@ -100,18 +124,19 @@ void	c_render(t_data *data, t_ray **rays, uint32_t **image)
 	}
 }
 
-uint32_t	**console_render(t_data *data)
+uint32_t	*console_render(t_data *data)
 {
-	t_ray		**rays;
 	t_vp		*vp;
-	uint32_t	**image;
+	uint32_t	*image;
 
 	vp = init_viewport(data->cam, data->x, data->y);
-	rays = init_raysc(data, data->cam, vp);
 	image = init_image_(data);
 	if (!image)
+	{
+		free(vp);
 		return (NULL);
-	c_render(data, rays, image);
-	free_render(data, vp, rays);
+	}
+	c_render(data, vp, image);
+	free(vp);
 	return (image);
 }

@@ -13,9 +13,9 @@
 #ifndef CONSOLE_H
 # define CONSOLE_H
 
-# include "miniRT.h"
+# include "rt.h"
 
-# define CAMPLUS 5
+# define CAMPLUS 0.5
 # define CAMAXISP 0.05f
 # define CAMAXISMIN -1.00f
 # define CAMAXISMAX 1.00f
@@ -25,9 +25,9 @@
 # define LIGHTMIN 0.0f
 # define LIGHTMAX 1.0f
 
-# define SPOTPLUS 5
+# define SPOTPLUS 0.5
 
-# define OBJPLUS 5
+# define OBJPLUS 0.5
 # define OBJAXISP 0.1f
 # define OBJAXISMIN -1.00f
 # define OBJAXISMAX 1.00f
@@ -220,7 +220,7 @@ void				click_slight_console(t_data *data, t_slight *slight,
 						t_btn_name clicked);
 
 //		click_utils
-int					ft_objremove(t_obj **lst, t_obj *node);
+int					obj_remove(t_obj **lst, t_obj *node);
 void				free_after_click(t_data *data);
 t_btn_name			get_clicked_btn(t_data *data, int x, int y);
 t_slight			*get_prev(t_data *data, t_slight *slight);

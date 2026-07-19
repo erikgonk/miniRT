@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "rt.h"
 
-void	fill_image(t_data *data, uint32_t *pixels, uint32_t **img_rgb)
+void	fill_image(t_data *data, uint32_t *pixels, uint32_t *img_rgb)
 {
 	int	x;
 	int	y;
@@ -25,18 +25,11 @@ void	fill_image(t_data *data, uint32_t *pixels, uint32_t **img_rgb)
 		while (x < data->x)
 		{
 			index = y * data->x + x;
-			pixels[index] = img_rgb[y][x];
+			pixels[index] = img_rgb[index];
 			x++;
 		}
 		y++;
 	}
-}
-
-void	swap_mgod(t_data *data)
-{
-	pthread_mutex_lock(data->m_god);
-	data->god = !data->god;
-	pthread_mutex_unlock(data->m_god);
 }
 
 void	set_last(t_data *data)
@@ -47,11 +40,4 @@ void	set_last(t_data *data)
 		data->render_sel = render_fast;
 	else if (data->last_render == UPDATE)
 		data->render_sel = update_render;
-}
-
-void	swap_flag_mlx(t_data *data)
-{
-	pthread_mutex_lock(data->m_trace);
-	data->trace_flag = !data->trace_flag;
-	pthread_mutex_unlock(data->m_trace);
 }

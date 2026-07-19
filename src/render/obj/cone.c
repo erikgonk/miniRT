@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "rt.h"
 
-void	cone_calc(t_ray *ray, t_obj *cone, t_v3 *oc, t_quadratic *quad)
+static void	cone_calc(t_ray *ray, t_obj *cone, t_v3 *oc, t_quadratic *quad)
 {
 	double	dot_dir_axis;
 	double	dot_oc_axis;
@@ -28,7 +28,7 @@ void	cone_calc(t_ray *ray, t_obj *cone, t_v3 *oc, t_quadratic *quad)
 	init_quadratic(quad, quad->a, quad->b, quad->c);
 }
 
-bool	cone_hit(t_ray *ray, t_obj *cone, double t_min, double *t)
+static bool	cone_hit(t_ray *ray, t_obj *cone, double t_min, double *t)
 {
 	t_v3	point;
 	t_v3	cone_to_point;
@@ -52,7 +52,7 @@ bool	cone_hit(t_ray *ray, t_obj *cone, double t_min, double *t)
 	return (true);
 }
 
-bool	hit_cone(t_ray *ray, t_obj *cone, double *t)
+bool	hit_cone(t_ray *restrict ray, t_obj *restrict cone, double *restrict t)
 {
 	t_v3		oc;
 	t_quadratic	quad;
@@ -60,5 +60,7 @@ bool	hit_cone(t_ray *ray, t_obj *cone, double *t)
 	cone_calc(ray, cone, &oc, &quad);
 	if (!solve_quadratic(&quad))
 		return (false);
-	return (cone_hit(ray, cone, quad.t1, t));
+	if (cone_hit(ray, cone, quad.t1, t))
+		return (true);
+	return (cone_hit(ray, cone, quad.t2, t));
 }

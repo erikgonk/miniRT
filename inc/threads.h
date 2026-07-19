@@ -15,19 +15,21 @@
 
 # include <pthread.h>
 # include <stdint.h>
-# include "miniRT.h"
+# include "rt.h"
 
-# define NUM_THREADS 6
+#define	NUM_THREADS 6
 
 typedef struct s_thread_data
 {
-	int			thread_id;
-	uint32_t	**image;
-	t_ray		**rays;
-	t_data		*data;
+	int	thread_id;
+	uint32_t		*image;
+	t_vp			*vp;
+	t_cam			*cam;
+	int				mode;
+	t_data			*data;
 }	t_thread_data;
 
-void	render_with_threads(t_data *data, t_ray **rays, uint32_t **image);
+void	render_with_threads(t_data *data, t_vp *vp, uint32_t *image, int mode);
 void	*process_rows(void *arg);
 
 #endif

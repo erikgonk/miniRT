@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "rt.h"
 
 bool	press_keyhook_normi(t_data *data, keys_t key, bool mode)
 {
@@ -18,7 +18,7 @@ bool	press_keyhook_normi(t_data *data, keys_t key, bool mode)
 	{
 		mode = true;
 		if (data->god)
-			swap_mgod(data);
+			data->god = false;
 		data->render_sel = render_fast;
 	}
 	else
@@ -29,9 +29,9 @@ bool	press_keyhook_normi(t_data *data, keys_t key, bool mode)
 void	key_cam_move(t_data *data, mlx_key_data_t keydata)
 {
 	if (keydata.key == MLX_KEY_DOWN && keydata.modifier == MLX_CONTROL)
-		data->cam->fov = fmax(data->cam->fov - CAMPLUS, 0);
+		data->cam->fov = fmax(data->cam->fov - 1, 0);
 	else if (keydata.key == MLX_KEY_UP && keydata.modifier == MLX_CONTROL)
-		data->cam->fov = fmin(180, data->cam->fov + CAMPLUS);
+		data->cam->fov = fmin(180, data->cam->fov + 1);
 	else if (keydata.key == MLX_KEY_UP)
 		data->cam->pos.y += CAMPLUS;
 	else if (keydata.key == MLX_KEY_DOWN)
@@ -51,14 +51,20 @@ void	press_keyhook(t_data *data, mlx_key_data_t keydata)
 	{
 		if (data->last_render != FAST)
 			mode = !mode;
-		swap_flag_mlx(data);
 		if (data->img_last)
 			free_image_all(data, data->img_last);
 		data->img_last = NULL;
+		free(data->accum_r);
+		free(data->accum_g);
+		free(data->accum_b);
+		data->accum_r = NULL;
+		data->accum_g = NULL;
+		data->accum_b = NULL;
+		data->sample_count = 0;
 		if (!mode)
 		{
 			if (data->god)
-				swap_mgod(data);
+				data->god = false;
 			data->render_sel = render_one;
 		}
 		else
@@ -74,10 +80,7 @@ void	my_keyhook(mlx_key_data_t keydata, void *param)
 
 	data = param;
 	if (keydata.key == MLX_KEY_ESCAPE)
-	{
-		mlx_terminate(data->mlx);
-		exit(EXIT_SUCCESS);
-	}
+		mlx_close_window(data->mlx);
 	else if (keydata.action == MLX_PRESS)
 		press_keyhook(data, keydata);
 	else if (data->last_render == FAST)
@@ -91,10 +94,15 @@ void	resise_w(int32_t width, int32_t height, void *param)
 	(void)width;
 	(void)height;
 	data = param;
-	pthread_mutex_lock(data->m_god);
 	data->god = false;
 	data->img_last = NULL;
-	pthread_mutex_unlock(data->m_god);
+	data->sample_count = 0;
+	free(data->accum_r);
+	free(data->accum_g);
+	free(data->accum_b);
+	data->accum_r = NULL;
+	data->accum_g = NULL;
+	data->accum_b = NULL;
 	if (data->last_render == ONE)
 		data->render_sel = render_one;
 	else if (data->last_render == FAST)

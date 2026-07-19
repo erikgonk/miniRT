@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "rt.h"
 
 bool	obj_click_move_normi(t_data *data, t_obj *obj, t_slight *slight)
 {
@@ -33,11 +33,11 @@ bool	obj_click_move(t_data *data, t_obj *obj, t_btn_name clicked)
 {
 	t_slight	*slight;
 
-	slight = data->s_light;
-	while (slight->next)
-		slight = slight->next;
 	if (clicked == left)
 	{
+		slight = data->s_light;
+		while (slight && slight->next)
+			slight = slight->next;
 		if (obj_click_move_normi(data, obj, slight))
 			return (true);
 	}

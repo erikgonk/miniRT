@@ -6,32 +6,33 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/23 10:41:48 by shurtado         ###   ########.fr       */
+/*   Updated: 2026/07/19 15:34:44 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RENDER_H
 # define RENDER_H
 
-# include "miniRT.h"
+# include "rt.h"
 
 # define PPLANEDISTANCE 1.0f
 # define BLACK 0xFF000000
 
 typedef unsigned char	t_uchar;
-# define EPSILON 1e-3
+#define	EPSILON 1e-4
 # ifndef M_PI
 #  define M_PI 3.14159265358979323846
 # endif
 
 // Materials
 # define SOLID_S 12
+# define METAL_BOOST 2.5
 
 // Color Weight
 # define G_WEIGHT 0.7
 # define L_WEIGHT 0.3
 
-# define MAX_DEPTH 5
+#define	MAX_DEPTH 5
 
 # define FLT_MAX 3.40282347e+38F
 
@@ -78,14 +79,15 @@ typedef struct s_quadratic
 }						t_quadratic;
 
 //		calcs
-t_obj					*find_closest(t_data *data, t_ray *ray, t_obj *objs,
-							double *t_min);
+t_obj					*find_closest(t_data *restrict data, t_ray *restrict ray,
+							double *restrict t_min);
 t_rgb					diffuse_ray(t_ray *ray, t_obj *closest, t_data *data,
 							int depth);
 t_rgb					compute_direct_light(t_obj *obj, t_data *data,
 							t_ray *ray, t_rgb color);
 t_rgb					path_trace(t_ray *ray, t_data *data, int depth);
 uint32_t				trace_ray(t_ray ray, t_data *data);
+uint32_t				trace_ray_dbg(t_ray ray, t_data *data, int px, int py);
 
 //		calcs_utils
 t_v3					random_in_hemisphere(t_v3 normal);
@@ -94,7 +96,7 @@ void					compute_emissive_light(t_obj *emitter, t_ray *ray,
 							t_rgb *color, t_data *data);
 void					iter_lights(t_data *data, t_obj *obj, t_ray *ray,
 							t_direct d);
-bool					pt_checks(t_obj *closest, t_ray *ray, t_rgb *dirb);
+bool					pt_checks(t_obj *closest, t_ray *ray, t_rgb *base_color);
 
 //		calcs_utils2
 uint32_t				texture_weight(t_rgb c1, t_rgb c2);
@@ -106,8 +108,6 @@ t_rgb					glass_ray(t_ray *ray, t_obj *closest, t_data *data,
 							int depth);
 t_rgb					mirror_ray(t_ray *ray, t_obj *closest, t_data *data,
 							int depth);
-t_v3					perturb_vector(t_v3 direction, double roughness,
-							t_v3 normal);
 t_rgb					metallic_ray(t_ray *ray, t_obj *closest, t_data *data,
 							int depth);
 
@@ -130,7 +130,7 @@ uint32_t				get_acolour(t_uchar alpha, t_uchar r, t_uchar g,
 							t_uchar b);
 uint32_t				get_colour(t_rgb color);
 void					unpack(uint32_t color, t_rgb *s);
-uint32_t				average(uint32_t c1, uint32_t c2);
+uint32_t				average(uint32_t c1, uint32_t c2, double w);
 
 //		extras
 t_rgb					checkerboard_color(t_obj *obj, t_v3 point);
@@ -141,7 +141,7 @@ void					init_data(t_data **data);
 
 //		init_image
 void					init_mlx(t_data *data);
-uint32_t				**init_image_(t_data *data);
+uint32_t				*init_image_(t_data *data);
 
 //		init_obj
 void					init_obj(t_data *data);
@@ -165,35 +165,24 @@ void					create_side(t_obj **side, t_obj *cube);
 //		init_sides_utils
 t_frame					set_frame(t_v3 axis);
 
-//		init_rays
-t_ray					**init_raysc(t_data *data, t_cam *cam, t_vp *vp);
-void					init_single_ray(t_ray *ray, t_vp *vp, t_cam *camera,
-							double *uv);
-t_ray					*init_ray_row(t_data *data, t_cam *camera, t_vp *vp,
-							int y);
-t_ray					**init_rays(t_data *data, t_cam *camera, t_vp *vp);
-
-//		init_rays_utils
-void					free_rays(t_ray **rays, int rows);
-
 //		init_materials
 void					init_gl(t_obj *obj);
 void					init_mt(t_obj *obj);
 void					init_mr(t_obj *obj);
-void					init_df(t_obj *obj);
-void					init_materials_render(t_data *data);
 
 //		cylinder
 void					set_cy_axis(t_quadratic *quad, t_obj *cy, t_ray *ray);
 double					set_ray_t(t_ray *ray, t_obj *cy, double *t,
 							t_quadratic quad);
-bool					hit_cy(t_ray *ray, t_obj *cy, double *t);
+bool					hit_cy(t_ray *restrict ray, t_obj *restrict cy,
+							double *restrict t);
 //		caps
-bool					hit_cap(t_data *data, t_ray *ray, t_obj *cap,
-							double *t);
+bool					hit_cap(t_data *restrict data, t_ray *restrict ray,
+							t_obj *restrict cap, double *restrict t);
 
 //		cone
-bool					hit_cone(t_ray *ray, t_obj *cone, double *t);
+bool					hit_cone(t_ray *restrict ray, t_obj *restrict cone,
+							double *restrict t);
 
 //		cube
 bool					create_cube(t_data *data, t_obj *cube);
@@ -204,18 +193,14 @@ void					difuse_light(t_rgb *color, t_slight *slight, t_obj *obj,
 							double inty);
 bool					data_shadow(t_data *data, t_ray *shadow_ray,
 							double max_dist, t_obj *self);
-t_rgb					phong(t_data *data, t_ray *ray, t_obj *obj);
-
-//		specular
-void					specular_light(t_rgb *color, t_data *data, t_ray *ray,
-							int shinnyness);
 
 //		intersections
 bool					calc_quad_sphere(t_obj *sphere, t_ray ray,
 							t_quadratic *quad);
-bool					hit_sp(t_ray *ray, t_obj *sphere, double *t);
-bool					hit_pl(t_data *data, t_ray *ray, t_obj *plane,
-							double *t);
+bool					hit_sp(t_ray *restrict ray, t_obj *restrict sphere,
+							double *restrict t);
+bool					hit_pl(t_data *restrict data, t_ray *restrict ray,
+							t_obj *restrict plane, double *restrict t);
 
 //		viewport
 t_v3					calculate_up(t_v3 forward, t_v3 right);
@@ -246,24 +231,22 @@ void					render_fast(void *param);
 void					update_render(void *param);
 
 //		render
-uint32_t				**render(t_data *data, int mode);
-uint32_t				**console_render(t_data *data);
-void					c_render(t_data *data, t_ray **rays, uint32_t **image);
+uint32_t				*render(t_data *data, int mode);
+uint32_t				*console_render(t_data *data);
+void					c_render(t_data *data, t_vp *vp, uint32_t *image);
+t_ray					generate_ray(t_data *data, t_vp *vp, t_cam *cam, int x,
+							int y, int mode);
 void					*cprocess_rows(void *arg);
 uint32_t				trace_fast(t_ray ray, t_data *data);
 
 //		free
-void					free_rays_all(t_data *data, t_ray **rays);
-void					free_render(t_data *data, t_vp *vp, t_ray **rays);
-void					free_image_all(t_data *data, uint32_t **image);
-void					free_rays(t_ray **rays, int rows);
+void					free_image_all(t_data *data, uint32_t *image);
 
 //		PATH_TRACER  (calcs)
 t_rgb					path_trace(t_ray *ray, t_data *data, int depth);
 t_v3					random_in_hemisphere(t_v3 normal);
 double					*generate_uv(int x, int y);
-uint32_t				**average_samples(t_data *data, uint32_t **sample1,
-							uint32_t **sample2);
-void					swap(double *a, double *b);
+uint32_t				*average_samples(t_data *data, uint32_t *sample1,
+							uint32_t *sample2, double w);
 
 #endif

@@ -10,12 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "rt.h"
 #include "render.h"
 
-t_v3	calculate_up(t_v3 forward, t_v3 right)
+t_v3	calculate_up(t_v3 forward, t_v3 rgt)
 {
-	return (normalize(cross(forward, right)));
+	return (normalize(cross(forward, rgt)));
 }
 
 t_v3	calculate_right(t_v3 forward)
@@ -47,7 +47,7 @@ t_vp	*init_viewport(t_cam *camera, int width, int height)
 	viewport->origin = camera->pos;
 	viewport->horizontal = vmul(viewport->viewport_width, camera->frame.right);
 	viewport->vertical = vmul(viewport->viewport_height, camera->frame.up);
-	viewport->lower_left = vsub(vsub(vsub(viewport->origin, \
+	viewport->lower_left = vadd(vsub(vsub(viewport->origin, \
 										scalar_div(viewport->horizontal, 2)), \
 										scalar_div(viewport->vertical, 2)), \
 										camera->frame.forward);

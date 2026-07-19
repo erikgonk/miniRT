@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "rt.h"
 
 int	random_sum_parse(t_obj *obj, char *str, int i)
 {
@@ -21,18 +21,18 @@ int	random_sum_parse(t_obj *obj, char *str, int i)
 	k = 0;
 	while (str[i] && str[i] != ',')
 	{
-		if (ft_isdigit(str[i]))
+		if (IS_DIGIT(str[i]))
 			j = 0;
 		if (k >= 2 || j >= 2)
-			exit(er(obj->data, "error: random_sum_parse", str));
-		if (ft_isspace(str[i]))
+			er(obj->data, "error: random_sum_parse", str);
+		if (IS_SPACE(str[i]))
 			break ;
 		if (str[i] == '.')
 			j++;
 		else if (str[i] == ',')
 			k++;
-		else if (!ft_isdigit(str[i]) && str[i] != '-')
-			exit(er(obj->data, "error: random_sum_parse", str));
+		else if (!IS_DIGIT(str[i]) && str[i] != '-')
+			er(obj->data, "error: random_sum_parse", str);
 		i++;
 	}
 	if (str[i] && str[i] == ',')
@@ -47,23 +47,23 @@ int	skip_double(t_data *data, char *str, int i, int flag)
 
 	j = 0;
 	if (!str[i])
-		exit(er(data, "error: skip_double: wrong map: skipdouble", str));
-	while (str[i] && ft_isspace(str[i]))
+		er(data, "error: skip_double: wrong map: skipdouble", str);
+	while (str[i] && IS_SPACE(str[i]))
 		i++;
 	while (str[i])
 	{
-		if (flag == 0 && ft_isspace(str[i]))
+		if (flag == 0 && IS_SPACE(str[i]))
 			return (i);
 		else if (flag == 1 && str[i] == ',')
 			return (++i);
 		else if (str[i] == '.')
 			j++;
-		else if (!(ft_isdigit(str[i]) || str[i] == '-'))
-			exit(er(data, "error: skip_double: wrong map: just nums", str));
+		else if (!(IS_DIGIT(str[i]) || str[i] == '-'))
+			er(data, "error: skip_double: wrong map: just nums", str);
 		if (j > 1)
-			exit(er(data, "error: skip_double: wrong map: too many .", str));
-		else if (str[i + 1] && str[i] == '.' && !ft_isdigit(str[i + 1]))
-			exit(er(data, "error: skip_double: wrong map: wrong char", str));
+			er(data, "error: skip_double: wrong map: too many .", str);
+		else if (str[i + 1] && str[i] == '.' && !IS_DIGIT(str[i + 1]))
+			er(data, "error: skip_double: wrong map: wrong char", str);
 		i++;
 	}
 	return (i);
@@ -74,47 +74,47 @@ int	skip_double(t_data *data, char *str, int i, int flag)
 int	skip_doubles(t_data *data, char *str, int i, int k)
 {
 	data->j = 0;
-	if (!str[i + 1] || !ft_isspace(str[i + 1]))
-		exit(er(data, "error: skip_doubles: wrong map: NULL", NULL));
-	while (str[i + 1] && ft_isspace(str[i + 1]))
+	if (!str[i + 1] || !IS_SPACE(str[i + 1]))
+		er(data, "error: skip_doubles: wrong map: NULL", NULL);
+	while (str[i + 1] && IS_SPACE(str[i + 1]))
 		i++;
 	while (str[++i])
 	{
-		if (k == 2 && ft_isspace(str[i]))
+		if (k == 2 && IS_SPACE(str[i]))
 			break ;
 		if (str[i] == '.')
 			data->j++;
 		else if (str[i] == ',')
 			k++;
-		if ((data->j > 3 || k > 2) || (ft_isspace(str[i]) && k != 2))
-			exit(er(data, "error: skip_doubles: too many , or .", str));
+		if ((data->j > 3 || k > 2) || (IS_SPACE(str[i]) && k != 2))
+			er(data, "error: skip_doubles: too many , or .", str);
 		else if (str[i + 1] && ((str[i] == '.' || str[i] == ',')
-				&& (!ft_isdigit(str[i + 1]) && str[i + 1] != '-')))
-			exit(er(data, "error: skip_doubles: after , or .", str));
+				&& (!IS_DIGIT(str[i + 1]) && str[i + 1] != '-')))
+			er(data, "error: skip_doubles: after , or .", str);
 		else if (str[i + 1] && (str[i] == '-' || str[i] == '+')
-			&& !ft_isdigit(str[i + 1]))
-			exit(er(data, "error: skip_doubles: after - or +", str));
+			&& !IS_DIGIT(str[i + 1]))
+			er(data, "error: skip_doubles: after - or +", str);
 	}
 	if (!str[i])
-		exit(er(data, "error: skip_doubles: wrong map: NULL end", str));
+		er(data, "error: skip_doubles: wrong map: NULL end", str);
 	return (i);
 }
 
 // skips 3 colors | 255,23,0
 int	skip_color(t_data *data, char *str, int i, int flag)
 {
-	while (flag == 0 && str[i] && ft_isspace(str[i]))
+	while (flag == 0 && str[i] && IS_SPACE(str[i]))
 		i++;
-	if (!str[i] || ft_isspace(str[i]))
-		exit(er(data, "error: skip_color: wrong map", NULL));
+	if (!str[i] || IS_SPACE(str[i]))
+		er(data, "error: skip_color: wrong map", NULL);
 	while (str[i])
 	{
-		if (str[i + 1] && str[i] == ',' && !ft_isdigit(str[i + 1]))
-			exit(er(data, "error: skip_color: wrong map: num after ,", str));
+		if (str[i + 1] && str[i] == ',' && !IS_DIGIT(str[i + 1]))
+			er(data, "error: skip_color: wrong map: num after ,", str);
 		else if (str[i] == ',')
 			return (i + 1);
-		else if (!ft_isdigit(str[i]))
-			exit(er(data, "error: skip_color: wrong map: not a num", str));
+		else if (!IS_DIGIT(str[i]))
+			er(data, "error: skip_color: wrong map: not a num", str);
 		i++;
 	}
 	return (i);
@@ -123,14 +123,14 @@ int	skip_color(t_data *data, char *str, int i, int flag)
 // skips 3 doubles | 1.2,4.1,0.0
 int	sum_parse(t_data *data, char *str, int i, int j)
 {
-	while (str[i] && !ft_isspace(str[i++]))
+	while (str[i] && !IS_SPACE(str[i++]))
 	{
-		if (!ft_isdigit(str[i - 1]) && str[i - 1] != '.' && str[i - 1] != '-')
-			exit(er(data, "error: sum_parse: 2 parsing", str));
+		if (!IS_DIGIT(str[i - 1]) && str[i - 1] != '.' && str[i - 1] != '-')
+			er(data, "error: sum_parse: 2 parsing", str);
 		else if (str[i - 1] == '.')
 			j++;
 	}
-	while (str[i] && ft_isspace(str[i]))
+	while (str[i] && IS_SPACE(str[i]))
 		i++;
 	return (i);
 }
