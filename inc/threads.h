@@ -17,11 +17,11 @@
 # include <stdint.h>
 # include "rt.h"
 
-#define	NUM_THREADS = 6;
+#define	NUM_THREADS 6
 
 typedef struct s_thread_data
 {
-	alignas(64) int	thread_id;
+	int	thread_id;
 	uint32_t		*image;
 	t_vp			*vp;
 	t_cam			*cam;

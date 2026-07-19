@@ -19,7 +19,7 @@
 # define BLACK 0xFF000000
 
 typedef unsigned char	t_uchar;
-#define	EPSILON = 1e-4;
+#define	EPSILON 1e-4
 # ifndef M_PI
 #  define M_PI 3.14159265358979323846
 # endif
@@ -32,7 +32,7 @@ typedef unsigned char	t_uchar;
 # define G_WEIGHT 0.7
 # define L_WEIGHT 0.3
 
-#define	MAX_DEPTH = 5;
+#define	MAX_DEPTH 5
 
 # define FLT_MAX 3.40282347e+38F
 

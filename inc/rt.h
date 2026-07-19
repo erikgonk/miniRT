@@ -46,8 +46,8 @@
 # include "window.h"
 # include "bvh.h"
 
-#define W_WH = 1920;
-#define W_HG = 1080;
+#define W_WH 1920
+#define W_HG 1080
 
 //		Obj
 # define SP 0
