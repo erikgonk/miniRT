@@ -114,20 +114,21 @@ libvct:
 # ─── Release objects ──────────────────────────────────────────────────────────
 
 $(OBJ_D)%.o:	$(SRC_D)%.c Makefile
-	@printf "\033[0;33m\r🔨 $< ✅ \033[0m"
-	@mkdir -p $(dir $@)
-	$(CC) $(IFLAGS) $(CFLAGS) -MMD -o $@ -c $<
+			clear
+			@printf "\033[0;33m\r🔨 $< ✅ \033[0m \n"
+			@mkdir -p $(dir $@)
+			$(CC) $(IFLAGS) $(CFLAGS) -MMD -o $@ -c $<
 
-$(NAME):		$(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(MLX_D)$(MLX) $(GLFW) $(LIBVCT) $(MLXFLAGS) -o $(NAME)
-	@echo "\n\033[1;32m[✓] $(NAME) built successfully\033[0m"
-
-# ─── Cleaning ─────────────────────────────────────────────────────────────────
+$(NAME):	$(OBJS)
+			@$(CC) $(CFLAGS) $(OBJS) $(LIBFT_D)$(LIBFT) $(MLX_D)$(MLX) $(LIBVCT) $(MLXFLAGS) -o $(NAME)
+			@clear
 
 c clean:
-			@make clean -s -C ./lib/libvector
-	@$(RM) $(DIR_MLX)/build
-	@$(RM) $(OBJ_D) $(DEBUG_D)
+			@make clean -s -C $(LIB)libft
+			@make clean -s -C $(LIB)libvector
+			@$(RM) $(DIR_MLX)/build
+			${RM} ./src/tmp
+			@clear
 
 f fclean:		clean
 			@make fclean -s -C ./lib/libvector
