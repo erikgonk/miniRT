@@ -17,7 +17,7 @@
 # include <stdint.h>
 # include "rt.h"
 
-constexpr int	NUM_THREADS = 6;
+#define	NUM_THREADS = 6;
 
 typedef struct s_thread_data
 {

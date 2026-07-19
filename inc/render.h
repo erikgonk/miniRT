@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:25:17 by shurtado          #+#    #+#             */
-/*   Updated: 2025/01/23 10:41:48 by shurtado         ###   ########.fr       */
+/*   Updated: 2026/07/19 15:34:44 by shurtado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # define BLACK 0xFF000000
 
 typedef unsigned char	t_uchar;
-constexpr double	EPSILON = 1e-4;
+#define	EPSILON = 1e-4;
 # ifndef M_PI
 #  define M_PI 3.14159265358979323846
 # endif
@@ -32,7 +32,7 @@ constexpr double	EPSILON = 1e-4;
 # define G_WEIGHT 0.7
 # define L_WEIGHT 0.3
 
-constexpr int	MAX_DEPTH = 5;
+#define	MAX_DEPTH = 5;
 
 # define FLT_MAX 3.40282347e+38F
 

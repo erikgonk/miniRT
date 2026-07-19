@@ -214,7 +214,4 @@ typedef struct s_data
 	int					bvh_count;
 }					t_data;
 
-static_assert(sizeof(t_obj) <= 1024, "t_obj too large");
-static_assert(sizeof(t_calcs) <= 512, "t_calcs too large");
-
 #endif

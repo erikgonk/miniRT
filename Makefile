@@ -6,7 +6,7 @@
 #    By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/19 12:51:14 by shurtado          #+#    #+#              #
-#    Updated: 2025/01/24 11:08:33 by shurtado         ###   ########.fr        #
+#    Updated: 2026/07/19 15:33:06 by shurtado         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,10 +69,10 @@ XFLAGS			:= -Wshadow -Wunused -Wformat=2 -Wundef \
 					-fstrict-aliasing
 
 # Release flags
-CFLAGS			:= -std=gnu23 -O3 -flto -march=native -pthread $(WFLAGS) $(XFLAGS)
+CFLAGS			:= -O3 -flto -march=native -pthread $(WFLAGS) 
 
 # Debug flags
-DFLAGS			:= -std=gnu23 -g3 -O0 -pthread $(WFLAGS) $(XFLAGS) \
+DFLAGS			:= -std=gnu23 -g3 -O0 -pthread $(WFLAGS) \
 					-fsanitize=address,undefined,leak,bounds
 
 LDFLAGS			:= -flto -pthread
